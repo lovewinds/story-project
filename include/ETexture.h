@@ -14,7 +14,7 @@ class ETexture
 {
 public:
 	// Initializes variables
-	ETexture(Ecore* core);
+	ETexture();
 
 	// Deallocates memory
 	~ETexture();

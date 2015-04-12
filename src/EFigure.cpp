@@ -1,8 +1,8 @@
 #include "EFigure.h"
 
 
-EFigure::EFigure(Ecore *core)
-:ETexture(core)
+EFigure::EFigure()
+:ETexture()
 {
 	
 }

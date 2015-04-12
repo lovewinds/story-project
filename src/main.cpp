@@ -3,9 +3,9 @@
 
 int main(int argc, char* args[])
 {
-	Ecore core;
+	Ecore* core = Ecore::getInstance();
 
-	core.Start();
+	core->Start();
 
 	return 0;
 }

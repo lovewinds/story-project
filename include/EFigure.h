@@ -4,7 +4,7 @@
 class EFigure :	public ETexture
 {
 public:
-	EFigure(Ecore* core);
+	EFigure();
 	virtual ~EFigure();
 
 	virtual void calculate(Uint32 currentTime, Uint32 accumulator = 0);

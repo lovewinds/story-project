@@ -5,18 +5,28 @@
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
+Ecore* Ecore::instance = NULL;
+
 Ecore::Ecore() :
 gWindow(NULL),
 gRenderer(NULL),
-gFont(NULL),
-boxTexture(this),
-textTexture(this)
+gFont(NULL)
 {
+	
 }
 
 Ecore::~Ecore()
 {
 	close();
+}
+
+Ecore*	Ecore::getInstance()
+{
+	if (!instance) {
+		instance = new Ecore();
+	}
+
+	return instance;
 }
 
 inline bool Ecore::handleEvent(SDL_Event *e)
@@ -52,6 +62,7 @@ void Ecore::Start()
 	}
 	else
 	{
+		screenManager = new EScreenManager();
 		//Load media
 		if (!loadMedia())
 		{
@@ -92,7 +103,8 @@ void Ecore::Start()
 			INFO("Start !!");
 			// While application is running
 
-			textTexture.animateStart(prevTime);
+			////////////textTexture.animateStart(prevTime);
+			screenManager->start(prevTime);
 
 			while (!quit)
 			{
@@ -102,9 +114,7 @@ void Ecore::Start()
 						quit = true;
 					}
 
-					if (e.type == SDL_MOUSEBUTTONDOWN) {
-						boxTexture.animateStart(SDL_GetTicks());
-					}
+					screenManager->handleEvent(e);
 				}
 
 				currentTime = SDL_GetTicks();
@@ -224,7 +234,7 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
 	SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
 	SDL_RenderClear(gRenderer);
-
+#if 0
 	// Render arrow
 	boxTexture.draw();
 
@@ -239,7 +249,8 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	}
 	//textTexture.render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
 	textTexture.render(50, 10);
-
+#endif
+	screenManager->render(d_fps);
 	// Render Color
 	//colorTexture.draw();
 	//colorTexture.render_resize(64, 64, 0, drawed_frames / 10, 0, SDL_FLIP_NONE);
@@ -250,8 +261,8 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 
 void Ecore::Update(Uint32 currentTime, Uint32 accumulator)
 {
-	//boxTexture.calculate(elapsedTime, deltaTime);
-	boxTexture.calculate(currentTime, accumulator);
+	////////////////boxTexture.calculate(currentTime, accumulator);
+	screenManager->update(currentTime, accumulator);
 }
 
 bool Ecore::init()
@@ -339,7 +350,7 @@ bool Ecore::loadMedia()
 		ERROR("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
 	}
-
+#if 0
 	//Load arrow
 	if (!boxTexture.loadFromFile("../res/kachan.png"))
 	{
@@ -347,6 +358,8 @@ bool Ecore::loadMedia()
 		ERROR("Failed to load box texture!\n");
 		success = false;
 	}
+#endif
+	success = screenManager->loadMedia();
 
 	return success;
 }
@@ -354,10 +367,10 @@ bool Ecore::loadMedia()
 void Ecore::close()
 {
 	//Free loaded images
-	boxTexture.free();
+	////////////boxTexture.free();
 
 	//Free fonts
-	textTexture.free();
+	/////////////textTexture.free();
 
 	TTF_CloseFont(gFont);
 	gFont = NULL;

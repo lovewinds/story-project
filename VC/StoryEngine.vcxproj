@@ -76,14 +76,18 @@
   <ItemGroup>
     <ClCompile Include="..\src\Ecore.cpp" />
     <ClCompile Include="..\src\EFigure.cpp" />
+    <ClCompile Include="..\src\EScreenManager.cpp" />
     <ClCompile Include="..\src\ETexture.cpp" />
+    <ClCompile Include="..\src\ETextureHandler.cpp" />
     <ClCompile Include="..\src\EWindow.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Ecore.h" />
     <ClInclude Include="..\include\EFigure.h" />
+    <ClInclude Include="..\include\EScreenManager.h" />
     <ClInclude Include="..\include\ETexture.h" />
+    <ClInclude Include="..\include\ETextureHandler.h" />
     <ClInclude Include="..\include\EWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

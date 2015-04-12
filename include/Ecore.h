@@ -4,16 +4,19 @@
 #include <stdio.h>
 
 #include "ETexture.h"
+#include "EScreenManager.h"
 
 #define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
 #define DEBUG(...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
 #define INFO(...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
 
+class EScreenManager;
+
 class Ecore
 {
 public:
-	Ecore();
 	~Ecore();
+	static Ecore*	getInstance();
 
 	//Starts up SDL and creates window
 	bool init();
@@ -25,7 +28,12 @@ public:
 	SDL_Renderer* getRenderer();
 	TTF_Font* getFont();
 
+	EScreenManager*		screenManager;
+
 private:
+	Ecore();
+
+	static Ecore*	instance;
 	//Loads media
 	bool loadMedia();
 
@@ -39,9 +47,6 @@ private:
 
 	//The window renderer
 	SDL_Renderer* gRenderer;
-
-	ETexture boxTexture;
-	ETexture textTexture;
 
 	TTF_Font *gFont;
 };

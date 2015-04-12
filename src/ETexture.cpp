@@ -5,7 +5,7 @@
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-ETexture::ETexture(Ecore *core)
+ETexture::ETexture()
 :core(NULL),
 m_x(-562), m_y(0),
 p_x(-562), p_y(0),
@@ -20,7 +20,7 @@ m_degrees(0.0)
 
 	animating = false;
 
-	this->core = core;
+	this->core = Ecore::getInstance();
 }
 
 ETexture::~ETexture()
@@ -43,7 +43,8 @@ bool ETexture::loadFromFile(std::string path)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		printf("Unable to load image %s! SDL_image Error: %s\n",
+				path.c_str(), IMG_GetError());
 	}
 	else
 	{
@@ -54,7 +55,8 @@ bool ETexture::loadFromFile(std::string path)
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			printf("Unable to create texture from %s! SDL Error: %s\n",
+					path.c_str(), SDL_GetError());
 		}
 		else
 		{
