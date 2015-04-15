@@ -102,10 +102,6 @@ void Ecore::Start()
 
 			INFO("Start !!");
 			// While application is running
-
-			////////////textTexture.animateStart(prevTime);
-			screenManager->start(prevTime);
-
 			while (!quit)
 			{
 				/* Check Event */
@@ -216,13 +212,13 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 
 	char str[256] = { 0, };
 
-	// Update latest position
+	/* Update latest position */
 	Update(currentTime, accumulator);
 
-	// Increase frame counter
+	/* Increase frame counter */
 	drawed_frames++;
 
-	// Calculate FPS
+	/* Calculate FPS */
 	currentTime = SDL_GetTicks();
 	if (currentTime - prevTime >= 1000) {
 		d_fps = (double)drawed_frames / (double)(currentTime - prevTime) * 1000.0;
@@ -230,102 +226,80 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 		drawed_frames = 1;
 	}
 	
-	// Clear screen
+	/* Clear screen */
 	//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
 	SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
 	SDL_RenderClear(gRenderer);
-#if 0
-	// Render arrow
-	boxTexture.draw();
 
-	// Render Text
-	static SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
-	static SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	SDL_snprintf(str, 256, "FPS: %0.2f", d_fps);
-	if (!textTexture.loadFromRenderedText(str, textColor, bgColor))
-	{
-		//printf("Failed to render text texture!\n");
-		ERROR("Failed to render text texture!\n");
-	}
-	//textTexture.render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
-	textTexture.render(50, 10);
-#endif
+	/* Render Screen */
 	screenManager->render(d_fps);
 	// Render Color
 	//colorTexture.draw();
 	//colorTexture.render_resize(64, 64, 0, drawed_frames / 10, 0, SDL_FLIP_NONE);
 
-	//Update screen
+	/* Update SDL Screen */
 	SDL_RenderPresent(gRenderer);
 }
 
 void Ecore::Update(Uint32 currentTime, Uint32 accumulator)
 {
-	////////////////boxTexture.calculate(currentTime, accumulator);
 	screenManager->update(currentTime, accumulator);
 }
 
 bool Ecore::init()
 {
-	//Initialization flag
+	/* Initialization flag */
 	bool success = true;
 
-	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		//printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		ERROR("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		success = false;
 	}
 	else
 	{
-		//Set texture filtering to linear
+		/* Set texture filtering to linear */
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		{
-			//printf("Warning: Linear texture filtering not enabled!");
 			ERROR("Warning: Linear texture filtering not enabled!");
 		}
 
-		//Create window
+		/* Create window */
 		gWindow = SDL_CreateWindow("SDL Tutorial",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 				SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
-			//printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			ERROR("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;
 		}
 		else
 		{
-			//Create vsynced renderer for window
+			/* Create vsynced renderer for window */
 			/* VSync: SDL_RENDERER_PRESENTVSYNC */
 			gRenderer = SDL_CreateRenderer(gWindow, -1,
 					SDL_RENDERER_ACCELERATED);
 			if (gRenderer == NULL)
 			{
-				//printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				ERROR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
 			}
 			else
 			{
-				//Initialize renderer color
+				/* Initialize renderer color */
 				SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
 
-				//Initialize PNG loading
+				/* Initialize PNG loading */
 				int imgFlags = IMG_INIT_PNG;
 				if (!(IMG_Init(imgFlags) & imgFlags))
 				{
-					//printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
 
-				//Initialize SDL_ttf
+				/* Initialize SDL_ttf */
 				if (TTF_Init() == -1)
 				{
-					//printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					ERROR("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					success = false;
 				}
@@ -338,23 +312,20 @@ bool Ecore::init()
 
 bool Ecore::loadMedia()
 {
-	//Loading success flag
+	/* Loading success flag */
 	bool success = true;
 
-	// Load Font
-	//Open the font
+	/* Load Font */
 	gFont = TTF_OpenFont("../res/consola.ttf", 28);
 	if (gFont == NULL)
 	{
-		//printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
-		ERROR("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+		ERROR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
 	}
 #if 0
 	//Load arrow
 	if (!boxTexture.loadFromFile("../res/kachan.png"))
 	{
-		//printf("Failed to load box texture!\n");
 		ERROR("Failed to load box texture!\n");
 		success = false;
 	}
@@ -366,22 +337,16 @@ bool Ecore::loadMedia()
 
 void Ecore::close()
 {
-	//Free loaded images
-	////////////boxTexture.free();
-
-	//Free fonts
-	/////////////textTexture.free();
-
 	TTF_CloseFont(gFont);
 	gFont = NULL;
 
-	//Destroy window	
+	/* Destroy window */
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	gRenderer = NULL;
 
-	//Quit SDL subsystems
+	/* Quit SDL subsystems */
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

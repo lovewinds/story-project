@@ -9,10 +9,10 @@ textTexture()
 
 EScreenManager::~EScreenManager()
 {
-	//Free loaded images
+	/* Free loaded images */
 	boxTexture.free();
 
-	//Free fonts
+	/* Free fonts */
 	textTexture.free();
 }
 
@@ -63,7 +63,6 @@ void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 void EScreenManager::handleEvent(SDL_Event e)
 {
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
-		/////////////boxTexture.animateStart(SDL_GetTicks());
 		boxTexture.animateStart(SDL_GetTicks());
 		textTexture.animateStart(SDL_GetTicks());
 	}
