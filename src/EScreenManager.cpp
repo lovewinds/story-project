@@ -1,10 +1,10 @@
 #include "EScreenManager.h"
 
-
 EScreenManager::EScreenManager():
 boxTexture(),
 textTexture()
 {
+	textureHandler = ETextureHandler::getInstance();
 }
 
 EScreenManager::~EScreenManager()
@@ -19,10 +19,9 @@ EScreenManager::~EScreenManager()
 bool EScreenManager::loadMedia()
 {
 	bool	success = true;
-	//Load arrow
+	/* Load arrow */
 	if (!boxTexture.loadFromFile("../res/kachan.png"))
 	{
-		//printf("Failed to load box texture!\n");
 		ERROR("Failed to load box texture!\n");
 		success = false;
 	}
@@ -39,16 +38,15 @@ void EScreenManager::start(Uint32 prevTime)
 void EScreenManager::render(double d_fps)
 {
 	static char str[256] = { 0, };
-	// Render arrow
+	/* Render arrow */
 	boxTexture.draw();
 
-	// Render Text
+	/* Render Text */
 	static SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	static SDL_Color bgColor = { 0x0, 0x0, 0x0 };
 	SDL_snprintf(str, 256, "FPS: %0.2f", d_fps);
 	if (!textTexture.loadFromRenderedText(str, textColor, bgColor))
 	{
-		//printf("Failed to render text texture!\n");
 		ERROR("Failed to render text texture!\n");
 	}
 	//textTexture.render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
@@ -63,7 +61,10 @@ void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 void EScreenManager::handleEvent(SDL_Event e)
 {
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
+		SDL_MouseButtonEvent *me = &e.button;
+
 		boxTexture.animateStart(SDL_GetTicks());
 		textTexture.animateStart(SDL_GetTicks());
+
 	}
 }
