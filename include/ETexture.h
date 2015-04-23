@@ -15,6 +15,7 @@ class ETexture
 public:
 	// Initializes variables
 	ETexture();
+	ETexture(int x, int y);
 
 	// Deallocates memory
 	~ETexture();

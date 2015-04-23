@@ -17,17 +17,15 @@ public:
 	ETextureHandler();
 	~ETextureHandler();
 
-	static ETextureHandler getInstance() {
-		if (instance == NULL) {
-
-		}
-	}
+	static ETextureHandler* getInstance();
 
 	void createTexture(int x, int y);
 	void removeTexture();
-	void startTextureAnimation();
+	void handleEvent(SDL_Event e);
 
 private:
 	static ETextureHandler*	instance;
 	list<ETexture*>	textureList;
+
+	void propagateEvent(SDL_Event e);
 };

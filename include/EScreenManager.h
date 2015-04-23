@@ -1,6 +1,9 @@
 #pragma once
 #include "ETexture.h"
 #include "Ecore.h"
+#include "ETextureHandler.h"
+
+class ETextureHandler;
 
 class EScreenManager
 {
@@ -15,6 +18,9 @@ public:
 	void update(Uint32 currentTime, Uint32 accumulator);
 
 	void handleEvent(SDL_Event e);
+
+private:
+	ETextureHandler *textureHandler;
 
 	ETexture boxTexture;
 	ETexture textTexture;

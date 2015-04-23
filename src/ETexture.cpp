@@ -7,8 +7,8 @@ const int SCREEN_HEIGHT = 600;
 
 ETexture::ETexture()
 :core(NULL),
-m_x(-562), m_y(0),
-p_x(-562), p_y(0),
+m_x(0), m_y(0),
+p_x(300), p_y(300),
 force_x(0), force_y(0),
 m_degrees(0.0)
 {
@@ -19,6 +19,28 @@ m_degrees(0.0)
 	radian = 0;
 
 	animating = false;
+
+	this->core = Ecore::getInstance();
+}
+
+ETexture::ETexture(int x, int y)
+:core(NULL),
+m_x(0), m_y(0),
+p_x(0), p_y(0),
+force_x(0), force_y(0),
+m_degrees(0.0)
+{
+	/* Initialize */
+	mTexture = NULL;
+	mWidth = 0;
+	mHeight = 0;
+	radian = 0;
+
+	animating = false;
+
+	/* Set Position */
+	p_x = x;
+	p_y = y;
 
 	this->core = Ecore::getInstance();
 }
@@ -181,8 +203,8 @@ void ETexture::calculate(Uint32 currentTime, Uint32 accumulator)
 #endif
 	//m_x += 0.5;//frameTime;// / 10.0;
 	/* Previous state */
-	p_x = m_x;
-	p_y = m_y;
+	//p_x = m_x;
+	//p_y = m_y;
 
 	Uint32 atomicTime = (compensatedTime - startTime);
 	Uint32 delta = atomicTime - prevTime;
@@ -201,8 +223,8 @@ void ETexture::calculate(Uint32 currentTime, Uint32 accumulator)
 	accel = 0.0;
 	velo = 0.1;
 
-	m_x = 300;
-	m_y = 300 + velo * ((atomicTime > 375) ? 375 : atomicTime);
+	m_x = p_x;
+	m_y = p_y + velo * ((atomicTime > 375) ? 375 : atomicTime);
 
 	if (atomicTime > 375) {
 		delta = atomicTime - 375;
