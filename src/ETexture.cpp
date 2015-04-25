@@ -30,7 +30,7 @@ p_x(0), p_y(0),
 force_x(0), force_y(0),
 m_degrees(0.0)
 {
-	/* Initialize */
+	//Initialize
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
@@ -38,11 +38,11 @@ m_degrees(0.0)
 
 	animating = false;
 
+	this->core = Ecore::getInstance();
+
 	/* Set Position */
 	p_x = x;
 	p_y = y;
-
-	this->core = Ecore::getInstance();
 }
 
 ETexture::~ETexture()
@@ -237,8 +237,10 @@ void ETexture::calculate(Uint32 currentTime, Uint32 accumulator)
 	
 	//m_x = (int)((compensatedTime - startTime) * velo) % 700;
 	//m_x = (m_x * alpha) + (p_x * (1.0 - alpha));
+#if 0
 	INFO("delta: [%d] / v: [%f] / a: [%f] / Y: [%f] / Yd: [%f]",
 		delta, velo, accel, m_y, m_y - p_y);
+#endif
 
 	prevTime = delta;
 #if 0

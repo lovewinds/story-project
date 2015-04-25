@@ -51,11 +51,17 @@ void EScreenManager::render(double d_fps)
 	}
 	//textTexture.render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
 	textTexture.render(50, 10);
+
+	/* Render through TextureHandler */
+	textureHandler->render();
 }
 
 void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	boxTexture.calculate(currentTime, accumulator);
+
+	/* Update through TextureHandler */
+	textureHandler->update(currentTime, accumulator);
 }
 
 void EScreenManager::handleEvent(SDL_Event e)
@@ -66,5 +72,6 @@ void EScreenManager::handleEvent(SDL_Event e)
 		boxTexture.animateStart(SDL_GetTicks());
 		textTexture.animateStart(SDL_GetTicks());
 
+		textureHandler->handleEvent(e);
 	}
 }

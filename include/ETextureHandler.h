@@ -22,6 +22,8 @@ public:
 	void createTexture(int x, int y);
 	void removeTexture();
 	void handleEvent(SDL_Event e);
+	void render();
+	void update(Uint32 currentTime, Uint32 accumulator);
 
 private:
 	static ETextureHandler*	instance;
