@@ -1,7 +1,7 @@
 #pragma once
-#include "ETexture.h"
 #include "Ecore.h"
-#include "ETextureHandler.h"
+#include "drawable/ETexture.h"
+#include "drawable/ETextureHandler.h"
 
 class ETextureHandler;
 
@@ -13,15 +13,12 @@ public:
 
 	/* Temporary Functions for adaptation */
 	bool loadMedia();
-	void start(Uint32 s);
+
+	/* Primitive functions */
 	void render(double d_fps);
 	void update(Uint32 currentTime, Uint32 accumulator);
-
 	void handleEvent(SDL_Event e);
 
 private:
 	ETextureHandler *textureHandler;
-
-	ETexture boxTexture;
-	ETexture textTexture;
 };

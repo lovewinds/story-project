@@ -1,7 +1,7 @@
 #include "Ecore.h"
-#include "ETexture.h"
+#include "drawable/ETexture.h"
 
-//Screen dimension constants
+/* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
@@ -54,30 +54,28 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 
 void Ecore::Start()
 {
-	//Start up SDL and create window
+	/* Start up SDL and create window */
 	if (!init())
 	{
-		//printf("Failed to initialize!\n");
 		ERROR("Failed to initialize!\n");
 	}
 	else
 	{
 		screenManager = new EScreenManager();
-		//Load media
+		/* Load media */
 		if (!loadMedia())
 		{
-			//printf("Failed to load media!\n");
 			ERROR("Failed to load media!\n");
 		}
 		else
 		{
-			//Main loop flag
+			/* Main loop flag */
 			bool quit = false;
 
-			//Event handler
+			/* Event handler */
 			SDL_Event e;
 			
-			//Flip type
+			/* Flip type */
 			SDL_RendererFlip flipType = SDL_FLIP_NONE;
 			
 			/* Time management */
@@ -101,7 +99,7 @@ void Ecore::Start()
 			double alpha = 0.0;
 
 			INFO("Start !!");
-			// While application is running
+			/* While application is running */
 			while (!quit)
 			{
 				/* Check Event */
@@ -322,14 +320,6 @@ bool Ecore::loadMedia()
 		ERROR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
 	}
-#if 0
-	//Load arrow
-	if (!boxTexture.loadFromFile("../res/kachan.png"))
-	{
-		ERROR("Failed to load box texture!\n");
-		success = false;
-	}
-#endif
 	success = screenManager->loadMedia();
 
 	return success;

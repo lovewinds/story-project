@@ -1,9 +1,10 @@
-#include "ETextureHandler.h"
+#include "drawable/ETextureHandler.h"
 
 ETextureHandler* ETextureHandler::instance = NULL;
 
 ETextureHandler::ETextureHandler()
 {
+	textTexture = new ETexture();
 }
 
 ETextureHandler::~ETextureHandler()
@@ -24,7 +25,7 @@ void ETextureHandler::createTexture(int x, int y)
 	static int maxCount = 0;
 	if (maxCount < 10) {
 		ETexture*	texture = new ETexture(x, y);
-		textureList.push_front(texture);
+		textureList.push_back(texture);
 
 		INFO("New texture created.");
 		INFO("    ( %d, %d ) / total: %d", x, y, textureList.size());
@@ -65,9 +66,10 @@ void ETextureHandler::propagateEvent(SDL_Event e)
 		texture->animateStart(SDL_GetTicks());
 		iter++;
 	}
+	textTexture->animateStart(SDL_GetTicks());
 }
 
-void ETextureHandler::render()
+void ETextureHandler::render(double d_fps)
 {
 	list<ETexture*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
@@ -80,6 +82,20 @@ void ETextureHandler::render()
 		}
 		iter++;
 	}
+
+	/* Handle Text Texture */
+	static char str[256] = { 0, };
+
+	/* Render Text */
+	static SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
+	static SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	SDL_snprintf(str, 256, "FPS: %0.2f", d_fps);
+	if (!textTexture->loadFromRenderedText(str, textColor, bgColor))
+	{
+		ERROR("Failed to render text texture!\n");
+	}
+	//textTexture.render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
+	textTexture->render(50, 10);
 }
 
 void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
@@ -91,4 +107,5 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 			texture->calculate(currentTime, accumulator);
 		iter++;
 	}
+	textTexture->calculate(currentTime, accumulator);
 }

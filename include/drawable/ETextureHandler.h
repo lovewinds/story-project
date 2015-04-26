@@ -22,12 +22,14 @@ public:
 	void createTexture(int x, int y);
 	void removeTexture();
 	void handleEvent(SDL_Event e);
-	void render();
+	void render(double d_fps);
 	void update(Uint32 currentTime, Uint32 accumulator);
 
 private:
 	static ETextureHandler*	instance;
 	list<ETexture*>	textureList;
+
+	ETexture *textTexture;
 
 	void propagateEvent(SDL_Event e);
 };

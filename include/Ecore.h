@@ -3,8 +3,8 @@
 #include <SDL_image.h>
 #include <stdio.h>
 
-#include "ETexture.h"
 #include "EScreenManager.h"
+#include "drawable/ETexture.h"
 
 #define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
 #define DEBUG(...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
@@ -50,4 +50,3 @@ private:
 
 	TTF_Font *gFont;
 };
-

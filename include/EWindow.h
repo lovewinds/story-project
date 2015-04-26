@@ -5,4 +5,3 @@ public:
 	EWindow();
 	~EWindow();
 };
-

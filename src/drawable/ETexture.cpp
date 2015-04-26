@@ -1,44 +1,36 @@
-#include "ETexture.h"
 #include "Ecore.h"
+#include "drawable/ETexture.h"
 
-//Screen dimension constants
+/* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-ETexture::ETexture()
-:core(NULL),
+ETexture::ETexture() :
 m_x(0), m_y(0),
 p_x(300), p_y(300),
-force_x(0), force_y(0),
 m_degrees(0.0)
 {
-	//Initialize
+	/* Initialize */
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
 	radian = 0;
 
 	animating = false;
-
-	this->core = Ecore::getInstance();
 }
 
-ETexture::ETexture(int x, int y)
-:core(NULL),
+ETexture::ETexture(int x, int y) :
 m_x(0), m_y(0),
 p_x(0), p_y(0),
-force_x(0), force_y(0),
 m_degrees(0.0)
 {
-	//Initialize
+	/* Initialize */
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
 	radian = 0;
 
 	animating = false;
-
-	this->core = Ecore::getInstance();
 
 	/* Set Position */
 	p_x = x;
@@ -47,21 +39,21 @@ m_degrees(0.0)
 
 ETexture::~ETexture()
 {
-	//Deallocate
+	/* Deallocate */
 	free();
 }
 
 bool ETexture::loadFromFile(std::string path)
 {
-	SDL_Renderer *gRenderer = core->getRenderer();
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
-	//Get rid of preexisting texture
+	/* Get rid of preexisting texture */
 	free();
 
-	//The final texture
+	/* The final texture */
 	SDL_Texture* newTexture = NULL;
 
-	//Load image at specified path
+	/* Load image at specified path */
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
@@ -70,10 +62,10 @@ bool ETexture::loadFromFile(std::string path)
 	}
 	else
 	{
-		//Color key image
+		/* Color key image */
 		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
 
-		//Create texture from surface pixels
+		/* Create texture from surface pixels */
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
@@ -82,23 +74,23 @@ bool ETexture::loadFromFile(std::string path)
 		}
 		else
 		{
-			//Get image dimensions
+			/* Get image dimensions */
 			mWidth = loadedSurface->w;
 			mHeight = loadedSurface->h;
 		}
 
-		//Get rid of old loaded surface
+		/* Get rid of old loaded surface */
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	//Return success
+	/* Return success */
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
 
 void ETexture::free()
 {
-	//Free texture if it exists
+	/* Free texture if it exists */
 	if (mTexture != NULL)
 	{
 		SDL_DestroyTexture(mTexture);
@@ -106,24 +98,6 @@ void ETexture::free()
 		mWidth = 0;
 		mHeight = 0;
 	}
-}
-
-void ETexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
-{
-	//Modulate texture rgb
-	SDL_SetTextureColorMod(mTexture, red, green, blue);
-}
-
-void ETexture::setBlendMode(SDL_BlendMode blending)
-{
-	//Set blending function
-	SDL_SetTextureBlendMode(mTexture, blending);
-}
-
-void ETexture::setAlpha(Uint8 alpha)
-{
-	//Modulate texture alpha
-	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
 void ETexture::animateStart(Uint32 start)
@@ -284,9 +258,9 @@ void ETexture::draw()
 
 void ETexture::paint(Uint32 currentTime, Uint32 accumulator)
 {
-	SDL_Renderer *gRenderer = core->getRenderer();
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
-	//Set rendering space and render to screen
+	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { m_x, m_y, mWidth, mHeight };
 #if 0
 	boxRGBA(gRenderer, m_x, 60, m_x + 200, 60 + 500, 0x11, 0x53, 0xDA, 0xFF);
@@ -309,30 +283,30 @@ void ETexture::paint(Uint32 currentTime, Uint32 accumulator)
 
 void ETexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
-	SDL_Renderer *gRenderer = core->getRenderer();
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
-	//Set rendering space and render to screen
+	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
-	//Set clip rendering dimensions
+	/* Set clip rendering dimensions */
 	if (clip != NULL)
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
 
-	//Render to screen
+	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 void ETexture::render_resize(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
-	SDL_Renderer *gRenderer = core->getRenderer();
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
-	//Set rendering space and render to screen
+	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
 
-	//Set clip rendering dimensions
+	/* Set clip rendering dimensions */
 	if (clip != NULL)
 	{
 		renderQuad.w = 16;
@@ -341,18 +315,19 @@ void ETexture::render_resize(int x, int y, SDL_Rect* clip, double angle, SDL_Poi
 	renderQuad.w = 32;
 	renderQuad.h = 32;
 
-	//Render to screen
+	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
 bool ETexture::loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Color bgColor)
 {
-	TTF_Font* gFont = core->getFont();
-	SDL_Renderer* gRenderer = core->getRenderer();
-	//Get rid of preexisting texture
+	TTF_Font* gFont = Ecore::getInstance()->getFont();
+	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
+
+	/* Get rid of preexisting texture */
 	free();
 
-	//Render text surface
+	/* Render text surface */
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(gFont, textureText.c_str(), textColor, bgColor);
 	if (textSurface == NULL)
@@ -361,7 +336,7 @@ bool ETexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
 	}
 	else
 	{
-		//Create texture from surface pixels
+		/* Create texture from surface pixels */
 		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
 		if (mTexture == NULL)
 		{
@@ -369,16 +344,16 @@ bool ETexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
 		}
 		else
 		{
-			//Get image dimensions
+			/* Get image dimensions */
 			mWidth = textSurface->w;
 			mHeight = textSurface->h;
 		}
 
-		//Get rid of old surface
+		/* Get rid of old surface */
 		SDL_FreeSurface(textSurface);
 	}
 
-	//Return success
+	/* Return success */
 	return mTexture != NULL;
 }
 
