@@ -37,8 +37,10 @@ void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 
 void EScreenManager::handleEvent(SDL_Event e)
 {
-	if (e.type == SDL_MOUSEBUTTONDOWN) {
-		SDL_MouseButtonEvent *me = &e.button;
+	if (e.type == SDL_MOUSEBUTTONDOWN
+		|| e.type == SDL_FINGERDOWN
+		|| e.type == SDL_FINGERMOTION)
+	{
 		textureHandler->handleEvent(e);
 	}
 }

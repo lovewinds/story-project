@@ -57,7 +57,7 @@ bool ETexture::loadFromFile(std::string path)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
-		printf("Unable to load image %s! SDL_image Error: %s\n",
+		INFO("Unable to load image %s! SDL_image Error: %s\n",
 				path.c_str(), IMG_GetError());
 	}
 	else
@@ -69,7 +69,7 @@ bool ETexture::loadFromFile(std::string path)
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
-			printf("Unable to create texture from %s! SDL Error: %s\n",
+			INFO("Unable to create texture from %s! SDL Error: %s\n",
 					path.c_str(), SDL_GetError());
 		}
 		else
@@ -332,7 +332,7 @@ bool ETexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(gFont, textureText.c_str(), textColor, bgColor);
 	if (textSurface == NULL)
 	{
-		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		INFO("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
 	}
 	else
 	{
@@ -340,7 +340,7 @@ bool ETexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
 		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
 		if (mTexture == NULL)
 		{
-			printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			INFO("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
 		}
 		else
 		{

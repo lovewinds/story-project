@@ -55,7 +55,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 void Ecore::Start()
 {
 	/* Start up SDL and create window */
-	if (!init())
+	if (init() == false)
 	{
 		ERROR("Failed to initialize!\n");
 	}
@@ -63,7 +63,7 @@ void Ecore::Start()
 	{
 		screenManager = new EScreenManager();
 		/* Load media */
-		if (!loadMedia())
+		if (loadMedia() == false)
 		{
 			ERROR("Failed to load media!\n");
 		}
@@ -317,8 +317,12 @@ bool Ecore::loadMedia()
 	gFont = TTF_OpenFont("../res/consola.ttf", 28);
 	if (gFont == NULL)
 	{
-		ERROR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
-		success = false;
+		/* Android can handle under /assets directory */
+		gFont = TTF_OpenFont("consola.ttf", 28);
+		if (gFont == NULL) {
+			ERROR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
+			return false;
+		}
 	}
 	success = screenManager->loadMedia();
 

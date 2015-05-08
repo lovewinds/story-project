@@ -44,6 +44,7 @@ void ETextureHandler::removeTexture()
 
 void ETextureHandler::handleEvent(SDL_Event e)
 {
+	static Uint32 latestEventTime = 0;
 	INFO("texture handle event!");
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
 		SDL_MouseButtonEvent *me = &e.button;
@@ -55,6 +56,31 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		else if (me->button == SDL_BUTTON_RIGHT) {
 			removeTexture();
 		}
+	} else if (e.type == SDL_FINGERDOWN) {
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
+
+		/* Limits event handling time */
+		if (te->timestamp - latestEventTime < 500) {
+			return;
+		}
+		latestEventTime = te->timestamp;
+
+		//INFO("x / y : [%f / %f]", te->x, te->y);
+		INFO("x / y : [%f / %f]", te->x * 1920.0, te->y * 1280.0);
+		createTexture(te->x * 1920.0, te->y * 1280.0);
+		propagateEvent(e);
+	} else if (e.type == SDL_FINGERMOTION) {
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		int ax = ((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000;
+		int ay = ((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000;
+
+		//INFO("Handle event! type: SDL_FINGERMOTION");
+		//INFO("dx / dy : [%f / %f]", te->dx, te->dy);
+		//INFO("ax / ay : [%d / %d]", ax, ay);
+
+		if (ax + ay > 50)
+			removeTexture();
 	}
 }
 
@@ -76,7 +102,7 @@ void ETextureHandler::render(double d_fps)
 		ETexture* texture = *iter;
 		if (texture != NULL) {
 			texture->draw();
-			INFO("List Texture(%p) rendered !", texture);
+			//INFO("List Texture(%p) rendered !", texture);
 		} else {
 			INFO("List Texture is NULL. count: %d", textureList.size());
 		}
