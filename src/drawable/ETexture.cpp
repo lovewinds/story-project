@@ -6,8 +6,7 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 ETexture::ETexture() :
-m_x(0), m_y(0),
-p_x(300), p_y(300),
+EDrawable(),
 m_degrees(0.0)
 {
 	/* Initialize */
@@ -20,8 +19,7 @@ m_degrees(0.0)
 }
 
 ETexture::ETexture(int x, int y) :
-m_x(0), m_y(0),
-p_x(0), p_y(0),
+EDrawable(),
 m_degrees(0.0)
 {
 	/* Initialize */
@@ -98,12 +96,6 @@ void ETexture::free()
 		mWidth = 0;
 		mHeight = 0;
 	}
-}
-
-void ETexture::animateStart(Uint32 start)
-{
-	animating = true;
-	startTime = start;
 }
 
 void ETexture::calculate(Uint32 currentTime, Uint32 accumulator)

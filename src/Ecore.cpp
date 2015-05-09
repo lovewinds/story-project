@@ -2,8 +2,8 @@
 #include "drawable/ETexture.h"
 
 /* Screen dimension constants */
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 768;
 
 Ecore* Ecore::instance = NULL;
 
@@ -285,7 +285,8 @@ bool Ecore::init()
 			else
 			{
 				/* Initialize renderer color */
-				SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+				//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x33, 0x99, 0xFF);
 
 				/* Initialize PNG loading */
 				int imgFlags = IMG_INIT_PNG;
@@ -354,4 +355,9 @@ SDL_Renderer* Ecore::getRenderer()
 TTF_Font* Ecore::getFont()
 {
 	return gFont;
+}
+
+SDL_Window* Ecore::getWindow()
+{
+	return gWindow;
 }

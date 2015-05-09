@@ -2,6 +2,7 @@
 #include <list>
 #include "Ecore.h"
 #include "ETexture.h"
+#include "EDrawable.h"
 
 using std::list;
 
@@ -27,7 +28,8 @@ public:
 
 private:
 	static ETextureHandler*	instance;
-	list<ETexture*>	textureList;
+	//list<ETexture*>	textureList;
+	list<EDrawable*>	textureList;
 
 	ETexture *textTexture;
 

@@ -27,6 +27,7 @@ public:
 
 	SDL_Renderer* getRenderer();
 	TTF_Font* getFont();
+	SDL_Window* getWindow();
 
 	EScreenManager*		screenManager;
 

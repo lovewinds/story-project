@@ -45,24 +45,12 @@ public:
 	int getWidth();
 	int getHeight();
 
-	void animateStart(Uint32 startTime);
-
 protected:
 	/* Image dimensions */
 	int mWidth;
 	int mHeight;
 
 	int radian;
-	
-	/* animation */
-	bool animating;
-	Uint32 startTime;
-
-	double m_x;
-	double m_y;
-
-	double p_x;
-	double p_y;
 
 	/* Angle of rotation */
 	double m_degrees;

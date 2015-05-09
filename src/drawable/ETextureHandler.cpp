@@ -24,7 +24,9 @@ void ETextureHandler::createTexture(int x, int y)
 {
 	static int maxCount = 0;
 	if (maxCount < 10) {
-		ETexture*	texture = new ETexture(x, y);
+		//ETexture*	texture = new ETexture(x, y);
+		EDrawable*	texture = new EDrawable(x, y);
+		texture->animateStart(SDL_GetTicks());
 		textureList.push_back(texture);
 
 		INFO("New texture created.");
@@ -34,7 +36,8 @@ void ETextureHandler::createTexture(int x, int y)
 
 void ETextureHandler::removeTexture()
 {
-	list<ETexture*>::iterator	iter;
+	//list<ETexture*>::iterator	iter;
+	list<EDrawable*>::iterator	iter;
 	while (textureList.empty() == false) {
 		iter = textureList.begin();
 		delete *iter;
@@ -58,6 +61,14 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		}
 	} else if (e.type == SDL_FINGERDOWN) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
+		int screen_width = 0;
+		int screen_height = 0;
+		SDL_Window *window = Ecore::getInstance()->getWindow();
+		if (window == NULL) {
+			ERROR("window is NULL!");
+			return;
+		}
+
 		INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
 		/* Limits event handling time */
@@ -66,9 +77,10 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		}
 		latestEventTime = te->timestamp;
 
-		//INFO("x / y : [%f / %f]", te->x, te->y);
-		INFO("x / y : [%f / %f]", te->x * 1920.0, te->y * 1280.0);
-		createTexture(te->x * 1920.0, te->y * 1280.0);
+		SDL_GetWindowSize(window, &screen_width, &screen_height);
+		INFO("x / y : [%f / %f]",
+			te->x * screen_width, te->y * screen_height);
+		createTexture(te->x * screen_width, te->y * screen_height);
 		propagateEvent(e);
 	} else if (e.type == SDL_FINGERMOTION) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
@@ -86,10 +98,11 @@ void ETextureHandler::handleEvent(SDL_Event e)
 
 void ETextureHandler::propagateEvent(SDL_Event e)
 {
-	list<ETexture*>::iterator	iter = textureList.begin();
+	//list<ETexture*>::iterator	iter = textureList.begin();
+	list<EDrawable*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
-		ETexture* texture = *iter;
-		texture->animateStart(SDL_GetTicks());
+		EDrawable* texture = *iter;
+		//texture->animateStart(SDL_GetTicks());
 		iter++;
 	}
 	textTexture->animateStart(SDL_GetTicks());
@@ -97,11 +110,13 @@ void ETextureHandler::propagateEvent(SDL_Event e)
 
 void ETextureHandler::render(double d_fps)
 {
-	list<ETexture*>::iterator	iter = textureList.begin();
+	//list<ETexture*>::iterator	iter = textureList.begin();
+	list<EDrawable*>::iterator	iter = textureList.begin();
+	Uint32 current = SDL_GetTicks();
 	while (iter != textureList.end()) {
-		ETexture* texture = *iter;
+		EDrawable* texture = *iter;
 		if (texture != NULL) {
-			texture->draw();
+			texture->draw(current);
 			//INFO("List Texture(%p) rendered !", texture);
 		} else {
 			INFO("List Texture is NULL. count: %d", textureList.size());
@@ -126,11 +141,14 @@ void ETextureHandler::render(double d_fps)
 
 void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 {
-	list<ETexture*>::iterator	iter = textureList.begin();
+	//list<ETexture*>::iterator	iter = textureList.begin();
+	list<EDrawable*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
-		ETexture* texture = *iter;
-		if (texture != NULL)
-			texture->calculate(currentTime, accumulator);
+		EDrawable* texture = *iter;
+		if (texture != NULL) {
+			//texture->calculate(currentTime, accumulator);
+			texture->update(currentTime, accumulator);
+		}	
 		iter++;
 	}
 	textTexture->calculate(currentTime, accumulator);
