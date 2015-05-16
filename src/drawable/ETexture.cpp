@@ -64,7 +64,7 @@ void ETexture::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Po
 	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
 }
 
-void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, Uint8 expand, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -74,11 +74,11 @@ void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, double angle,
 	/* Set clip rendering dimensions */
 	if (clip != NULL)
 	{
-		renderQuad.w = 16;
-		renderQuad.h = 16;
+		renderQuad.w = clip->w;
+		renderQuad.h = clip->h;
 	}
-	renderQuad.w = 32;
-	renderQuad.h = 32;
+	renderQuad.w *= expand;
+	renderQuad.h *= expand;
 
 	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);

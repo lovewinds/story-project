@@ -4,6 +4,7 @@
 #include "ETexture.h"
 #include "EDrawable.h"
 #include "ETextTexture.h"
+#include "ESprite.h"
 
 using std::list;
 
@@ -33,6 +34,7 @@ private:
 	list<EDrawable*>	textureList;
 
 	ETextTexture *textTexture;
+	ESprite* sprite;
 
 	void propagateEvent(SDL_Event e);
 };

@@ -5,6 +5,11 @@ ETextureHandler* ETextureHandler::instance = NULL;
 ETextureHandler::ETextureHandler()
 {
 	textTexture = new ETextTexture();
+	sprite = new ESprite();
+	if (false == sprite->loadFromFile("../res/rydia-sprite.png"))
+	{
+		sprite->loadFromFile("rydia-sprite.png");
+	}
 }
 
 ETextureHandler::~ETextureHandler()
@@ -126,6 +131,7 @@ void ETextureHandler::render()
 
 	/* TODO: Handle this texture same with others */
 	textTexture->render();
+	sprite->render();
 }
 
 void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
@@ -143,4 +149,5 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 
 	/* TODO: Handle this texture same with others */
 	textTexture->update(currentTime, accumulator);
+	sprite->update(currentTime, accumulator);
 }
