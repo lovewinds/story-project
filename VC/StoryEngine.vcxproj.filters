@@ -39,11 +39,20 @@
     <ClCompile Include="..\src\drawable\EFigure.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\ETexture.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\drawable\ETextureHandler.cpp">
       <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawable\ESprite.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawable\EImageTexture.cpp">
+      <Filter>Source Files\drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawable\ETexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\drawable\ETextTexture.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,8 +74,17 @@
     <ClInclude Include="..\include\drawable\ETextureHandler.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\ETexture.h">
+    <ClInclude Include="..\include\drawable\ESprite.h">
       <Filter>Header Files\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\drawable\EImageTexture.h">
+      <Filter>Header Files\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\drawable\ETexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\drawable\ETextTexture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

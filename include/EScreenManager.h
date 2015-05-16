@@ -15,7 +15,7 @@ public:
 	bool loadMedia();
 
 	/* Primitive functions */
-	void render(double d_fps);
+	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
 	void handleEvent(SDL_Event e);
 

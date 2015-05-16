@@ -1,57 +1,51 @@
 #pragma once
-#include <stdio.h>
-#include <string>
-#include <cmath>
-
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL2_gfxPrimitives.h>
 
-#include "EDrawable.h"
-
-class Ecore;
-
-//Texture wrapper class
-class ETexture : public EDrawable
+class ETexture
 {
 public:
-	/* Initializes variables */
 	ETexture();
-	ETexture(int x, int y);
-
-	/* Deallocates memory */
-	~ETexture();
-
-	/* Loads image at specified path */
-	bool loadFromFile(std::string path);
+	virtual ~ETexture();
 
 	/* Deallocates texture */
-	void free();
+	virtual void free();
 
-	/* Creates image from font string */
-	bool loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Color bgColor);
+	/* Set blending */
+	void setBlendMode(SDL_BlendMode blending);
 
-	/* Renders texture at given point */
-	void render(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	/* Set alpha modulation */
+	void setAlpha(Uint8 alpha);
 
-	void render_resize(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	/* Set color modulation */
+	void setColor(Uint8 red, Uint8 green, Uint8 blue);
 
-	virtual void calculate(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void draw();
-
-	/* Gets image dimensions */
-	int getWidth();
-	int getHeight();
+	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
+	virtual void render() = 0;
 
 protected:
-	/* Image dimensions */
+	/* The actual SDL texture */
+	SDL_Texture* mTexture;
+
+	/* Position */
+	double m_x;
+	double m_y;
+
+	double p_x;
+	double p_y;
+
+	/* Texture dimensions */
 	int mWidth;
 	int mHeight;
 
-	int radian;
-
-	/* Angle of rotation */
-	double m_degrees;
+	/* Renders texture at given point */
+	virtual void texture_render(int x, int y,
+		SDL_Rect* clip = NULL,
+		double angle = 0.0,
+		SDL_Point* center = NULL,
+		SDL_RendererFlip flip = SDL_FLIP_NONE);
+	virtual void texture_render_resize(int x, int y,
+		SDL_Rect* clip = NULL,
+		double angle = 0.0,
+		SDL_Point* center = NULL,
+		SDL_RendererFlip flip = SDL_FLIP_NONE);
 };

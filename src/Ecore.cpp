@@ -204,7 +204,6 @@ void Ecore::Start()
 
 void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 {
-	static double d_fps = 0.0;
 	static Uint32 prevTime = 0;
 	static unsigned int drawed_frames = 0;
 
@@ -230,7 +229,7 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	SDL_RenderClear(gRenderer);
 
 	/* Render Screen */
-	screenManager->render(d_fps);
+	screenManager->render();
 	// Render Color
 	//colorTexture.draw();
 	//colorTexture.render_resize(64, 64, 0, drawed_frames / 10, 0, SDL_FLIP_NONE);
@@ -242,6 +241,11 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 void Ecore::Update(Uint32 currentTime, Uint32 accumulator)
 {
 	screenManager->update(currentTime, accumulator);
+}
+
+double Ecore::GetFPS()
+{
+	return d_fps;
 }
 
 bool Ecore::init()

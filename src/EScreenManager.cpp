@@ -23,10 +23,10 @@ bool EScreenManager::loadMedia()
 	return success;
 }
 
-void EScreenManager::render(double d_fps)
+void EScreenManager::render()
 {
 	/* Render through TextureHandler */
-	textureHandler->render(d_fps);
+	textureHandler->render();
 }
 
 void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)

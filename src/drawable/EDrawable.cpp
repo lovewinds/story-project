@@ -1,10 +1,10 @@
-#include "drawable/EDrawable.h"
+#include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
 
 #include "Ecore.h"
+#include "drawable/EDrawable.h"
 
-EDrawable::EDrawable() :
-m_x(0), m_y(0),
-p_x(300), p_y(300)
+EDrawable::EDrawable()
 {
 	/* Initialize */
 	mTexture = NULL;
@@ -13,9 +13,7 @@ p_x(300), p_y(300)
 	alpha = 255;
 }
 
-EDrawable::EDrawable(int x, int y) :
-m_x(0), m_y(0),
-p_x(0), p_y(0)
+EDrawable::EDrawable(int x, int y)
 {
 	/* Initialize */
 	mTexture = NULL;
@@ -31,24 +29,6 @@ p_x(0), p_y(0)
 EDrawable::~EDrawable()
 {
 
-}
-
-void EDrawable::setBlendMode(SDL_BlendMode blending)
-{
-	/* Set blending function */
-	SDL_SetTextureBlendMode(mTexture, blending);
-}
-
-void EDrawable::setAlpha(Uint8 alpha)
-{
-	/* Modulate texture alpha */
-	SDL_SetTextureAlphaMod(mTexture, alpha);
-}
-
-void EDrawable::setColor(Uint8 red, Uint8 green, Uint8 blue)
-{
-	/* Modulate texture rgb */
-	SDL_SetTextureColorMod(mTexture, red, green, blue);
 }
 
 void EDrawable::animateStart(Uint32 start)
@@ -74,7 +54,7 @@ void EDrawable::update(Uint32 currentTime, Uint32 accumulator)
 
 	if (degree >= 360.0 * depth) {
 		/* infinite animation */
-		alpha = 0;
+		alpha = 255;
 		animating = false;
 		INFO("FINISH");
 		return;
@@ -84,16 +64,17 @@ void EDrawable::update(Uint32 currentTime, Uint32 accumulator)
 
 	/* change color */
 	alpha = 256 - current_depth * 16;
+	//alpha = current_depth * 16 + 16;
 	if (alpha == 256)
 		alpha = 255;
-#if 1
+#if 0
 	INFO("[0x%p] degree: %f, radian: %d, alpha: %d, depth: %d",
 		this, degree, (int)(degree/360.0), alpha, current_depth);
 #endif
 	prevTime = delta;
 }
 
-void EDrawable::draw(Uint32 currentTime, Uint32 accumulator)
+void EDrawable::render()
 {
 	SDL_Renderer *renderer = Ecore::getInstance()->getRenderer();
 	if (renderer == NULL)
@@ -104,12 +85,14 @@ void EDrawable::draw(Uint32 currentTime, Uint32 accumulator)
 	if (alpha <= 240 && alpha > 0) {
 		int b_alpha = alpha + 16;
 		if (b_alpha > 255) b_alpha = 255;
+#if 1
 		filledCircleRGBA(renderer, p_x, p_y,
 			30,
 			0x70, 0xC6, 0xFF, b_alpha);
+#endif
 	}
 	filledPieRGBA(renderer, p_x, p_y,
 		30,
-		0, radian,
+		270, radian + 270,
 		0x70, 0xC6, 0xFF, alpha);
 }

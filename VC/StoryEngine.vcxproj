@@ -76,6 +76,9 @@
   <ItemGroup>
     <ClCompile Include="..\src\drawable\EDrawable.cpp" />
     <ClCompile Include="..\src\drawable\EFigure.cpp" />
+    <ClCompile Include="..\src\drawable\EImageTexture.cpp" />
+    <ClCompile Include="..\src\drawable\ESprite.cpp" />
+    <ClCompile Include="..\src\drawable\ETextTexture.cpp" />
     <ClCompile Include="..\src\drawable\ETexture.cpp" />
     <ClCompile Include="..\src\drawable\ETextureHandler.cpp" />
     <ClCompile Include="..\src\Ecore.cpp" />
@@ -86,6 +89,9 @@
   <ItemGroup>
     <ClInclude Include="..\include\drawable\EDrawable.h" />
     <ClInclude Include="..\include\drawable\EFigure.h" />
+    <ClInclude Include="..\include\drawable\EImageTexture.h" />
+    <ClInclude Include="..\include\drawable\ESprite.h" />
+    <ClInclude Include="..\include\drawable\ETextTexture.h" />
     <ClInclude Include="..\include\drawable\ETexture.h" />
     <ClInclude Include="..\include\drawable\ETextureHandler.h" />
     <ClInclude Include="..\include\Ecore.h" />

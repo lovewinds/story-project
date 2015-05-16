@@ -3,6 +3,7 @@
 #include "Ecore.h"
 #include "ETexture.h"
 #include "EDrawable.h"
+#include "ETextTexture.h"
 
 using std::list;
 
@@ -23,7 +24,7 @@ public:
 	void createTexture(int x, int y);
 	void removeTexture();
 	void handleEvent(SDL_Event e);
-	void render(double d_fps);
+	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
 
 private:
@@ -31,7 +32,7 @@ private:
 	//list<ETexture*>	textureList;
 	list<EDrawable*>	textureList;
 
-	ETexture *textTexture;
+	ETextTexture *textTexture;
 
 	void propagateEvent(SDL_Event e);
 };

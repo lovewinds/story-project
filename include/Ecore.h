@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <stdio.h>
 
 #include "EScreenManager.h"
@@ -18,18 +19,22 @@ public:
 	~Ecore();
 	static Ecore*	getInstance();
 
-	//Starts up SDL and creates window
+	/* SDL variables */
+	SDL_Renderer* getRenderer();
+	TTF_Font* getFont();
+	SDL_Window* getWindow();
+
+	EScreenManager*		screenManager;
+
+	/* Starts up SDL and creates window */
 	bool init();
 
 	void Start();
 	void Render(Uint32 currentTime, Uint32 accumulator);
 	void Update(Uint32 currentTime, Uint32 accumulator = 0);
 
-	SDL_Renderer* getRenderer();
-	TTF_Font* getFont();
-	SDL_Window* getWindow();
-
-	EScreenManager*		screenManager;
+	/* Provide current FPS */
+	double GetFPS();
 
 private:
 	Ecore();
@@ -50,4 +55,6 @@ private:
 	SDL_Renderer* gRenderer;
 
 	TTF_Font *gFont;
+
+	double d_fps;
 };
