@@ -5,6 +5,7 @@
 #include "EDrawable.h"
 #include "ETextTexture.h"
 #include "ESprite.h"
+#include "EImageTexture.h"
 
 using std::list;
 
@@ -35,6 +36,7 @@ private:
 
 	ETextTexture *textTexture;
 	ESprite* sprite;
+	EImageTexture* background;
 
 	void propagateEvent(SDL_Event e);
 };

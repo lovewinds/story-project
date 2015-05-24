@@ -17,7 +17,7 @@ public:
 	virtual void render();
 
 protected:
-	SDL_Rect gSpriteClips[3];
+	SDL_Rect gSpriteClips[4];
 	int8_t	sprite_index;
 	int8_t	sprite_change;
 };

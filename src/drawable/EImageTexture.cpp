@@ -204,41 +204,35 @@ void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 	//m_degrees += 2.0f;
 }
 
-void EImageTexture::draw()
+void EImageTexture::render()
 {
-	static int prev = SDL_GetTicks();
-	static int curr = prev;
+	SDL_Window* window = Ecore::getInstance()->getWindow();
+	int width = 0, height = 0;
+	SDL_Rect rect = { 0, };
 
-	int f_x = (int)SDL_floor(m_x + 0.5);
-	int f_y = (int)SDL_floor(m_y + 0.5);
-	curr = SDL_GetTicks();
-#if 0
-	INFO("Render : %d -> %d (+%d) [ %d (+%d) ]",
-		prev, curr, curr-prev,
-		f_x, SDL_abs(p_x - f_x));
-#endif
-#if 0
-	render(f_x, f_y,
-		NULL, m_degrees,
-		NULL, SDL_FLIP_NONE);
-#endif
-	paint(0, 0);
-	prev = curr;
+	SDL_GetWindowSize(window, &width, &height);
+	rect.w = width;
+	rect.h = height;
+
+	texture_render(0, 0, &rect);
 }
 
+#if 0
 void EImageTexture::paint(Uint32 currentTime, Uint32 accumulator)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
 	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { m_x, m_y, mWidth, mHeight };
-#if 0
+
+	/*
 	boxRGBA(gRenderer, m_x, 60, m_x + 200, 60 + 500, 0x11, 0x53, 0xDA, 0xFF);
 	boxRGBA(gRenderer, m_x, 70, m_x + 190, 70 + 60, 0xFF, 0xFF, 0xFF, 0xFF);
 	boxRGBA(gRenderer, m_x, 130, m_x + 190, 130 + 60, 0xFF, 0xFF, 0xFF, 0xAA);
 	boxRGBA(gRenderer, m_x, 190, m_x + 190, 190 + 60, 0xFF, 0xFF, 0xFF, 0x88);
 	boxRGBA(gRenderer, m_x, 250, m_x + 190, 250 + 60, 0xFF, 0xFF, 0xFF, 0x22);
-#endif
+	*/
+
 	const Sint16 THICK = 4;
 	const Sint16 WIDTH = 40;
 	boxRGBA(gRenderer,
@@ -250,6 +244,7 @@ void EImageTexture::paint(Uint32 currentTime, Uint32 accumulator)
 		m_x + WIDTH - THICK, m_y + WIDTH - THICK,
 		0x1B, 0x40, 0x5E, 0xFF);
 }
+#endif
 
 int EImageTexture::getWidth()
 {

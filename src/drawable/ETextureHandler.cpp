@@ -6,9 +6,18 @@ ETextureHandler::ETextureHandler()
 {
 	textTexture = new ETextTexture();
 	sprite = new ESprite();
-	if (false == sprite->loadFromFile("../res/rydia-sprite.png"))
+	background = new EImageTexture();
+
+	if (false == sprite->loadFromFile("../res/adol-sprite.png"))
 	{
-		sprite->loadFromFile("rydia-sprite.png");
+		/* TEMPORARY: For Android */
+		sprite->loadFromFile("adol-sprite.png");
+	}
+
+	if (false == background->loadFromFile("../res/room_x4.png"))
+	{
+		/* TEMPORARY: For Android */
+		background->loadFromFile("room_x4.png");
 	}
 }
 
@@ -77,7 +86,7 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
 		/* Limits event handling time */
-		if (te->timestamp - latestEventTime < 500) {
+		if (te->timestamp - latestEventTime < 200) {
 			return;
 		}
 		latestEventTime = te->timestamp;
@@ -130,6 +139,8 @@ void ETextureHandler::render()
 	}
 
 	/* TODO: Handle this texture same with others */
+	background->render();
+
 	textTexture->render();
 	sprite->render();
 }
@@ -148,6 +159,8 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	/* TODO: Handle this texture same with others */
+	//background->update(currentTime, accumulator);
+
 	textTexture->update(currentTime, accumulator);
 	sprite->update(currentTime, accumulator);
 }

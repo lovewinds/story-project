@@ -6,6 +6,9 @@ ESprite::ESprite() :
 {
 	sprite_index = 0;
 	sprite_change = 1;
+
+	/* No blending */
+	setBlendMode(SDL_BLENDMODE_NONE);
 }
 
 ESprite::~ESprite()
@@ -49,18 +52,23 @@ bool ESprite::loadFromFile(std::string path)
 
 			gSpriteClips[0].x = 0;
 			gSpriteClips[0].y = 0;
-			gSpriteClips[0].w = 32;
-			gSpriteClips[0].h = 32;
+			gSpriteClips[0].w = 32 * 4;
+			gSpriteClips[0].h = 48 * 4;
 
-			gSpriteClips[1].x = 32 * 1;
+			gSpriteClips[1].x = 128 * 1;
 			gSpriteClips[1].y = 0;
-			gSpriteClips[1].w = 32;
-			gSpriteClips[1].h = 32;
+			gSpriteClips[1].w = 32 * 4;
+			gSpriteClips[1].h = 48 * 4;
 
-			gSpriteClips[2].x = 32 * 2;
+			gSpriteClips[2].x = 128 * 2;
 			gSpriteClips[2].y = 0;
-			gSpriteClips[2].w = 32;
-			gSpriteClips[2].h = 32;
+			gSpriteClips[2].w = 32 * 4;
+			gSpriteClips[2].h = 48 * 4;
+
+			gSpriteClips[3].x = 128 * 3;
+			gSpriteClips[3].y = 0;
+			gSpriteClips[3].w = 32 * 4;
+			gSpriteClips[3].h = 48 * 4;
 		}
 
 		/* Get rid of old loaded surface */
@@ -79,7 +87,7 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 	if (currentTime - prevTime > 400)
 	{
 		prevTime = currentTime;
-
+#if 0
 		sprite_index = sprite_index + sprite_change;
 		if (sprite_index > 2) {
 			sprite_index = 1;
@@ -89,11 +97,15 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 			sprite_index = 1;
 			sprite_change = 1;
 		}
+#endif
+		sprite_index++;
+		if (sprite_index > 3)
+			sprite_index = 0;
 	}
 }
 
 void ESprite::render()
 {
-	texture_render(100, 100, &gSpriteClips[sprite_index]);
+	texture_render(200, 200, &gSpriteClips[sprite_index]);
 	//texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
 }
