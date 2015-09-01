@@ -1,4 +1,4 @@
-#include "drawable/EFigure.h"
+#include "texture/EFigure.h"
 
 
 EFigure::EFigure()

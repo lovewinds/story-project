@@ -1,5 +1,5 @@
 #include "Ecore.h"
-#include "drawable/ESprite.h"
+#include "texture/ESprite.h"
 
 ESprite::ESprite() :
 	ETexture()
@@ -106,6 +106,7 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 
 void ESprite::render()
 {
-	texture_render(200, 200, &gSpriteClips[sprite_index]);
+	//texture_render(200, 200, &gSpriteClips[sprite_index]);
+	texture_render(p_x, p_y, &gSpriteClips[sprite_index]);
 	//texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
 }

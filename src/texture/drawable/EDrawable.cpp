@@ -2,7 +2,7 @@
 #include <SDL2_gfxPrimitives.h>
 
 #include "Ecore.h"
-#include "drawable/EDrawable.h"
+#include "texture/drawable/EDrawable.h"
 
 EDrawable::EDrawable()
 {

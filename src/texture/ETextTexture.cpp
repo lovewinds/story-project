@@ -1,7 +1,7 @@
 #include <SDL_ttf.h>
 
 #include "Ecore.h"
-#include "drawable/ETextTexture.h"
+#include "texture/ETextTexture.h"
 
 
 ETextTexture::ETextTexture():
@@ -24,7 +24,8 @@ bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Colo
 
 	/* Render text surface */
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
-	SDL_Surface* textSurface = TTF_RenderText_Shaded(gFont, textureText.c_str(), textColor, bgColor);
+	//SDL_Surface* textSurface = TTF_RenderText_Shaded(gFont, textureText.c_str(), textColor, bgColor);
+	SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, textureText.c_str(), textColor);
 	if (textSurface == NULL)
 	{
 		ERROR("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());

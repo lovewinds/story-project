@@ -19,6 +19,10 @@ public:
 	/* Set color modulation */
 	void setColor(Uint8 red, Uint8 green, Uint8 blue);
 
+	/* Position */
+	void movePositionTo(double x, double y);
+	void movePositionBy(double delta_x, double delta_y);
+
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
 	virtual void render() = 0;
 
@@ -27,9 +31,6 @@ protected:
 	SDL_Texture* mTexture;
 
 	/* Position */
-	double m_x;
-	double m_y;
-
 	double p_x;
 	double p_y;
 

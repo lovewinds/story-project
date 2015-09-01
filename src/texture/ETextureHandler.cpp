@@ -1,4 +1,4 @@
-#include "drawable/ETextureHandler.h"
+#include "texture/ETextureHandler.h"
 
 ETextureHandler* ETextureHandler::instance = NULL;
 
@@ -97,6 +97,7 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		createTexture(te->x * screen_width, te->y * screen_height);
 		propagateEvent(e);
 	} else if (e.type == SDL_FINGERMOTION) {
+		/* Touch & swipe clears textures */
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		int ax = ((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000;
 		int ay = ((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000;
@@ -107,6 +108,27 @@ void ETextureHandler::handleEvent(SDL_Event e)
 
 		if (ax + ay > 50)
 			removeTexture();
+	} else if (e.type == SDL_KEYDOWN) {
+		switch (e.key.keysym.sym) {
+		case SDLK_RIGHT:
+			temp_moveCharacter(1.0, 0.0);
+			INFO("Character Move : Right");
+			break;
+		case SDLK_LEFT:
+			temp_moveCharacter(-1.0, 0.0);
+			INFO("Character Move : Left");
+			break;
+		case SDLK_UP:
+			temp_moveCharacter(0.0, -1.0);
+			INFO("Character Move : Up");
+			break;
+		case SDLK_DOWN:
+			temp_moveCharacter(0.0, 1.0);
+			INFO("Character Move : Down");
+			break;
+		}
+	} else if (e.type == SDL_TEXTINPUT) {
+		INFO("text : [%s]", e.text.text);
 	}
 }
 
@@ -127,6 +149,10 @@ void ETextureHandler::render()
 	//list<ETexture*>::iterator	iter = textureList.begin();
 	list<EDrawable*>::iterator	iter = textureList.begin();
 	Uint32 current = SDL_GetTicks();
+
+	/* TODO: Handle this texture same with others */
+	background->render();
+
 	while (iter != textureList.end()) {
 		EDrawable* texture = *iter;
 		if (texture != NULL) {
@@ -137,10 +163,6 @@ void ETextureHandler::render()
 		}
 		iter++;
 	}
-
-	/* TODO: Handle this texture same with others */
-	background->render();
-
 	textTexture->render();
 	sprite->render();
 }
@@ -159,8 +181,18 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	/* TODO: Handle this texture same with others */
-	//background->update(currentTime, accumulator);
+	background->update(currentTime, accumulator);
 
 	textTexture->update(currentTime, accumulator);
 	sprite->update(currentTime, accumulator);
+}
+
+void ETextureHandler::temp_moveBackGround(double dx, double dy)
+{
+	background->movePositionBy(dx, dy);
+}
+
+void ETextureHandler::temp_moveCharacter(double dx, double dy)
+{
+	sprite->movePositionBy(dx, dy);
 }

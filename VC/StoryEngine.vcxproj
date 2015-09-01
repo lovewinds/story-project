@@ -74,26 +74,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\drawable\EDrawable.cpp" />
-    <ClCompile Include="..\src\drawable\EFigure.cpp" />
-    <ClCompile Include="..\src\drawable\EImageTexture.cpp" />
-    <ClCompile Include="..\src\drawable\ESprite.cpp" />
-    <ClCompile Include="..\src\drawable\ETextTexture.cpp" />
-    <ClCompile Include="..\src\drawable\ETexture.cpp" />
-    <ClCompile Include="..\src\drawable\ETextureHandler.cpp" />
+    <ClCompile Include="..\src\texture\drawable\EDrawable.cpp" />
+    <ClCompile Include="..\src\texture\EFigure.cpp" />
+    <ClCompile Include="..\src\texture\EImageTexture.cpp" />
+    <ClCompile Include="..\src\texture\ESprite.cpp" />
+    <ClCompile Include="..\src\texture\ETextTexture.cpp" />
+    <ClCompile Include="..\src\texture\ETexture.cpp" />
+    <ClCompile Include="..\src\texture\ETextureHandler.cpp" />
     <ClCompile Include="..\src\Ecore.cpp" />
     <ClCompile Include="..\src\EScreenManager.cpp" />
     <ClCompile Include="..\src\EWindow.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\drawable\EDrawable.h" />
-    <ClInclude Include="..\include\drawable\EFigure.h" />
-    <ClInclude Include="..\include\drawable\EImageTexture.h" />
-    <ClInclude Include="..\include\drawable\ESprite.h" />
-    <ClInclude Include="..\include\drawable\ETextTexture.h" />
-    <ClInclude Include="..\include\drawable\ETexture.h" />
-    <ClInclude Include="..\include\drawable\ETextureHandler.h" />
+    <ClInclude Include="..\include\texture\drawable\EDrawable.h" />
+    <ClInclude Include="..\include\texture\EFigure.h" />
+    <ClInclude Include="..\include\texture\EImageTexture.h" />
+    <ClInclude Include="..\include\texture\ESprite.h" />
+    <ClInclude Include="..\include\texture\ETextTexture.h" />
+    <ClInclude Include="..\include\texture\ETexture.h" />
+    <ClInclude Include="..\include\texture\ETextureHandler.h" />
     <ClInclude Include="..\include\Ecore.h" />
     <ClInclude Include="..\include\EScreenManager.h" />
     <ClInclude Include="..\include\EWindow.h" />

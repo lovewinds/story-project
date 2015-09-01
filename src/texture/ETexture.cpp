@@ -1,9 +1,8 @@
 #include "Ecore.h"
-#include "drawable/ETexture.h"
+#include "texture/ETexture.h"
 
 
 ETexture::ETexture() : 
-m_x(0), m_y(0),
 p_x(0), p_y(0)
 {
 	/* Initialize */
@@ -34,6 +33,19 @@ void ETexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 	/* Modulate texture rgb */
 	SDL_SetTextureColorMod(mTexture, red, green, blue);
 }
+
+void ETexture::movePositionTo(double x, double y)
+{
+	p_x = x;
+	p_y = y;
+}
+
+void ETexture::movePositionBy(double delta_x, double delta_y)
+{
+	p_x += delta_x;
+	p_y += delta_y;
+}
+
 void ETexture::free()
 {
 	/* Free texture if it exists */

@@ -33,25 +33,25 @@
     <ClCompile Include="..\src\EScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\EDrawable.cpp">
+    <ClCompile Include="..\src\texture\drawable\EDrawable.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\EFigure.cpp">
+    <ClCompile Include="..\src\texture\EFigure.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\ETextureHandler.cpp">
+    <ClCompile Include="..\src\texture\ETextureHandler.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\ESprite.cpp">
+    <ClCompile Include="..\src\texture\ESprite.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\EImageTexture.cpp">
+    <ClCompile Include="..\src\texture\EImageTexture.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\ETextTexture.cpp">
+    <ClCompile Include="..\src\texture\ETextTexture.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\drawable\ETexture.cpp">
+    <ClCompile Include="..\src\texture\ETexture.cpp">
       <Filter>Source Files\drawable</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,25 +65,25 @@
     <ClInclude Include="..\include\EScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\EDrawable.h">
+    <ClInclude Include="..\include\texture\drawable\EDrawable.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\EFigure.h">
+    <ClInclude Include="..\include\texture\EFigure.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\ETextureHandler.h">
+    <ClInclude Include="..\include\texture\ETextureHandler.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\ESprite.h">
+    <ClInclude Include="..\include\texture\ESprite.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\EImageTexture.h">
+    <ClInclude Include="..\include\texture\EImageTexture.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\ETexture.h">
+    <ClInclude Include="..\include\texture\ETexture.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\drawable\ETextTexture.h">
+    <ClInclude Include="..\include\texture\ETextTexture.h">
       <Filter>Header Files\drawable</Filter>
     </ClInclude>
   </ItemGroup>

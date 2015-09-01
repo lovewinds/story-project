@@ -1,7 +1,7 @@
 #pragma once
 #include "Ecore.h"
-#include "drawable/ETexture.h"
-#include "drawable/ETextureHandler.h"
+#include "texture/ETexture.h"
+#include "texture/ETextureHandler.h"
 
 class ETextureHandler;
 

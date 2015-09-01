@@ -2,7 +2,7 @@
 #include <list>
 #include "Ecore.h"
 #include "ETexture.h"
-#include "EDrawable.h"
+#include "drawable/EDrawable.h"
 #include "ETextTexture.h"
 #include "ESprite.h"
 #include "EImageTexture.h"
@@ -28,6 +28,9 @@ public:
 	void handleEvent(SDL_Event e);
 	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
+
+	void temp_moveBackGround(double dx, double dy);
+	void temp_moveCharacter(double dx, double dy);
 
 private:
 	static ETextureHandler*	instance;

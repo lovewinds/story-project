@@ -1,5 +1,5 @@
 #include "Ecore.h"
-#include "drawable/ETexture.h"
+#include "texture/ETexture.h"
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 1024;
