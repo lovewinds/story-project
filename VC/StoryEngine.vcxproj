@@ -83,7 +83,6 @@
     <ClCompile Include="..\src\texture\ETextureHandler.cpp" />
     <ClCompile Include="..\src\Ecore.cpp" />
     <ClCompile Include="..\src\EScreenManager.cpp" />
-    <ClCompile Include="..\src\EWindow.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +95,6 @@
     <ClInclude Include="..\include\texture\ETextureHandler.h" />
     <ClInclude Include="..\include\Ecore.h" />
     <ClInclude Include="..\include\EScreenManager.h" />
-    <ClInclude Include="..\include\EWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

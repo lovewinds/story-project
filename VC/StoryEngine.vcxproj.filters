@@ -5,26 +5,29 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\drawable">
-      <UniqueIdentifier>{9945099e-5ded-4079-b807-73058485dd1c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Header Files\drawable">
-      <UniqueIdentifier>{c0406543-c64a-4285-8969-f38df9a0a3f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\texture">
+      <UniqueIdentifier>{9945099e-5ded-4079-b807-73058485dd1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\texture">
+      <UniqueIdentifier>{c0406543-c64a-4285-8969-f38df9a0a3f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\texture\drawable">
+      <UniqueIdentifier>{e1a4eb20-83b1-44e0-9223-de887a0a3af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\texture\drawable">
+      <UniqueIdentifier>{3e7f5aa0-de7a-4f9b-8f1c-dbd1d6d3b976}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Ecore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\EWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp">
@@ -33,58 +36,55 @@
     <ClCompile Include="..\src\EScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\texture\drawable\EDrawable.cpp">
-      <Filter>Source Files\drawable</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\texture\EFigure.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\src\texture\ETextureHandler.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\src\texture\ESprite.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\src\texture\EImageTexture.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\src\texture\ETextTexture.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\src\texture\ETexture.cpp">
-      <Filter>Source Files\drawable</Filter>
+      <Filter>Source Files\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\texture\drawable\EDrawable.cpp">
+      <Filter>Source Files\texture\drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Ecore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\EWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\EScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\texture\drawable\EDrawable.h">
-      <Filter>Header Files\drawable</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\texture\EFigure.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\include\texture\ETextureHandler.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\include\texture\ESprite.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\include\texture\EImageTexture.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\include\texture\ETexture.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\include\texture\ETextTexture.h">
-      <Filter>Header Files\drawable</Filter>
+      <Filter>Header Files\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\texture\drawable\EDrawable.h">
+      <Filter>Header Files\texture\drawable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
