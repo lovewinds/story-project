@@ -1,5 +1,6 @@
 #include "Ecore.h"
 #include "texture/ETexture.h"
+#include "util/LogHelper.hpp"
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 1024;
@@ -12,11 +13,12 @@ gWindow(NULL),
 gRenderer(NULL),
 gFont(NULL)
 {
-	
+	Log::init();
 }
 
 Ecore::~Ecore()
 {
+	Log::deinit();
 	close();
 }
 
@@ -57,7 +59,7 @@ void Ecore::Start()
 	/* Start up SDL and create window */
 	if (init() == false)
 	{
-		ERROR("Failed to initialize!\n");
+		LOG_ERR("Failed to initialize!\n");
 	}
 	else
 	{
@@ -65,7 +67,7 @@ void Ecore::Start()
 		/* Load media */
 		if (loadMedia() == false)
 		{
-			ERROR("Failed to load media!\n");
+			LOG_ERR("Failed to load media!\n");
 		}
 		else
 		{
@@ -98,7 +100,7 @@ void Ecore::Start()
 			int rendered = 0;
 			double alpha = 0.0;
 
-			INFO("Start !!");
+			LOG_INFO("Start !!");
 			/* While application is running */
 			while (!quit)
 			{
@@ -168,7 +170,7 @@ void Ecore::Start()
 				//if (currentTime - prevTime <= 1000 / 60) {
 				if (currentTime - prevCalculated > 1000) {
 					//SDL_Delay(1000 / 60);
-					INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
+					LOG_INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
 					updated = 0;
 					rendered = 0;
 					//continue;
@@ -255,7 +257,7 @@ bool Ecore::init()
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		ERROR("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		LOG_ERR("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		success = false;
 	}
 	else
@@ -263,7 +265,7 @@ bool Ecore::init()
 		/* Set texture filtering to linear */
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		{
-			ERROR("Warning: Linear texture filtering not enabled!");
+			LOG_ERR("Warning: Linear texture filtering not enabled!");
 		}
 
 		/* Create window */
@@ -272,7 +274,7 @@ bool Ecore::init()
 				SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
-			ERROR("Window could not be created! SDL Error: %s\n", SDL_GetError());
+			LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;
 		}
 		else
@@ -283,7 +285,7 @@ bool Ecore::init()
 					SDL_RENDERER_ACCELERATED);
 			if (gRenderer == NULL)
 			{
-				ERROR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+				LOG_ERR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
 			}
 			else
@@ -296,14 +298,14 @@ bool Ecore::init()
 				int imgFlags = IMG_INIT_PNG;
 				if (!(IMG_Init(imgFlags) & imgFlags))
 				{
-					ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+					LOG_ERR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
 
 				/* Initialize SDL_ttf */
 				if (TTF_Init() == -1)
 				{
-					ERROR("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+					LOG_ERR("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					success = false;
 				}
 			}
@@ -325,7 +327,7 @@ bool Ecore::loadMedia()
 		/* Android can handle under /assets directory */
 		gFont = TTF_OpenFont("consola.ttf", 28);
 		if (gFont == NULL) {
-			ERROR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
+			LOG_ERR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
 			return false;
 		}
 	}

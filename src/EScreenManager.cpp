@@ -50,19 +50,19 @@ void EScreenManager::handleEvent(SDL_Event e)
 	/* Handle Keyboard state */
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	if (currentKeyStates[SDL_SCANCODE_W]) {
-		INFO("    Key state [W] / e.type : [%x]", e.type);
+		LOG_INFO("    Key state [W] / e.type : [%x]", e.type);
 		textureHandler->temp_moveBackGround(0.0, -1.0);
 	}
 	if (currentKeyStates[SDL_SCANCODE_A]) {
-		INFO("    Key state [A] / e.type : [%x]", e.type);
+		LOG_INFO("    Key state [A] / e.type : [%x]", e.type);
 		textureHandler->temp_moveBackGround(-1.0, 0.0);
 	}
 	if (currentKeyStates[SDL_SCANCODE_S]) {
-		INFO("    Key state [S] / e.type : [%x]", e.type);
+		LOG_INFO("    Key state [S] / e.type : [%x]", e.type);
 		textureHandler->temp_moveBackGround(0.0, 1.0);
 	}
 	if (currentKeyStates[SDL_SCANCODE_D]) {
-		INFO("    Key state [D] / e.type : [%x]", e.type);
+		LOG_INFO("    Key state [D] / e.type : [%x]", e.type);
 		textureHandler->temp_moveBackGround(1.0, 0.0);
 	}
 }

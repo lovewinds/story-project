@@ -6,10 +6,13 @@
 
 #include "EScreenManager.h"
 #include "texture/ETexture.h"
+#include "util/LogHelper.hpp"
 
+#if 0
 #define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
 #define DEBUG(...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
 #define INFO(...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
+#endif
 
 class EScreenManager;
 

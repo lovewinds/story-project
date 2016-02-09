@@ -43,8 +43,8 @@ void ETextureHandler::createTexture(int x, int y)
 		texture->animateStart(SDL_GetTicks());
 		textureList.push_back(texture);
 
-		INFO("New texture created.");
-		INFO("    ( %d, %d ) / total: %d", x, y, textureList.size());
+		LOG_INFO("New texture created.");
+		LOG_INFO("    ( %d, %d ) / total: %d", x, y, textureList.size());
 	}
 }
 
@@ -62,10 +62,10 @@ void ETextureHandler::removeTexture()
 void ETextureHandler::handleEvent(SDL_Event e)
 {
 	static Uint32 latestEventTime = 0;
-	INFO("texture handle event!");
+	LOG_INFO("texture handle event!");
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
 		SDL_MouseButtonEvent *me = &e.button;
-		INFO("Handle event! type: %d", e.button.button);
+		LOG_INFO("Handle event! type: %d", e.button.button);
 		if (me->button == SDL_BUTTON_LEFT) {
 			createTexture(me->x, me->y);
 			propagateEvent(e);
@@ -79,11 +79,11 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		int screen_height = 0;
 		SDL_Window *window = Ecore::getInstance()->getWindow();
 		if (window == NULL) {
-			ERROR("window is NULL!");
+			LOG_ERR("window is NULL!");
 			return;
 		}
 
-		INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
+		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
 		/* Limits event handling time */
 		if (te->timestamp - latestEventTime < 200) {
@@ -92,15 +92,15 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		latestEventTime = te->timestamp;
 
 		SDL_GetWindowSize(window, &screen_width, &screen_height);
-		INFO("x / y : [%f / %f]",
+		LOG_INFO("x / y : [%f / %f]",
 			te->x * screen_width, te->y * screen_height);
-		createTexture(te->x * screen_width, te->y * screen_height);
+		createTexture((int)te->x * screen_width, (int)te->y * screen_height);
 		propagateEvent(e);
 	} else if (e.type == SDL_FINGERMOTION) {
 		/* Touch & swipe clears textures */
 		SDL_TouchFingerEvent *te = &e.tfinger;
-		int ax = ((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000;
-		int ay = ((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000;
+		int ax = (int)((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000;
+		int ay = (int)((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000;
 
 		//INFO("Handle event! type: SDL_FINGERMOTION");
 		//INFO("dx / dy : [%f / %f]", te->dx, te->dy);
@@ -112,23 +112,23 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		switch (e.key.keysym.sym) {
 		case SDLK_RIGHT:
 			temp_moveCharacter(1.0, 0.0);
-			INFO("Character Move : Right");
+			LOG_INFO("Character Move : Right");
 			break;
 		case SDLK_LEFT:
 			temp_moveCharacter(-1.0, 0.0);
-			INFO("Character Move : Left");
+			LOG_INFO("Character Move : Left");
 			break;
 		case SDLK_UP:
 			temp_moveCharacter(0.0, -1.0);
-			INFO("Character Move : Up");
+			LOG_INFO("Character Move : Up");
 			break;
 		case SDLK_DOWN:
 			temp_moveCharacter(0.0, 1.0);
-			INFO("Character Move : Down");
+			LOG_INFO("Character Move : Down");
 			break;
 		}
 	} else if (e.type == SDL_TEXTINPUT) {
-		INFO("text : [%s]", e.text.text);
+		LOG_INFO("text : [%s]", e.text.text);
 	}
 }
 
@@ -157,9 +157,9 @@ void ETextureHandler::render()
 		EDrawable* texture = *iter;
 		if (texture != NULL) {
 			texture->render();
-			//INFO("List Texture(%p) rendered !", texture);
+			//LOG_INFO("List Texture(%p) rendered !", texture);
 		} else {
-			INFO("List Texture is NULL. count: %d", textureList.size());
+			LOG_INFO("List Texture is NULL. count: %d", textureList.size());
 		}
 		iter++;
 	}

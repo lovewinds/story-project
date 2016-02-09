@@ -56,11 +56,11 @@ void EDrawable::update(Uint32 currentTime, Uint32 accumulator)
 		/* infinite animation */
 		alpha = 255;
 		animating = false;
-		INFO("FINISH");
+		LOG_INFO("FINISH");
 		return;
 	}
-	radian = degree;
-	current_depth = degree / 360.0;
+	radian = (int)degree;
+	current_depth = (int)(degree / 360.0);
 
 	/* change color */
 	alpha = 256 - current_depth * 16;

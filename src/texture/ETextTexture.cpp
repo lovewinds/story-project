@@ -28,7 +28,7 @@ bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Colo
 	SDL_Surface* textSurface = TTF_RenderText_Blended(gFont, textureText.c_str(), textColor);
 	if (textSurface == NULL)
 	{
-		ERROR("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		LOG_ERR("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
 	}
 	else
 	{
@@ -40,7 +40,7 @@ bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Colo
 		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
 		if (mTexture == NULL)
 		{
-			ERROR("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+			LOG_ERR("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
 		}
 
 		/* Get rid of old surface */
@@ -77,7 +77,7 @@ void ETextTexture::update_string(const std::string& str)
 		/* Render Text */
 		if (loadFromRenderedText(message, textColor, bgColor))
 		{
-			ERROR("Failed to render text texture!\n");
+			LOG_ERR("Failed to render text texture!\n");
 		}
 	}
 }

@@ -25,6 +25,12 @@
     <Filter Include="Source Files\texture\drawable">
       <UniqueIdentifier>{3e7f5aa0-de7a-4f9b-8f1c-dbd1d6d3b976}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{05562d7c-90ad-4e0a-9202-3b4461f319b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{cda32b16-8617-44f1-9793-6ad15456d61e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Ecore.cpp">
@@ -57,6 +63,9 @@
     <ClCompile Include="..\src\texture\drawable\EDrawable.cpp">
       <Filter>Source Files\texture\drawable</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\LogHelper.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Ecore.h">
@@ -85,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\include\texture\drawable\EDrawable.h">
       <Filter>Header Files\texture\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\util\LogHelper.hpp">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

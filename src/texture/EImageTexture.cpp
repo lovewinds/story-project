@@ -45,7 +45,7 @@ bool EImageTexture::loadFromFile(std::string path)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
-		INFO("Unable to load image %s! SDL_image Error: %s\n",
+		LOG_INFO("Unable to load image %s! SDL_image Error: %s\n",
 				path.c_str(), IMG_GetError());
 	}
 	else
@@ -57,7 +57,7 @@ bool EImageTexture::loadFromFile(std::string path)
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
-			INFO("Unable to create texture from %s! SDL Error: %s\n",
+			LOG_INFO("Unable to create texture from %s! SDL Error: %s\n",
 					path.c_str(), SDL_GetError());
 		}
 		else
@@ -127,7 +127,7 @@ void EImageTexture::render()
 	rect.h = height;
 
 	//texture_render(0, 0, &rect);
-	texture_render(p_x, p_y, &rect);
+	texture_render((int)p_x, (int)p_y, &rect);
 }
 
 int EImageTexture::getWidth()

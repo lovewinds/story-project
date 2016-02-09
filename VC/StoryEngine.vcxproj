@@ -39,21 +39,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\..\include;$(ProjectDir)\..\external\SDL2\include;$(ProjectDir)\..\external\SDL2_ttf\include;$(ProjectDir)\..\external\SDL2_image\include;$(ProjectDir)\..\external\SDL2_gfx;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\..\external\SDL2\lib\x86;$(ProjectDir)\..\external\SDL2_ttf\lib\x86;$(ProjectDir)\..\external\SDL2_image\lib\x86;$(ProjectDir)\..\external\SDL2_gfx\Win32\Debug;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>$(ProjectDir)\..\external\built;$(ProjectDir)\external;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(ProjectDir)\..\include;$(ProjectDir)\..\external\SDL2\include;$(ProjectDir)\..\external\SDL2_ttf\include;$(ProjectDir)\..\external\SDL2_image\include;$(ProjectDir)\..\external\SDL2_gfx;$(ProjectDir)\..\external\g3log\src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\..\external\built;$(ProjectDir)\..\external\SDL2\lib\x86;$(ProjectDir)\..\external\SDL2_ttf\lib\x86;$(ProjectDir)\..\external\SDL2_image\lib\x86;$(ProjectDir)\..\external\SDL2_gfx\Win32\Debug;$(ProjectDir)\..\external\g3log\build\Debug;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ProjectDir)\external;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_gfx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_gfx.lib;g3logger.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)\external\* $(ProjectDir)\Debug</Command>
@@ -84,6 +85,7 @@
     <ClCompile Include="..\src\Ecore.cpp" />
     <ClCompile Include="..\src\EScreenManager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\util\LogHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\texture\drawable\EDrawable.h" />
@@ -95,6 +97,7 @@
     <ClInclude Include="..\include\texture\ETextureHandler.h" />
     <ClInclude Include="..\include\Ecore.h" />
     <ClInclude Include="..\include\EScreenManager.h" />
+    <ClInclude Include="..\include\util\LogHelper.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
