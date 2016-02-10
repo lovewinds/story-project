@@ -6,13 +6,13 @@ Log* Log::logger = NULL;
 struct CustomSink {
 	// Linux xterm color
 	// http://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-	enum FG_Color { YELLOW = 33, RED = 31, GREEN = 32, WHITE = 97 };
+	enum FG_Color { YELLOW = 33, RED = 31, GREEN = 32, BLUE = 35, WHITE = 97 };
 
 	FG_Color GetColor(const LEVELS level) const {
-		if (level.value == WARNING.value) { return YELLOW; }
+		if (level.value == WARNING.value) { return RED; }
 		// Windows (DEBUG->DBUG)
 		if (level.value == DBUG.value) { return GREEN; }
-		if (g3::internal::wasFatal(level)) { return RED; }
+		if (g3::internal::wasFatal(level)) { return BLUE; }
 
 		return WHITE;
 	}
@@ -21,8 +21,29 @@ struct CustomSink {
 		auto level = logEntry.get()._level;
 		auto color = GetColor(level);
 
-		std::cout << "\033[" << color << "m"
-			<< logEntry.get().toString() << "\033[m" << std::endl;
+		logEntry.get().timestamp("[%m/%d %H:%M:%S]");
+
+		//std::cout << "\033[" << color << "m"
+		//	<< logEntry.get().toString() << "\033[m" << std::endl;
+		if (level.text.compare("INFO")) {
+			std::cout << "\033[" << BLUE << "m"
+				<< "[" << logEntry.get().timestamp("%m/%d %H:%M:%S")
+				/*<< ":" << logEntry.get().microseconds() << "]"*/
+				<< ":" << (int)(logEntry.get()._microseconds / 10000) << "]"
+				<< " " << logEntry.get().level() << " "
+				<< "[" << logEntry.get().file() << "]"
+				<< " " << logEntry.get().message()
+				<< "\033[m" << std::endl;
+		} else {
+			std::cout << "\033[" << color << "m"
+				<< "[" << logEntry.get().timestamp("%m/%d %H:%M:%S")
+				<< ":" << (int)(logEntry.get()._microseconds / 10000) << "]"
+				<< " " << logEntry.get().level() << " "
+				<< "[" << logEntry.get().file()
+				<< ":" << logEntry.get().line() << "]"
+				<< " " << logEntry.get().message()
+				<< "\033[m" << std::endl;
+		}
 	}
 };
 

@@ -77,7 +77,7 @@ void ETextTexture::update_string(const std::string& str)
 		/* Render Text */
 		if (loadFromRenderedText(message, textColor, bgColor))
 		{
-			LOG_ERR("Failed to render text texture!\n");
+			LOG_ERR("Failed to render text texture!");
 		}
 	}
 }

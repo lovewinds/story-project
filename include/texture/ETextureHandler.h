@@ -15,6 +15,15 @@ enum TextureType {
 	TEXTURE_TYPE_RENDER,
 };
 
+enum MoveDirection {
+	DIR_STOP = 0x0,
+	DIR_UP = 0x1000,
+	DIR_RIGHT = 0x0100,
+	DIR_DOWN = 0x0010,
+	DIR_LEFT = 0x0001,
+	DIR_ALL = 0x1111,
+};
+
 class ETextureHandler
 {
 public:
@@ -40,6 +49,8 @@ private:
 	ETextTexture *textTexture;
 	ESprite* sprite;
 	EImageTexture* background;
+	int testState;
+	int testBackgroundState;
 
 	void propagateEvent(SDL_Event e);
 };

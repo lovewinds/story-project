@@ -37,16 +37,16 @@ void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 
 void EScreenManager::handleEvent(SDL_Event e)
 {
-	//|| e.type == SDL_TEXTINPUT
-	//INFO("Event : [%x] / e.key : [%x]", e.type, e.key);
 	if (e.type == SDL_MOUSEBUTTONDOWN
-		|| e.type == SDL_KEYDOWN
+		|| e.type == SDL_KEYDOWN || e.type == SDL_TEXTINPUT	/* Key pressed */
+		|| e.type == SDL_KEYUP	/* Key released */
 		|| e.type == SDL_FINGERDOWN
 		|| e.type == SDL_FINGERMOTION)
 	{
+		LOG_INFO("Event : [%x] / e.key : [%x]", e.type, e.key);
 		textureHandler->handleEvent(e);
 	}
-
+#if 0
 	/* Handle Keyboard state */
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	if (currentKeyStates[SDL_SCANCODE_W]) {
@@ -65,4 +65,5 @@ void EScreenManager::handleEvent(SDL_Event e)
 		LOG_INFO("    Key state [D] / e.type : [%x]", e.type);
 		textureHandler->temp_moveBackGround(1.0, 0.0);
 	}
+#endif
 }

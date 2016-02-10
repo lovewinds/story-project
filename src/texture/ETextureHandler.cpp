@@ -19,6 +19,10 @@ ETextureHandler::ETextureHandler()
 		/* TEMPORARY: For Android */
 		background->loadFromFile("room_x4.png");
 	}
+
+	/* TEMP: Input state handle */
+	testState = DIR_STOP;
+	testBackgroundState = DIR_STOP;
 }
 
 ETextureHandler::~ETextureHandler()
@@ -62,7 +66,7 @@ void ETextureHandler::removeTexture()
 void ETextureHandler::handleEvent(SDL_Event e)
 {
 	static Uint32 latestEventTime = 0;
-	LOG_INFO("texture handle event!");
+	//LOG_INFO("texture handle event!");
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
 		SDL_MouseButtonEvent *me = &e.button;
 		LOG_INFO("Handle event! type: %d", e.button.button);
@@ -111,24 +115,65 @@ void ETextureHandler::handleEvent(SDL_Event e)
 	} else if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 		case SDLK_RIGHT:
-			temp_moveCharacter(1.0, 0.0);
+			testState &= (DIR_ALL ^ DIR_LEFT);
+			testState |= DIR_RIGHT;
 			LOG_INFO("Character Move : Right");
 			break;
 		case SDLK_LEFT:
-			temp_moveCharacter(-1.0, 0.0);
+			testState &= (DIR_ALL ^ DIR_RIGHT);
+			testState |= DIR_LEFT;
 			LOG_INFO("Character Move : Left");
 			break;
 		case SDLK_UP:
-			temp_moveCharacter(0.0, -1.0);
+			testState &= (DIR_ALL ^ DIR_DOWN);
+			testState |= DIR_UP;
 			LOG_INFO("Character Move : Up");
 			break;
 		case SDLK_DOWN:
-			temp_moveCharacter(0.0, 1.0);
+			testState &= (DIR_ALL ^ DIR_UP);
+			testState |= DIR_DOWN;
 			LOG_INFO("Character Move : Down");
 			break;
 		}
+	} else if (e.type == SDL_KEYUP) {
+		/* non-character key input */
+		switch (e.key.keysym.sym) {
+		case SDLK_RIGHT:
+			testState &= (DIR_ALL ^ DIR_RIGHT);
+			break;
+		case SDLK_LEFT:
+			testState &= (DIR_ALL ^ DIR_LEFT);
+			break;
+		case SDLK_UP:
+			testState &= (DIR_ALL ^ DIR_UP);
+			break;
+		case SDLK_DOWN:
+			testState &= (DIR_ALL ^ DIR_DOWN);
+			break;
+		}
+
+		/* character key input */
+		switch (e.key.keysym.sym) {
+		case SDL_SCANCODE_D:
+			testBackgroundState &= (DIR_ALL ^ DIR_RIGHT);
+			break;
+		case SDL_SCANCODE_A:
+			testBackgroundState &= (DIR_ALL ^ DIR_LEFT);
+			break;
+		case SDL_SCANCODE_W:
+			testBackgroundState &= (DIR_ALL ^ DIR_UP);
+			break;
+		case SDL_SCANCODE_S:
+			testBackgroundState &= (DIR_ALL ^ DIR_DOWN);
+			break;
+		}
 	} else if (e.type == SDL_TEXTINPUT) {
-		LOG_INFO("text : [%s]", e.text.text);
+		/* Character key treated as a text input on Windows */
+		const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+		if (currentKeyStates[SDL_SCANCODE_D]) {
+			testBackgroundState = true;
+			LOG_INFO("Background Move : Right");
+		}
 	}
 }
 
@@ -185,6 +230,19 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 
 	textTexture->update(currentTime, accumulator);
 	sprite->update(currentTime, accumulator);
+
+	/* TEST */
+	if (testState & DIR_UP)
+		temp_moveCharacter(0.0, -1.0);
+	if (testState & DIR_DOWN)
+		temp_moveCharacter(0.0, 1.0);
+	if (testState & DIR_LEFT)
+		temp_moveCharacter(-1.0, 0.0);
+	if (testState & DIR_RIGHT)
+		temp_moveCharacter(1.0, 0.0);
+
+	if (testBackgroundState)
+		temp_moveBackGround(1.0, 0.0);
 }
 
 void ETextureHandler::temp_moveBackGround(double dx, double dy)
