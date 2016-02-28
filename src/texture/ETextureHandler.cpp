@@ -8,16 +8,16 @@ ETextureHandler::ETextureHandler()
 	sprite = new ESprite();
 	background = new EImageTexture();
 
-	if (false == sprite->loadFromFile("../res/adol-sprite.png"))
+	if (false == sprite->loadFromFile("../res/moderngirl02x2.png"))
 	{
 		/* TEMPORARY: For Android */
-		sprite->loadFromFile("adol-sprite.png");
+		sprite->loadFromFile("moderngirl02.png");
 	}
 
-	if (false == background->loadFromFile("../res/room_x4.png"))
+	if (false == background->loadFromFile("../res/japanvillage.jpg"))
 	{
 		/* TEMPORARY: For Android */
-		background->loadFromFile("room_x4.png");
+		background->loadFromFile("japanvillage.jpg");
 	}
 
 	/* TEMP: Input state handle */
@@ -106,9 +106,9 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		int ax = (int)((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000;
 		int ay = (int)((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000;
 
-		//INFO("Handle event! type: SDL_FINGERMOTION");
-		//INFO("dx / dy : [%f / %f]", te->dx, te->dy);
-		//INFO("ax / ay : [%d / %d]", ax, ay);
+		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
+		LOG_INFO("dx / dy : [%f / %f]", te->dx, te->dy);
+		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
 
 		if (ax + ay > 50)
 			removeTexture();

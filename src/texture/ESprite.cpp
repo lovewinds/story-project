@@ -1,6 +1,9 @@
 #include "Ecore.h"
 #include "texture/ESprite.h"
 
+#define SPRITE_WIDTH  64
+#define SPRITE_HEIGHT 96
+
 ESprite::ESprite() :
 	ETexture()
 {
@@ -52,23 +55,23 @@ bool ESprite::loadFromFile(std::string path)
 
 			gSpriteClips[0].x = 0;
 			gSpriteClips[0].y = 0;
-			gSpriteClips[0].w = 32 * 4;
-			gSpriteClips[0].h = 48 * 4;
+			gSpriteClips[0].w = SPRITE_WIDTH;
+			gSpriteClips[0].h = SPRITE_HEIGHT;
 
-			gSpriteClips[1].x = 128 * 1;
+			gSpriteClips[1].x = SPRITE_WIDTH * 1;
 			gSpriteClips[1].y = 0;
-			gSpriteClips[1].w = 32 * 4;
-			gSpriteClips[1].h = 48 * 4;
+			gSpriteClips[1].w = SPRITE_WIDTH;
+			gSpriteClips[1].h = SPRITE_HEIGHT;
 
-			gSpriteClips[2].x = 128 * 2;
+			gSpriteClips[2].x = SPRITE_WIDTH * 2;
 			gSpriteClips[2].y = 0;
-			gSpriteClips[2].w = 32 * 4;
-			gSpriteClips[2].h = 48 * 4;
+			gSpriteClips[2].w = SPRITE_WIDTH;
+			gSpriteClips[2].h = SPRITE_HEIGHT;
 
-			gSpriteClips[3].x = 128 * 3;
+			gSpriteClips[3].x = SPRITE_WIDTH * 3;
 			gSpriteClips[3].y = 0;
-			gSpriteClips[3].w = 32 * 4;
-			gSpriteClips[3].h = 48 * 4;
+			gSpriteClips[3].w = SPRITE_WIDTH;
+			gSpriteClips[3].h = SPRITE_HEIGHT;
 		}
 
 		/* Get rid of old loaded surface */

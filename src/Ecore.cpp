@@ -290,6 +290,9 @@ bool Ecore::init()
 			}
 			else
 			{
+				/* Disable text input */
+				SDL_StopTextInput();
+
 				/* Initialize renderer color */
 				//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
 				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x33, 0x99, 0xFF);
@@ -321,11 +324,11 @@ bool Ecore::loadMedia()
 	bool success = true;
 
 	/* Load Font */
-	gFont = TTF_OpenFont("../res/consola.ttf", 28);
+	gFont = TTF_OpenFont("../res/FreeSans.ttf", 28);
 	if (gFont == NULL)
 	{
 		/* Android can handle under /assets directory */
-		gFont = TTF_OpenFont("consola.ttf", 28);
+		gFont = TTF_OpenFont("FreeSans.ttf", 28);
 		if (gFont == NULL) {
 			LOG_ERR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
 			return false;
