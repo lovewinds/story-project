@@ -30,7 +30,8 @@ public:
 	ETextureHandler();
 	~ETextureHandler();
 
-	static ETextureHandler* getInstance();
+	//static ETextureHandler* getInstance();
+	//static void setInstance(ETextureHandler* handler);
 
 	void createTexture(int x, int y);
 	void removeTexture();

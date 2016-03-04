@@ -25,3 +25,6 @@
 *.exe
 *.out
 *.app
+
+# Built result files
+build/

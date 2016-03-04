@@ -6,7 +6,7 @@ Log* Log::logger = NULL;
 struct CustomSink {
 	// Linux xterm color
 	// http://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-	enum FG_Color { YELLOW = 33, RED = 31, GREEN = 32, BLUE = 35, WHITE = 97 };
+	enum FG_Color { YELLOW = 33, RED = 31, GREEN = 32, BLUE = 36, WHITE = 97 };
 
 	FG_Color GetColor(const LEVELS level) const {
 		if (level.value == WARNING.value) { return RED; }

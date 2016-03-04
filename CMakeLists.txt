@@ -42,6 +42,7 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/include/
     ${CMAKE_SOURCE_DIR}/external/sources/g3log/src/
     ${CMAKE_SOURCE_DIR}/external/sources/jsoncpp/dist/
+    ${CMAKE_SOURCE_DIR}/external/sources/pugixml/src/
 )
 IF(UNIX AND NOT WIN32)
     LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/built/lib/)
@@ -67,7 +68,9 @@ FILE(GLOB_RECURSE TMP_FILES
     "include/*.hpp"
 )
 # Append external libraries
-SET(SOURCES ${TMP_FILES} "external/sources/jsoncpp/dist/jsoncpp.cpp")
+SET(SOURCES ${TMP_FILES}
+    "external/sources/jsoncpp/dist/jsoncpp.cpp"
+    "external/sources/pugixml/src/pugixml.cpp")
 
 # Make source group (a.k.a. filter of MSVC, subdirectory)
 foreach(f ${TMP_FILES})

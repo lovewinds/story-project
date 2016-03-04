@@ -29,7 +29,7 @@ ETextureHandler::~ETextureHandler()
 {
 	removeTexture();
 }
-
+#if 0
 ETextureHandler* ETextureHandler::getInstance() {
 	if (instance == NULL) {
 		instance = new ETextureHandler();
@@ -37,7 +37,7 @@ ETextureHandler* ETextureHandler::getInstance() {
 
 	return instance;
 }
-
+#endif
 void ETextureHandler::createTexture(int x, int y)
 {
 	static int maxCount = 0;
@@ -48,7 +48,7 @@ void ETextureHandler::createTexture(int x, int y)
 		textureList.push_back(texture);
 
 		LOG_INFO("New texture created.");
-		LOG_INFO("    ( %d, %d ) / total: %d", x, y, textureList.size());
+		LOG_INFO("    ( %d, %d ) / total: %lu", x, y, textureList.size());
 	}
 }
 
@@ -113,6 +113,7 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		if (ax + ay > 50)
 			removeTexture();
 	} else if (e.type == SDL_KEYDOWN) {
+		LOG_INFO("Pressed [%d]", e.key.keysym.sym)
 		switch (e.key.keysym.sym) {
 		case SDLK_RIGHT:
 			testState &= (DIR_ALL ^ DIR_LEFT);
@@ -134,6 +135,22 @@ void ETextureHandler::handleEvent(SDL_Event e)
 			testState |= DIR_DOWN;
 			LOG_INFO("Character Move : Down");
 			break;
+		case SDLK_d:
+			testBackgroundState &= (DIR_ALL ^ DIR_RIGHT);
+			LOG_INFO("Background move : Right");
+			break;
+		case SDLK_a:
+			testBackgroundState &= (DIR_ALL ^ DIR_LEFT);
+			LOG_INFO("Background move : Left");
+			break;
+		case SDLK_w:
+			testBackgroundState &= (DIR_ALL ^ DIR_UP);
+			LOG_INFO("Background move : Up");
+			break;
+		case SDLK_s:
+			testBackgroundState &= (DIR_ALL ^ DIR_DOWN);
+			LOG_INFO("Background move : Down");
+			break;
 		}
 	} else if (e.type == SDL_KEYUP) {
 		/* non-character key input */
@@ -150,20 +167,16 @@ void ETextureHandler::handleEvent(SDL_Event e)
 		case SDLK_DOWN:
 			testState &= (DIR_ALL ^ DIR_DOWN);
 			break;
-		}
-
-		/* character key input */
-		switch (e.key.keysym.sym) {
-		case SDL_SCANCODE_D:
+		case SDLK_d:
 			testBackgroundState &= (DIR_ALL ^ DIR_RIGHT);
 			break;
-		case SDL_SCANCODE_A:
+		case SDLK_a:
 			testBackgroundState &= (DIR_ALL ^ DIR_LEFT);
 			break;
-		case SDL_SCANCODE_W:
+		case SDLK_w:
 			testBackgroundState &= (DIR_ALL ^ DIR_UP);
 			break;
-		case SDL_SCANCODE_S:
+		case SDLK_s:
 			testBackgroundState &= (DIR_ALL ^ DIR_DOWN);
 			break;
 		}
@@ -204,7 +217,7 @@ void ETextureHandler::render()
 			texture->render();
 			//LOG_INFO("List Texture(%p) rendered !", texture);
 		} else {
-			LOG_INFO("List Texture is NULL. count: %d", textureList.size());
+			LOG_INFO("List Texture is NULL. count: %lu", textureList.size());
 		}
 		iter++;
 	}
@@ -221,7 +234,7 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 		if (texture != NULL) {
 			//texture->calculate(currentTime, accumulator);
 			texture->update(currentTime, accumulator);
-		}	
+		}
 		iter++;
 	}
 
@@ -241,7 +254,13 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 	if (testState & DIR_RIGHT)
 		temp_moveCharacter(1.0, 0.0);
 
-	if (testBackgroundState)
+	if (testBackgroundState & DIR_UP)
+		temp_moveBackGround(0.0, -1.0);
+	if (testBackgroundState & DIR_DOWN)
+		temp_moveBackGround(0.0, 1.0);
+	if (testBackgroundState & DIR_LEFT)
+		temp_moveBackGround(-1.0, 0.0);
+	if (testBackgroundState & DIR_RIGHT)
 		temp_moveBackGround(1.0, 0.0);
 }
 

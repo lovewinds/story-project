@@ -7,6 +7,7 @@
 #include "EScreenManager.h"
 #include "texture/ETexture.h"
 #include "util/LogHelper.hpp"
+#include "resource/EResourceManager.h"
 
 #if 0
 #define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
@@ -38,6 +39,8 @@ public:
 
 	/* Provide current FPS */
 	double GetFPS();
+	const char* getBasePath();
+	const char* getStorePath();
 
 private:
 	Ecore();
@@ -58,6 +61,8 @@ private:
 	SDL_Renderer* gRenderer;
 
 	TTF_Font *gFont;
+
+	EResourceManager resManager;
 
 	double d_fps;
 };

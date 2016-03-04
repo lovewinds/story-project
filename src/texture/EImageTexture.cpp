@@ -123,10 +123,8 @@ void EImageTexture::render()
 	SDL_Rect rect = { 0, };
 
 	SDL_GetWindowSize(window, &width, &height);
-	//rect.w = width;
-	//rect.h = height;
-	rect.w = mWidth * 2;
-	rect.h = mHeight * 2;
+	rect.w = width;
+	rect.h = height;
 
 	//texture_render(0, 0, &rect);
 	texture_render((int)p_x, (int)p_y, &rect);

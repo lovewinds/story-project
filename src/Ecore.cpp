@@ -1,6 +1,8 @@
 #include "Ecore.h"
 #include "texture/ETexture.h"
 #include "util/LogHelper.hpp"
+#include "util/JsonHelper.hpp"
+#include "util/XmlHelper.hpp"
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 1024;
@@ -252,6 +254,13 @@ double Ecore::GetFPS()
 
 bool Ecore::init()
 {
+	//createJson();
+	//readJson();
+	resManager.loadResource(NULL);
+
+	LOG_DBG("Base path: %s", getBasePath());
+	LOG_DBG("Pref path: %s", getStorePath());
+
 	/* Initialization flag */
 	bool success = true;
 
@@ -369,4 +378,16 @@ TTF_Font* Ecore::getFont()
 SDL_Window* Ecore::getWindow()
 {
 	return gWindow;
+}
+
+const char* Ecore::getBasePath()
+{
+	static const char* path = SDL_GetBasePath();
+	return path;
+}
+
+const char* Ecore::getStorePath()
+{
+	static const char* path = SDL_GetPrefPath("ariens", "story-project");
+	return path;
 }

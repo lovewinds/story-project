@@ -17,6 +17,7 @@ SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.1"
 JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.1"
+PUGIXML = "pugixml-1.7"
 
 def mkdir_p(path):
 	try:
@@ -140,6 +141,13 @@ def extract_sources():
 	else:
 		tarfile.open(JSONCPP+'.tar.gz').extractall(source_path)
 		os.rename(source_path+JSONCPP, source_path+'jsoncpp')
+
+	# extract pugixml
+	if os.path.exists(source_path+'pugixml/'):
+		print "pugixml is already extracted."
+	else:
+		tarfile.open(PUGIXML+'.tar.gz').extractall(source_path)
+		os.rename(source_path+PUGIXML, source_path+'pugixml')
 
 def build_sources_MSVC(build_type):
 	print "Trying to build extracted sources ..."
