@@ -11,8 +11,8 @@ public:
 	EScreenManager();
 	~EScreenManager();
 
-	/* Temporary Functions for adaptation */
-	bool loadMedia();
+	/* Initialize phase */
+	bool loadResources(std::string& path);
 
 	/* Primitive functions */
 	void render();

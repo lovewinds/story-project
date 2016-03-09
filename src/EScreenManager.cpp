@@ -1,4 +1,5 @@
 #include "EScreenManager.h"
+#include "resource/XMLResourceLoader.h"
 
 EScreenManager::EScreenManager()
 {
@@ -10,17 +11,14 @@ EScreenManager::~EScreenManager()
 {
 }
 
-bool EScreenManager::loadMedia()
+bool EScreenManager::loadResources(std::string& path)
 {
 	bool	success = true;
-#if 0
-	/* Load arrow */
-	if (!boxTexture.loadFromFile("../res/kachan.png"))
-	{
-		ERROR("Failed to load box texture!\n");
-		success = false;
-	}
-#endif
+
+	XMLResourceLoader loader;
+
+	loader.loadScene(path);
+
 	return success;
 }
 

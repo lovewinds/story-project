@@ -1,0 +1,10 @@
+language: cpp
+compiler:
+  - gcc
+
+# command to run tests
+script: 
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make

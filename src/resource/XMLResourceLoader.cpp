@@ -1,6 +1,7 @@
 #include <iostream>
-#include <pugixml.hpp>
 
+#include "Ecore.h"
+#include "util/LogHelper.hpp"
 #include "resource/XMLResourceLoader.h"
 
 XMLResourceLoader::XMLResourceLoader()
@@ -11,12 +12,12 @@ XMLResourceLoader::~XMLResourceLoader()
 {
 }
 
-void XMLResourceLoader::loadScene(const char* res_file)
+void XMLResourceLoader::loadScene(std::string& res_file)
 {
 	pugi::xml_document doc;
 	if (!doc.load_file("../res/sample_scene.xml")) {
 		if (!doc.load_file("sample_scene.xml")) {
-			std::cout << "Failed to open xml scene file !" << std::endl;
+			LOG_ERR("Failed to open xml scene file !");
 		}
 	}
 
@@ -27,7 +28,7 @@ void XMLResourceLoader::loadScene(const char* res_file)
 		std::cout << "Nodes:" << std::endl;
 		for (pugi::xpath_node_set::const_iterator it = sel.begin(); it != sel.end(); ++it) {
 			pugi::xpath_node node = *it;
-			std::cout << node.node().attribute("src").value() << "\n";
+			LOG_DBG("%s", node.node().attribute("src").value());
 		}
 
 		/* Examples: sprite selection */
@@ -36,7 +37,7 @@ void XMLResourceLoader::loadScene(const char* res_file)
 		std::cout << "\n["<< spr.size() << "] Sprites:" << std::endl;
 		for (pugi::xpath_node_set::const_iterator it = spr.begin(); it != spr.end(); ++it) {
 			pugi::xpath_node node = *it;
-			std::cout << node.node().child_value() << "\n";
+			LOG_DBG("%s", node.node().child_value());
 		}
 
 		/* Examples: linear sprite selection */
@@ -45,10 +46,16 @@ void XMLResourceLoader::loadScene(const char* res_file)
 		std::cout << "\n["<< linear.size() << "] Sprites:" << std::endl;
 		for (pugi::xpath_node_set::const_iterator it = linear.begin(); it != linear.end(); ++it) {
 			pugi::xpath_node node = *it;
-			std::cout << node.node().child_value() << "\n";
+			LOG_DBG("%s", node.node().child_value());
 		}
 	}
 	catch (const pugi::xpath_exception& e) {
-		std::cout << "Select failed: " << e.what() << std::endl;
+		LOG_ERR("Select failed: %s", e.what());
 	}
+}
+
+void XMLResourceLoader::loadSprites(pugi::xml_document &doc)
+{
+	Ecore *core = Ecore::getInstance();
+	
 }

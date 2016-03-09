@@ -13,7 +13,7 @@ EResourceManager::~EResourceManager()
 {
 }
 
-void EResourceManager::loadResource(const char* res_file)
+void EResourceManager::loadResource(std::string& res_file)
 {
 	loader->loadScene(res_file);
 }

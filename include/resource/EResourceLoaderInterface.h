@@ -1,9 +1,11 @@
 #pragma once
 
+#include <iostream>
+
 class EResourceLoaderInterface
 {
 public:
 	virtual ~EResourceLoaderInterface() {}
 
-	virtual void loadScene(const char* res_file) = 0;
+	virtual void loadScene(std::string& res_file) = 0;
 };

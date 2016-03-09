@@ -256,7 +256,6 @@ bool Ecore::init()
 {
 	//createJson();
 	//readJson();
-	resManager.loadResource(NULL);
 
 	LOG_DBG("Base path: %s", getBasePath());
 	LOG_DBG("Pref path: %s", getStorePath());
@@ -343,7 +342,10 @@ bool Ecore::loadMedia()
 			return false;
 		}
 	}
-	success = screenManager->loadMedia();
+
+	/* Load resources */
+	resManager.loadResource(std::string("sample_scene.xml"));
+	//success = screenManager->loadResources(std::string("sample_scene.xml"));
 
 	return success;
 }
