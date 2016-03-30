@@ -1,11 +1,13 @@
 #pragma once
 #include <list>
-#include "Ecore.h"
+#include <string>
+
+#include "Ecore.hpp"
 #include "ETexture.h"
 #include "drawable/EDrawable.h"
 #include "ETextTexture.h"
-#include "ESprite.h"
-#include "EImageTexture.h"
+#include "ESprite.hpp"
+#include "EImageTexture.hpp"
 
 using std::list;
 
@@ -38,6 +40,9 @@ public:
 	void handleEvent(SDL_Event e);
 	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
+
+	bool createBackgroundImage(std::string& img_path);
+	bool createSprite(std::string& sprite_path);
 
 	void temp_moveBackGround(double dx, double dy);
 	void temp_moveCharacter(double dx, double dy);

@@ -1,11 +1,11 @@
 #include <SDL_ttf.h>
 
-#include "Ecore.h"
+#include "Ecore.hpp"
 #include "texture/ETextTexture.h"
+#include "util/LogHelper.hpp"
 
-
-ETextTexture::ETextTexture():
-	ETexture()
+ETextTexture::ETextTexture()
+ : ETexture()
 {
 }
 
@@ -20,7 +20,7 @@ bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Colo
 	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
 
 	/* Get rid of preexisting texture */
-	free();
+	dealloc();
 
 	/* Render text surface */
 	//SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);

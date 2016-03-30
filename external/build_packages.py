@@ -256,6 +256,7 @@ def build_sources_MSVC(build_type):
 def build_sources(build_type):
 	print "Trying to build extracted sources ..."
 	build_path = WORKING_PATH+'built/'
+	library_path = WORKING_PATH+'built/lib/'
 	include_path = WORKING_PATH+'built/include/'
 
 	sdl2_path = WORKING_PATH+'sources/SDL2/build/'
@@ -264,6 +265,7 @@ def build_sources(build_type):
 	sdl2_gfx_path = WORKING_PATH+'sources/SDL2_gfx/build/'
 	g3log_path = WORKING_PATH+'sources/g3log/build/'
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
+	pugixml_path = WORKING_PATH+'sources/pugixml/scripts/build/'
 
 	# TODO: Check its working
 	if build_type == 'debug':
@@ -275,7 +277,7 @@ def build_sources(build_type):
 	mkdir_p(build_path)
 
 # Build SDL2
-	if os.path.exists(build_path+'lib/libSDL2.a'):
+	if os.path.exists(library_path+'libSDL2.a'):
 		print "SDL2 is already built."
 	else:
 		mkdir_p(sdl2_path)
@@ -283,7 +285,7 @@ def build_sources(build_type):
 		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_image
-	if os.path.exists(build_path+'lib/libSDL2_image.a'):
+	if os.path.exists(library_path+'libSDL2_image.a'):
 		print "SDL2_image is already built."
 	else:
 		mkdir_p(sdl2_image_path)
@@ -292,7 +294,7 @@ def build_sources(build_type):
 		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_ttf
-	if os.path.exists(build_path+'lib/libSDL2_ttf.a'):
+	if os.path.exists(library_path+'libSDL2_ttf.a'):
 		print "SDL2_ttf is already built."
 	else:
 		mkdir_p(sdl2_ttf_path)
@@ -300,7 +302,7 @@ def build_sources(build_type):
 		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_gfx
-	if os.path.exists(build_path+'lib/libSDL2_gfx.a'):
+	if os.path.exists(library_path+'libSDL2_gfx.a'):
 		print "SDL2_gfx is already built."
 	else:
 		mkdir_p(sdl2_gfx_path)
@@ -308,7 +310,7 @@ def build_sources(build_type):
 		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build g3log
-	if os.path.exists(build_path+'libg3logger.a'):
+	if os.path.exists(library_path+'libg3logger.a'):
 		print "g3log is already built."
 	else:
 		print "Start building g3log .."
@@ -316,12 +318,21 @@ def build_sources(build_type):
 		os.chdir(g3log_path)
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger')
 		# There is no install rule, just copy library file into built directory.
-		copy2(g3log_path+'libg3logger.a', build_path+'lib/')
+		copy2(g3log_path+'libg3logger.a', library_path)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
+
+# Build pugixml
+	if os.path.exists(library_path+'libpugixml.a'):
+		print "pugixml is already built."
+	else:
+		print "Start building pugixml .."
+		mkdir_p(pugixml_path)
+		os.chdir(pugixml_path)
+		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
 
 if __name__ == "__main__":
 	# Handle arguments

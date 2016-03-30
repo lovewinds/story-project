@@ -2,33 +2,22 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <stdio.h>
-
-#include "EScreenManager.h"
-#include "texture/ETexture.h"
-#include "util/LogHelper.hpp"
-#include "resource/EResourceManager.h"
-
-#if 0
-#define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
-#define DEBUG(...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
-#define INFO(...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
-#endif
+#include <string>
 
 class EScreenManager;
+class EResourceManager;
 
 class Ecore
 {
 public:
 	~Ecore();
 	static Ecore*	getInstance();
+	static void		releaseInstance();
 
 	/* SDL variables */
 	SDL_Renderer* getRenderer();
 	TTF_Font* getFont();
 	SDL_Window* getWindow();
-
-	EScreenManager*		screenManager;
 
 	/* Starts up SDL and creates window */
 	bool init();
@@ -39,18 +28,25 @@ public:
 
 	/* Provide current FPS */
 	double GetFPS();
-	const char* getBasePath();
-	const char* getStorePath();
+	static const char* getBasePath();
+	static const char* getStorePath();
+	static std::string getResourcePath(std::string file_name);
+	static std::string getPlatform();
+	static bool checkPlatform(std::string);
+
+	EResourceManager& getResourceManager();
+	EScreenManager& getScreenManager();
 
 private:
 	Ecore();
 
 	static Ecore*	instance;
-	//Loads media
-	bool loadMedia();
+
+	/* Loads game resource */
+	bool loadResources();
 
 	//Frees media and shuts down SDL
-	void close();
+	void deinit();
 
 	inline bool handleEvent(SDL_Event *e);
 
@@ -62,7 +58,13 @@ private:
 
 	TTF_Font *gFont;
 
-	EResourceManager resManager;
-
 	double d_fps;
+
+	/* Manager classes:
+	 * Handle these as a pointer type for obvious resource deallocation.
+	 */
+	EResourceManager* resManager;
+	EScreenManager* screenManager;
+
+	static std::string getParentPath(std::string path, std::string::size_type level);
 };

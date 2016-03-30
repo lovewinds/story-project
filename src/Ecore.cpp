@@ -1,5 +1,8 @@
-#include "Ecore.h"
+#include "Ecore.hpp"
 #include "texture/ETexture.h"
+#include "EScreenManager.hpp"
+#include "resource/EResourceManager.hpp"
+
 #include "util/LogHelper.hpp"
 #include "util/JsonHelper.hpp"
 #include "util/XmlHelper.hpp"
@@ -20,8 +23,8 @@ gFont(NULL)
 
 Ecore::~Ecore()
 {
+	deinit();
 	Log::deinit();
-	close();
 }
 
 Ecore*	Ecore::getInstance()
@@ -31,6 +34,14 @@ Ecore*	Ecore::getInstance()
 	}
 
 	return instance;
+}
+
+void Ecore::releaseInstance()
+{
+	if (instance) {
+		delete instance;
+		instance = NULL;
+	}
 }
 
 inline bool Ecore::handleEvent(SDL_Event *e)
@@ -61,15 +72,17 @@ void Ecore::Start()
 	/* Start up SDL and create window */
 	if (init() == false)
 	{
-		LOG_ERR("Failed to initialize!\n");
+		LOG_ERR("Failed to initialize!");
 	}
 	else
 	{
 		screenManager = new EScreenManager();
-		/* Load media */
-		if (loadMedia() == false)
+		resManager = new EResourceManager();
+
+		/* Load game resources */
+		if (loadResources() == false)
 		{
-			LOG_ERR("Failed to load media!\n");
+			LOG_ERR("Failed to load media!");
 		}
 		else
 		{
@@ -78,10 +91,10 @@ void Ecore::Start()
 
 			/* Event handler */
 			SDL_Event e;
-			
+
 			/* Flip type */
 			SDL_RendererFlip flipType = SDL_FLIP_NONE;
-			
+
 			/* Time management */
 			const Uint32 MAX_FRAMESKIP = 5;			/* Maximun count of skipping frame rendering */
 			const Uint32 UPDATE_TICKS_PER_SECOND = 25;	/* Tick time for each update function. it affects game speed */
@@ -89,7 +102,7 @@ void Ecore::Start()
 			Uint32 t = 0;
 			const Uint32 SKIP_UPDATE_TICKS = 1000 / UPDATE_TICKS_PER_SECOND;
 			const Uint32 SKIP_RENDER_TICKS = 1000 / RENDER_TICKS_PER_SECOND;
-			
+
 			Uint32 accumulator = 0;
 			Uint32 prevTime = SDL_GetTicks();
 			Uint32 currentTime = prevTime;
@@ -118,7 +131,7 @@ void Ecore::Start()
 				currentTime = SDL_GetTicks();
 				frameTime = currentTime - prevTime;	/* elapsed time from last frame rendering */
 				//accumulator += frameTime;
-				
+
 				//SDL_Log("Prev: %f / Curr: %f / frameTime: %f", prevTime, currentTime, frameTime);
 				//INFO("Prev: %d / Curr: %d / frameTime: %d", prevTime, currentTime, frameTime);
 
@@ -144,7 +157,7 @@ void Ecore::Start()
 					//alpha = accumulator / SKIP_UPDATE_TICKS;
 					Update(currentTime);
 					accumulator += currentTime - nextUpdateTick;
-					
+
 					/* Set next tick time */
 					nextUpdateTick += SKIP_UPDATE_TICKS;
 
@@ -163,7 +176,7 @@ void Ecore::Start()
 				/* Calculate alpha accumulator */
 				//alpha = double(currentTime + SKIP_UPDATE_TICKS - nextUpdateTick) / double(SKIP_UPDATE_TICKS);
 				alpha = double(accumulator) / double(SKIP_UPDATE_TICKS);
-				
+
 				//SDL_Log("Render !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				//INFO("Render !! / Updated : [%d] times", loops);
 #if 1
@@ -201,7 +214,7 @@ void Ecore::Start()
 	}
 
 	/* Free resources and close SDL */
-	close();
+	//deinit();
 
 	return ;
 }
@@ -226,7 +239,7 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 		prevTime = currentTime;
 		drawed_frames = 1;
 	}
-	
+
 	/* Clear screen */
 	//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
 	SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
@@ -250,6 +263,16 @@ void Ecore::Update(Uint32 currentTime, Uint32 accumulator)
 double Ecore::GetFPS()
 {
 	return d_fps;
+}
+
+EResourceManager& Ecore::getResourceManager()
+{
+	return *resManager;
+}
+
+EScreenManager& Ecore::getScreenManager()
+{
+	return *screenManager;
 }
 
 bool Ecore::init()
@@ -326,7 +349,7 @@ bool Ecore::init()
 	return success;
 }
 
-bool Ecore::loadMedia()
+bool Ecore::loadResources()
 {
 	/* Loading success flag */
 	bool success = true;
@@ -344,16 +367,37 @@ bool Ecore::loadMedia()
 	}
 
 	/* Load resources */
-	resManager.loadResource(std::string("sample_scene.xml"));
+	std::string res_xml("sample_scene.xml");
+	success = resManager->loadResources(res_xml);
+	if (!success) {
+		LOG_ERR("Failed to load resources!");
+		return false;
+	}
 	//success = screenManager->loadResources(std::string("sample_scene.xml"));
+
+	/* Load first scene - main */
+	std::string start_scene("main");
+	success = screenManager->loadScene(start_scene);
+	if (!success) {
+		LOG_ERR("Failed to load scene [%s] !", start_scene.c_str());
+		return false;
+	}
 
 	return success;
 }
 
-void Ecore::close()
+void Ecore::deinit()
 {
+	LOG_DBG("Deinitialize Ecore");
+
 	TTF_CloseFont(gFont);
 	gFont = NULL;
+
+	/* Release resources */
+	delete resManager;
+	delete screenManager;
+	resManager = NULL;
+	screenManager = NULL;
 
 	/* Destroy window */
 	SDL_DestroyRenderer(gRenderer);
@@ -392,4 +436,81 @@ const char* Ecore::getStorePath()
 {
 	static const char* path = SDL_GetPrefPath("ariens", "story-project");
 	return path;
+}
+
+std::string Ecore::getParentPath(std::string path, std::string::size_type level)
+{
+	std::vector<std::string> tokens;
+	static std::string delim;
+	std::string result;
+
+	if (Ecore::checkPlatform("Windows"))
+		delim = "\\";
+	else {
+		delim = "/";
+		result.append(delim);
+	}
+	std::string::size_type lastPos = path.find_first_not_of(delim, 0);
+	std::string::size_type pos = path.find_first_of(delim, lastPos);
+
+	while (std::string::npos != pos || std::string::npos != lastPos)
+	{
+		std::string s(path.substr(lastPos, pos-lastPos));
+		tokens.push_back(s);
+		lastPos = path.find_first_not_of(delim, pos);
+		pos = path.find_first_of(delim, lastPos);
+	}
+
+	for (std::string::size_type i = 0 ; i < tokens.size() - level ; i++)
+	{
+		if (i != 0)
+			result.append(delim);
+		result.append(tokens[i]);
+	}
+	result.append(delim);
+
+	return result;
+}
+
+std::string Ecore::getResourcePath(std::string file_name)
+{
+	if (file_name.empty()) {
+		LOG_ERR("Resource file is not provided !");
+		return std::string();
+	}
+	std::string path(SDL_GetBasePath());
+	static std::string platform(SDL_GetPlatform());
+
+	/* TODO:
+	 *  below path is not considering the installation path.
+	 *  The path should consider installation.
+	 */
+	if ("Windows" == platform) {
+		path = getParentPath(path, 2);
+		path.append("res\\");
+		//LOG_INFO("Windows platform: [%s]", path.c_str());
+	} else if ("Linux" == platform) {
+		path = getParentPath(path, 1);
+		path.append("res/");
+		//LOG_INFO("Linux platform: [%s]", path.c_str());
+	} else if ("Mac OS X" == platform) {
+		path = getParentPath(path, 1);
+		path.append("res/");
+		//LOG_INFO("Mac OS X platform: [%s]", path.c_str());
+	}
+	path.append(file_name);
+
+	return path;
+}
+
+std::string Ecore::getPlatform()
+{
+	std::string platform(SDL_GetPlatform());
+	return platform;
+}
+
+bool Ecore::checkPlatform(std::string platform)
+{
+	std::string p(SDL_GetPlatform());
+	return (p == platform);
 }

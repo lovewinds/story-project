@@ -9,13 +9,10 @@
 #include <g3log/logworker.hpp>
 #include <g3log/logmessage.hpp>
 
-#include "EScreenManager.h"
-#include "texture/ETexture.h"
-
 #ifdef USE_SDL_LOG
-#define ERROR(...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, __VA_ARGS__);
-#define DEBUG(...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
-#define INFO(...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, __VA_ARGS__);
+#define LOG_ERR(fmt, ...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, ##__VA_ARGS__);
+#define LOG_DBG(fmt, ...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, ##__VA_ARGS__);
+#define LOG_INFO(fmt, ...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, ##__VA_ARGS__);
 #else
 #define LOG_ERR(fmt, ...)	LOGF(WARNING, fmt, ##__VA_ARGS__);
 #define LOG_DBG(fmt, ...)	LOGF(DBUG, fmt, ##__VA_ARGS__);

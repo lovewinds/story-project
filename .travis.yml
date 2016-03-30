@@ -1,6 +1,8 @@
+sudo: false
 language: cpp
 compiler:
   - gcc
+  - clang
 
 # command to run tests
 script: 
@@ -8,3 +10,14 @@ script:
   - cd build
   - cmake ..
   - make
+
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.9
+    - g++-4.9
+    - clang

@@ -1,8 +1,8 @@
-#include "Ecore.h"
+#include "Ecore.hpp"
 #include "texture/ETexture.h"
+#include "util/LogHelper.hpp"
 
-
-ETexture::ETexture() : 
+ETexture::ETexture() :
 p_x(0), p_y(0)
 {
 	/* Initialize */
@@ -13,7 +13,7 @@ p_x(0), p_y(0)
 
 ETexture::~ETexture()
 {
-	free();
+	dealloc();
 }
 
 void ETexture::setBlendMode(SDL_BlendMode blending)
@@ -46,7 +46,7 @@ void ETexture::movePositionBy(double delta_x, double delta_y)
 	p_y += delta_y;
 }
 
-void ETexture::free()
+void ETexture::dealloc()
 {
 	/* Free texture if it exists */
 	if (mTexture != NULL)

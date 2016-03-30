@@ -31,6 +31,7 @@ FIND_PACKAGE(SDL2 REQUIRED)
 FIND_PACKAGE(SDL2_image REQUIRED)
 FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
+FIND_PACKAGE(PythonLibs REQUIRED)
 
 FOREACH(flag ${pkgs_CXXFLAGS})
     SET(EXTRA_CXXFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -40,6 +41,7 @@ ENDFOREACH(flag)
 INCLUDE_DIRECTORIES(
     ${SDL2_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include/
+    ${CMAKE_SOURCE_DIR}/external/built/include/
     ${CMAKE_SOURCE_DIR}/external/sources/g3log/src/
     ${CMAKE_SOURCE_DIR}/external/sources/jsoncpp/dist/
     ${CMAKE_SOURCE_DIR}/external/sources/pugixml/src/
@@ -98,7 +100,7 @@ IF(UNIX AND NOT WIN32)
         ${SDL2_IMAGE_LIBRARIES}
         ${SDL2_TTF_LIBRARIES}
         ${SDL2_GFX_LIBRARIES}
-        "-ldl -lg3logger")
+        "-ldl -lg3logger -lpugixml")
 ELSE(UNIX AND NOT WIN32)
     # Windows
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}

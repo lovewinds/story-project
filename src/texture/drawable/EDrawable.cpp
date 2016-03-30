@@ -1,7 +1,8 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 
-#include "Ecore.h"
+#include "Ecore.hpp"
+#include "util/LogHelper.hpp"
 #include "texture/drawable/EDrawable.h"
 
 EDrawable::EDrawable()

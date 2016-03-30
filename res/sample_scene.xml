@@ -1,25 +1,30 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
-	<Resources>
-		<Images>
-			<Image src="loading.png" name="Loading"
-				 type="sprite" sprite_width="50" sprite_height="50"/>
-		</Images>
-		<Sprites>
-			<Sprite source="Loading" name="loading_circle" x="30" y="30">
-				<Index linear="start">1</Index>
-				<Index>2</Index>
-				<Index>3</Index>
-				<Index>4</Index>
-				<Index>5</Index>
-				<Index>6</Index>
-				<Index linear="end">7</Index>
-				<Index>8</Index>
-				<Index>9</Index>
-				<Index>10</Index>
-				<Index>11</Index>
-				<Index>12</Index>
-			</Sprite>
-		</Sprites>
-	</Resources>
+	<Resources type="global"></Resources>
+	<Scene name="main">
+		<Resources>
+			<Images>
+				<Image src="japanvillage.jpg" name="Background"
+					 type="background" />
+				<Image src="moderngirl02.png" name="Loading"
+					 type="sprite" sprite_width="50" sprite_height="50" />
+			</Images>
+			<Sprites>
+				<Sprite source="Loading" name="loading_circle" x="30" y="30">
+					<Index linear="start">1</Index>
+					<Index>2</Index>
+					<Index>3</Index>
+					<Index>4</Index>
+					<Index>5</Index>
+					<Index>6</Index>
+					<Index linear="end">7</Index>
+					<Index>8</Index>
+					<Index>9</Index>
+					<Index>10</Index>
+					<Index>11</Index>
+					<Index>12</Index>
+				</Sprite>
+			</Sprites>
+		</Resources>
+	</Scene>
 </SceneRoot>

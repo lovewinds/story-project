@@ -5,7 +5,6 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 
 #include "ETexture.h"
 
@@ -13,7 +12,7 @@ class EImageTexture : public ETexture
 {
 public:
 	/* Initializes variables */
-	EImageTexture();
+	EImageTexture(std::string path);
 	EImageTexture(int x, int y);
 
 	/* Deallocates memory */
@@ -21,6 +20,7 @@ public:
 
 	/* Loads image at specified path */
 	bool loadFromFile(std::string path);
+	bool alloc();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	//virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
@@ -38,4 +38,9 @@ protected:
 
 	/* animation */
 	bool animating;
+
+	std::string image_path;
+
+	/* Store surface for sprites */
+	SDL_Surface* loadedSurface;
 };

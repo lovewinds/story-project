@@ -26,5 +26,8 @@
 *.out
 *.app
 
+# Tag files
+.tags*
+
 # Built result files
 build/

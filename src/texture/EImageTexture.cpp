@@ -1,16 +1,18 @@
-#include "Ecore.h"
-#include "texture/EImageTexture.h"
+#include "Ecore.hpp"
+#include "util/LogHelper.hpp"
+#include "texture/EImageTexture.hpp"
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-EImageTexture::EImageTexture() :
+EImageTexture::EImageTexture(std::string path) :
 	ETexture(),
 	m_degrees(0.0)
 {
 	radian = 0;
 	animating = false;
+	image_path = path;
 }
 
 EImageTexture::EImageTexture(int x, int y) :
@@ -28,21 +30,67 @@ EImageTexture::EImageTexture(int x, int y) :
 EImageTexture::~EImageTexture()
 {
 	/* Deallocate */
-	free();
+	dealloc();
+}
+
+
+bool EImageTexture::alloc()
+{
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+
+	/* Get rid of preallocated texture */
+	dealloc();
+
+	/* The final texture */
+	SDL_Texture* newTexture = NULL;
+
+	/* Load image at specified path */
+	loadedSurface = IMG_Load(image_path.c_str());
+	if (loadedSurface == NULL)
+	{
+		LOG_INFO("Unable to load image %s! SDL_image Error: %s\n",
+				image_path.c_str(), IMG_GetError());
+	}
+	else
+	{
+		/* Color key image */
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+
+		/* Create texture from surface pixels */
+		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		if (newTexture == NULL)
+		{
+			LOG_INFO("Unable to create texture from %s! SDL Error: %s\n",
+					image_path.c_str(), SDL_GetError());
+		}
+		else
+		{
+			/* Get image dimensions */
+			mWidth = loadedSurface->w;
+			mHeight = loadedSurface->h;
+		}
+
+		/* Get rid of old loaded surface */
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	/* Return success */
+	mTexture = newTexture;
+	return mTexture != NULL;
 }
 
 bool EImageTexture::loadFromFile(std::string path)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
-	/* Get rid of preexisting texture */
-	free();
+	/* Get rid of preallocated texture */
+	dealloc();
 
 	/* The final texture */
 	SDL_Texture* newTexture = NULL;
 
 	/* Load image at specified path */
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL)
 	{
 		LOG_INFO("Unable to load image %s! SDL_image Error: %s\n",
@@ -89,7 +137,7 @@ void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 	Uint32 atomicTime = (compensatedTime - startTime);
 	Uint32 delta = atomicTime - prevTime;
 	static double prev_y = 0;
-	
+
 	if (atomicTime == 0) {
 		velo = 1.0;
 		accel = 0.0;

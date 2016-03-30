@@ -6,7 +6,7 @@ Log* Log::logger = NULL;
 struct CustomSink {
 	// Linux xterm color
 	// http://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-	enum FG_Color { YELLOW = 33, RED = 31, GREEN = 32, BLUE = 36, WHITE = 97 };
+	enum FG_Color { YELLOW = 33, RED = 41, GREEN = 32, BLUE = 36, WHITE = 97 };
 
 	FG_Color GetColor(const LEVELS level) const {
 		if (level.value == WARNING.value) { return RED; }
@@ -25,25 +25,21 @@ struct CustomSink {
 
 		//std::cout << "\033[" << color << "m"
 		//	<< logEntry.get().toString() << "\033[m" << std::endl;
-		if (level.text.compare("INFO")) {
-			std::cout << "\033[" << BLUE << "m"
-				<< "[" << logEntry.get().timestamp("%m/%d %H:%M:%S")
-				/*<< ":" << logEntry.get().microseconds() << "]"*/
-				<< ":" << (int)(logEntry.get()._microseconds / 10000) << "]"
-				<< " " << logEntry.get().level() << " "
-				<< "[" << logEntry.get().file() << "]"
-				<< " " << logEntry.get().message()
-				<< "\033[m" << std::endl;
-		} else {
-			std::cout << "\033[" << color << "m"
-				<< "[" << logEntry.get().timestamp("%m/%d %H:%M:%S")
-				<< ":" << (int)(logEntry.get()._microseconds / 10000) << "]"
-				<< " " << logEntry.get().level() << " "
-				<< "[" << logEntry.get().file()
-				<< ":" << logEntry.get().line() << "]"
-				<< " " << logEntry.get().message()
-				<< "\033[m" << std::endl;
-		}
+		if (level.value == WARNING.value)
+			std::cout << "\033[41m" << "\033[97m";
+		else
+			std::cout << "\033[" << color << "m";
+		std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
+			<< std::setw(4) << std::right;
+		std::cout.fill('0');
+		std::cout << (int)(logEntry.get()._microseconds / 10000) << "] " << std::left;
+		std::cout.fill(' ');
+		std::cout.width(7);
+		std::cout << logEntry.get().level()
+			<< " [" << logEntry.get().file()
+			<< ":" << logEntry.get().line() << "]"
+			<< " " << logEntry.get().message()
+			<< "\033[m" << std::endl;
 	}
 };
 
@@ -53,7 +49,7 @@ Log::Log()
 
 Log::~Log()
 {
-	deinit();
+	//deinit();
 }
 
 void Log::init()
@@ -73,9 +69,6 @@ void Log::init()
 	static auto sinkHandle = logger->logworker->addSink(std2::make_unique<CustomSink>(),
 		&CustomSink::ReceiveLogMessage);
 	g3::initializeLogging(logger->logworker.get());
-	LOG(WARNING) << "This log call, may or may not happend before"
-		<< "the sinkHandle->call below";
-	LOGF(WARNING, "test");
 
 	//std::future<void> received = sinkHandle->call(&CustomSink::Foo, NULL);
 

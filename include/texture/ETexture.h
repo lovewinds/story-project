@@ -8,7 +8,7 @@ public:
 	virtual ~ETexture();
 
 	/* Deallocates texture */
-	virtual void free();
+	virtual void dealloc();
 
 	/* Set blending */
 	void setBlendMode(SDL_BlendMode blending);

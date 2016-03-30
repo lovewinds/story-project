@@ -1,5 +1,8 @@
-#include "EScreenManager.h"
-#include "resource/XMLResourceLoader.h"
+#include "EScreenManager.hpp"
+
+#include "texture/ETextureHandler.h"
+#include "resource/EResourceManager.hpp"
+#include "util/LogHelper.hpp"
 
 EScreenManager::EScreenManager()
 {
@@ -11,15 +14,36 @@ EScreenManager::~EScreenManager()
 {
 }
 
-bool EScreenManager::loadResources(std::string& path)
+bool EScreenManager::loadScene(std::string& scene_name)
 {
 	bool	success = true;
 
-	XMLResourceLoader loader;
+	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+	/* TODO: Load scene instance with resource manager */
+	resMgr.allocateScene(scene_name);
 
-	loader.loadScene(path);
+	/* TODO: Let texture handler load textures from scene instance */
+	// success = textureHandler->loadTextures(scene);
+#if 0
+	std::string platform = Ecore::getInstance()->getPlatform();
+	if (platform.compare("Linux") == 0) {
+		LOG_ERR("Platform: [%s]", platform.c_str());
+		success = false;
+	}
+#endif
+	success = false;
 
 	return success;
+}
+
+bool EScreenManager::createBackgroundImage(std::string& image_path)
+{
+	return textureHandler->createBackgroundImage(image_path);
+}
+
+bool EScreenManager::createSprite(std::string& sprite_path)
+{
+	return textureHandler->createSprite(sprite_path);
 }
 
 void EScreenManager::render()

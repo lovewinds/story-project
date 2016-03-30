@@ -1,10 +1,9 @@
 #include "texture/EFigure.h"
 
-
 EFigure::EFigure()
 :ETexture()
 {
-	
+
 }
 
 

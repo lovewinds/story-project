@@ -1,7 +1,7 @@
 #pragma once
-#include "Ecore.h"
-#include "texture/ETexture.h"
-#include "texture/ETextureHandler.h"
+
+#include <string>
+#include <SDL.h>
 
 class ETextureHandler;
 
@@ -11,8 +11,12 @@ public:
 	EScreenManager();
 	~EScreenManager();
 
-	/* Initialize phase */
-	bool loadResources(std::string& path);
+	/* Prohibit copy constructor */
+	EScreenManager(EScreenManager& self) = delete;
+
+	bool loadScene(std::string& scene_name);
+	bool createBackgroundImage(std::string& image_path);
+	bool createSprite(std::string& sprite_path);
 
 	/* Primitive functions */
 	void render();

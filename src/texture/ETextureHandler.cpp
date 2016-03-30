@@ -1,12 +1,14 @@
 #include "texture/ETextureHandler.h"
+#include "util/LogHelper.hpp"
 
 ETextureHandler* ETextureHandler::instance = NULL;
 
 ETextureHandler::ETextureHandler()
 {
 	textTexture = new ETextTexture();
-	sprite = new ESprite();
-	background = new EImageTexture();
+#if 0
+	//sprite = new ESprite();
+	//background = new EImageTexture();
 
 	if (false == sprite->loadFromFile("../res/moderngirl02x2.png"))
 	{
@@ -19,10 +21,30 @@ ETextureHandler::ETextureHandler()
 		/* TEMPORARY: For Android */
 		background->loadFromFile("japanvillage.jpg");
 	}
-
+#endif
 	/* TEMP: Input state handle */
 	testState = DIR_STOP;
 	testBackgroundState = DIR_STOP;
+}
+
+bool ETextureHandler::createBackgroundImage(std::string& img_path)
+{
+	bool created = false;
+	background = new EImageTexture(img_path);
+
+	created = background->loadFromFile(img_path.c_str());
+
+	return created;
+}
+
+bool ETextureHandler::createSprite(std::string& sprite_path)
+{
+	bool created = false;
+	sprite = new ESprite();
+
+	created = sprite->loadFromFile(sprite_path.c_str());
+
+	return created;
 }
 
 ETextureHandler::~ETextureHandler()
