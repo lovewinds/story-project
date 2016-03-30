@@ -6,6 +6,7 @@ compiler:
 
 # command to run tests
 script: 
+  - gcc --version
   - mkdir build
   - cd build
   - cmake ..
@@ -21,3 +22,5 @@ addons:
     - gcc-4.9
     - g++-4.9
     - clang
+    - python-dev
+    - cmake

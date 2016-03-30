@@ -219,21 +219,21 @@ def build_sources_MSVC(build_type):
 		copy2(sdl2_ttf_path+'Win32/Release/libfreetype-6.dll', build_path_rel)
 
 # Build SDL2_gfx
-	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
-		print "SDL2_gfx is already built."
-	else:
-		os.chdir(sdl2_gfx_path)
-		# !REQUIRED! Patch additional library and include path
-		patch_sdl2_gfx("SDL2_gfx.vcxproj")
-		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
-		# Copy headers
-		print "Copying SDL2_gfx header files .."
-		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
-		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
-		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
-		copy2(sdl2_gfx_path+'SDL2_imageFilter.h', include_path)
-		copy2(sdl2_gfx_path+'SDL2_rotozoom.h', include_path)
+#	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
+#		print "SDL2_gfx is already built."
+#	else:
+#		os.chdir(sdl2_gfx_path)
+#		# !REQUIRED! Patch additional library and include path
+#		patch_sdl2_gfx("SDL2_gfx.vcxproj")
+#		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+#		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+#		# Copy headers
+#		print "Copying SDL2_gfx header files .."
+#		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
+#		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
+#		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
+#		copy2(sdl2_gfx_path+'SDL2_imageFilter.h', include_path)
+#		copy2(sdl2_gfx_path+'SDL2_rotozoom.h', include_path)
 
 # Build g3log
 	if os.path.exists(build_path_rel+'g3logger.lib'):
@@ -302,12 +302,12 @@ def build_sources(build_type):
 		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_gfx
-	if os.path.exists(library_path+'libSDL2_gfx.a'):
-		print "SDL2_gfx is already built."
-	else:
-		mkdir_p(sdl2_gfx_path)
-		os.chdir(sdl2_gfx_path)
-		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
+#	if os.path.exists(library_path+'libSDL2_gfx.a'):
+#		print "SDL2_gfx is already built."
+#	else:
+#		mkdir_p(sdl2_gfx_path)
+#		os.chdir(sdl2_gfx_path)
+#		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
