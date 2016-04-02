@@ -21,8 +21,7 @@ ELSE(UNIX AND NOT WIN32)
     # Windows
     MESSAGE("Windows !")
     EXECUTE_PROCESS(COMMAND python "${CMAKE_SOURCE_DIR}/external/build_packages.py" --path "${CMAKE_SOURCE_DIR}/external/")
-	# OUTPUT_VARIABLE EXT_BUILD_RESULT)
-    SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\built\\")
+	SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\built\\")
     SET(SDL2_PATH "${CMAKE_SOURCE_DIR}\\external\\built\\Release\\"
         "${CMAKE_SOURCE_DIR}\\external\\built\\Debug\\")
 ENDIF(UNIX AND NOT WIN32)
@@ -41,6 +40,7 @@ INCLUDE_DIRECTORIES(
     ${SDL2_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include/
     ${CMAKE_SOURCE_DIR}/external/built/include/
+    ${CMAKE_SOURCE_DIR}/external/built/include/SDL2/
     ${CMAKE_SOURCE_DIR}/external/sources/g3log/src/
     ${CMAKE_SOURCE_DIR}/external/sources/jsoncpp/dist/
     ${CMAKE_SOURCE_DIR}/external/sources/pugixml/src/

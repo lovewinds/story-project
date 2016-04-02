@@ -219,21 +219,21 @@ def build_sources_MSVC(build_type):
 		copy2(sdl2_ttf_path+'Win32/Release/libfreetype-6.dll', build_path_rel)
 
 # Build SDL2_gfx
-#	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
-#		print "SDL2_gfx is already built."
-#	else:
-#		os.chdir(sdl2_gfx_path)
-#		# !REQUIRED! Patch additional library and include path
-#		patch_sdl2_gfx("SDL2_gfx.vcxproj")
-#		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-#		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
-#		# Copy headers
-#		print "Copying SDL2_gfx header files .."
-#		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
-#		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
-#		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
-#		copy2(sdl2_gfx_path+'SDL2_imageFilter.h', include_path)
-#		copy2(sdl2_gfx_path+'SDL2_rotozoom.h', include_path)
+	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
+		print "SDL2_gfx is already built."
+	else:
+		os.chdir(sdl2_gfx_path)
+		# !REQUIRED! Patch additional library and include path
+		patch_sdl2_gfx("SDL2_gfx.vcxproj")
+		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+		# Copy headers
+		print "Copying SDL2_gfx header files .."
+		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_imageFilter.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_rotozoom.h', include_path)
 
 # Build g3log
 	if os.path.exists(build_path_rel+'g3logger.lib'):
@@ -256,6 +256,7 @@ def build_sources_MSVC(build_type):
 def build_sources(build_type):
 	print "Trying to build extracted sources ..."
 	build_path = WORKING_PATH+'built/'
+	bin_path = WORKING_PATH+'built/bin/'
 	library_path = WORKING_PATH+'built/lib/'
 	include_path = WORKING_PATH+'built/include/'
 
@@ -264,6 +265,7 @@ def build_sources(build_type):
 	sdl2_ttf_path = WORKING_PATH+'sources/SDL2_ttf/build/'
 	sdl2_gfx_path = WORKING_PATH+'sources/SDL2_gfx/build/'
 	g3log_path = WORKING_PATH+'sources/g3log/build/'
+	freetype2_path = WORKING_PATH+'sources/SDL2_ttf/external/freetype-2.4.12/build/'
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
 	pugixml_path = WORKING_PATH+'sources/pugixml/scripts/build/'
 
@@ -291,7 +293,15 @@ def build_sources(build_type):
 		mkdir_p(sdl2_image_path)
 		os.chdir(sdl2_image_path)
 		print '*********************'
-		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
+
+# Build FreeType2
+	if os.path.exists(bin_path+'freetype-config'):
+		print "FreeType2 is already built."
+	else:
+		mkdir_p(freetype2_path)
+		os.chdir(freetype2_path)
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_ttf
 	if os.path.exists(library_path+'libSDL2_ttf.a'):
@@ -299,15 +309,15 @@ def build_sources(build_type):
 	else:
 		mkdir_p(sdl2_ttf_path)
 		os.chdir(sdl2_ttf_path)
-		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
 
 # Build SDL2_gfx
-#	if os.path.exists(library_path+'libSDL2_gfx.a'):
-#		print "SDL2_gfx is already built."
-#	else:
-#		mkdir_p(sdl2_gfx_path)
-#		os.chdir(sdl2_gfx_path)
-#		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
+	if os.path.exists(library_path+'libSDL2_gfx.a'):
+		print "SDL2_gfx is already built."
+	else:
+		mkdir_p(sdl2_gfx_path)
+		os.chdir(sdl2_gfx_path)
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):

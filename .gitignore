@@ -35,6 +35,8 @@
 .tags*
 *.vtg
 
+# OSX
+.DS_Store
 
 # Built result files
 build/

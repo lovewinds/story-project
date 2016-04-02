@@ -1,3 +1,6 @@
 # Built result files
 built
 sources
+
+# OSX
+.DS_Store
