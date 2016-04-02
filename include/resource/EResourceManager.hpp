@@ -56,6 +56,7 @@ protected:
 	/* image map uses path as a key, it can have simillar prefix.
 	 * unordered_map can be more effecient for this case */
 	std::unordered_map<std::string, std::shared_ptr<EImageResourceInfo>> image_map;
+
 	std::map<std::string, std::shared_ptr<ESpriteInfo>> sprite_map;
 
 	std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> texture_map;

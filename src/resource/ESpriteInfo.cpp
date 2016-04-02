@@ -8,16 +8,8 @@ ESpriteInfo::ESpriteInfo(std::string name, std::string image_res)
 {
 	LOG_INFO("ESpriteInfo[%s] created", name.c_str());
 
-	EResourceManager &resManager = Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<EImageResourceInfo> imgRes = resManager.getImageResource(image_res);
-
-	if (imgRes) {
-		this->texture = imgRes->getTexture();
-		LOG_INFO("Sprite refers texture [0x%p]", this->texture->getTexture());
-	} else {
-		LOG_ERR("Cannot found Image resource [%s] from map !", image_res.c_str());
-	}
 	this->name = name;
+	this->image_res = image_res;
 }
 
 ESpriteInfo::~ESpriteInfo()
@@ -37,5 +29,20 @@ void ESpriteInfo::setSpriteCells()
 
 bool ESpriteInfo::allocateSprite()
 {
-	return true;
+	bool allocated = true;
+	EResourceManager &resManager = Ecore::getInstance()->getResourceManager();
+	std::shared_ptr<EImageResourceInfo> imgRes = resManager.getImageResource(image_res);
+
+	if (imgRes) {
+		this->texture = imgRes->getTexture();
+		if (this->texture) {
+			LOG_INFO("Sprite refers texture [0x%p]", this->texture->getTexture());
+		} else {
+			allocated = false;
+		}
+	} else {
+		LOG_ERR("Cannot found Image resource [%s] from map !", image_res.c_str());
+	}
+
+	return allocated;
 }

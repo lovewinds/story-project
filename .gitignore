@@ -26,8 +26,15 @@
 *.out
 *.app
 
+# Project files
+*.vpw
+*.vpj
+*.vpwhist
+
 # Tag files
 .tags*
+*.vtg
+
 
 # Built result files
 build/

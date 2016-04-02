@@ -18,6 +18,8 @@ EResourceManager::EResourceManager()
 
 EResourceManager::~EResourceManager()
 {
+	delete loader;
+	loader = NULL;
 	LOG_DBG("Bye ResourceManager !");
 }
 
@@ -54,6 +56,8 @@ bool EResourceManager::allocateScene(std::string& scene_name)
 
 			//it.second->allocate();
 		}
+
+		/* CHECK: Allocate all sprites with specific scene */
 	} else {
 		/* not found */
 		return false;

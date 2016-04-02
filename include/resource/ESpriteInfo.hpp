@@ -28,5 +28,6 @@ public:
 
 protected:
 	std::string name;
+	std::string image_res;
 	std::shared_ptr<SDL_Texture_Wrap>	texture;
 };
