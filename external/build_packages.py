@@ -263,6 +263,7 @@ def build_sources(build_type):
 	sdl2_path = WORKING_PATH+'sources/SDL2/build/'
 	sdl2_image_path = WORKING_PATH+'sources/SDL2_image/build/'
 	sdl2_ttf_path = WORKING_PATH+'sources/SDL2_ttf/build/'
+	sdl2_gfx_parent_path = WORKING_PATH+'sources/SDL2_gfx/'
 	sdl2_gfx_path = WORKING_PATH+'sources/SDL2_gfx/build/'
 	g3log_path = WORKING_PATH+'sources/g3log/build/'
 	freetype2_path = WORKING_PATH+'sources/SDL2_ttf/external/freetype-2.4.12/build/'
@@ -315,6 +316,9 @@ def build_sources(build_type):
 	if os.path.exists(library_path+'libSDL2_gfx.a'):
 		print "SDL2_gfx is already built."
 	else:
+		os.chdir(sdl2_gfx_parent_path)
+		os.system('PATH='+bin_path+':$PATH ./autogen.sh --prefix='+build_path)
+
 		mkdir_p(sdl2_gfx_path)
 		os.chdir(sdl2_gfx_path)
 		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
