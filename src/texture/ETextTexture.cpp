@@ -16,6 +16,7 @@ ETextTexture::~ETextTexture()
 
 bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Color textColor, SDL_Color bgColor)
 {
+#if 0
 	TTF_Font* gFont = Ecore::getInstance()->getFont();
 	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -49,6 +50,8 @@ bool ETextTexture::loadFromRenderedText(const std::string& textureText, SDL_Colo
 
 	/* Return success */
 	return mTexture != NULL;
+#endif
+	return false;
 }
 
 

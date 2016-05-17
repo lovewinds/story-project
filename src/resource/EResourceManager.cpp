@@ -7,7 +7,6 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
-#include "resource/ESpriteInfo.hpp"
 
 EResourceManager::EResourceManager()
 {
@@ -18,12 +17,18 @@ EResourceManager::EResourceManager()
 
 EResourceManager::~EResourceManager()
 {
-	delete loader;
-	loader = NULL;
+	if (loader) {
+		delete loader;
+		loader = NULL;
+	}
+
+	scene_map.clear();
+	image_map.clear();
+
 	LOG_DBG("Bye ResourceManager !");
 }
 
-bool EResourceManager::loadResources(std::string& res_file)
+bool EResourceManager::loadResources(std::string res_file)
 {
 	std::string path = Ecore::getResourcePath(res_file);
 	if (path.empty()) {
@@ -39,82 +44,6 @@ bool EResourceManager::loadResources(std::string& res_file)
 	}
 
 	return loader->loadResources(path);
-}
-
-bool EResourceManager::allocateScene(std::string& scene_name)
-{
-	/* TODO: Search target scene with scene name */
-	//std::shared_ptr<ESceneInfo>	scene = scene_map[scene_name];
-	auto scene = scene_map.find(scene_name);
-
-	if (scene != scene_map.end()) {
-		/* Scene found. Allocate Image resources */
-		for (auto& it : image_map) {
-			std::string path(Ecore::getResourcePath(it.second->getName()));
-			LOG_INFO("   Stored path: [%s]", it.second->getName().c_str());
-			LOG_INFO("   Image  path: [%s]", path.c_str());
-
-			//it.second->allocate();
-		}
-
-		/* CHECK: Allocate all sprites with specific scene */
-	} else {
-		/* not found */
-		return false;
-	}
-
-	/* TODO: Allocate sprite resources on memory */
-	return true;
-}
-
-std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string path)
-{
-	std::shared_ptr<SDL_Texture_Wrap> result;
-	auto found = texture_map.find(path);
-
-	if (found == texture_map.end()) {
-		/* Texture is not exist. allocate one */
-		std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(path));
-		if (texture) {
-			//auto insert = texture_map.emplace(path, texture);
-			std::pair<std::string, std::shared_ptr<SDL_Texture_Wrap>> p(path, texture);
-			auto insert = texture_map.insert(p);
-			//auto insert = texture_map.insert(path, texture);
-			if (!insert.second) {
-				LOG_ERR("Failed to insert texture !");
-				int idx = 0;
-				for(auto& t : texture_map)
-				{
-					//auto t = it.second.get();
-					//SDL_Texture *tx = t.second.get()->getTexture();
-				}
-			}
-			result = texture;
-		} else {
-			LOG_ERR("Failed to allocate texture !");
-		}
-	} else {
-		result = found->second;
-	}
-
-	return result;
-}
-
-void EResourceManager::releaseTexture(std::string path)
-{
-	//auto cnt = texture_map.erase(path);
-	//LOG_DBG("  Count after erase [%lu]", cnt);
-	LOG_ERR("  Count before erase [%lu]", texture_map.size());
-	if (texture_map.empty())
-		return;
-
-	std::shared_ptr<SDL_Texture_Wrap> result;
-	auto found = texture_map.find(path);
-
-	if (found != texture_map.end()) {
-		//LOG_DBG("  texture [%s] count [%lu]", found->first.c_str(), found->second.use_count());
-		//texture_map.erase(found);
-	}
 }
 
 std::shared_ptr<ESceneInfo> EResourceManager::createScene(std::string scene_name)
@@ -139,56 +68,169 @@ std::shared_ptr<ESceneInfo> EResourceManager::createScene(std::string scene_name
 	return scene;
 }
 
-bool EResourceManager::createSprite(std::string name, std::string src_image_name)
+std::shared_ptr<ESceneInfo> EResourceManager::getScene(std::string scene_name)
 {
-	bool res = true;
-	LOG_DBG("Trying to create sprite [%s] with image res[%s]", name.c_str(), src_image_name.c_str());
-	std::shared_ptr<ESpriteInfo> sprite(new ESpriteInfo(name, src_image_name));
+	std::shared_ptr<ESceneInfo> result = nullptr;
+	auto scene = scene_map.find(scene_name);
+
+	if (scene != scene_map.end()) {
+		result = scene->second;
+	} else {
+		result = nullptr;
+	}
+	return result;
+}
+
+bool EResourceManager::allocateScene(std::string scene_name)
+{
+	/* Search target scene with scene name */
+	auto scene = scene_map.find(scene_name);
+	if (scene != scene_map.end()) {
+		/* Scene found. Allocate Image resources */
+		currentScene = scene->second;
+
+		for (auto& it : image_map) {
+			std::string name(it.first);
+			std::string path(it.second->getPath());
+			LOG_INFO("   Stored name: [%s]", name.c_str());
+			LOG_INFO("   Image  path: [%s]", path.c_str());
+
+			it.second->allocate();
+		}
+
+		/* CHECK: Allocate all sprites with specific scene */
+		currentScene->allocateSprites();
+	} else {
+		/* not found */
+		return false;
+	}
+
+	/* TODO: Allocate sprite resources on memory */
+	return true;
+}
+
+std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string path)
+{
+	std::shared_ptr<SDL_Texture_Wrap> result;
+	if (currentScene)
+		result = currentScene->allocateTexture(path);
+
+	return result;
+}
+
+// TODO: Need to deallocate texture here if caching is applied.
+void EResourceManager::releaseTexture(std::string path)
+{
+	// Get current scene
+	if (currentScene)
+		currentScene->releaseTexture(path);
+}
+
+bool EResourceManager::createSpriteType(std::shared_ptr<ESpriteType> spriteType)
+{
+	if (!spriteType)
+		return false;
+
+	auto inserted = sprite_types.emplace(spriteType->getName(), spriteType);
+	if (!inserted.second) {
+		LOG_ERR("Failed to insert sprite type map!");
+		return false;
+	}
+
+	return true;
+}
+
+std::shared_ptr<ESpriteType>
+EResourceManager::getSpriteType(std::string type_name)
+{
+	std::shared_ptr<ESpriteType> found = nullptr;
+	auto spriteType = sprite_types.find(type_name);
+
+	if (spriteType != sprite_types.end()) {
+		/* Found */
+		found = spriteType->second;
+	}
+
+	return found;
+}
+
+std::shared_ptr<ESprite>
+EResourceManager::createSprite(std::string type, std::string name)
+{
+	LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
+
+	//std::shared_ptr<ESprite> sprite(new ESprite(name, base_image));
+	/* Find sprite template type */
+
+	//std::pair<std::map<std::string, std::shared_ptr<ESpriteType>>::iterator, bool> result;
+	auto t = sprite_types.find(type);
+	if (t == sprite_types.end()) {
+		LOG_ERR("Sprite type [%s] is not defined.", type.c_str());
+		return nullptr;
+	}
+
+	std::shared_ptr<ESpriteType> spriteType = t->second;
+	if (!spriteType) {
+		LOG_ERR("Sprite type [%s] is invalid.", t->first.c_str());
+		return nullptr;
+	}
+	std::shared_ptr<ESprite> sprite = spriteType->createSprite(name);
+	if (!sprite) {
+		LOG_ERR("Failed to allocate sprite! [Type:%s]", spriteType->getName().c_str());
+		return nullptr;
+	}
 
 	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
-	auto result = sprite_map.emplace(name, sprite);
+	auto result = _sprite_map.emplace(name, sprite);
 
 	if (!result.second) {
 		LOG_ERR("Failed to insert sprite into set !");
-		res = false;
+		return nullptr;
 	}
+
 #if 1
-	LOG_INFO("Current sprites:");
-	for(auto& it : sprite_map)
+	LOG_DBG("Current sprites:");
+	for(auto& it : _sprite_map)
 	{
 		//auto t = it.second.get();
-		LOG_INFO("   %s", it.second->getName().c_str());
+		LOG_DBG("   %s", it.first.c_str());
 	}
 #endif
-	return res;
+	return sprite;
 }
 
-bool EResourceManager::createImageResource(std::string name, std::string path)
+std::shared_ptr<EImageResourceInfo>
+EResourceManager::createImageResource(std::string name, std::string path)
 {
-	bool result = false;
 	LOG_DBG("Trying to create image resource [%s]", name.c_str());
 	std::shared_ptr<EImageResourceInfo> imgInfo(new EImageResourceInfo(name, path));
+
+	if (!imgInfo) {
+		LOG_ERR("Failed to create Image Resource info!!");
+		return nullptr;
+	}
 
 	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
 	auto map_result = image_map.emplace(name, imgInfo);
 
 	if (map_result.second) {
-		result = true;
+		LOG_INFO("Created Image resource info !");
 	} else {
 		LOG_ERR("Failed to insert image resource map !");
 	}
-
+#if 1
 	LOG_INFO("Current Image resources:");
 	for(auto& it : image_map)
 	{
 		//auto t = it.second.get();
 		LOG_INFO("   %s", it.second->getName().c_str());
 	}
-
-	return result;
+#endif
+	return imgInfo;
 }
 
-std::shared_ptr<EImageResourceInfo>	EResourceManager::getImageResource(std::string resource_name)
+std::shared_ptr<EImageResourceInfo>
+EResourceManager::getImageResource(std::string resource_name)
 {
 	/* TDOO: Resolve key issue - use alias? path? */
 	//std::weak_ptr<EImageResourceInfo>	imgRes = image_map.find(resource_name);
@@ -200,6 +242,8 @@ std::shared_ptr<EImageResourceInfo>	EResourceManager::getImageResource(std::stri
 
 		// Return weak_ptr of imageResource
 		found = imgRes->second;
+	} else {
+		found = nullptr;
 	}
 
 	/* not found */

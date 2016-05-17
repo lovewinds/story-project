@@ -1,5 +1,5 @@
 #include <SDL.h>
-//#include <SDL2_gfxPrimitives.h>
+#include <SDL2_gfxPrimitives.h>
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
@@ -86,8 +86,8 @@ void EDrawable::render()
 	if (alpha <= 240 && alpha > 0) {
 		int b_alpha = alpha + 16;
 		if (b_alpha > 255) b_alpha = 255;
-	}
-#if 0
+	//}
+#if 1
 		filledCircleRGBA(renderer, p_x, p_y,
 			30,
 			0x70, 0xC6, 0xFF, b_alpha);

@@ -366,7 +366,9 @@ bool Ecore::loadResources()
 		}
 	}
 
-	/* Load resources */
+	/* Load resources
+	 * TODO: This logic should 'prepare' to allocate all resources.
+	 */
 	std::string res_xml("sample_scene.xml");
 	success = resManager->loadResources(res_xml);
 	if (!success) {
@@ -375,11 +377,14 @@ bool Ecore::loadResources()
 	}
 	//success = screenManager->loadResources(std::string("sample_scene.xml"));
 
-	/* Load first scene - main */
-	std::string start_scene("main");
-	success = screenManager->loadScene(start_scene);
+	/* Play default scene
+	 *   This logic allocates all required resources into memory
+	 *   and launch specific screen.
+	 */
+	std::string default_scene("main");
+	success = screenManager->playScene(default_scene);
 	if (!success) {
-		LOG_ERR("Failed to load scene [%s] !", start_scene.c_str());
+		LOG_ERR("Failed to play scene [%s] !", default_scene.c_str());
 		return false;
 	}
 
@@ -394,10 +399,10 @@ void Ecore::deinit()
 	gFont = NULL;
 
 	/* Release resources */
-	delete resManager;
 	delete screenManager;
-	resManager = NULL;
 	screenManager = NULL;
+	delete resManager;
+	resManager = NULL;
 
 	/* Destroy window */
 	SDL_DestroyRenderer(gRenderer);
@@ -511,6 +516,6 @@ std::string Ecore::getPlatform()
 
 bool Ecore::checkPlatform(std::string platform)
 {
-	std::string p(SDL_GetPlatform());
+	static std::string p(SDL_GetPlatform());
 	return (p == platform);
 }

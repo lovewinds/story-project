@@ -13,8 +13,8 @@ EImageResourceInfo::EImageResourceInfo(std::string name, std::string path)
 	LOG_INFO("EImageResourceInfo[%s] created", this->name.c_str());
 	LOG_INFO("      path : [%s]", this->path.c_str());
 
-	/* Don't allocate on creation */
-	allocate();
+	/* TODO: Don't allocate on creation */
+	//allocate();
 }
 
 EImageResourceInfo::~EImageResourceInfo()

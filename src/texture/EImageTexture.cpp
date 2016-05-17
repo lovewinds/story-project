@@ -33,9 +33,9 @@ EImageTexture::~EImageTexture()
 	dealloc();
 }
 
-
 bool EImageTexture::alloc()
 {
+#if 0
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
 	/* Get rid of preallocated texture */
@@ -77,10 +77,13 @@ bool EImageTexture::alloc()
 	/* Return success */
 	mTexture = newTexture;
 	return mTexture != NULL;
+#endif
+	return false;
 }
 
 bool EImageTexture::loadFromFile(std::string path)
 {
+#if 0
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
 	/* Get rid of preallocated texture */
@@ -122,6 +125,8 @@ bool EImageTexture::loadFromFile(std::string path)
 	/* Return success */
 	mTexture = newTexture;
 	return mTexture != NULL;
+#endif
+	return false;
 }
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)

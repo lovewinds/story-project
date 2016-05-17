@@ -1,30 +1,27 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
-	<Resources type="global"></Resources>
-	<Scene name="main">
+	<GlobalResources type="global"></GlobalResources>
+	<Scene name="main" class="Template_RPG">
 		<Resources>
 			<Images>
 				<Image src="japanvillage.jpg" name="Background"
 					 type="background" />
-				<Image src="moderngirl02.png" name="Loading"
-					 type="sprite" sprite_width="50" sprite_height="50" />
+				<Image src="moderngirl02.png" name="Character"
+					 type="sprite" sprite_width="32" sprite_height="48" />
 			</Images>
 			<Sprites>
-				<Sprite source="Loading" name="loading_circle" x="30" y="30">
+				<Sprite source="Character" name="loading_circle">
 					<Index linear="start">1</Index>
 					<Index>2</Index>
 					<Index>3</Index>
-					<Index>4</Index>
-					<Index>5</Index>
-					<Index>6</Index>
-					<Index linear="end">7</Index>
-					<Index>8</Index>
-					<Index>9</Index>
-					<Index>10</Index>
-					<Index>11</Index>
-					<Index>12</Index>
+					<Index linear="end">4</Index>
 				</Sprite>
 			</Sprites>
 		</Resources>
+		<Layer name="base">
+			<Image type="Background" name="bg" x="0" y="0" />
+			<Sprite type="loading_circle" name="c1" x="0" y="0" />
+			<Sprite type="loading_circle" name="c2" x="30" y="60" />
+		</Layer>
 	</Scene>
 </SceneRoot>

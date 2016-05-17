@@ -19,19 +19,19 @@ ETexture::~ETexture()
 void ETexture::setBlendMode(SDL_BlendMode blending)
 {
 	/* Set blending function */
-	SDL_SetTextureBlendMode(mTexture, blending);
+	SDL_SetTextureBlendMode(mTexture->getTexture(), blending);
 }
 
 void ETexture::setAlpha(Uint8 alpha)
 {
 	/* Modulate texture alpha */
-	SDL_SetTextureAlphaMod(mTexture, alpha);
+	SDL_SetTextureAlphaMod(mTexture->getTexture(), alpha);
 }
 
 void ETexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
 	/* Modulate texture rgb */
-	SDL_SetTextureColorMod(mTexture, red, green, blue);
+	SDL_SetTextureColorMod(mTexture->getTexture(), red, green, blue);
 }
 
 void ETexture::movePositionTo(double x, double y)
@@ -49,10 +49,11 @@ void ETexture::movePositionBy(double delta_x, double delta_y)
 void ETexture::dealloc()
 {
 	/* Free texture if it exists */
-	if (mTexture != NULL)
+	if (mTexture)
 	{
-		SDL_DestroyTexture(mTexture);
-		mTexture = NULL;
+		/* std::shared_ptr */
+		//SDL_DestroyTexture(mTexture);
+		//mTexture = NULL;
 		mWidth = 0;
 		mHeight = 0;
 	}
@@ -73,7 +74,7 @@ void ETexture::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Po
 	}
 
 	/* Render to screen */
-	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }
 
 void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, Uint8 expand, double angle, SDL_Point* center, SDL_RendererFlip flip)
@@ -93,5 +94,5 @@ void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, Uint8 expand,
 	renderQuad.h *= expand;
 
 	/* Render to screen */
-	SDL_RenderCopyEx(gRenderer, mTexture, clip, &renderQuad, angle, center, flip);
+	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }

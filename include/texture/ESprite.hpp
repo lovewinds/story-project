@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 #include <memory>
+#include <vector>
 
 #include "ETexture.h"
 
@@ -9,20 +11,28 @@ class EImageResourceInfo;
 class ESprite : public ETexture
 {
 public:
-	ESprite();
+	ESprite(std::string name, std::string base_image, std::vector<SDL_Rect>& cells);
 	~ESprite();
 
-	/* Loads sprite image at specified path */
-	bool loadFromFile(std::string path);
-	bool alloc(std::string path);
+	std::string getName();
+
+	bool allocate();
+	void deallocate();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
 
 protected:
-	SDL_Rect gSpriteClips[4];
+	ESprite();
+
+	std::string name;
+	std::string base_image_name;
+
+	std::vector<SDL_Rect> gSpriteClips;
 	int8_t	sprite_index;
 	int8_t	sprite_change;
 
-	std::shared_ptr<EImageResourceInfo>	resource;
+	Uint32 prevTime;
+
+	std::shared_ptr<EImageResourceInfo>	sprite_base;
 };

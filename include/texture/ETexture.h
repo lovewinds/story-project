@@ -1,5 +1,8 @@
 #pragma once
+
 #include <SDL.h>
+#include <memory>
+#include "util/SDLWrap.hpp"
 
 class ETexture
 {
@@ -28,7 +31,7 @@ public:
 
 protected:
 	/* The actual SDL texture */
-	SDL_Texture* mTexture;
+	std::shared_ptr<SDL_Texture_Wrap> mTexture;
 
 	/* Position */
 	double p_x;

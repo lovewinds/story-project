@@ -21,7 +21,7 @@ ELSE(UNIX AND NOT WIN32)
     # Windows
     MESSAGE("Windows !")
     EXECUTE_PROCESS(COMMAND python "${CMAKE_SOURCE_DIR}/external/build_packages.py" --path "${CMAKE_SOURCE_DIR}/external/")
-	SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\built\\")
+    SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\built\\")
     SET(SDL2_PATH "${CMAKE_SOURCE_DIR}\\external\\built\\Release\\"
         "${CMAKE_SOURCE_DIR}\\external\\built\\Debug\\")
 ENDIF(UNIX AND NOT WIN32)

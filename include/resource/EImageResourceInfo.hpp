@@ -17,15 +17,15 @@ public:
 	virtual ~EImageResourceInfo();
 
 	std::string getName() const;
+	std::string getPath() const;
 
-	/* TODO: Should provide it as weak_ptr? - to sprite instance */
+	void allocate();
+
+	/* CHECK: Should provide it as weak_ptr? - to sprite instance */
 	std::shared_ptr<SDL_Texture_Wrap>	getTexture();
 
 protected:
 	std::string name;
 	std::string path;
 	std::shared_ptr<SDL_Texture_Wrap>	texture;
-
-	void allocate();
-	std::string getPath() const;
 };

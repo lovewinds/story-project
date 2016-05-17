@@ -6,6 +6,7 @@
 
 
 SDL_Surface_Wrap::SDL_Surface_Wrap(const SDL_Surface_Wrap& other)
+: surface(nullptr)
 {
 	SDL_Surface_Wrap& managed = const_cast<SDL_Surface_Wrap&>(other);
 	surface = managed.surface;
@@ -13,12 +14,14 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(const SDL_Surface_Wrap& other)
 }
 
 SDL_Surface_Wrap::SDL_Surface_Wrap(SDL_Surface *_surf)
+: surface(nullptr)
 {
 	if (_surf)
 		surface = _surf;
 }
 
 SDL_Surface_Wrap::SDL_Surface_Wrap(std::string path)
+: surface(nullptr)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -89,6 +92,7 @@ bool SDL_Texture_Wrap::createFromSurface(SDL_Surface *surface)
 }
 
 SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture *_texture)
+: texture(nullptr)
 {
 	if (_texture)
 		texture = _texture;
@@ -96,11 +100,13 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture *_texture)
 }
 
 SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Surface *surface)
+: texture(nullptr)
 {
 	createFromSurface(surface);
 }
 
 SDL_Texture_Wrap::SDL_Texture_Wrap(std::string path)
+: texture(nullptr)
 {
 	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(path));
 

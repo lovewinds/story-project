@@ -1,12 +1,16 @@
-#include "texture/ETextureHandler.h"
+#include "ESceneManager.hpp"
+
 #include "util/LogHelper.hpp"
+#include "resource/EResourceManager.hpp"
 
-ETextureHandler* ETextureHandler::instance = NULL;
+//ESceneManager* ESceneManager::instance = NULL;
 
-ETextureHandler::ETextureHandler()
+ESceneManager::ESceneManager()
 {
-	textTexture = new ETextTexture();
+	currentScene = nullptr;
 #if 0
+	textTexture = new ETextTexture();
+
 	//sprite = new ESprite();
 	//background = new EImageTexture();
 
@@ -27,7 +31,13 @@ ETextureHandler::ETextureHandler()
 	testBackgroundState = DIR_STOP;
 }
 
-bool ETextureHandler::createBackgroundImage(std::string& img_path)
+ESceneManager::~ESceneManager()
+{
+	removeTexture();
+	LOG_INFO("Bye ESceneManager !");
+}
+#if 0
+bool ESceneManager::createBackgroundImage(std::string img_path)
 {
 	bool created = false;
 	background = new EImageTexture(img_path);
@@ -37,31 +47,28 @@ bool ETextureHandler::createBackgroundImage(std::string& img_path)
 	return created;
 }
 
-bool ETextureHandler::createSprite(std::string& sprite_path)
+bool ESceneManager::createSprite(std::string sprite_path)
 {
 	bool created = false;
 	sprite = new ESprite();
 
-	created = sprite->loadFromFile(sprite_path.c_str());
+	//created = sprite->loadFromFile(sprite_path.c_str());
 
 	return created;
 }
 
-ETextureHandler::~ETextureHandler()
-{
-	removeTexture();
-}
-#if 0
-ETextureHandler* ETextureHandler::getInstance() {
+ESceneManager* ESceneManager::getInstance() {
 	if (instance == NULL) {
-		instance = new ETextureHandler();
+		instance = new ESceneManager();
 	}
 
 	return instance;
 }
 #endif
-void ETextureHandler::createTexture(int x, int y)
+
+void ESceneManager::createTexture(int x, int y)
 {
+#if 0
 	static int maxCount = 0;
 	if (maxCount < 10) {
 		//ETexture*	texture = new ETexture(x, y);
@@ -72,21 +79,43 @@ void ETextureHandler::createTexture(int x, int y)
 		LOG_INFO("New texture created.");
 		LOG_INFO("    ( %d, %d ) / total: %lu", x, y, textureList.size());
 	}
+#endif
 }
 
-void ETextureHandler::removeTexture()
+void ESceneManager::removeTexture()
 {
-	//list<ETexture*>::iterator	iter;
-	list<EDrawable*>::iterator	iter;
+#if 0
+	//std::list<ETexture*>::iterator	iter;
+	std::list<EDrawable*>::iterator	iter;
 	while (textureList.empty() == false) {
 		iter = textureList.begin();
 		delete *iter;
 		textureList.erase(iter);
 	}
+#endif
 }
 
-void ETextureHandler::handleEvent(SDL_Event e)
+bool ESceneManager::playScene(std::string scene_name)
 {
+	std::shared_ptr<ESceneInfo> scene;
+	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+	bool success = resMgr.allocateScene(scene_name);
+
+	if (success) {
+		scene = resMgr.getScene(scene_name);
+		LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
+
+		currentScene = scene;
+	}
+
+	return true;
+}
+
+void ESceneManager::handleEvent(SDL_Event e)
+{
+//	if (currentScene)
+//		currentScene->handleEvent(e);
+#if 0
 	static Uint32 latestEventTime = 0;
 	//LOG_INFO("texture handle event!");
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
@@ -210,24 +239,31 @@ void ETextureHandler::handleEvent(SDL_Event e)
 			LOG_INFO("Background Move : Right");
 		}
 	}
+#endif
 }
 
-void ETextureHandler::propagateEvent(SDL_Event e)
+void ESceneManager::propagateEvent(SDL_Event e)
 {
-	//list<ETexture*>::iterator	iter = textureList.begin();
-	list<EDrawable*>::iterator	iter = textureList.begin();
+#if 0
+	/* TODO: This logic should be executed in animation actor */
+	//std::list<ETexture*>::iterator	iter = textureList.begin();
+	std::list<EDrawable*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
 		EDrawable* texture = *iter;
 		//texture->animateStart(SDL_GetTicks());
 		iter++;
 	}
 	//textTexture->animateStart(SDL_GetTicks());
+#endif
 }
 
-void ETextureHandler::render()
+void ESceneManager::render()
 {
-	//list<ETexture*>::iterator	iter = textureList.begin();
-	list<EDrawable*>::iterator	iter = textureList.begin();
+	if (currentScene)
+		currentScene->render();
+#if 0
+	//std::list<ETexture*>::iterator	iter = textureList.begin();
+	std::list<EDrawable*>::iterator	iter = textureList.begin();
 	Uint32 current = SDL_GetTicks();
 
 	/* TODO: Handle this texture same with others */
@@ -245,12 +281,16 @@ void ETextureHandler::render()
 	}
 	textTexture->render();
 	sprite->render();
+#endif
 }
 
-void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
+void ESceneManager::update(Uint32 currentTime, Uint32 accumulator)
 {
-	//list<ETexture*>::iterator	iter = textureList.begin();
-	list<EDrawable*>::iterator	iter = textureList.begin();
+	if (currentScene)
+		currentScene->update(currentTime, accumulator);
+#if 0
+	//std::list<ETexture*>::iterator	iter = textureList.begin();
+	std::list<EDrawable*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
 		EDrawable* texture = *iter;
 		if (texture != NULL) {
@@ -284,14 +324,15 @@ void ETextureHandler::update(Uint32 currentTime, Uint32 accumulator)
 		temp_moveBackGround(-1.0, 0.0);
 	if (testBackgroundState & DIR_RIGHT)
 		temp_moveBackGround(1.0, 0.0);
+#endif
 }
 
-void ETextureHandler::temp_moveBackGround(double dx, double dy)
+void ESceneManager::temp_moveBackGround(double dx, double dy)
 {
-	background->movePositionBy(dx, dy);
+//	background->movePositionBy(dx, dy);
 }
 
-void ETextureHandler::temp_moveCharacter(double dx, double dy)
+void ESceneManager::temp_moveCharacter(double dx, double dy)
 {
-	sprite->movePositionBy(dx, dy);
+//	sprite->movePositionBy(dx, dy);
 }
