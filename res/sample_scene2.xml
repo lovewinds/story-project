@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<SceneRoot name="Sample Scene">
+	<GlobalResources type="global"></GlobalResources>
+	<Scene name="main" class="Template_RPG">
+		<Resources>
+			<Images>
+				<Image src="japanvillage.jpg" name="Background"
+					 type="background" width="636" height="475" />
+				<Image src="moderngirl02.png" name="Character"
+					 type="sprite" width="600" height="50" />
+			</Images>
+			<Sprites>
+				<Sprite source="Character" name="loading_circle" width="50" height="50">
+					<Index linear="start">1</Index>
+					<Index>2</Index>
+					<Index>3</Index>
+					<Index>4</Index>
+					<Index>5</Index>
+					<Index>6</Index>
+					<Index>7</Index>
+					<Index>8</Index>
+					<Index>9</Index>
+					<Index>10</Index>
+					<Index>11</Index>
+					<Index linear="end">12</Index>
+				</Sprite>
+			</Sprites>
+		</Resources>
+		<Layer name="base">
+			<Image type="Background" name="bg" x="0" y="0" />
+			<Sprite type="loading_circle" name="c1" x="0" y="0" />
+			<Sprite type="loading_circle" name="c2" x="50" y="0" />
+			<Sprite type="loading_circle" name="c3" x="100" y="0" />
+			<Sprite type="loading_circle" name="c4" x="150" y="0" />
+			<Sprite type="loading_circle" name="c5" x="200" y="0" />
+			<Sprite type="loading_circle" name="c6" x="0" y="50" />
+			<Sprite type="loading_circle" name="c7" x="50" y="50" />
+			<Sprite type="loading_circle" name="c8" x="100" y="50" />
+			<Sprite type="loading_circle" name="c9" x="150" y="50" />
+			<Sprite type="loading_circle" name="c10" x="200" y="50" />
+		</Layer>
+	</Scene>
+</SceneRoot>

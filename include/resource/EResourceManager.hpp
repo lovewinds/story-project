@@ -42,7 +42,7 @@ public:
 	 * uses 'path' to load real image file.
 	 */
 	std::shared_ptr<EImageResourceInfo>
-	createImageResource(std::string name, std::string path);
+	createImageResource(std::string name, std::string path, unsigned int width, unsigned int height);
 
 	/* Returns shared_ptr of ImageResource instance allocated */
 	std::shared_ptr<EImageResourceInfo>

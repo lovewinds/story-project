@@ -19,8 +19,7 @@ public:
 	ESpriteType(std::string name, std::string base_image);
 	virtual ~ESpriteType();
 
-	void setBaseImageInfo(unsigned int image_width, unsigned int image_height);
-	void setCellInfo(unsigned int cell_width, unsigned int cell_height);
+	bool setCellInfo(unsigned int cell_width, unsigned int cell_height);
 
 	/* Store sprite cell information to create */
 	bool appendSpriteCell(unsigned int index);
@@ -31,6 +30,8 @@ public:
 	//bool allocateSprite(std::vector<int> indexList);
 
 	std::string getName();
+	unsigned int getWidth() const;
+	unsigned int getHeight() const;
 
 protected:
 	std::string name;

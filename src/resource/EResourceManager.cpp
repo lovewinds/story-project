@@ -98,10 +98,11 @@ bool EResourceManager::allocateScene(std::string scene_name)
 			it.second->allocate();
 		}
 
-		/* CHECK: Allocate all sprites with specific scene */
+		/* TODO: Allocate all sprites and image textures on specific scene */
 		currentScene->allocateSprites();
 	} else {
-		/* not found */
+		/* Scene is not found ! */
+		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
 		return false;
 	}
 
@@ -200,10 +201,10 @@ EResourceManager::createSprite(std::string type, std::string name)
 }
 
 std::shared_ptr<EImageResourceInfo>
-EResourceManager::createImageResource(std::string name, std::string path)
+EResourceManager::createImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
 {
 	LOG_DBG("Trying to create image resource [%s]", name.c_str());
-	std::shared_ptr<EImageResourceInfo> imgInfo(new EImageResourceInfo(name, path));
+	std::shared_ptr<EImageResourceInfo> imgInfo(new EImageResourceInfo(name, path, width, height));
 
 	if (!imgInfo) {
 		LOG_ERR("Failed to create Image Resource info!!");

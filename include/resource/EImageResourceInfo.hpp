@@ -13,11 +13,13 @@
 class EImageResourceInfo
 {
 public:
-	EImageResourceInfo(std::string name, std::string path);
+	EImageResourceInfo(std::string name, std::string path, unsigned int width, unsigned int height);
 	virtual ~EImageResourceInfo();
 
 	std::string getName() const;
 	std::string getPath() const;
+	unsigned int getWidth() const;
+	unsigned int getHeight() const;
 
 	void allocate();
 
@@ -27,5 +29,7 @@ public:
 protected:
 	std::string name;
 	std::string path;
+	unsigned int width;
+	unsigned int height;
 	std::shared_ptr<SDL_Texture_Wrap>	texture;
 };

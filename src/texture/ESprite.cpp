@@ -39,6 +39,14 @@ std::string ESprite::getName()
 	return name;
 }
 
+void ESprite::setIndex(unsigned int index)
+{
+	if (index < gSpriteClips.size()) {
+		sprite_index = index;
+		LOG_DBG("Sprite[%p] index set [%d]", this, sprite_index);
+	}
+}
+
 bool ESprite::allocate()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
@@ -47,6 +55,7 @@ bool ESprite::allocate()
 		return false;
 	}
 
+	/* TODO: Allocate a new texture for each sprite */
 	sprite_base = resManager.getImageResource(base_image_name);
 
 	if (!sprite_base)

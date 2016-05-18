@@ -5,10 +5,12 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResourceInfo.hpp"
 
-EImageResourceInfo::EImageResourceInfo(std::string name, std::string path)
+EImageResourceInfo::EImageResourceInfo(std::string name, std::string path, unsigned int width, unsigned int height)
 {
 	this->name = name;
 	this->path = Ecore::getResourcePath(path);
+	this->width = width;
+	this->height = height;
 
 	LOG_INFO("EImageResourceInfo[%s] created", this->name.c_str());
 	LOG_INFO("      path : [%s]", this->path.c_str());
@@ -36,6 +38,16 @@ std::string EImageResourceInfo::getName() const
 std::string EImageResourceInfo::getPath() const
 {
 	return path;
+}
+
+unsigned int EImageResourceInfo::getWidth() const
+{
+	return width;
+}
+
+unsigned int EImageResourceInfo::getHeight() const
+{
+	return height;
 }
 
 std::shared_ptr<SDL_Texture_Wrap> EImageResourceInfo::getTexture()

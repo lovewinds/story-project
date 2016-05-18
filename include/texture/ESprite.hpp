@@ -15,6 +15,7 @@ public:
 	~ESprite();
 
 	std::string getName();
+	void setIndex(unsigned int index);
 
 	bool allocate();
 	void deallocate();
