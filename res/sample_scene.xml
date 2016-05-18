@@ -14,14 +14,22 @@
 					<Index linear="start">1</Index>
 					<Index>2</Index>
 					<Index>3</Index>
-					<Index linear="end">4</Index>
+					<Index>4</Index>
+					<Index>5</Index>
+					<Index>6</Index>
+					<Index>7</Index>
+					<Index>8</Index>
+					<Index>9</Index>
+					<Index>10</Index>
+					<Index>11</Index>
+					<Index linear="end">12</Index>
 				</Sprite>
 			</Sprites>
 		</Resources>
 		<Layer name="base">
 			<Image type="Background" name="bg" x="0" y="0" />
 			<Sprite type="loading_circle" name="c1" x="0" y="0" />
-			<Sprite type="loading_circle" name="c2" x="30" y="60" />
+			<Sprite type="loading_circle" name="c2" x="32" y="0" />
 		</Layer>
 	</Scene>
 </SceneRoot>

@@ -69,9 +69,10 @@ bool ESpriteType::appendSpriteCell(unsigned int index)
 		return false;
 	}
 	rect.x = cell_width * x;
-	rect.y = cell_width * y;
+	rect.y = cell_height * y;
 	rect.w = cell_width;
 	rect.h = cell_height;
+	LOG_DBG("Cell [%d] (%d,%d) [%d/%d]", index, rect.x, rect.y, rect.w, rect.h);
 
 	cell.push_back(rect);
 

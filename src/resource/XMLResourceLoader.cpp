@@ -135,7 +135,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				std::shared_ptr<ESpriteType> spriteType = resManager->getSpriteType(itm_type);
 				if (spriteType) {
 					auto s = spriteType->createSprite(itm_name, p_x, p_y);
-					s->setIndex(idx+1);
+					s->setIndex(idx*4);
 					scene->addSprite(s);
 					LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
 				}
