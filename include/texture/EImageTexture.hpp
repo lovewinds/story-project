@@ -1,26 +1,24 @@
 #pragma once
-#include <stdio.h>
+
 #include <string>
 #include <cmath>
 
-#include <SDL.h>
-#include <SDL_image.h>
-
 #include "ETexture.h"
+
+class EImageResourceInfo;
 
 class EImageTexture : public ETexture
 {
 public:
 	/* Initializes variables */
-	EImageTexture(std::string path);
+	EImageTexture(std::string name, std::string base_image);
 	EImageTexture(int x, int y);
 
 	/* Deallocates memory */
 	~EImageTexture();
 
-	/* Loads image at specified path */
-	bool loadFromFile(std::string path);
-	bool alloc();
+	bool allocate();
+	void deallocate();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	//virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
@@ -29,6 +27,7 @@ public:
 	/* Gets image dimensions */
 	int getWidth();
 	int getHeight();
+	std::string getName();
 
 protected:
 	int radian;
@@ -39,8 +38,8 @@ protected:
 	/* animation */
 	bool animating;
 
-	std::string image_path;
+	std::string name;
+	std::string base_image;
 
-	/* Store surface for sprites */
-	SDL_Surface* loadedSurface;
+	std::shared_ptr<EImageResourceInfo>	image;
 };

@@ -100,6 +100,7 @@ bool EResourceManager::allocateScene(std::string scene_name)
 
 		/* TODO: Allocate all sprites and image textures on specific scene */
 		currentScene->allocateSprites();
+		currentScene->allocateImages();
 	} else {
 		/* Scene is not found ! */
 		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
@@ -249,4 +250,34 @@ EResourceManager::getImageResource(std::string resource_name)
 
 	/* not found */
 	return found;
+}
+
+std::shared_ptr<EImageTexture>
+EResourceManager::createImageTexture(std::string name, std::string base_image)
+{
+	std::shared_ptr<EImageTexture> imgTexture(new EImageTexture(name, base_image));
+	if (!imgTexture) {
+		LOG_ERR("Failed to create Image texture !!");
+		return nullptr;
+	}
+
+	//std::pair<std::map<std::string, std::shared_ptr<EImageTexture>>::iterator, bool> result;
+	auto map_result = _image_texture_map.emplace(name, imgTexture);
+
+	if (map_result.second) {
+		LOG_INFO("Created Image texture !!");
+	} else {
+		LOG_ERR("Failed to insert image texture map !");
+	}
+
+#if 1
+	LOG_INFO("Current Image textures:");
+	for(auto& it : _image_texture_map)
+	{
+		//auto t = it.second.get();
+		LOG_INFO("   %s", it.second->getName().c_str());
+	}
+#endif
+
+	return imgTexture;
 }

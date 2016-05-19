@@ -6,6 +6,7 @@
 
 #include "util/SDLWrap.hpp"
 #include "texture/ESprite.hpp"
+#include "texture/EImageTexture.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -35,11 +36,14 @@ public:
 	/* Should handle creation of resources with Resource manager */
 	bool addSprite(std::shared_ptr<ESprite> sprite);
 
+	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
+
 	/* Resource manager allocates image resource */
 	std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);
 	void releaseTexture(std::string path);
 
 	bool allocateSprites();
+	bool allocateImages();
 
 	std::string getName();
 
@@ -55,6 +59,8 @@ protected:
 	 */
 	//std::map<std::string, std::shared_ptr<ESpriteInfo>> _sprite_map;
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
+
+	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
 
 	/* Texture map for cache
 	 *   These textures are already allocated on video memory.

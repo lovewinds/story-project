@@ -140,6 +140,16 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
 				}
 				idx++;
+			} else if (itm_node.compare("Image") == 0) {
+				/* Image instance */
+				LOG_DBG("Finding image name [%s]", itm_type.c_str());
+				auto img = resManager->createImageTexture(itm_name, itm_type);
+				if (img) {
+					scene->addImage(img);
+					LOG_INFO("   [Image] %s prepared", itm_name.c_str());
+				} else {
+					LOG_ERR("Failed to create ImageTexture !");
+				}
 			}
 		}
 

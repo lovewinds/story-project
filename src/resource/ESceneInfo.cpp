@@ -116,6 +116,16 @@ bool ESceneInfo::addSprite(std::shared_ptr<ESprite> sprite)
 	return true;
 }
 
+bool ESceneInfo::addImage(std::shared_ptr<EImageTexture> imgTexture)
+{
+	auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
+	if (!result.second) {
+		LOG_ERR("Failed to insert imgTexture set !");
+		return false;
+	}
+	return true;
+}
+
 bool ESceneInfo::allocateSprites()
 {
 	if (_sprite_map.empty())
@@ -128,6 +138,18 @@ bool ESceneInfo::allocateSprites()
 	return true;
 }
 
+bool ESceneInfo::allocateImages()
+{
+	if (_img_texture_map.empty())
+		return false;
+
+	for(auto &it : _img_texture_map) {
+		LOG_DBG("  Allocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->allocate();
+	}
+	return true;
+}
+
 void ESceneInfo::handleEvent(SDL_Event e)
 {
 
@@ -135,7 +157,12 @@ void ESceneInfo::handleEvent(SDL_Event e)
 
 void ESceneInfo::render()
 {
-	for(auto& it : _sprite_map)
+	for (auto &it : _img_texture_map)
+	{
+		it.second->render();
+	}
+
+	for (auto& it : _sprite_map)
 	{
 		it.second->render();
 	}

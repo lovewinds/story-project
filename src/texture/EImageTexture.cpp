@@ -1,18 +1,23 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
+#include "resource/EResourceManager.hpp"
+#include "resource/EImageResourceInfo.hpp"
 #include "texture/EImageTexture.hpp"
+
+#include <SDL.h>
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-EImageTexture::EImageTexture(std::string path) :
+EImageTexture::EImageTexture(std::string name, std::string base_image) :
 	ETexture(),
 	m_degrees(0.0)
 {
 	radian = 0;
 	animating = false;
-	image_path = path;
+	this->name = name;
+	this->base_image = base_image;
 }
 
 EImageTexture::EImageTexture(int x, int y) :
@@ -30,103 +35,30 @@ EImageTexture::EImageTexture(int x, int y) :
 EImageTexture::~EImageTexture()
 {
 	/* Deallocate */
-	dealloc();
+	deallocate();
 }
 
-bool EImageTexture::alloc()
+bool EImageTexture::allocate()
 {
-#if 0
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
-
-	/* Get rid of preallocated texture */
-	dealloc();
-
-	/* The final texture */
-	SDL_Texture* newTexture = NULL;
-
-	/* Load image at specified path */
-	loadedSurface = IMG_Load(image_path.c_str());
-	if (loadedSurface == NULL)
-	{
-		LOG_INFO("Unable to load image %s! SDL_image Error: %s\n",
-				image_path.c_str(), IMG_GetError());
-	}
-	else
-	{
-		/* Color key image */
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
-
-		/* Create texture from surface pixels */
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		if (newTexture == NULL)
-		{
-			LOG_INFO("Unable to create texture from %s! SDL Error: %s\n",
-					image_path.c_str(), SDL_GetError());
-		}
-		else
-		{
-			/* Get image dimensions */
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
-		}
-
-		/* Get rid of old loaded surface */
-		SDL_FreeSurface(loadedSurface);
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	if (base_image.empty()) {
+		LOG_ERR("base_image is empty !");
+		return false;
 	}
 
-	/* Return success */
-	mTexture = newTexture;
-	return mTexture != NULL;
-#endif
-	return false;
+	/* TODO: Allocate a new texture for each sprite */
+	image = resManager.getImageResource(base_image);
+
+	if (!image)
+		return false;
+
+	mTexture = image->getTexture();
+	return true;
 }
 
-bool EImageTexture::loadFromFile(std::string path)
+void EImageTexture::deallocate()
 {
-#if 0
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
-
-	/* Get rid of preallocated texture */
-	dealloc();
-
-	/* The final texture */
-	SDL_Texture* newTexture = NULL;
-
-	/* Load image at specified path */
-	loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == NULL)
-	{
-		LOG_INFO("Unable to load image %s! SDL_image Error: %s\n",
-				path.c_str(), IMG_GetError());
-	}
-	else
-	{
-		/* Color key image */
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
-
-		/* Create texture from surface pixels */
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		if (newTexture == NULL)
-		{
-			LOG_INFO("Unable to create texture from %s! SDL Error: %s\n",
-					path.c_str(), SDL_GetError());
-		}
-		else
-		{
-			/* Get image dimensions */
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
-		}
-
-		/* Get rid of old loaded surface */
-		SDL_FreeSurface(loadedSurface);
-	}
-
-	/* Return success */
-	mTexture = newTexture;
-	return mTexture != NULL;
-#endif
-	return false;
+	mTexture.reset();
 }
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
@@ -176,11 +108,13 @@ void EImageTexture::render()
 	SDL_Rect rect = { 0, };
 
 	SDL_GetWindowSize(window, &width, &height);
+	LOG_DBG("Window [%d x %d]", width, height);
 	rect.w = width;
 	rect.h = height;
 
-	//texture_render(0, 0, &rect);
-	texture_render((int)p_x, (int)p_y, &rect);
+	if (mTexture)
+		texture_render(0, 0, &rect);
+		//texture_render((int)p_x, (int)p_y, &rect);
 }
 
 int EImageTexture::getWidth()
@@ -191,4 +125,9 @@ int EImageTexture::getWidth()
 int EImageTexture::getHeight()
 {
 	return mHeight;
+}
+
+std::string EImageTexture::getName()
+{
+	return name;
 }

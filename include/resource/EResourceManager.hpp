@@ -48,6 +48,9 @@ public:
 	std::shared_ptr<EImageResourceInfo>
 	getImageResource(std::string resource_name);
 
+	std::shared_ptr<EImageTexture>
+	createImageTexture(std::string name, std::string base_image);
+
 /*
  * Sprite Functions
  */
@@ -89,6 +92,9 @@ protected:
 
 	/* Allocated sprite instances */
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
+
+	/* Allocated Image Texture instances */
+	std::map<std::string, std::shared_ptr<EImageTexture>> _image_texture_map;
 
 	/* TODO: Store texture here for caching */
 	//std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> texture_map;
