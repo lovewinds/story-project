@@ -2,13 +2,10 @@
 
 #include "Ecore.hpp"
 #include "ESceneManager.hpp"
-#include "resource/EResourceManager.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/drawable/EDrawable.h"
 
 EScreenManager::EScreenManager()
 {
-	//sceneManager = ESceneManager::getInstance();
 	sceneManager = new ESceneManager();
 }
 
@@ -42,70 +39,12 @@ void EScreenManager::render()
 {
 	/* Render through sceneManager */
 	sceneManager->render();
-#if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
-	Uint32 current = SDL_GetTicks();
-
-	/* TODO: Handle this texture same with others */
-	background->render();
-
-	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
-		if (texture != NULL) {
-			texture->render();
-			//LOG_INFO("List Texture(%p) rendered !", texture);
-		} else {
-			LOG_INFO("List Texture is NULL. count: %lu", textureList.size());
-		}
-		iter++;
-	}
-	textTexture->render();
-	sprite->render();
-#endif
 }
 
 void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	/* Update through sceneManager */
 	sceneManager->update(currentTime, accumulator);
-#if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
-	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
-		if (texture != NULL) {
-			//texture->calculate(currentTime, accumulator);
-			texture->update(currentTime, accumulator);
-		}
-		iter++;
-	}
-
-	/* TODO: Handle this texture same with others */
-	background->update(currentTime, accumulator);
-
-	textTexture->update(currentTime, accumulator);
-	sprite->update(currentTime, accumulator);
-
-	/* TEST */
-	if (testState & DIR_UP)
-		temp_moveCharacter(0.0, -1.0);
-	if (testState & DIR_DOWN)
-		temp_moveCharacter(0.0, 1.0);
-	if (testState & DIR_LEFT)
-		temp_moveCharacter(-1.0, 0.0);
-	if (testState & DIR_RIGHT)
-		temp_moveCharacter(1.0, 0.0);
-
-	if (testBackgroundState & DIR_UP)
-		temp_moveBackGround(0.0, -1.0);
-	if (testBackgroundState & DIR_DOWN)
-		temp_moveBackGround(0.0, 1.0);
-	if (testBackgroundState & DIR_LEFT)
-		temp_moveBackGround(-1.0, 0.0);
-	if (testBackgroundState & DIR_RIGHT)
-		temp_moveBackGround(1.0, 0.0);
-#endif
 }
 
 void EScreenManager::handleEvent(SDL_Event e)

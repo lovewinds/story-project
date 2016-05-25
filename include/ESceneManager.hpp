@@ -31,17 +31,9 @@ public:
 	ESceneManager();
 	~ESceneManager();
 
-	//static ESceneManager* getInstance();
-	//static void setInstance(ESceneManager* handler);
-
-	void createTexture(int x, int y);
-	void removeTexture();
 	void handleEvent(SDL_Event e);
 	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
-
-	//bool createBackgroundImage(std::string img_path);
-	//bool createSprite(std::string sprite_path);
 
 	void temp_moveBackGround(double dx, double dy);
 	void temp_moveCharacter(double dx, double dy);
@@ -49,13 +41,8 @@ public:
 	bool playScene(std::string scene_name);
 
 private:
-	//static ESceneManager*	instance;
-	//std::list<EDrawable*>	textureList;
 	std::shared_ptr<ESceneInfo> currentScene;
 
-	//ETextTexture *textTexture;
-	//ESprite* sprite;
-	//EImageTexture* background;
 	int testState;
 	int testBackgroundState;
 

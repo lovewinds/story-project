@@ -3,29 +3,10 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 
-//ESceneManager* ESceneManager::instance = NULL;
-
 ESceneManager::ESceneManager()
 {
 	currentScene = nullptr;
-#if 0
-	textTexture = new ETextTexture();
 
-	//sprite = new ESprite();
-	//background = new EImageTexture();
-
-	if (false == sprite->loadFromFile("../res/moderngirl02x2.png"))
-	{
-		/* TEMPORARY: For Android */
-		sprite->loadFromFile("moderngirl02.png");
-	}
-
-	if (false == background->loadFromFile("../res/japanvillage.jpg"))
-	{
-		/* TEMPORARY: For Android */
-		background->loadFromFile("japanvillage.jpg");
-	}
-#endif
 	/* TEMP: Input state handle */
 	testState = DIR_STOP;
 	testBackgroundState = DIR_STOP;
@@ -33,66 +14,7 @@ ESceneManager::ESceneManager()
 
 ESceneManager::~ESceneManager()
 {
-	removeTexture();
 	LOG_INFO("Bye ESceneManager !");
-}
-#if 0
-bool ESceneManager::createBackgroundImage(std::string img_path)
-{
-	bool created = false;
-	background = new EImageTexture(img_path);
-
-	created = background->loadFromFile(img_path.c_str());
-
-	return created;
-}
-
-bool ESceneManager::createSprite(std::string sprite_path)
-{
-	bool created = false;
-	sprite = new ESprite();
-
-	//created = sprite->loadFromFile(sprite_path.c_str());
-
-	return created;
-}
-
-ESceneManager* ESceneManager::getInstance() {
-	if (instance == NULL) {
-		instance = new ESceneManager();
-	}
-
-	return instance;
-}
-#endif
-
-void ESceneManager::createTexture(int x, int y)
-{
-#if 0
-	static int maxCount = 0;
-	if (maxCount < 10) {
-		//ETexture*	texture = new ETexture(x, y);
-		EDrawable*	texture = new EDrawable(x, y);
-		texture->animateStart(SDL_GetTicks());
-		textureList.push_back(texture);
-
-		LOG_INFO("New texture created.");
-		LOG_INFO("    ( %d, %d ) / total: %lu", x, y, textureList.size());
-	}
-#endif
-}
-
-void ESceneManager::removeTexture()
-{
-#if 0
-	//std::list<ETexture*>::iterator	iter;
-	std::list<EDrawable*>::iterator	iter;
-	while (textureList.empty() == false) {
-		iter = textureList.begin();
-		delete *iter;
-		textureList.erase(iter);
-	}
-#endif
 }
 
 bool ESceneManager::playScene(std::string scene_name)
@@ -261,70 +183,12 @@ void ESceneManager::render()
 {
 	if (currentScene)
 		currentScene->render();
-#if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
-	Uint32 current = SDL_GetTicks();
-
-	/* TODO: Handle this texture same with others */
-	background->render();
-
-	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
-		if (texture != NULL) {
-			texture->render();
-			//LOG_INFO("List Texture(%p) rendered !", texture);
-		} else {
-			LOG_INFO("List Texture is NULL. count: %lu", textureList.size());
-		}
-		iter++;
-	}
-	textTexture->render();
-	sprite->render();
-#endif
 }
 
 void ESceneManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (currentScene)
 		currentScene->update(currentTime, accumulator);
-#if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
-	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
-		if (texture != NULL) {
-			//texture->calculate(currentTime, accumulator);
-			texture->update(currentTime, accumulator);
-		}
-		iter++;
-	}
-
-	/* TODO: Handle this texture same with others */
-	background->update(currentTime, accumulator);
-
-	textTexture->update(currentTime, accumulator);
-	sprite->update(currentTime, accumulator);
-
-	/* TEST */
-	if (testState & DIR_UP)
-		temp_moveCharacter(0.0, -1.0);
-	if (testState & DIR_DOWN)
-		temp_moveCharacter(0.0, 1.0);
-	if (testState & DIR_LEFT)
-		temp_moveCharacter(-1.0, 0.0);
-	if (testState & DIR_RIGHT)
-		temp_moveCharacter(1.0, 0.0);
-
-	if (testBackgroundState & DIR_UP)
-		temp_moveBackGround(0.0, -1.0);
-	if (testBackgroundState & DIR_DOWN)
-		temp_moveBackGround(0.0, 1.0);
-	if (testBackgroundState & DIR_LEFT)
-		temp_moveBackGround(-1.0, 0.0);
-	if (testBackgroundState & DIR_RIGHT)
-		temp_moveBackGround(1.0, 0.0);
-#endif
 }
 
 void ESceneManager::temp_moveBackGround(double dx, double dy)

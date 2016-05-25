@@ -108,7 +108,6 @@ void EImageTexture::render()
 	SDL_Rect rect = { 0, };
 
 	SDL_GetWindowSize(window, &width, &height);
-	LOG_DBG("Window [%d x %d]", width, height);
 	rect.w = width;
 	rect.h = height;
 
