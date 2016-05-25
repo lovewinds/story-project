@@ -6,8 +6,7 @@
 #include "resource/ESceneInfo.hpp"
 
 ESceneInfo::ESceneInfo(std::string name)
-: texture_map(_texture_map),
-  sprite_map(_sprite_map)
+: sprite_map(_sprite_map)
 {
 	LOG_INFO("ESceneInfo[%s] created", name.c_str());
 	this->name = name;
@@ -16,7 +15,6 @@ ESceneInfo::ESceneInfo(std::string name)
 ESceneInfo::~ESceneInfo()
 {
 	_sprite_map.clear();
-	_texture_map.clear();
 
 	LOG_INFO("ESceneInfo[%s] removed", name.c_str());
 }
@@ -25,62 +23,18 @@ std::string ESceneInfo::getName()
 {
 	return name;
 }
-
+#if 0
 std::shared_ptr<SDL_Texture_Wrap>
 ESceneInfo::allocateTexture(std::string path)
 {
-	std::shared_ptr<SDL_Texture_Wrap> result;
-	auto found = _texture_map.find(path);
 
-	if (found == _texture_map.end()) {
-		/* Texture is not exist. allocate one */
-		std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(path));
-		if (texture) {
-			//auto insert = _texture_map.emplace(path, texture);
-			std::pair<std::string, std::shared_ptr<SDL_Texture_Wrap>> p(path, texture);
-			auto insert = _texture_map.insert(p);
-			//auto insert = texture_map.insert(path, texture);
-			if (insert.second) {
-				// stored
-				result = texture;
-			} else {
-				LOG_ERR("Failed to insert texture !");
-				int idx = 0;
-
-				for(auto& t : _texture_map)
-				{
-					//auto t = it.second.get();
-					//SDL_Texture *tx = t.second.get()->getTexture();
-				}
-				result = nullptr;
-			}
-		} else {
-			LOG_ERR("Failed to allocate texture !");
-		}
-	} else {
-		result = found->second;
-	}
-
-	return result;
 }
 
 void ESceneInfo::releaseTexture(std::string path)
 {
-	//auto cnt = _texture_map.erase(path);
-	//LOG_DBG("  Count after erase [%lu]", cnt);
-	LOG_ERR("  Count before erase [%lu]", _texture_map.size());
-	if (_texture_map.empty())
-		return;
 
-	std::shared_ptr<SDL_Texture_Wrap> result;
-	auto found = _texture_map.find(path);
-
-	if (found != _texture_map.end()) {
-		//LOG_DBG("  texture [%s] count [%lu]", found->first.c_str(), found->second.use_count());
-		//_texture_map.erase(found);
-	}
 }
-
+#endif
 bool ESceneInfo::addSprite(std::shared_ptr<ESprite> sprite)
 {
 #if 0
@@ -148,6 +102,18 @@ bool ESceneInfo::allocateImages()
 		it.second->allocate();
 	}
 	return true;
+}
+
+void ESceneInfo::deallocate()
+{
+	for(auto &it : _sprite_map) {
+		LOG_DBG("  DeAllocate sprite [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->deallocate();
+	}
+	for(auto &it : _img_texture_map) {
+		LOG_DBG("  DeAllocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->deallocate();
+	}
 }
 
 void ESceneInfo::handleEvent(SDL_Event e)

@@ -89,16 +89,7 @@ bool EResourceManager::allocateScene(std::string scene_name)
 		/* Scene found. Allocate Image resources */
 		currentScene = scene->second;
 
-		for (auto& it : image_map) {
-			std::string name(it.first);
-			std::string path(it.second->getPath());
-			LOG_INFO("   Stored name: [%s]", name.c_str());
-			LOG_INFO("   Image  path: [%s]", path.c_str());
-
-			it.second->allocate();
-		}
-
-		/* TODO: Allocate all sprites and image textures on specific scene */
+		/* Allocate all sprites and image textures on specific scene */
 		currentScene->allocateSprites();
 		currentScene->allocateImages();
 	} else {
@@ -111,11 +102,61 @@ bool EResourceManager::allocateScene(std::string scene_name)
 	return true;
 }
 
+bool EResourceManager::deallocateScene(std::string scene_name)
+{
+	std::shared_ptr<ESceneInfo> s;
+	auto scene = scene_map.find(scene_name);
+
+	if (scene != scene_map.end()) {
+		s = scene->second;
+		s->deallocate();
+	} else {
+		/* Scene is not found ! */
+		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
+		return false;
+	}
+
+	return true;
+}
+
 std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string path)
 {
+#if 0
 	std::shared_ptr<SDL_Texture_Wrap> result;
 	if (currentScene)
 		result = currentScene->allocateTexture(path);
+#endif
+	std::shared_ptr<SDL_Texture_Wrap> result;
+	auto found = _texture_map.find(path);
+
+	if (found == _texture_map.end()) {
+		/* Texture is not exist. allocate one */
+		std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(path));
+		if (texture) {
+			//auto insert = _texture_map.emplace(path, texture);
+			std::pair<std::string, std::shared_ptr<SDL_Texture_Wrap>> p(path, texture);
+			auto insert = _texture_map.insert(p);
+			//auto insert = texture_map.insert(path, texture);
+			if (insert.second) {
+				// stored
+				result = texture;
+			} else {
+				LOG_ERR("Failed to insert texture !");
+				int idx = 0;
+
+				for(auto& t : _texture_map)
+				{
+					//auto t = it.second.get();
+					//SDL_Texture *tx = t.second.get()->getTexture();
+				}
+				result = nullptr;
+			}
+		} else {
+			LOG_ERR("Failed to allocate texture !");
+		}
+	} else {
+		result = found->second;
+	}
 
 	return result;
 }
@@ -123,9 +164,21 @@ std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string 
 // TODO: Need to deallocate texture here if caching is applied.
 void EResourceManager::releaseTexture(std::string path)
 {
-	// Get current scene
-	if (currentScene)
-		currentScene->releaseTexture(path);
+	LOG_ERR("  Count of texture map items [%lu]", _texture_map.size());
+	if (_texture_map.empty())
+		return;
+
+	std::shared_ptr<SDL_Texture_Wrap> result;
+	auto found = _texture_map.find(path);
+
+	if (found != _texture_map.end()) {
+		LOG_DBG("  texture [%s] count [%lu]", found->first.c_str(), found->second.use_count());
+		/* Reference counting logic
+		 * If use_count is 1, it is not owned by all activated scenes.
+		 * remove it ! */
+		if (found->second.use_count() == 1)
+			_texture_map.erase(found);
+	}
 }
 
 bool EResourceManager::createSpriteType(std::shared_ptr<ESpriteType> spriteType)

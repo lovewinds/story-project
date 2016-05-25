@@ -39,17 +39,19 @@ public:
 	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
 
 	/* Resource manager allocates image resource */
-	std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);
-	void releaseTexture(std::string path);
+	//std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);
+	//void releaseTexture(std::string path);
 
 	bool allocateSprites();
 	bool allocateImages();
+
+	void deallocate();
 
 	std::string getName();
 
 	/* Export read-only resources */
 	const std::map<std::string, std::shared_ptr<ESprite>>& sprite_map;
-	const std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>>& texture_map;
+//	const std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>>& texture_map;
 
 protected:
 	std::string name;
@@ -61,9 +63,4 @@ protected:
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 
 	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
-
-	/* Texture map for cache
-	 *   These textures are already allocated on video memory.
-	 */
-	std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> _texture_map;
 };

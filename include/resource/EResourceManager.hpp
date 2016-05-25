@@ -34,6 +34,8 @@ public:
 	/* Allocate specific scene and related resource(i.e. sprites) into memory */
 	bool allocateScene(std::string scene_name);
 
+	bool deallocateScene(std::string scene_name);
+
 /*
  * Image Resource Functions
  */
@@ -96,6 +98,8 @@ protected:
 	/* Allocated Image Texture instances */
 	std::map<std::string, std::shared_ptr<EImageTexture>> _image_texture_map;
 
-	/* TODO: Store texture here for caching */
-	//std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> texture_map;
+	/* Texture map for cache
+	 *   These textures are already allocated on video memory.
+	 */
+	std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> _texture_map;
 };

@@ -32,6 +32,7 @@ ESprite::ESprite(std::string _name, std::string _base_image, std::vector<SDL_Rec
 ESprite::~ESprite()
 {
 	deallocate();
+	gSpriteClips.clear();
 }
 
 std::string ESprite::getName()
@@ -68,7 +69,7 @@ bool ESprite::allocate()
 void ESprite::deallocate()
 {
 	mTexture.reset();
-	gSpriteClips.clear();
+	sprite_base->releaseTexture();
 }
 
 void ESprite::update(Uint32 currentTime, Uint32 accumulator)

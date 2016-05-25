@@ -21,12 +21,7 @@ EImageResourceInfo::EImageResourceInfo(std::string name, std::string path, unsig
 
 EImageResourceInfo::~EImageResourceInfo()
 {
-	/* TODO: Notify destruction to ResourceManager.
-	 *       It will deallocate unused resource from memory.
-	 */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	resManager.releaseTexture(name);
-
+	releaseTexture();
 	LOG_INFO("EImageResourceInfo[%s] removed", name.c_str());
 }
 
@@ -52,9 +47,31 @@ unsigned int EImageResourceInfo::getHeight() const
 
 std::shared_ptr<SDL_Texture_Wrap> EImageResourceInfo::getTexture()
 {
+	if (texture == nullptr) {
+		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+
+		texture = resManager.allocateTexture(path);
+		if (!texture) {
+			LOG_ERR("Failed to allocate resource [%s]", getPath().c_str());
+			return nullptr;
+		}
+	}
+
 	return texture;
 }
 
+void EImageResourceInfo::releaseTexture()
+{
+	texture.reset();
+	texture = nullptr;
+
+	/* Notify destruction to ResourceManager.
+	* It will deallocate unused resource from memory.
+	*/
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	resManager.releaseTexture(path);
+}
+#if 0
 void EImageResourceInfo::allocate()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
@@ -66,3 +83,4 @@ void EImageResourceInfo::allocate()
 
 	return;
 }
+#endif

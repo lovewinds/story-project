@@ -14,6 +14,7 @@ ESceneManager::ESceneManager()
 
 ESceneManager::~ESceneManager()
 {
+	stopCurrentScene();
 	LOG_INFO("Bye ESceneManager !");
 }
 
@@ -33,10 +34,37 @@ bool ESceneManager::playScene(std::string scene_name)
 	return true;
 }
 
+void ESceneManager::stopCurrentScene()
+{
+	if (currentScene) {
+		EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+		bool success = resMgr.deallocateScene(currentScene->getName());
+
+		currentScene = nullptr;
+	}
+}
+
 void ESceneManager::handleEvent(SDL_Event e)
 {
 //	if (currentScene)
 //		currentScene->handleEvent(e);
+	bool ret = false;
+	std::string default_scene("main");
+
+	if (e.type == SDL_KEYDOWN) {
+		LOG_INFO("Pressed [%d]", e.key.keysym.sym)
+		switch (e.key.keysym.sym) {
+		case SDLK_1:
+			LOG_INFO("Play Scene");
+			ret = playScene(default_scene);
+			if (false == ret)
+				LOG_ERR("Failed to play scene [%s] !", default_scene.c_str());
+			break;
+		case SDLK_2:
+			stopCurrentScene();
+			break;
+		}
+	}
 #if 0
 	static Uint32 latestEventTime = 0;
 	//LOG_INFO("texture handle event!");

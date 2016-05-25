@@ -39,6 +39,7 @@ public:
 	void temp_moveCharacter(double dx, double dy);
 
 	bool playScene(std::string scene_name);
+	void stopCurrentScene();
 
 private:
 	std::shared_ptr<ESceneInfo> currentScene;

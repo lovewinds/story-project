@@ -46,12 +46,12 @@ bool EImageTexture::allocate()
 		return false;
 	}
 
-	/* TODO: Allocate a new texture for each sprite */
 	image = resManager.getImageResource(base_image);
 
 	if (!image)
 		return false;
 
+	/* Get shared texture from Resource Manager */
 	mTexture = image->getTexture();
 	return true;
 }
@@ -59,6 +59,7 @@ bool EImageTexture::allocate()
 void EImageTexture::deallocate()
 {
 	mTexture.reset();
+	image->releaseTexture();
 }
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)

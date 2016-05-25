@@ -4,13 +4,13 @@
 	<Scene name="main" class="Template_RPG">
 		<Resources>
 			<Images>
-				<Image src="japanvillage.jpg" name="Background"
+				<Image src="bg-black.png" name="Background"
 					 type="background" width="636" height="475" />
-				<Image src="moderngirl02.png" name="Character"
-					 type="sprite" width="600" height="50" />
+				<Image src="grid-base.png" name="Character"
+					 type="sprite" width="128" height="192" />
 			</Images>
 			<Sprites>
-				<Sprite source="Character" name="loading_circle" width="50" height="50">
+				<Sprite source="Character" name="loading_circle" width="32" height="48">
 					<Index linear="start">1</Index>
 					<Index>2</Index>
 					<Index>3</Index>

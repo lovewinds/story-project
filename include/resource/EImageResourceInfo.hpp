@@ -21,10 +21,8 @@ public:
 	unsigned int getWidth() const;
 	unsigned int getHeight() const;
 
-	void allocate();
-
-	/* CHECK: Should provide it as weak_ptr? - to sprite instance */
 	std::shared_ptr<SDL_Texture_Wrap>	getTexture();
+	void releaseTexture();
 
 protected:
 	std::string name;
