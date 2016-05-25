@@ -46,9 +46,15 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/external/sources/pugixml/src/
 )
 IF(UNIX AND NOT WIN32)
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/built/lib/)
+    LINK_DIRECTORIES(
+		${CMAKE_SOURCE_DIR}/external/built/lib/
+		${CMAKE_BINARY_DIR}
+	)
 ELSE(UNIX AND NOT WIN32)
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/built/lib/$(Configuration)/)
+    LINK_DIRECTORIES(
+		${CMAKE_SOURCE_DIR}/external/built/lib/$(Configuration)/
+		${CMAKE_BINARY_DIR}
+	)
 ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
@@ -68,8 +74,13 @@ FILE(GLOB_RECURSE TMP_FILES
     "include/*.h"
     "include/*.hpp"
 )
+
+# Remove single file from list
+LIST(REMOVE_ITEM TMP_FILES "main.cpp")
+
 # Append external libraries
 SET(SOURCES ${TMP_FILES}
+	"src/main.cpp"
     "external/sources/jsoncpp/dist/jsoncpp.cpp"
     "external/sources/pugixml/src/pugixml.cpp")
 
@@ -88,18 +99,40 @@ foreach(f ${TMP_FILES})
     source_group("${SRCGR}" FILES ${f})
 endforeach()
 
-MESSAGE(${SRCGR})
-
-# binary build
-ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES})
+##################### Library build with fPIC option
 IF(UNIX AND NOT WIN32)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+    ADD_LIBRARY(${LIBNAME} SHARED ${SOURCES})
+    SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
+    TARGET_LINK_LIBRARIES(${LIBNAME}
         ${pkgs_LDFLAGS}
         ${SDL2_LIBRARIES}
         ${SDL2_IMAGE_LIBRARIES}
         ${SDL2_TTF_LIBRARIES}
         ${SDL2_GFX_LIBRARIES}
-        "-ldl -lg3logger -lpugixml")
+        "-ldl -lg3logger_shared -lpugixml")
+ELSE(UNIX AND NOT WIN32)
+    # Windows
+    ADD_LIBRARY(${LIBNAME} STATIC ${SOURCES})
+    SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
+    TARGET_LINK_LIBRARIES(${LIBNAME}
+        ${pkgs_LDFLAGS}
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_ttf.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/g3logger.lib
+        "dbghelp.lib")
+ENDIF(UNIX AND NOT WIN32)
+SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
+
+
+##################### Binary build
+ADD_EXECUTABLE(${PROJECT_NAME} "src/main.cpp")
+IF(UNIX AND NOT WIN32)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+        ${pkgs_LDFLAGS}
+        "-ldl -lstory-project")
 ELSE(UNIX AND NOT WIN32)
     # Windows
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
@@ -110,22 +143,9 @@ ELSE(UNIX AND NOT WIN32)
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_ttf.lib
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/g3logger.lib
+        ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         "dbghelp.lib")
 ENDIF(UNIX AND NOT WIN32)
-
-# Library build with fPIC option
-ADD_LIBRARY(${LIBNAME} SHARED ${SOURCES})
-SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
-#IF(UNIX AND NOT WIN32)
-    TARGET_LINK_LIBRARIES(${LIBNAME}
-        ${pkgs_LDFLAGS}
-        ${SDL2_LIBRARIES}
-        ${SDL2_IMAGE_LIBRARIES}
-        ${SDL2_TTF_LIBRARIES}
-        ${SDL2_GFX_LIBRARIES}
-        "-ldl -lg3logger_shared -lpugixml")
-#ENDIF(UNIX AND NOT WIN32)
-SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
 
 # Post build
 IF(WIN32)

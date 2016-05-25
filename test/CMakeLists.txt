@@ -55,5 +55,8 @@ ELSE(UNIX AND NOT WIN32)
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_ttf.lib
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/g3logger.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/gtest.lib
+        ${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/gtest_main.lib
+        ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         "dbghelp.lib")
 ENDIF(UNIX AND NOT WIN32)

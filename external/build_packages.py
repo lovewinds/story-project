@@ -19,6 +19,7 @@ JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.1"
 PUGIXML = "pugixml-1.7"
 GTEST = "googletest-release-1.7.0"
+MSVC_VER = "v120"
 
 def mkdir_p(path):
 	try:
@@ -88,6 +89,25 @@ def patch_sdl2_gfx(path):
 		item = child.find(msvc_ns_prefix+"Link")
 		item = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
 		item.text = "..\\..\\built\\$(Configuration);"+item.text
+
+	print "Patched\n"
+
+	tree.write(path, encoding="utf-8", xml_declaration=True)
+
+def patch_gtest(path):
+	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+	ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
+	tree = ElementTree.parse(path)
+	root = tree.getroot()
+
+	list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
+	for child in list:
+		item = child.find(msvc_ns_prefix+"ClCompile")
+		item = item.find(msvc_ns_prefix+"RuntimeLibrary")
+		if item.text == 'MultiThreaded':
+			item.text = "MultiThreadedDLL"
+		elif item.text == 'MultiThreadedDebug':
+			item.text = "MultiThreadedDebugDLL"
 
 	print "Patched\n"
 
@@ -179,8 +199,8 @@ def build_sources_MSVC(build_type):
 		print "SDL2 is already built."
 	else:
 		os.chdir(sdl2_path)
-		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
 		print "Copying SDL2 header files .."
 		copytree(sdl2_include_path, include_path)
@@ -192,8 +212,8 @@ def build_sources_MSVC(build_type):
 		os.chdir(sdl2_image_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_image("SDL_image_VS2012.vcxproj")
-		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
 		print "Copying SDL2_image header files .."
 		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
@@ -217,8 +237,8 @@ def build_sources_MSVC(build_type):
 		os.chdir(sdl2_ttf_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_ttf("SDL_ttf.vcxproj")
-		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
 		print "Copying SDL2_ttf header files .."
 		copy2(sdl2_ttf_path+'../SDL_ttf.h', include_path+'SDL_ttf.h')
@@ -234,8 +254,8 @@ def build_sources_MSVC(build_type):
 		os.chdir(sdl2_gfx_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_gfx("SDL2_gfx.vcxproj")
-		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet=v120 /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
 		print "Copying SDL2_gfx header files .."
 		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
@@ -270,6 +290,8 @@ def build_sources_MSVC(build_type):
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
 		os.system('cmake ..')
+		patch_gtest("gtest.vcxproj")
+		patch_gtest("gtest_main.vcxproj")
 		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Release /p:OutDir='+build_path_rel)
 
@@ -387,7 +409,7 @@ if __name__ == "__main__":
 	parser.add_argument('--path', help='Set running path of script')
 	parser.add_argument('--type', default='release', choices=['debug', 'release'], help='Select compile type (default: release)')
 	parser.add_argument('--arch', default='x86', choices=['x86', 'x64', 'x86_64'], help='Select archtecture for desktop build (default: x86)')
-	parser.add_argument('--vc-version', default='vc120', help='If you use MSVC, you can select MSVC version to build with. (default: vc120)')
+	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: vc120)')
 	args = parser.parse_args()
 
 	print "Build type : "+args.type
@@ -407,8 +429,9 @@ if __name__ == "__main__":
 		print 'Linux'
 		build_sources(args.type)
 	elif platform.system() == 'Windows':
-		print 'Windows'
 		WORKING_PATH = WORKING_PATH.replace('\\', '/')
+		MSVC_VER = args.msvc
+		print 'Windows (MSVC: '+MSVC_VER+')'
 		build_sources_MSVC(args.type)
 	elif platform.system() == 'Darwin':
 		print 'MAC OS'
