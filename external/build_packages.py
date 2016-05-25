@@ -18,6 +18,7 @@ SDL2_GFX = "SDL2_gfx-1.0.1"
 JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.1"
 PUGIXML = "pugixml-1.7"
+GTEST = "googletest-release-1.7.0"
 
 def mkdir_p(path):
 	try:
@@ -149,6 +150,13 @@ def extract_sources():
 		tarfile.open(PUGIXML+'.tar.gz').extractall(source_path)
 		os.rename(source_path+PUGIXML, source_path+'pugixml')
 
+	# extract gtest
+	if os.path.exists(source_path+'gtest/'):
+		print "gtest is already extracted."
+	else:
+		tarfile.open(GTEST+'.tar.gz').extractall(source_path)
+		os.rename(source_path+GTEST, source_path+'gtest')
+
 def build_sources_MSVC(build_type):
 	print "Trying to build extracted sources ..."
 	build_path_dbg = WORKING_PATH+'built/Debug/'
@@ -164,6 +172,7 @@ def build_sources_MSVC(build_type):
 	sdl2_gfx_path = WORKING_PATH+'sources/SDL2_gfx/'
 	g3log_path = WORKING_PATH+'sources/g3log/build/'
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
+	gtest_path = WORKING_PATH+'sources/gtest/build/'
 
 # Build SDL2
 	if os.path.exists(build_path_rel+'SDL2.lib'):
@@ -253,6 +262,17 @@ def build_sources_MSVC(build_type):
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
+# Build gtest
+	if os.path.exists(build_path_rel+'gtest.lib'):
+		print "gtest is already built."
+	else:
+		print "Start building gtest .."
+		mkdir_p(gtest_path)
+		os.chdir(gtest_path)
+		os.system('cmake ..')
+		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Release /p:OutDir='+build_path_rel)
+
 def build_sources(build_type):
 	print "Trying to build extracted sources ..."
 	build_path = WORKING_PATH+'built/'
@@ -269,6 +289,7 @@ def build_sources(build_type):
 	freetype2_path = WORKING_PATH+'sources/SDL2_ttf/external/freetype-2.4.12/build/'
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
 	pugixml_path = WORKING_PATH+'sources/pugixml/scripts/build/'
+	gtest_path = WORKING_PATH+'sources/gtest/build/'
 
 	# TODO: Check its working
 	if build_type == 'debug':
@@ -330,9 +351,10 @@ def build_sources(build_type):
 		print "Start building g3log .."
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
-		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger')
+		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger; make g3logger_shared')
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
+		copy2(g3log_path+'libg3logger_shared.so', library_path)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
@@ -347,6 +369,17 @@ def build_sources(build_type):
 		mkdir_p(pugixml_path)
 		os.chdir(pugixml_path)
 		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
+
+# Build gtest
+	if os.path.exists(library_path+'libgtest.a'):
+		print "gtest is already built."
+	else:
+		print "Start building gtest .."
+		mkdir_p(gtest_path)
+		os.chdir(gtest_path)
+		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
+		copy2(gtest_path+'libgtest_main.a', library_path)
+		copy2(gtest_path+'libgtest.a', library_path)
 
 if __name__ == "__main__":
 	# Handle arguments

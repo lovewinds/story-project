@@ -6,12 +6,12 @@ SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 SET(EXEC_PREFIX "\${prefix}")
 SET(LIBDIR "\${prefix}/lib")
 SET(INCLUDEDIR "\${prefix}/include")
+SET(LIBNAME "lib${PROJECT_NAME}")
 
 # Check external libraries
 
 # Search SDL2 libraries
 # https://github.com/rodrigo21/sdl2-cmake-scripts
-# TODO: Does it working on Windows?
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake")
 IF(UNIX AND NOT WIN32)
     MESSAGE("Unix or Linux !")
@@ -53,7 +53,7 @@ ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
 IF(UNIX AND NOT WIN32)
-	SET(ADDITIONAL_CXXFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable -std=c++11")
+	SET(ADDITIONAL_CXXFLAGS "-fPIC -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -std=c++11")
 ENDIF(UNIX AND NOT WIN32)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ADDITIONAL_CXXFLAGS} ")
@@ -113,6 +113,20 @@ ELSE(UNIX AND NOT WIN32)
         "dbghelp.lib")
 ENDIF(UNIX AND NOT WIN32)
 
+# Library build with fPIC option
+ADD_LIBRARY(${LIBNAME} SHARED ${SOURCES})
+SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
+#IF(UNIX AND NOT WIN32)
+    TARGET_LINK_LIBRARIES(${LIBNAME}
+        ${pkgs_LDFLAGS}
+        ${SDL2_LIBRARIES}
+        ${SDL2_IMAGE_LIBRARIES}
+        ${SDL2_TTF_LIBRARIES}
+        ${SDL2_GFX_LIBRARIES}
+        "-ldl -lg3logger_shared -lpugixml")
+#ENDIF(UNIX AND NOT WIN32)
+SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
+
 # Post build
 IF(WIN32)
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
@@ -120,6 +134,9 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
     COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/built/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
     COMMENT "Copy required dynamic libraries")
 ENDIF(WIN32)
+
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/test)
+
 # install
 #INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 #INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/built/lib/ DESTINATION ${CMAKE_SOURCE_DIR}/bin
