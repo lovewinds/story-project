@@ -376,8 +376,10 @@ def build_sources(build_type):
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger; make g3logger_shared')
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
-		copy2(g3log_path+'libg3logger_shared.so', library_path)
-		copy2(g3log_path+'libg3logger_shared.dylib', library_path)
+		if os.path.exists(g3log_path+'libg3logger_shared.so'):
+			copy2(g3log_path+'libg3logger_shared.so', library_path)
+		if os.path.exists(g3log_path+'libg3logger_shared.dylib'):
+			copy2(g3log_path+'libg3logger_shared.dylib', library_path)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
