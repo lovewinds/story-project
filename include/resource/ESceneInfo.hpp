@@ -7,6 +7,7 @@
 #include "util/SDLWrap.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
+#include "texture/ETextTexture.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -44,6 +45,7 @@ public:
 
 	bool allocateSprites();
 	bool allocateImages();
+	bool allocateTexts();
 
 	void deallocate();
 
@@ -63,4 +65,6 @@ protected:
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 
 	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
+
+	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 };

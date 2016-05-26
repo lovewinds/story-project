@@ -6,7 +6,7 @@
 #include "resource/ESceneInfo.hpp"
 #include "texture/drawable/EDrawable.h"
 #include "texture/ETexture.h"
-#include "texture/ETextTexture.h"
+#include "texture/ETextTexture.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 

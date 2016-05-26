@@ -58,6 +58,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				_height = std::stoi(height);
 			}
 			catch (std::exception &e) {
+				LOG_ERR("%s", e.what());
 				LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
 				continue;
 			}
@@ -83,6 +84,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				_height = std::stoi(height);
 			}
 			catch (std::exception &e) {
+				LOG_ERR("%s", e.what());
 				LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
 				continue;
 			}
@@ -123,6 +125,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				p_y = std::stoi(itm_p_y);
 			}
 			catch (std::exception &e) {
+				LOG_ERR("%s", e.what());
 				LOG_ERR("   Invalid position x/y [%s / %s]. use default pos (0,0)",
 				 	itm_p_x.c_str(), itm_p_y.c_str());
 			}

@@ -79,7 +79,7 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 		prevTime = currentTime;
 
 		sprite_index++;
-		if (sprite_index >= gSpriteClips.size())
+		if (sprite_index >= (int8_t)gSpriteClips.size())
 			sprite_index = 0;
 	}
 }

@@ -42,6 +42,28 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::string path)
 	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0xFF, 0xFF));
 }
 
+SDL_Surface_Wrap::SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+: surface(nullptr)
+{
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	TTF_Font* gFont = Ecore::getInstance()->getFont();
+
+	if (text.empty()) {
+		LOG_ERR("Text for texture is empty !");
+		return;
+	}
+
+	/* Render text surface */
+	//surface = TTF_RenderText_Solid(gFont, text.c_str(), textColor);
+	//surface = TTF_RenderText_Shaded(gFont, text.c_str(), textColor, bgColor);
+	surface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
+	if (surface == nullptr)
+	{
+		LOG_ERR("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		return;
+	}
+}
+
 SDL_Surface_Wrap::~SDL_Surface_Wrap()
 {
 	if (surface) {
@@ -81,6 +103,9 @@ bool SDL_Texture_Wrap::createFromSurface(SDL_Surface *surface)
 	if (!surface)
 		return false;
 
+	width = surface->w;
+	height = surface->h;
+
 	/* Create texture from surface pixels */
 	texture = SDL_CreateTextureFromSurface(gRenderer, surface);
 	if (texture == nullptr) {
@@ -109,6 +134,18 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(std::string path)
 : texture(nullptr)
 {
 	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(path));
+
+	if (surf) {
+		createFromSurface(surf->getSurface());
+	} else {
+		LOG_ERR("Failed to create surface !");
+	}
+}
+
+SDL_Texture_Wrap::SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+: texture(nullptr)
+{
+	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(text, textColor, bgColor));
 
 	if (surf) {
 		createFromSurface(surf->getSurface());
@@ -155,4 +192,14 @@ SDL_Texture_Wrap::~SDL_Texture_Wrap()
 SDL_Texture* SDL_Texture_Wrap::getTexture()
 {
 	return texture;
+}
+
+int SDL_Texture_Wrap::getWidth()
+{
+	return width;
+}
+
+int SDL_Texture_Wrap::getHeight()
+{
+	return height;
 }

@@ -1,5 +1,8 @@
 #pragma once
+
 #include <string>
+
+#include <SDL.h>
 
 #include "ETexture.h"
 
@@ -7,11 +10,14 @@ class ETextTexture :
 	public ETexture
 {
 public:
-	ETextTexture();
+	ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
 	virtual ~ETextTexture();
 
-	/* Creates image from font string */
-	bool loadFromRenderedText(const std::string& textureText, SDL_Color textColor, SDL_Color bgColor);
+	/* Update String */
+	virtual void setText(const std::string& text);
+
+	bool allocate();
+	void deallocate();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
@@ -20,6 +26,6 @@ protected:
 	/* String to show */
 	std::string message;
 
-	/* Update String */
-	virtual void update_string(const std::string& str);
+	SDL_Color textColor;
+	SDL_Color bgColor;
 };

@@ -92,6 +92,7 @@ bool EResourceManager::allocateScene(std::string scene_name)
 		/* Allocate all sprites and image textures on specific scene */
 		currentScene->allocateSprites();
 		currentScene->allocateImages();
+		currentScene->allocateTexts();
 	} else {
 		/* Scene is not found ! */
 		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
@@ -159,6 +160,14 @@ std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string 
 	}
 
 	return result;
+}
+
+std::shared_ptr<SDL_Texture_Wrap>
+EResourceManager::allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
+{
+	std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(text, textColor, bgColor));
+	LOG_ERR("[ResMgr] texture [%p]", texture);
+	return texture;
 }
 
 // TODO: Need to deallocate texture here if caching is applied.

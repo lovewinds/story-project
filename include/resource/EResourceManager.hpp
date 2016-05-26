@@ -71,6 +71,12 @@ public:
 	//	createSprite(std::string sprite_name, std::weak_ptr<EImageResourceInfo> img_resource);
 
 /*
+ * Text texture Functions
+ */
+	std::shared_ptr<SDL_Texture_Wrap>
+	allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
+
+/*
  * Texture Functions
  */
 	std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);

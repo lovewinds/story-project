@@ -10,11 +10,22 @@ ESceneInfo::ESceneInfo(std::string name)
 {
 	LOG_INFO("ESceneInfo[%s] created", name.c_str());
 	this->name = name;
+
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
+	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
+	tt->movePositionTo(10, 100);
+	auto result = _text_texture_map.emplace("test string", tt);
+	if (!result.second) {
+		LOG_ERR("Failed to insert text set !");
+	}
 }
 
 ESceneInfo::~ESceneInfo()
 {
 	_sprite_map.clear();
+	_text_texture_map.clear();
 
 	LOG_INFO("ESceneInfo[%s] removed", name.c_str());
 }
@@ -23,18 +34,7 @@ std::string ESceneInfo::getName()
 {
 	return name;
 }
-#if 0
-std::shared_ptr<SDL_Texture_Wrap>
-ESceneInfo::allocateTexture(std::string path)
-{
 
-}
-
-void ESceneInfo::releaseTexture(std::string path)
-{
-
-}
-#endif
 bool ESceneInfo::addSprite(std::shared_ptr<ESprite> sprite)
 {
 #if 0
@@ -104,6 +104,18 @@ bool ESceneInfo::allocateImages()
 	return true;
 }
 
+bool ESceneInfo::allocateTexts()
+{
+	if (_text_texture_map.empty())
+		return false;
+
+	for (auto &it : _text_texture_map) {
+		LOG_DBG("  Allocate text texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->allocate();
+	}
+	return true;
+}
+
 void ESceneInfo::deallocate()
 {
 	for(auto &it : _sprite_map) {
@@ -112,6 +124,10 @@ void ESceneInfo::deallocate()
 	}
 	for(auto &it : _img_texture_map) {
 		LOG_DBG("  DeAllocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->deallocate();
+	}
+	for (auto &it : _text_texture_map) {
+		LOG_DBG("  DeAllocate text texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
 		it.second->deallocate();
 	}
 }
@@ -129,6 +145,11 @@ void ESceneInfo::render()
 	}
 
 	for (auto& it : _sprite_map)
+	{
+		it.second->render();
+	}
+
+	for (auto& it : _text_texture_map)
 	{
 		it.second->render();
 	}
@@ -157,6 +178,11 @@ void ESceneInfo::render()
 void ESceneInfo::update(Uint32 currentTime, Uint32 accumulator)
 {
 	for(auto& it : _sprite_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for(auto& it : _text_texture_map)
 	{
 		it.second->update(currentTime, accumulator);
 	}
