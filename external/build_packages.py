@@ -377,6 +377,7 @@ def build_sources(build_type):
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
 		copy2(g3log_path+'libg3logger_shared.so', library_path)
+		copy2(g3log_path+'libg3logger_shared.dylib', library_path)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):

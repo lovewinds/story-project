@@ -29,7 +29,7 @@ bool ETextTexture::allocate()
 	}
 
 	mTexture = resManager.allocateTextTexture(message, textColor, bgColor);
-	LOG_ERR("[Text] texture [%p]", mTexture);
+	//LOG_ERR("[Text] texture [%p]", &mTexture);
 	if (!mTexture) {
 		LOG_ERR("Failed to allocate text texture!");
 		return false;

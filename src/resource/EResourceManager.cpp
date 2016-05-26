@@ -166,7 +166,7 @@ std::shared_ptr<SDL_Texture_Wrap>
 EResourceManager::allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
 {
 	std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(text, textColor, bgColor));
-	LOG_ERR("[ResMgr] texture [%p]", texture);
+	LOG_ERR("[ResMgr] texture [%p]", &texture);
 	return texture;
 }
 
