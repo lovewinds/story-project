@@ -8,7 +8,7 @@
 EDrawable::EDrawable()
 {
 	/* Initialize */
-	mTexture = NULL;
+	mTexture = nullptr;
 	animating = false;
 
 	alpha = 255;
@@ -17,7 +17,7 @@ EDrawable::EDrawable()
 EDrawable::EDrawable(int x, int y)
 {
 	/* Initialize */
-	mTexture = NULL;
+	mTexture = nullptr;
 	animating = false;
 
 	/* Set Position */

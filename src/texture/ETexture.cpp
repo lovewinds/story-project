@@ -6,7 +6,7 @@ ETexture::ETexture() :
 p_x(0), p_y(0)
 {
 	/* Initialize */
-	mTexture = NULL;
+	mTexture = nullptr;
 	mWidth = 0;
 	mHeight = 0;
 }

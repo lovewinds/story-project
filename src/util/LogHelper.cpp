@@ -1,5 +1,6 @@
-#include <util/LogHelper.hpp>
+#include "util/LogHelper.hpp"
 
+#ifndef USE_SDL_LOG
 Log* Log::logger = NULL;
 //std::unique_ptr<g3::LogWorker> Log::logworker{ g3::LogWorker::createLogWorker() };
 
@@ -87,3 +88,4 @@ void Log::deinit()
 		logger = NULL;
 	}
 }
+#endif /*#ifndef USE_SDL_LOG*/

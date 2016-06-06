@@ -27,6 +27,9 @@ ESceneInfo::~ESceneInfo()
 	_sprite_map.clear();
 	_text_texture_map.clear();
 
+	isAllocated = false;
+	isActivated = false;
+
 	LOG_INFO("ESceneInfo[%s] removed", name.c_str());
 }
 
@@ -116,6 +119,25 @@ bool ESceneInfo::allocateTexts()
 	return true;
 }
 
+bool ESceneInfo::allocate()
+{
+	bool res = false;
+	res |= allocateSprites();
+	res |= allocateImages();
+	res |= allocateTexts();
+
+	if (false == res) {
+		LOG_ERR("Failed to allocate !");
+		deallocate();
+		return false;
+	}
+
+	isAllocated = true;
+	isActivated = true;
+
+	return true;
+}
+
 void ESceneInfo::deallocate()
 {
 	for(auto &it : _sprite_map) {
@@ -130,6 +152,14 @@ void ESceneInfo::deallocate()
 		LOG_DBG("  DeAllocate text texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
 		it.second->deallocate();
 	}
+
+	isAllocated = false;
+	isActivated = false;
+}
+
+void ESceneInfo::setActiveState(bool active)
+{
+	isActivated = active;
 }
 
 void ESceneInfo::handleEvent(SDL_Event e)
@@ -177,6 +207,9 @@ void ESceneInfo::render()
 
 void ESceneInfo::update(Uint32 currentTime, Uint32 accumulator)
 {
+	if (false == isActivated)
+		return;
+
 	for(auto& it : _sprite_map)
 	{
 		it.second->update(currentTime, accumulator);

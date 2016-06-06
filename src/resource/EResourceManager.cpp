@@ -37,10 +37,21 @@ bool EResourceManager::loadResources(std::string res_file)
 	}
 	LOG_DBG("Load resource file [%s]", path.c_str());
 
-	std::fstream resource(path.c_str());
-	if (!resource.good()) {
-		LOG_ERR("Failed to open resource file ['%s']", path.c_str());
-		return false;
+	if (Ecore::checkPlatform("iOS")) {
+		std::ifstream f;
+		f.open(path);
+		if (false == f.is_open()) {
+			LOG_ERR("Failed to open resource file ['%s']", path.c_str());
+			return false;
+		}
+		f.close();
+	}
+	else {
+		std::fstream resource(path.c_str());
+		if (!resource.good()) {
+			LOG_ERR("Failed to open resource file ['%s']", path.c_str());
+			return false;
+		}
 	}
 
 	return loader->loadResources(path);
@@ -89,10 +100,8 @@ bool EResourceManager::allocateScene(std::string scene_name)
 		/* Scene found. Allocate Image resources */
 		currentScene = scene->second;
 
-		/* Allocate all sprites and image textures on specific scene */
-		currentScene->allocateSprites();
-		currentScene->allocateImages();
-		currentScene->allocateTexts();
+		/* Allocate all resources on specific scene */
+		currentScene->allocate();
 	} else {
 		/* Scene is not found ! */
 		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());

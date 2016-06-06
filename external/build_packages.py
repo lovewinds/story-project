@@ -410,9 +410,10 @@ if __name__ == "__main__":
 	# Handle arguments
 	parser = argparse.ArgumentParser(description='Build script for external packages !!!NOT supported yet!!!')
 	parser.add_argument('--path', help='Set running path of script')
-	parser.add_argument('--type', default='release', choices=['debug', 'release'], help='Select compile type (default: release)')
+	parser.add_argument('--type', default='debug', choices=['debug', 'release'], help='Select compile type (default: debug)')
 	parser.add_argument('--arch', default='x86', choices=['x86', 'x64', 'x86_64'], help='Select archtecture for desktop build (default: x86)')
 	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: vc120)')
+	parser.add_argument('--platform', default='Windows', choices=['Windows', 'Linux', 'MacOSX'], help='Select platform to build. (default: Windows)')
 	args = parser.parse_args()
 
 	print "Build type : "+args.type

@@ -4,11 +4,6 @@
 
 #include "Ecore.hpp"
 #include "resource/ESceneInfo.hpp"
-#include "texture/drawable/EDrawable.h"
-#include "texture/ETexture.h"
-#include "texture/ETextTexture.hpp"
-#include "texture/ESprite.hpp"
-#include "texture/EImageTexture.hpp"
 
 enum TextureType {
 	TEXTURE_TYPE_FONT,
@@ -41,8 +36,12 @@ public:
 	bool playScene(std::string scene_name);
 	void stopCurrentScene();
 
+	void pauseCurrentScene();
+	void startCurrentScene();
+
 private:
 	std::shared_ptr<ESceneInfo> currentScene;
+	std::shared_ptr<ESceneInfo> overlay;
 
 	int testState;
 	int testBackgroundState;

@@ -28,4 +28,5 @@ int testXml()
 	catch (const pugi::xpath_exception& e) {
 		std::cout << "Select failed: " << e.what() << std::endl;
 	}
+	return 0;
 }

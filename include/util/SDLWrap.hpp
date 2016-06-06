@@ -29,12 +29,12 @@ public:
 	virtual ~SDL_Texture_Wrap();
 
 	SDL_Texture_Wrap(SDL_Texture_Wrap&) = delete;
-	SDL_Texture_Wrap& operator=(SDL_Texture_Wrap&& other) = delete;
-
-	SDL_Texture_Wrap(const SDL_Texture_Wrap& other) = delete;
-	SDL_Texture_Wrap& operator=(const SDL_Texture_Wrap& other) = delete;
+	/*SDL_Texture_Wrap(const SDL_Texture_Wrap& other) = delete;*/
 	SDL_Texture_Wrap(SDL_Texture_Wrap&& t) = delete;
+
 	SDL_Texture_Wrap operator=(SDL_Texture_Wrap** t) = delete;
+	SDL_Texture_Wrap& operator=(SDL_Texture_Wrap&& other) = delete;
+	SDL_Texture_Wrap& operator=(const SDL_Texture_Wrap& other) = delete;
 
 	SDL_Texture* getTexture();
 	int getWidth();

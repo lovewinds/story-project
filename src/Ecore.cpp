@@ -18,13 +18,17 @@ gWindow(NULL),
 gRenderer(NULL),
 gFont(NULL)
 {
+#ifndef USE_SDL_LOG
 	Log::init();
+#endif
 }
 
 Ecore::~Ecore()
 {
 	deinit();
+#ifndef USE_SDL_LOG
 	Log::deinit();
+#endif
 }
 
 Ecore*	Ecore::getInstance()

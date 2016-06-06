@@ -44,15 +44,26 @@ void ESceneManager::stopCurrentScene()
 	}
 }
 
+void ESceneManager::pauseCurrentScene()
+{
+	if (currentScene)
+		currentScene->setActiveState(false);
+}
+
+void ESceneManager::startCurrentScene()
+{
+	if (currentScene)
+		currentScene->setActiveState(true);
+}
+
 void ESceneManager::handleEvent(SDL_Event e)
 {
-//	if (currentScene)
-//		currentScene->handleEvent(e);
+	/* Handler inter-scene events */
 	bool ret = false;
 	std::string default_scene("main");
 
 	if (e.type == SDL_KEYDOWN) {
-		LOG_INFO("Pressed [%d]", e.key.keysym.sym)
+		LOG_INFO("Pressed [%d]", e.key.keysym.sym);
 		switch (e.key.keysym.sym) {
 		case SDLK_1:
 			LOG_INFO("Play Scene");
@@ -62,6 +73,13 @@ void ESceneManager::handleEvent(SDL_Event e)
 			break;
 		case SDLK_2:
 			stopCurrentScene();
+			break;
+
+		case SDLK_3:
+			pauseCurrentScene();
+			break;
+		case SDLK_4:
+			startCurrentScene();
 			break;
 		}
 	}
