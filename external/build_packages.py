@@ -10,16 +10,27 @@ from shutil import copytree, copy2
 from xml.etree import ElementTree
 import argparse
 
+CURRENT_PLATFORM = 0
 WORKING_PATH = "./"
 SDL2 = "SDL2-2.0.4"
 SDL2_IMAGE = "SDL2_image-2.0.0"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.1"
 JSONCPP = "jsoncpp-1.6.5"
-G3LOG = "g3log-1.1"
+G3LOG = "g3log-1.2"
 PUGIXML = "pugixml-1.7"
 GTEST = "googletest-release-1.7.0"
+PROTOBUF = "protobuf-3.0.0"
+ZEROMQ = "zeromq-4.1.5"
+CPPZMQ = "cppzmq"
 MSVC_VER = "v120"
+STATIC_LINK = False
+
+def enum(*sequential, **named):
+	enums = dict(zip(sequential, range(len(sequential))), **named)
+	reverse = dict((value, key) for key, value in enums.iteritems())
+	enums['reverse_mapping'] = reverse
+	return type('Enum', (), enums)
 
 def mkdir_p(path):
 	try:
@@ -28,6 +39,39 @@ def mkdir_p(path):
 		if exc.errno == errno.EEXIST and os.path.isdir(path):
 			pass
 		else: raise
+
+def patch_static_MSVC(path):
+	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+	ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
+	tree = ElementTree.parse(path)
+	root = tree.getroot()
+
+	# Change build result to .lib
+	list = root.findall(msvc_ns_prefix+"PropertyGroup")
+	for child in list:
+		try:
+			item = child.find(msvc_ns_prefix+"ConfigurationType")
+			if item.text == "DynamicLibrary":
+				item.text = "StaticLibrary"
+		except:
+			pass
+
+	# Change runtime library
+	list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
+	for child in list:
+		try:
+			item = child.find(msvc_ns_prefix+"ClCompile")
+			item = item.find(msvc_ns_prefix+"RuntimeLibrary")
+			if item.text == 'MultiThreadedDLL':
+				item.text = "MultiThreaded"
+			elif item.text == 'MultiThreadedDebugDLL':
+				item.text = "MultiThreadedDebug"
+		except:
+			pass
+
+	print "   [SDL2] Patched\n"
+
+	tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def patch_sdl2_image(path):
 	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -52,7 +96,7 @@ def patch_sdl2_image(path):
 			dir.attrib["Include"] = dir.attrib["Include"].replace("..\\..\\SDL\\VisualC\\SDLmain\\$(Platform)\\$(Configuration)\\SDL2main.lib", "..\\..\\..\\built\\$(Configuration)\\SDL2main.lib")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
-	print "Patched\n"
+	print "   [SDL2_image] Patched\n"
 
 def patch_sdl2_ttf(path):
 	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -70,7 +114,7 @@ def patch_sdl2_ttf(path):
 		item = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
 		item.text = "..\\..\\..\\built\\$(Configuration);"+item.text
 
-	print "Patched\n"
+	print "   [SDL2_ttf] Patched\n"
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -90,7 +134,7 @@ def patch_sdl2_gfx(path):
 		item = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
 		item.text = "..\\..\\built\\$(Configuration);"+item.text
 
-	print "Patched\n"
+	print "   [SDL2_gfx] Patched\n"
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -109,12 +153,41 @@ def patch_gtest(path):
 		elif item.text == 'MultiThreadedDebug':
 			item.text = "MultiThreadedDebugDLL"
 
-	print "Patched\n"
+	print "   [gtest] Patched\n"
+
+	tree.write(path, encoding="utf-8", xml_declaration=True)
+
+def patch_libzmq_linux(path):
+	os.chdir(path)
+	os.chdir('..')
+	print "Current path: ["+os.getcwd()+"]"
+	os.system('patch -p0 < ../../libzmq.patch')
+	os.chdir(path)
+	print "   [ZeroMQ] Patched\n"
+
+def patch_libzmq_win(path):
+	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+	ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
+	tree = ElementTree.parse(path)
+	root = tree.getroot()
+
+	list = root.findall(msvc_ns_prefix+"PropertyGroup")
+	for child in list:
+		try:
+			item = child.find(msvc_ns_prefix+"Linkage-libsodium")
+			item.text = ""
+		except:
+			pass
+
+	print "  [ZeroMQ] Patched\n"
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def extract_sources():
-	print "Check source files ..."
+	print "\n"
+	print "#########################################"
+	print "## Checking source files ..."
+	print "#########################################"
 	os.chdir(WORKING_PATH)
 
 	# Extract sources
@@ -123,62 +196,97 @@ def extract_sources():
 
 	# extract SDL2
 	if os.path.exists(source_path+'SDL2/'):
-		print "SDL2 is already extracted."
+		print "   [SDL2] already extracted."
 	else:
 		tarfile.open(SDL2+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2, source_path+'SDL2')
+		print "   [SDL2] extracted."
 
 	# extract SDL2_image
 	if os.path.exists(source_path+'SDL2_image/'):
-		print "SDL2_image is already extracted."
+		print "   [SDL2_image] already extracted."
 	else:
 		tarfile.open(SDL2_IMAGE+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_IMAGE, source_path+'SDL2_image')
+		print "   [SDL2_image] extracted."
 
 	# extract SDL2_ttf
 	if os.path.exists(source_path+'SDL2_ttf/'):
-		print "SDL2_ttf is already extracted."
+		print "   [SDL2_ttf] already extracted."
 	else:
 		tarfile.open(SDL2_TTF+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_TTF, source_path+'SDL2_ttf')
+		print "   [SDL2_ttf] extracted."
 
 	# extract SDL2_gfx
 	if os.path.exists(source_path+'SDL2_gfx/'):
-		print "SDL2_gfx is already extracted."
+		print "   [SDL2_gfx] already extracted."
 	else:
 		tarfile.open(SDL2_GFX+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_GFX, source_path+'SDL2_gfx')
+		print "   [SDL2_gfx] extracted."
 
 	# extract g3log
 	if os.path.exists(source_path+'g3log/'):
-		print "g3log is already extracted."
+		print "   [g3log] already extracted."
 	else:
 		tarfile.open(G3LOG+'.tar.gz').extractall(source_path)
 		os.rename(source_path+G3LOG, source_path+'g3log')
+		print "   [g3log] extracted."
 
 	# extract jsoncpp
 	if os.path.exists(source_path+'jsoncpp/'):
-		print "jsoncpp is already extracted."
+		print "   [jsoncpp] already extracted."
 	else:
 		tarfile.open(JSONCPP+'.tar.gz').extractall(source_path)
 		os.rename(source_path+JSONCPP, source_path+'jsoncpp')
+		print "   [jsoncpp] extracted."
 
 	# extract pugixml
 	if os.path.exists(source_path+'pugixml/'):
-		print "pugixml is already extracted."
+		print "   [pugixml] already extracted."
 	else:
 		tarfile.open(PUGIXML+'.tar.gz').extractall(source_path)
 		os.rename(source_path+PUGIXML, source_path+'pugixml')
+		print "   [pugixml] extracted."
 
 	# extract gtest
 	if os.path.exists(source_path+'gtest/'):
-		print "gtest is already extracted."
+		print "   [gtest] already extracted."
 	else:
 		tarfile.open(GTEST+'.tar.gz').extractall(source_path)
 		os.rename(source_path+GTEST, source_path+'gtest')
+		print "   [gtest] extracted."
+
+	# extract protobuf
+	if os.path.exists(source_path+'protobuf/'):
+		print "   [protobuf] already extracted."
+	else:
+		tarfile.open(PROTOBUF+'.tar.gz').extractall(source_path)
+		os.rename(source_path+PROTOBUF, source_path+'protobuf')
+		print "   [protobuf] extracted."
+
+	# extract ZeroMQ
+	if os.path.exists(source_path+'zeromq/'):
+		print "   [ZeroMQ] already extracted."
+	else:
+		tarfile.open(ZEROMQ+'.tar.gz').extractall(source_path)
+		os.rename(source_path+ZEROMQ, source_path+'zeromq')
+		print "   [ZeroMQ] extracted."
+
+	# extract ZeroMQ - C++ binding
+	if os.path.exists(source_path+'cppzmq/'):
+		print "   [cppzmq] already extracted."
+	else:
+		tarfile.open(CPPZMQ+'.tar.gz').extractall(source_path)
+		print "   [cppzmq] extracted."
 
 def build_sources_MSVC(build_type):
-	print "Trying to build extracted sources ..."
+	print "\n"
+	print "#########################################"
+	print "## Trying to build extracted sources ..."
+	print "#########################################"
+	
 	build_path_dbg = WORKING_PATH+'built/Debug/'
 	build_path_dbg = build_path_dbg.replace('/','\\')
 	build_path_rel = WORKING_PATH+'built/Release/'
@@ -193,29 +301,36 @@ def build_sources_MSVC(build_type):
 	g3log_path = WORKING_PATH+'sources/g3log/build/'
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
 	gtest_path = WORKING_PATH+'sources/gtest/build/'
+	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
+	zeromq_path = WORKING_PATH+'sources/zeromq/builds/msvc/vs2013/'
 
 # Build SDL2
 	if os.path.exists(build_path_rel+'SDL2.lib'):
-		print "SDL2 is already built."
+		print "   [SDL2] already built."
 	else:
 		os.chdir(sdl2_path)
+		if STATIC_LINK == True:
+			patch_static_MSVC("SDL/SDL.vcxproj")
+			patch_static_MSVC("SDLmain/SDLmain.vcxproj")
 		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "Copying SDL2 header files .."
+		print "   [SDL2] Copying header files .."
 		copytree(sdl2_include_path, include_path)
 
 # Build SDL2_image
 	if os.path.exists(build_path_rel+'SDL2_image.lib'):
-		print "SDL2_image is already built."
+		print "   [SDL2_image] already built."
 	else:
 		os.chdir(sdl2_image_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_image("SDL_image_VS2012.vcxproj")
+		if STATIC_LINK == True:
+			patch_static_MSVC("SDL_image_VS2012.vcxproj")
 		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "Copying SDL2_image header files .."
+		print "   [SDL2_image] Copying header files .."
 		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
 		# Copy external libraries
 		# TODO: Fix hardcoded arch
@@ -232,15 +347,17 @@ def build_sources_MSVC(build_type):
 
 # Build SDL2_ttf
 	if os.path.exists(build_path_rel+'SDL2_ttf.lib'):
-		print "SDL2_ttf is already built."
+		print "   [SDL2_ttf] already built."
 	else:
 		os.chdir(sdl2_ttf_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_ttf("SDL_ttf.vcxproj")
+		if STATIC_LINK == True:
+			patch_static_MSVC("SDL_ttf.vcxproj")
 		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "Copying SDL2_ttf header files .."
+		print "   [SDL2_ttf] Copying header files .."
 		copy2(sdl2_ttf_path+'../SDL_ttf.h', include_path+'SDL_ttf.h')
 		# Copy external libraries
 		# TODO: Fix hardcoded arch
@@ -249,15 +366,17 @@ def build_sources_MSVC(build_type):
 
 # Build SDL2_gfx
 	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
-		print "SDL2_gfx is already built."
+		print "   [SDL2_gfx] already built."
 	else:
 		os.chdir(sdl2_gfx_path)
 		# !REQUIRED! Patch additional library and include path
 		patch_sdl2_gfx("SDL2_gfx.vcxproj")
+		if STATIC_LINK == True:
+			patch_static_MSVC("SDL2_gfx.vcxproj")
 		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "Copying SDL2_gfx header files .."
+		print "   [SDL2_gfx] Copying header files .."
 		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
@@ -266,37 +385,72 @@ def build_sources_MSVC(build_type):
 
 # Build g3log
 	if os.path.exists(build_path_rel+'g3logger.lib'):
-		print "g3log is already built."
+		print "   [g3log] already built."
 	else:
-		print "Start building g3log .."
+		print "   [g3log] Start building .."
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
 		# TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
 		#os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
-		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON ..')
-		os.system('msbuild g3log.sln /t:g3logger /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild g3log.sln /t:g3logger /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DADD_BUILD_WIN_SHARED=ON ..')
+		if STATIC_LINK == True:
+			patch_static_MSVC("g3logger.vcxproj")
+		os.system('msbuild g3log.sln /t:g3logger;g3logger_shared /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild g3log.sln /t:g3logger;g3logger_shared /p:Configuration=Release /p:OutDir='+build_path_rel)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
+		print "   [jsoncpp] Copying header files .."
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
 # Build gtest
 	if os.path.exists(build_path_rel+'gtest.lib'):
-		print "gtest is already built."
+		print "   [gtest] already built."
 	else:
-		print "Start building gtest .."
+		print "   [gtest] Start building .."
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
 		os.system('cmake ..')
-		patch_gtest("gtest.vcxproj")
-		patch_gtest("gtest_main.vcxproj")
+		if STATIC_LINK == False:
+			patch_gtest("gtest.vcxproj")
+			patch_gtest("gtest_main.vcxproj")
 		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild gtest.sln /t:gtest;gtest_main /p:Configuration=Release /p:OutDir='+build_path_rel)
 
+# Build protobuf
+	if os.path.exists(build_path_rel+'libprotobuf.lib'):
+		print "   [protobuf] already built."
+	else:
+		print "   [protobuf] Start building .."
+		mkdir_p(protobuf_path)
+		os.chdir(protobuf_path)
+		os.system('cmake .. -Dprotobuf_BUILD_TESTS=OFF')
+		os.system('msbuild protobuf.sln /t:libprotobuf /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild protobuf.sln /t:libprotobuf /p:Configuration=Release /p:OutDir='+build_path_rel)
+		os.rename(build_path_dbg+'libprotobufd.lib', build_path_dbg+'libprotobuf.lib')
+
+# Build zeromq
+	if os.path.exists(build_path_rel+'libzmq.lib'):
+		print "   [ZeroMQ] is already built."
+	else:
+		print "   [ZeroMQ] Start building .."
+		mkdir_p(zeromq_path)
+		os.chdir(zeromq_path)
+		# Disable libsodium
+		# TODO: Need to check for secure connection
+		patch_libzmq_win(zeromq_path+"libzmq/libzmq.props")
+		os.system('msbuild libzmq.sln /t:libzmq /p:Option-sodium=false /p:Configuration=DynDebug /p:PlatformToolSet='+MSVC_VER+' /p:OutDir='+build_path_dbg)
+		os.system('msbuild libzmq.sln /t:libzmq /p:Option-sodium=false /p:Configuration=DynRelease /p:PlatformToolSet='+MSVC_VER+' /p:OutDir='+build_path_rel)
+
+	print "\n\n"
+
 def build_sources(build_type):
-	print "Trying to build extracted sources ..."
+	print "\n"
+	print "#########################################"
+	print "## Trying to build extracted sources ..."
+	print "#########################################"
+
 	build_path = WORKING_PATH+'built/'
 	bin_path = WORKING_PATH+'built/bin/'
 	library_path = WORKING_PATH+'built/lib/'
@@ -312,6 +466,8 @@ def build_sources(build_type):
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
 	pugixml_path = WORKING_PATH+'sources/pugixml/scripts/build/'
 	gtest_path = WORKING_PATH+'sources/gtest/build/'
+	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
+	zeromq_path = WORKING_PATH+'sources/zeromq/build/'
 
 	# TODO: Check its working
 	if build_type == 'debug':
@@ -324,7 +480,7 @@ def build_sources(build_type):
 
 # Build SDL2
 	if os.path.exists(library_path+'libSDL2.a'):
-		print "SDL2 is already built."
+		print "   [SDL2] already built."
 	else:
 		mkdir_p(sdl2_path)
 		os.chdir(sdl2_path)
@@ -332,16 +488,15 @@ def build_sources(build_type):
 
 # Build SDL2_image
 	if os.path.exists(library_path+'libSDL2_image.a'):
-		print "SDL2_image is already built."
+		print "   [SDL2_image] already built."
 	else:
 		mkdir_p(sdl2_image_path)
 		os.chdir(sdl2_image_path)
-		print '*********************'
 		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
 
 # Build FreeType2
 	if os.path.exists(bin_path+'freetype-config'):
-		print "FreeType2 is already built."
+		print "   [FreeType2] already built."
 	else:
 		mkdir_p(freetype2_path)
 		os.chdir(freetype2_path)
@@ -349,7 +504,7 @@ def build_sources(build_type):
 
 # Build SDL2_ttf
 	if os.path.exists(library_path+'libSDL2_ttf.a'):
-		print "SDL2_ttf is already built."
+		print "   [SDL2_ttf] already built."
 	else:
 		mkdir_p(sdl2_ttf_path)
 		os.chdir(sdl2_ttf_path)
@@ -357,7 +512,7 @@ def build_sources(build_type):
 
 # Build SDL2_gfx
 	if os.path.exists(library_path+'libSDL2_gfx.a'):
-		print "SDL2_gfx is already built."
+		print "   [SDL2_gfx] already built."
 	else:
 		os.chdir(sdl2_gfx_parent_path)
 		os.system('PATH='+bin_path+':$PATH ./autogen.sh --prefix='+build_path)
@@ -368,27 +523,28 @@ def build_sources(build_type):
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
-		print "g3log is already built."
+		print "   [g3log] already built."
 	else:
-		print "Start building g3log .."
+		print "   [g3log] Start building .."
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger; make g3logger_shared')
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
-		if os.path.exists(g3log_path+'libg3logger_shared.so'):
-			copy2(g3log_path+'libg3logger_shared.so', library_path)
+		if os.path.exists(g3log_path+'libg3logger.so'):
+			copy2(g3log_path+'libg3logger.so', library_path)
 		if os.path.exists(g3log_path+'libg3logger_shared.dylib'):
 			copy2(g3log_path+'libg3logger_shared.dylib', library_path)
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
+		print "   [jsoncpp] Copying header files .."
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
 # Build pugixml
 	if os.path.exists(library_path+'libpugixml.a'):
-		print "pugixml is already built."
+		print "   [pugixml] already built."
 	else:
 		print "Start building pugixml .."
 		mkdir_p(pugixml_path)
@@ -397,48 +553,87 @@ def build_sources(build_type):
 
 # Build gtest
 	if os.path.exists(library_path+'libgtest.a'):
-		print "gtest is already built."
+		print "   [gtest] already built."
 	else:
-		print "Start building gtest .."
+		print "   [gtest] Start building .."
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
 		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
 		copy2(gtest_path+'libgtest_main.a', library_path)
 		copy2(gtest_path+'libgtest.a', library_path)
 
+# Build protobuf
+	if os.path.exists(library_path+'libprotobuf.a'):
+		print "   [protobuf] already built."
+	else:
+		print "   [protobuf] Start building .."
+		mkdir_p(protobuf_path)
+		os.chdir(protobuf_path)
+		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make libprotobuf')
+		copy2(protobuf_path+'libprotobuf.a', library_path)
+
+# Build ZeroMQ
+	if os.path.exists(library_path+'libzmq-static.a'):
+		print "   [ZeroMQ] already built."
+	else:
+		print "   [ZeroMQ] Start building .."
+		mkdir_p(zeromq_path)
+		os.chdir(zeromq_path)
+		patch_libzmq_linux(zeromq_path)
+		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ; make libzmq-static')
+		copy2(zeromq_path+'lib/libzmq-static.a', library_path)
+
+	print "\n\n"
+
 if __name__ == "__main__":
 	# Handle arguments
 	parser = argparse.ArgumentParser(description='Build script for external packages !!!NOT supported yet!!!')
 	parser.add_argument('--path', help='Set running path of script')
 	parser.add_argument('--type', default='debug', choices=['debug', 'release'], help='Select compile type (default: debug)')
+	parser.add_argument('--static', default='TRUE', choices=['TRUE', 'FALSE'], help='Select linking type (default: TRUE)')
 	parser.add_argument('--arch', default='x86', choices=['x86', 'x64', 'x86_64'], help='Select archtecture for desktop build (default: x86)')
-	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: vc120)')
+	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: v120)')
 	parser.add_argument('--platform', default='Windows', choices=['Windows', 'Linux', 'MacOSX'], help='Select platform to build. (default: Windows)')
 	args = parser.parse_args()
 
-	print "Build type : "+args.type
+	Platform = enum('Windows', 'Linux', 'macOS', 'NotSupport')
+	if platform.system().startswith('Linux'):
+		CURRENT_PLATFORM = Platform.Linux
+	elif platform.system() == 'Windows':
+		CURRENT_PLATFORM = Platform.Windows
+	elif platform.system() == 'Darwin':
+		CURRENT_PLATFORM = Platform.macOS
+	else:
+		CURRENT_PLATFORM = Platform.NotSupport
 
 	# Set current working directory
 	if not args.path:
 		WORKING_PATH = os.getcwd() + '/'
 	else:
 		WORKING_PATH = args.path + '/'
-	print "Script working on: ["+WORKING_PATH+"]"
+
+	print "#########################################"
+	print "## Prepare external libraries ..."
+	print "##"
+	print "## Platform    : [ "+Platform.reverse_mapping[CURRENT_PLATFORM]+" ]"
+	if CURRENT_PLATFORM == Platform.Windows:
+		print "##        MSVC : [ "+args.msvc+" ]"
+	#print "## Build type  : [ "+args.type+" ]"
+	print "## Static link : [ "+args.static+" ]"
+	print "## Working path: [ "+WORKING_PATH+" ]"
+	print "#########################################"
 
 	# Extract sources from archive files
 	extract_sources()
 
 	# Build sources
-	if platform.system().startswith('Linux'):
-		print 'Linux'
+	if CURRENT_PLATFORM == Platform.Linux:
 		build_sources(args.type)
-	elif platform.system() == 'Windows':
+	elif CURRENT_PLATFORM == Platform.Windows:
 		WORKING_PATH = WORKING_PATH.replace('\\', '/')
 		MSVC_VER = args.msvc
-		print 'Windows (MSVC: '+MSVC_VER+')'
+		#if args.static == 'FALSE':
+		#	STATIC_LINK = False
 		build_sources_MSVC(args.type)
-	elif platform.system() == 'Darwin':
-		print 'MAC OS'
+	elif CURRENT_PLATFORM == Platform.macOS:
 		build_sources(args.type)
-	else:
-		print 'Current OS is not supported yet'

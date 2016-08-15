@@ -22,6 +22,8 @@
 #endif
 
 #ifndef USE_SDL_LOG
+const LEVELS PY_LOG {DBUG.value + 1, "[Python] "};
+
 class Log
 {
 public:
@@ -31,9 +33,10 @@ public:
 	static void init();
 	static void deinit();
 
+	void dbg();
+
 private:
 	Log();
-
 	static Log*	logger;
 	std::unique_ptr<g3::LogWorker> logworker;
 	//auto sinkHandle;

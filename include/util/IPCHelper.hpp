@@ -1,0 +1,39 @@
+#pragma once
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include <zmq.hpp>
+
+class IPCServer
+{
+public:
+	IPCServer();
+
+	static void *CreateIPC();
+	static void DestroyIPC();
+
+	static unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+	static unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+
+private:
+	static zmq::context_t context;
+	static zmq::socket_t socket_server;
+};
+
+class IPCClient
+{
+public:
+	IPCClient();
+
+	static void *OpenIPC();
+	static void CloseIPC();
+
+	static unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+	static unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+
+private:
+	static zmq::context_t context;
+	static zmq::socket_t socket_client;
+};

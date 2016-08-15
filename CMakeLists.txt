@@ -6,6 +6,8 @@ SET(EXEC_PREFIX "\${prefix}")
 SET(LIBDIR "\${prefix}/lib")
 SET(INCLUDEDIR "\${prefix}/include")
 SET(LIBNAME "lib${PROJECT_NAME}")
+#SET(STATIC_LINKING "TRUE")
+SET(STATIC_LINKING "FALSE")
 
 # Detect Platform
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -22,9 +24,7 @@ ENDIF(WIN32)
 
 # Features
 IF(${FEATURE_DISABLE_G3LOG})
-	MESSAGE("Disable g3log")
 ELSE(${FEATURE_DISABLE_G3LOG})
-	MESSAGE("Enable g3log")
 	SET(USE_G3LOG "TRUE")
 ENDIF(${FEATURE_DISABLE_G3LOG})
 
@@ -32,7 +32,6 @@ ENDIF(${FEATURE_DISABLE_G3LOG})
 # https://github.com/rodrigo21/sdl2-cmake-scripts
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake")
 
-MESSAGE("Platform: ${PLATFORM} !")
 # Build external packages
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 	EXECUTE_PROCESS(COMMAND python
@@ -60,6 +59,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 	EXECUTE_PROCESS(COMMAND python
 		 "${CMAKE_SOURCE_DIR}/external/build_packages.py"
 		 --path "${CMAKE_SOURCE_DIR}/external"
+		 --static "${STATIC_LINKING}"
 		 --platform "${PLATFORM}"
 		 ${VC_VER}
 	)
@@ -74,7 +74,7 @@ FIND_PACKAGE(SDL2 REQUIRED)
 FIND_PACKAGE(SDL2_image REQUIRED)
 FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
-FIND_PACKAGE(PythonLibs REQUIRED)
+FIND_PACKAGE(PythonLibs 2.7 REQUIRED)
 
 FOREACH(flag ${pkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -86,14 +86,21 @@ FOREACH(flag ${pkgs_CXXFLAGS})
 	SET(EXTRA_CPPFLAGS "${EXTRA_CPPFLAGS} ${flag}")
 ENDFOREACH(flag)
 
+# Strip file name from python lib path
+get_filename_component(PYTHON_LIB_PATH ${PYTHON_LIBRARIES} PATH)
+
 # Include and library directories
 INCLUDE_DIRECTORIES(
 	${SDL2_INCLUDE_DIRS}
+	${PYTHON_INCLUDE_DIR}
 	${CMAKE_SOURCE_DIR}/include/
 	${CMAKE_SOURCE_DIR}/external/built/include/
 	${CMAKE_SOURCE_DIR}/external/built/include/SDL2/
 	${CMAKE_SOURCE_DIR}/external/sources/jsoncpp/dist/
 	${CMAKE_SOURCE_DIR}/external/sources/pugixml/src/
+	${CMAKE_SOURCE_DIR}/external/sources/protobuf/src/
+	${CMAKE_SOURCE_DIR}/external/sources/zeromq/include/
+	${CMAKE_SOURCE_DIR}/external/sources/cppzmq/
 )
 IF(USE_G3LOG)
 INCLUDE_DIRECTORIES(
@@ -102,7 +109,7 @@ INCLUDE_DIRECTORIES(
 ELSE(USE_G3LOG)
 ADD_DEFINITIONS("-DUSE_SDL_LOG")
 ENDIF(USE_G3LOG)
-
+#ADD_DEFINITIONS("-DZMQ_STATIC")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 	LINK_DIRECTORIES(
@@ -112,7 +119,9 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	LINK_DIRECTORIES(
 		${CMAKE_SOURCE_DIR}/external/built/lib/$(Configuration)/
+		${CMAKE_SOURCE_DIR}/external/built/lib/
 		${CMAKE_BINARY_DIR}
+		${PYTHON_LIB_PATH}
 	)
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 
@@ -128,26 +137,73 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")
 SET(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} ${EXTRA_CPPFLAGS} ${ADDITIONAL_CPPFLAGS} ")
 
+# Dynamically replace MT / MD for MSVC
+IF(MSVC AND STATIC_LINKING)
+FOREACH(flag_var
+        CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+        CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+	IF(${flag_var} MATCHES "/MD")
+		STRING(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+	ENDIF(${flag_var} MATCHES "/MD")
+ENDFOREACH(flag_var)
+ENDIF(MSVC AND STATIC_LINKING)
+
+MESSAGE("############################################")
+MESSAGE("  CMake build environments")
+MESSAGE("")
+MESSAGE("Platform: ${PLATFORM}")
+MESSAGE("")
 MESSAGE("C_FLAGS      : " ${CMAKE_C_FLAGS})
 MESSAGE("CXX_FLAGS    : " ${CMAKE_CXX_FLAGS})
 MESSAGE("CPP_FLAGS    : " ${CMAKE_CPP_FLAGS})
 MESSAGE("pkgs_LDFLAGS : " ${pkgs_LDFLAGS})
+MESSAGE("Python Libs  : " ${PYTHON_LIBRARIES})
+MESSAGE("Python Lib path  : " ${PYTHON_LIB_PATH})
+MESSAGE("Python include   : " ${PYTHON_INCLUDE_DIRS})
+MESSAGE("")
+MESSAGE("  Features")
+IF(USE_G3LOG)
+	MESSAGE("[g3log] : Enabled")
+ELSE(USE_G3LOG)
+	MESSAGE("[g3log] : Disabled")
+ENDIF(USE_G3LOG)
+MESSAGE("############################################")
 
 # Main project files
 FILE(GLOB_RECURSE TMP_FILES
 	"src/*.c"
 	"src/*.cpp"
+	"scripting/*.cc"
+	"scripting/*.h"
 	"include/*.h"
 	"include/*.hpp"
 )
 
+# Remove single file from list
+LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
+
+# Append platform dependent codes
+#IF(${PLATFORM} STREQUAL "Windows")
+#	LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_nix.cpp")
+#ELSE(${PLATFORM} STREQUAL "Windows")
+#	LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_win.cpp")
+#ENDIF(${PLATFORM} STREQUAL "Windows")
+
+# Remove temporary code
+LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_win.cpp")
+LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_nix.cpp")
+
+MESSAGE("Compiled code files :")
+foreach(f ${TMP_FILES})
+	MESSAGE("   ${f}")
+endforeach()
+
 # Append external libraries
 SET(SOURCES ${TMP_FILES}
 	"external/sources/jsoncpp/dist/jsoncpp.cpp"
-	"external/sources/pugixml/src/pugixml.cpp")
-
-# Remove single file from list
-LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
+	"external/sources/pugixml/src/pugixml.cpp"
+	"scripting/ipc.pb.cc"
+)
 
 # Make source group (a.k.a. filter of MSVC, subdirectory)
 foreach(f ${TMP_FILES})
@@ -168,7 +224,7 @@ endforeach()
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 	IF(USE_G3LOG)
-		SET(LINK_G3LOG "-lg3logger_shared")
+		SET(LINK_G3LOG "-lg3logger")
 	ELSE(USE_G3LOG)
 		SET(LINK_G3LOG "")
 	ENDIF(USE_G3LOG)
@@ -181,7 +237,8 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 		${SDL2_TTF_LIBRARIES}
 		${SDL2_GFX_LIBRARIES}
 		${LINK_G3LOG}
-		"-ldl -lpugixml")
+		${PYTHON_LIBRARIES}
+		"-ldl -lpugixml -lprotobuf -lzmq-static")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
 	IF(USE_G3LOG)
@@ -198,7 +255,9 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_image.lib
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_ttf.lib
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_gfx.lib
+		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/libzmq.lib
 		${LINK_G3LOG}
+		${PYTHON_LIBRARIES}
 		"dbghelp.lib")
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
@@ -209,7 +268,7 @@ ADD_EXECUTABLE(${PROJECT_NAME} "src/main.cpp")
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 	TARGET_LINK_LIBRARIES(${PROJECT_NAME}
 		${pkgs_LDFLAGS}
-		"-ldl -lstory-project")
+		"-ldl -lprotobuf -lzmq-static -lstory-project")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
 	IF(USE_G3LOG)
@@ -224,17 +283,45 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_image.lib
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_ttf.lib
 		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/SDL2_gfx.lib
+		${CMAKE_SOURCE_DIR}/external/built/$(Configuration)/libzmq.lib
 		${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
 		${LINK_G3LOG}
 		"dbghelp.lib")
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
 
 # Post build
+# Copy external dynamic libraries into specific directory to execute process.
 IF(${PLATFORM} STREQUAL "Windows")
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
 	POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/built/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
 	COMMENT "Copy required dynamic libraries")
+
+# Build python binding modules for Windows
+#ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
+#	POST_BUILD
+#	COMMAND "python.exe"
+#	"setup_win.py"
+#	"build"
+#	--debug
+#	"install"
+#	--home=build
+#	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+#	COMMENT "Build python binding modules..."
+#)
+ELSE(${PLATFORM} STREQUAL "Windows")
+# Build python binding modules
+ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
+	POST_BUILD
+	COMMAND python
+	"setup.py"
+	"build"
+	--debug
+	"install"
+	--home=build
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	COMMENT "Build python binding modules..."
+)
 ENDIF(${PLATFORM} STREQUAL "Windows")
 
 IF(NOT IOS)

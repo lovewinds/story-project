@@ -21,11 +21,20 @@ gFont(NULL)
 #ifndef USE_SDL_LOG
 	Log::init();
 #endif
+	PythonScript::addPath(getResourcePath());
+	/* Teporary relative path
+	 * TODO: Directory policy should be decided */
+	/* build/lib/python */
+	PythonScript::addPath(makeBasePath(".."));
+	PythonScript::addPath(makeBasePath("..\\lib"));
+	PythonScript::addPath(makeBasePath("..\\lib\\python"));
+	PythonScript::initialize();
 }
 
 Ecore::~Ecore()
 {
 	deinit();
+	PythonScript::finalize();
 #ifndef USE_SDL_LOG
 	Log::deinit();
 #endif
@@ -483,6 +492,32 @@ std::string Ecore::getParentPath(std::string path, std::string::size_type level)
 	return result;
 }
 
+std::string Ecore::getResourcePath()
+{
+	std::string path(SDL_GetBasePath());
+	static std::string platform(SDL_GetPlatform());
+
+	/* TODO:
+	 *  below path is not considering the installation path.
+	 *  The path should consider installation.
+	 */
+	if ("Windows" == platform) {
+		path = getParentPath(path, 2);
+		path.append("res");
+		//LOG_INFO("Windows platform: [%s]", path.c_str());
+	} else if ("Linux" == platform) {
+		path = getParentPath(path, 1);
+		path.append("res");
+		//LOG_INFO("Linux platform: [%s]", path.c_str());
+	} else if ("Mac OS X" == platform) {
+		path = getParentPath(path, 1);
+		path.append("res");
+		//LOG_INFO("Mac OS X platform: [%s]", path.c_str());
+	}
+
+	return path;
+}
+
 std::string Ecore::getResourcePath(std::string file_name)
 {
 	if (file_name.empty()) {
@@ -510,6 +545,15 @@ std::string Ecore::getResourcePath(std::string file_name)
 		//LOG_INFO("Mac OS X platform: [%s]", path.c_str());
 	}
 	path.append(file_name);
+
+	return path;
+}
+
+std::string Ecore::makeBasePath(std::string child_dir)
+{
+	std::string path(SDL_GetBasePath());
+
+	path.append(child_dir);
 
 	return path;
 }

@@ -1,7 +1,7 @@
 #include "util/LogHelper.hpp"
 
 #ifndef USE_SDL_LOG
-Log* Log::logger = NULL;
+Log* Log::logger = nullptr;
 //std::unique_ptr<g3::LogWorker> Log::logworker{ g3::LogWorker::createLogWorker() };
 
 struct CustomSink {
@@ -12,8 +12,10 @@ struct CustomSink {
 	FG_Color GetColor(const LEVELS level) const {
 		if (level.value == WARNING.value) { return RED; }
 		// Windows (DEBUG->DBUG)
-		if (level.value == DBUG.value) { return GREEN; }
-		if (g3::internal::wasFatal(level)) { return BLUE; }
+		else if (level.value == DBUG.value) { return GREEN; }
+		/* Custom log level for python */
+		else if (level.value == WARNING.value + 1) { return GREEN; }
+		else if (g3::internal::wasFatal(level)) { return BLUE; }
 
 		return WHITE;
 	}
@@ -24,23 +26,35 @@ struct CustomSink {
 
 		logEntry.get().timestamp("[%m/%d %H:%M:%S]");
 
-		//std::cout << "\033[" << color << "m"
-		//	<< logEntry.get().toString() << "\033[m" << std::endl;
-		if (level.value == WARNING.value)
-			std::cout << "\033[41m" << "\033[97m";
-		else
+		if (level.value == WARNING.value + 1) {
+			/* Custom log level for python */
 			std::cout << "\033[" << color << "m";
-		std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
-			<< std::setw(4) << std::right;
-		std::cout.fill('0');
-		std::cout << (int)(logEntry.get()._microseconds / 10000) << "] " << std::left;
-		std::cout.fill(' ');
-		std::cout.width(7);
-		std::cout << logEntry.get().level()
-			<< " [" << logEntry.get().file()
-			<< ":" << logEntry.get().line() << "]"
-			<< " " << logEntry.get().message()
-			<< "\033[m" << std::endl;
+			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
+				<< std::setw(4) << std::right;
+			std::cout.fill('0');
+			std::cout << (int)(logEntry.get()._microseconds / 10000) << "] " << std::left;
+			std::cout.fill(' ');
+			std::cout.width(7);
+			std::cout << "[Python] "
+				<< logEntry.get().message()
+				<< "\033[m" << std::endl;
+		} else {
+			if (level.value == WARNING.value)
+				std::cout << "\033[41m" << "\033[97m";
+			else
+				std::cout << "\033[" << color << "m";
+			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
+				<< std::setw(4) << std::right;
+			std::cout.fill('0');
+			std::cout << (int)(logEntry.get()._microseconds / 10000) << "] " << std::left;
+			std::cout.fill(' ');
+			std::cout.width(7);
+			std::cout << logEntry.get().level()
+				<< " [" << logEntry.get().file()
+				<< ":" << logEntry.get().line() << "]"
+				<< " " << logEntry.get().message()
+				<< "\033[m" << std::endl;
+		}
 	}
 };
 
@@ -53,9 +67,14 @@ Log::~Log()
 	//deinit();
 }
 
+void Log::dbg()
+{
+	LOGF(PY_LOG, "Python debug Message !!!");
+}
+
 void Log::init()
 {
-	if (logger == NULL)
+	if (logger == nullptr) {
 		logger = new Log();
 
 /*
@@ -66,26 +85,27 @@ void Log::init()
 	g3::initializeLogging(worker.get());
 */
 
-	logger->logworker = g3::LogWorker::createLogWorker();
-	static auto sinkHandle = logger->logworker->addSink(std2::make_unique<CustomSink>(),
-		&CustomSink::ReceiveLogMessage);
-	g3::initializeLogging(logger->logworker.get());
+		logger->logworker = g3::LogWorker::createLogWorker();
+		static auto sinkHandle = logger->logworker->addSink(std2::make_unique<CustomSink>(),
+			&CustomSink::ReceiveLogMessage);
+		g3::initializeLogging(logger->logworker.get());
 
 	//std::future<void> received = sinkHandle->call(&CustomSink::Foo, NULL);
 
 	//shutDownLogging();
 	//	std::future<std::string> log_file_name = handle->call(&g3::FileSink::fileName);
 	//	std::cout << "Log filename :[" << log_file_name.get() << std::endl;
+	}
 }
 
 void Log::deinit()
 {
-	if (logger != NULL) {
+	if (logger != nullptr) {
 		std::cout << "Logger destroyed" << std::endl;
 
 		g3::internal::shutDownLogging();
 		delete logger;
-		logger = NULL;
+		logger = nullptr;
 	}
 }
 #endif /*#ifndef USE_SDL_LOG*/

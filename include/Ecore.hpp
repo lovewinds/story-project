@@ -4,6 +4,8 @@
 #include <SDL_ttf.h>
 #include <string>
 
+#include "util/PythonScript.hpp"
+
 class EScreenManager;
 class EResourceManager;
 
@@ -30,6 +32,8 @@ public:
 	double GetFPS();
 	static const char* getBasePath();
 	static const char* getStorePath();
+	static std::string makeBasePath(std::string child_dir);
+	static std::string getResourcePath();
 	static std::string getResourcePath(std::string file_name);
 	static std::string getPlatform();
 	static bool checkPlatform(std::string);
