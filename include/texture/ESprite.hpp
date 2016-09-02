@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "ETexture.h"
+#include "ETexture.hpp"
 
 class EImageResourceInfo;
 

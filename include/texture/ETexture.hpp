@@ -2,7 +2,9 @@
 
 #include <SDL.h>
 #include <memory>
+
 #include "util/SDLWrap.hpp"
+#include "texture/EAnimation.hpp"
 
 class ETexture
 {
@@ -26,6 +28,13 @@ public:
 	void movePositionTo(double x, double y);
 	void movePositionBy(double delta_x, double delta_y);
 
+	/* Animation */
+	void setAnimation(std::shared_ptr<EAnimation> animation);
+	void startAnimation();
+	void stopAnimation();
+	void pauseAnimation();
+	void resumeAnimation();
+
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
 	virtual void render() = 0;
 
@@ -40,6 +49,9 @@ protected:
 	/* Texture dimensions */
 	int mWidth;
 	int mHeight;
+
+	/* Animation */
+	std::shared_ptr<EAnimation> animation;
 
 	/* Renders texture at given point */
 	virtual void texture_render(int x, int y,

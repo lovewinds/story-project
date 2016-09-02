@@ -1,5 +1,5 @@
 #pragma once
-#include "../ETexture.h"
+#include "texture/ETexture.hpp"
 
 class EDrawable : public ETexture
 {

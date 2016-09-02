@@ -1,5 +1,5 @@
 #include "Ecore.hpp"
-#include "texture/ETexture.h"
+#include "texture/ETexture.hpp"
 #include "EScreenManager.hpp"
 #include "resource/EResourceManager.hpp"
 

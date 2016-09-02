@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 
-#include "ETexture.h"
+#include "ETexture.hpp"
 
 class EImageResourceInfo;
 

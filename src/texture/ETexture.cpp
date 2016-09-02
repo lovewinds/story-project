@@ -1,5 +1,5 @@
 #include "Ecore.hpp"
-#include "texture/ETexture.h"
+#include "texture/ETexture.hpp"
 #include "util/LogHelper.hpp"
 
 ETexture::ETexture() :
@@ -44,6 +44,39 @@ void ETexture::movePositionBy(double delta_x, double delta_y)
 {
 	p_x += delta_x;
 	p_y += delta_y;
+}
+
+void ETexture::setAnimation(std::shared_ptr<EAnimation> animation)
+{
+	this->animation = animation;
+}
+
+void ETexture::startAnimation()
+{
+	if (animation) {
+		animation->start();
+	}
+}
+
+void ETexture::stopAnimation()
+{
+	if (animation) {
+		animation->stop();
+	}
+}
+
+void ETexture::pauseAnimation()
+{
+	if (animation) {
+		animation->pause();
+	}
+}
+
+void ETexture::resumeAnimation()
+{
+	if (animation) {
+		animation->resume();
+	}
 }
 
 void ETexture::dealloc()

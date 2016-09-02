@@ -28,8 +28,8 @@
 		</Resources>
 		<Layer name="base">
 			<Image type="Background" name="bg" x="0" y="0" />
-			<Sprite type="loading_circle" name="c1" x="0" y="0" />
-			<Sprite type="loading_circle" name="c2" x="32" y="0" />
+			<Sprite type="loading_circle" name="c1" x="0" y="256" />
+			<Sprite type="loading_circle" name="c2" x="32" y="256" />
 		</Layer>
 	</Scene>
 </SceneRoot>

@@ -74,7 +74,6 @@ void ESceneManager::handleEvent(SDL_Event e)
 		case SDLK_2:
 			stopCurrentScene();
 			break;
-
 		case SDLK_3:
 			pauseCurrentScene();
 			break;
@@ -82,6 +81,15 @@ void ESceneManager::handleEvent(SDL_Event e)
 			startCurrentScene();
 			break;
 		}
+	}
+	else if (e.type == SDL_MOUSEBUTTONDOWN)
+	{
+
+	}
+
+	/* Propagate event into Scene instance */
+	if (currentScene) {
+		currentScene->handleEvent(e);
 	}
 #if 0
 	static Uint32 latestEventTime = 0;

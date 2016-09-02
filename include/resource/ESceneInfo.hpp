@@ -8,6 +8,7 @@
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
+#include "texture/EAnimation.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -47,6 +48,7 @@ public:
 	void deallocate();
 
 	void setActiveState(bool active);
+	void testAnimation(AnimationState state);
 
 	std::string getName();
 

@@ -120,7 +120,7 @@ void PythonScript::initialize()
 			LOG_DBG("10 * 15 = %d", Multiply(10, 15));
 			Py_Finalize();
 		}
-
+#if 0
 		handle = IPCServer::CreateIPC();
 		if (handle) {
 			char pData[1024] = {0,};
@@ -133,12 +133,13 @@ void PythonScript::initialize()
 		} else {
 			LOG_ERR("Failed to initialize IPC");
 		}
+#endif
 	}
 }
 
 void PythonScript::finalize()
 {
-	IPCServer::DestroyIPC();
+//	IPCServer::DestroyIPC();
 
 	if (nullptr != instance) {
 		if (Py_IsInitialized())

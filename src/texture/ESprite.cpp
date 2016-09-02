@@ -82,12 +82,28 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 		if (sprite_index >= (int8_t)gSpriteClips.size())
 			sprite_index = 0;
 	}
+
+	/* Animation */
+	if (animation) {
+		animation->update(currentTime, accumulator);
+	}
 }
 
 void ESprite::render()
 {
+	double ani_x = 0, ani_y = 0;
+
+	if (animation) {
+		ani_x = animation->getX();
+		ani_y = animation->getY();
+	}
 	//texture_render(200, 200, &gSpriteClips[sprite_index]);
 	//texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
-	if (mTexture)
-		texture_render((int)p_x, (int)p_y, &gSpriteClips[sprite_index]);
+	if (mTexture) {
+		texture_render(
+			(int)(p_x + ani_x),
+			(int)(p_y + ani_y),
+			&gSpriteClips[sprite_index]
+		);
+	}
 }
