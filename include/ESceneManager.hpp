@@ -40,8 +40,8 @@ public:
 	void startCurrentScene();
 
 private:
-	std::shared_ptr<ESceneInfo> currentScene;
-	std::shared_ptr<ESceneInfo> overlay;
+	std::shared_ptr<EScene> currentScene;
+	std::shared_ptr<EScene> overlay;
 
 	int testState;
 	int testBackgroundState;

@@ -32,7 +32,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 	/* TODO: Foreach for all scenes */
 	try {
 		/* Scene: Load main scene */
-		std::shared_ptr<ESceneInfo> scene;
+		std::shared_ptr<EScene> scene;
 		pugi::xpath_node_set scene_sel = doc.select_nodes(
 				"/SceneRoot/Scene[@name='main']");
 		for (pugi::xpath_node_set::const_iterator it = scene_sel.begin(); it != scene_sel.end(); ++it) {
@@ -119,10 +119,25 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			std::string itm_name(node.node().attribute("name").value());
 			std::string itm_p_x(node.node().attribute("x").value());
 			std::string itm_p_y(node.node().attribute("y").value());
+			std::string itm_p_w(node.node().attribute("width").value());
+			std::string itm_p_h(node.node().attribute("height").value());
 			int p_x=0, p_y=0;
+			int p_w=0, p_h=0;
+			bool width_percent = false;
+			bool height_percent = false;
 			try {
 				p_x = std::stoi(itm_p_x);
 				p_y = std::stoi(itm_p_y);
+				if (itm_p_w.empty() == false) {
+					p_w = std::stoi(itm_p_w);
+					if (itm_p_w.length() > 1 && itm_p_w.substr(itm_p_w.length() - 1, 1) == std::string("%"))
+						width_percent = true;
+				}
+				if (itm_p_h.empty() == false) {
+					p_h = std::stoi(itm_p_h);
+					if (itm_p_h.length() > 1 && itm_p_h.substr(itm_p_h.length() - 1, 1) == std::string("%"))
+						height_percent = true;
+				}
 			}
 			catch (std::exception &e) {
 				LOG_ERR("%s", e.what());
@@ -148,6 +163,15 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				LOG_DBG("Finding image name [%s]", itm_type.c_str());
 				auto img = resManager->createImageTexture(itm_name, itm_type);
 				if (img) {
+					if (width_percent)
+						img->setWidth(p_w, true);
+					else
+						img->setWidth(p_w, false);
+					if (height_percent)
+						img->setHeight(p_h, true);
+					else
+						img->setHeight(p_h, false);
+					img->setPos(p_x, p_y);
 					scene->addImage(img);
 					LOG_INFO("   [Image] %s prepared", itm_name.c_str());
 				} else {

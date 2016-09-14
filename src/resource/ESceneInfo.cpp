@@ -5,7 +5,7 @@
 
 #include "resource/ESceneInfo.hpp"
 
-ESceneInfo::ESceneInfo(std::string name)
+EScene::EScene(std::string name)
 : sprite_map(_sprite_map)
 {
 	LOG_INFO("ESceneInfo[%s] created", name.c_str());
@@ -22,7 +22,7 @@ ESceneInfo::ESceneInfo(std::string name)
 	}
 }
 
-ESceneInfo::~ESceneInfo()
+EScene::~EScene()
 {
 	_sprite_map.clear();
 	_text_texture_map.clear();
@@ -33,12 +33,12 @@ ESceneInfo::~ESceneInfo()
 	LOG_INFO("ESceneInfo[%s] removed", name.c_str());
 }
 
-std::string ESceneInfo::getName()
+std::string EScene::getName()
 {
 	return name;
 }
 
-bool ESceneInfo::addSprite(std::shared_ptr<ESprite> sprite)
+bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 {
 #if 0
 	LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
@@ -73,7 +73,7 @@ bool ESceneInfo::addSprite(std::shared_ptr<ESprite> sprite)
 	return true;
 }
 
-bool ESceneInfo::addImage(std::shared_ptr<EImageTexture> imgTexture)
+bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
 {
 	auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
 	if (!result.second) {
@@ -83,7 +83,7 @@ bool ESceneInfo::addImage(std::shared_ptr<EImageTexture> imgTexture)
 	return true;
 }
 
-bool ESceneInfo::allocateSprites()
+bool EScene::allocateSprites()
 {
 	if (_sprite_map.empty())
 		return false;
@@ -95,19 +95,19 @@ bool ESceneInfo::allocateSprites()
 	return true;
 }
 
-bool ESceneInfo::allocateImages()
+bool EScene::allocateImages()
 {
 	if (_img_texture_map.empty())
 		return false;
 
-	for(auto &it : _img_texture_map) {
+	for (auto &it : _img_texture_map) {
 		LOG_DBG("  Allocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
 		it.second->allocate();
 	}
 	return true;
 }
 
-bool ESceneInfo::allocateTexts()
+bool EScene::allocateTexts()
 {
 	if (_text_texture_map.empty())
 		return false;
@@ -119,7 +119,7 @@ bool ESceneInfo::allocateTexts()
 	return true;
 }
 
-bool ESceneInfo::allocate()
+bool EScene::allocate()
 {
 	bool res = false;
 	res |= allocateSprites();
@@ -138,7 +138,7 @@ bool ESceneInfo::allocate()
 	return true;
 }
 
-void ESceneInfo::deallocate()
+void EScene::deallocate()
 {
 	for(auto &it : _sprite_map) {
 		LOG_DBG("  DeAllocate sprite [%s] count [%lu]", it.first.c_str(), it.second.use_count());
@@ -157,12 +157,12 @@ void ESceneInfo::deallocate()
 	isActivated = false;
 }
 
-void ESceneInfo::setActiveState(bool active)
+void EScene::setActiveState(bool active)
 {
 	isActivated = active;
 }
 
-void ESceneInfo::testAnimation(AnimationState state)
+void EScene::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
 	for (auto& it : _sprite_map)
@@ -187,7 +187,7 @@ void ESceneInfo::testAnimation(AnimationState state)
 	}
 }
 
-void ESceneInfo::handleEvent(SDL_Event e)
+void EScene::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -214,7 +214,7 @@ void ESceneInfo::handleEvent(SDL_Event e)
 	}
 }
 
-void ESceneInfo::render()
+void EScene::render()
 {
 	for (auto &it : _img_texture_map)
 	{
@@ -252,7 +252,7 @@ void ESceneInfo::render()
 #endif
 }
 
-void ESceneInfo::update(Uint32 currentTime, Uint32 accumulator)
+void EScene::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;

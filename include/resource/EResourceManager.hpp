@@ -28,8 +28,8 @@ public:
  * Scene Functions
  */
 	/* Create scene with name and ready for allocation */
-	std::shared_ptr<ESceneInfo> createScene(std::string scene_name);
-	std::shared_ptr<ESceneInfo> getScene(std::string scene_name);
+	std::shared_ptr<EScene> createScene(std::string scene_name);
+	std::shared_ptr<EScene> getScene(std::string scene_name);
 
 	/* Allocate specific scene and related resource(i.e. sprites) into memory */
 	bool allocateScene(std::string scene_name);
@@ -43,11 +43,11 @@ public:
 	 * uses 'name' as key,
 	 * uses 'path' to load real image file.
 	 */
-	std::shared_ptr<EImageResourceInfo>
+	std::shared_ptr<EImageResource>
 	createImageResource(std::string name, std::string path, unsigned int width, unsigned int height);
 
 	/* Returns shared_ptr of ImageResource instance allocated */
-	std::shared_ptr<EImageResourceInfo>
+	std::shared_ptr<EImageResource>
 	getImageResource(std::string resource_name);
 
 	std::shared_ptr<EImageTexture>
@@ -68,7 +68,7 @@ public:
 
 	/* Create sprite with name and ready for allocation */
 	//	std::shared_ptr<ESpriteInfo>
-	//	createSprite(std::string sprite_name, std::weak_ptr<EImageResourceInfo> img_resource);
+	//	createSprite(std::string sprite_name, std::weak_ptr<EImageResource> img_resource);
 
 /*
  * Text texture Functions
@@ -87,13 +87,13 @@ protected:
 	EResourceLoaderInterface *loader;
 
 	/* Cache for current playing scene */
-	std::shared_ptr<ESceneInfo>	currentScene;
+	std::shared_ptr<EScene>	currentScene;
 
-	std::map<std::string, std::shared_ptr<ESceneInfo>> scene_map;
+	std::map<std::string, std::shared_ptr<EScene>> scene_map;
 
 	/* image map uses path as a key, it can have simillar prefix.
 	 * unordered_map can be more effecient for this case */
-	std::unordered_map<std::string, std::shared_ptr<EImageResourceInfo>> image_map;
+	std::unordered_map<std::string, std::shared_ptr<EImageResource>> image_map;
 
 	/* Store sprite info here for caching */
 	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;

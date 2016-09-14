@@ -62,7 +62,8 @@ protected:
 
 	virtual void texture_render_resize(int x, int y,
 		SDL_Rect* clip = NULL,
-		Uint8 expand = 1,
+		double ratio_w = 1.0,
+		double ratio_h = 1.0,
 		double angle = 0.0,
 		SDL_Point* center = NULL,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);

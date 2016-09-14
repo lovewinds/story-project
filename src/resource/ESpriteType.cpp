@@ -33,7 +33,7 @@ std::string ESpriteType::getName()
 bool ESpriteType::setCellInfo(unsigned int cell_width, unsigned int cell_height)
 {
 	EResourceManager &resManager = Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<EImageResourceInfo> res = resManager.getImageResource(base_image);
+	std::shared_ptr<EImageResource> res = resManager.getImageResource(base_image);
 	if (res) {
 		this->base_width = res->getWidth();
 		this->base_height = res->getHeight();

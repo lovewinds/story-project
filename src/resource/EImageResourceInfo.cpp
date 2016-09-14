@@ -5,47 +5,47 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResourceInfo.hpp"
 
-EImageResourceInfo::EImageResourceInfo(std::string name, std::string path, unsigned int width, unsigned int height)
+EImageResource::EImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
 {
 	this->name = name;
 	this->path = Ecore::getResourcePath(path);
 	this->width = width;
 	this->height = height;
 
-	LOG_INFO("EImageResourceInfo[%s] created", this->name.c_str());
+	LOG_INFO("EImageResource[%s] created", this->name.c_str());
 	LOG_INFO("      path : [%s]", this->path.c_str());
 
 	/* TODO: Don't allocate on creation */
 	//allocate();
 }
 
-EImageResourceInfo::~EImageResourceInfo()
+EImageResource::~EImageResource()
 {
 	releaseTexture();
-	LOG_INFO("EImageResourceInfo[%s] removed", name.c_str());
+	LOG_INFO("EImageResource[%s] removed", name.c_str());
 }
 
-std::string EImageResourceInfo::getName() const
+std::string EImageResource::getName() const
 {
 	return name;
 }
 
-std::string EImageResourceInfo::getPath() const
+std::string EImageResource::getPath() const
 {
 	return path;
 }
 
-unsigned int EImageResourceInfo::getWidth() const
+unsigned int EImageResource::getWidth() const
 {
 	return width;
 }
 
-unsigned int EImageResourceInfo::getHeight() const
+unsigned int EImageResource::getHeight() const
 {
 	return height;
 }
 
-std::shared_ptr<SDL_Texture_Wrap> EImageResourceInfo::getTexture()
+std::shared_ptr<SDL_Texture_Wrap> EImageResource::getTexture()
 {
 	if (texture == nullptr) {
 		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
@@ -60,7 +60,7 @@ std::shared_ptr<SDL_Texture_Wrap> EImageResourceInfo::getTexture()
 	return texture;
 }
 
-void EImageResourceInfo::releaseTexture()
+void EImageResource::releaseTexture()
 {
 	texture.reset();
 	texture = nullptr;
@@ -72,7 +72,7 @@ void EImageResourceInfo::releaseTexture()
 	resManager.releaseTexture(path);
 }
 #if 0
-void EImageResourceInfo::allocate()
+void EImageResource::allocate()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 

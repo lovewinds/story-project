@@ -10,11 +10,11 @@
  * When scene is changed, SceneManager allocates actual Scene instance
  * with this ~~Info instance on ResourceManager.
  */
-class EImageResourceInfo
+class EImageResource
 {
 public:
-	EImageResourceInfo(std::string name, std::string path, unsigned int width, unsigned int height);
-	virtual ~EImageResourceInfo();
+	EImageResource(std::string name, std::string path, unsigned int width, unsigned int height);
+	virtual ~EImageResource();
 
 	std::string getName() const;
 	std::string getPath() const;

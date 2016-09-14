@@ -57,10 +57,10 @@ bool EResourceManager::loadResources(std::string res_file)
 	return loader->loadResources(path);
 }
 
-std::shared_ptr<ESceneInfo> EResourceManager::createScene(std::string scene_name)
+std::shared_ptr<EScene> EResourceManager::createScene(std::string scene_name)
 {
 	LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
-	std::shared_ptr<ESceneInfo> scene(new ESceneInfo(scene_name));
+	std::shared_ptr<EScene> scene(new EScene(scene_name));
 
 	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
 	auto result = scene_map.emplace(scene_name, scene);
@@ -79,9 +79,9 @@ std::shared_ptr<ESceneInfo> EResourceManager::createScene(std::string scene_name
 	return scene;
 }
 
-std::shared_ptr<ESceneInfo> EResourceManager::getScene(std::string scene_name)
+std::shared_ptr<EScene> EResourceManager::getScene(std::string scene_name)
 {
-	std::shared_ptr<ESceneInfo> result = nullptr;
+	std::shared_ptr<EScene> result = nullptr;
 	auto scene = scene_map.find(scene_name);
 
 	if (scene != scene_map.end()) {
@@ -114,7 +114,7 @@ bool EResourceManager::allocateScene(std::string scene_name)
 
 bool EResourceManager::deallocateScene(std::string scene_name)
 {
-	std::shared_ptr<ESceneInfo> s;
+	std::shared_ptr<EScene> s;
 	auto scene = scene_map.find(scene_name);
 
 	if (scene != scene_map.end()) {
@@ -272,11 +272,11 @@ EResourceManager::createSprite(std::string type, std::string name)
 	return sprite;
 }
 
-std::shared_ptr<EImageResourceInfo>
+std::shared_ptr<EImageResource>
 EResourceManager::createImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
 {
 	LOG_DBG("Trying to create image resource [%s]", name.c_str());
-	std::shared_ptr<EImageResourceInfo> imgInfo(new EImageResourceInfo(name, path, width, height));
+	std::shared_ptr<EImageResource> imgInfo(new EImageResource(name, path, width, height));
 
 	if (!imgInfo) {
 		LOG_ERR("Failed to create Image Resource info!!");
@@ -302,12 +302,12 @@ EResourceManager::createImageResource(std::string name, std::string path, unsign
 	return imgInfo;
 }
 
-std::shared_ptr<EImageResourceInfo>
+std::shared_ptr<EImageResource>
 EResourceManager::getImageResource(std::string resource_name)
 {
 	/* TDOO: Resolve key issue - use alias? path? */
-	//std::weak_ptr<EImageResourceInfo>	imgRes = image_map.find(resource_name);
-	std::shared_ptr<EImageResourceInfo> found;
+	//std::weak_ptr<EImageResource>	imgRes = image_map.find(resource_name);
+	std::shared_ptr<EImageResource> found;
 	auto imgRes = image_map.find(resource_name);
 
 	if (imgRes != image_map.end()) {

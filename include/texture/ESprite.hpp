@@ -6,7 +6,7 @@
 
 #include "ETexture.hpp"
 
-class EImageResourceInfo;
+class EImageResource;
 
 class ESprite : public ETexture
 {
@@ -35,5 +35,5 @@ protected:
 
 	Uint32 prevTime;
 
-	std::shared_ptr<EImageResourceInfo>	sprite_base;
+	std::shared_ptr<EImageResource>	sprite_base;
 };

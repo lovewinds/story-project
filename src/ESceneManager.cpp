@@ -20,7 +20,7 @@ ESceneManager::~ESceneManager()
 
 bool ESceneManager::playScene(std::string scene_name)
 {
-	std::shared_ptr<ESceneInfo> scene;
+	std::shared_ptr<EScene> scene;
 	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 	bool success = resMgr.allocateScene(scene_name);
 

@@ -25,12 +25,13 @@
  *  - It should own textures to show.
  *  - It should perform render and update.
  */
-class ESceneInfo
+class EScene
 {
 public:
-	ESceneInfo(std::string name);
-	virtual ~ESceneInfo();
+	EScene(std::string name);
+	virtual ~EScene();
 
+	/* Primitive Scene actions */
 	void handleEvent(SDL_Event e);
 	void render();
 	void update(Uint32 currentTime, Uint32 accumulator);
@@ -76,6 +77,7 @@ protected:
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 
 	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
+	//std::map<std::string, std::shared_ptr<EImageResource>> _img_resource_map;
 
 	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 };

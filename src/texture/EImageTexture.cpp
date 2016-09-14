@@ -12,7 +12,8 @@ const int SCREEN_HEIGHT = 600;
 
 EImageTexture::EImageTexture(std::string name, std::string base_image) :
 	ETexture(),
-	m_degrees(0.0)
+	m_degrees(0.0),
+	wRatio(1.0), hRatio(1.0)
 {
 	radian = 0;
 	animating = false;
@@ -22,7 +23,8 @@ EImageTexture::EImageTexture(std::string name, std::string base_image) :
 
 EImageTexture::EImageTexture(int x, int y) :
 	ETexture(),
-	m_degrees(0.0)
+	m_degrees(0.0),
+	wRatio(1.0), hRatio(1.0)
 {
 	radian = 0;
 	animating = false;
@@ -51,6 +53,9 @@ bool EImageTexture::allocate()
 	if (!image)
 		return false;
 
+	mWidth = image->getWidth();
+	mHeight = image->getHeight();
+
 	/* Get shared texture from Resource Manager */
 	mTexture = image->getTexture();
 	return true;
@@ -59,7 +64,8 @@ bool EImageTexture::allocate()
 void EImageTexture::deallocate()
 {
 	mTexture.reset();
-	image->releaseTexture();
+	if (nullptr != image)
+		image->releaseTexture();
 }
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
@@ -109,12 +115,19 @@ void EImageTexture::render()
 	SDL_Rect rect = { 0, };
 
 	SDL_GetWindowSize(window, &width, &height);
-	rect.w = width;
-	rect.h = height;
+	//rect.w = width;
+	//rect.h = height;
+	rect.w = mWidth;
+	rect.h = mHeight;
 
-	if (mTexture)
-		texture_render(0, 0, &rect);
+	if (mTexture) {
+		//texture_render(0, 0, &rect);
 		//texture_render((int)p_x, (int)p_y, &rect);
+		if (wRatio != 1.0 || hRatio != 1.0)
+			texture_render_resize((int)p_x, (int)p_y, &rect, wRatio, hRatio);
+		else
+			texture_render((int)p_x, (int)p_y, &rect);
+	}
 }
 
 int EImageTexture::getWidth()
@@ -125,6 +138,28 @@ int EImageTexture::getWidth()
 int EImageTexture::getHeight()
 {
 	return mHeight;
+}
+
+void EImageTexture::setWidth(int width, bool ratio)
+{
+	if (ratio)
+		wRatio = width / 100.0;
+	else
+		mWidth = width;
+}
+
+void EImageTexture::setHeight(int height, bool ratio)
+{
+	if (ratio)
+		hRatio = height / 100.0;
+	else
+		mHeight = height;
+}
+
+void EImageTexture::setPos(int x, int y)
+{
+	p_x = x;
+	p_y = y;
 }
 
 std::string EImageTexture::getName()

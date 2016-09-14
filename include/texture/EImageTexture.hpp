@@ -5,7 +5,7 @@
 
 #include "ETexture.hpp"
 
-class EImageResourceInfo;
+class EImageResource;
 
 class EImageTexture : public ETexture
 {
@@ -27,10 +27,15 @@ public:
 	/* Gets image dimensions */
 	int getWidth();
 	int getHeight();
+	void setWidth(int width, bool ratio = false);
+	void setHeight(int height, bool ratio = false);
+	void setPos(int x, int y);
 	std::string getName();
 
 protected:
 	int radian;
+	double wRatio;
+	double hRatio;
 
 	/* Angle of rotation */
 	double m_degrees;
@@ -41,5 +46,5 @@ protected:
 	std::string name;
 	std::string base_image;
 
-	std::shared_ptr<EImageResourceInfo>	image;
+	std::shared_ptr<EImageResource>	image;
 };
