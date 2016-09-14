@@ -1,7 +1,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EImageResourceInfo.hpp"
+#include "resource/EImageResource.hpp"
 #include "texture/EImageTexture.hpp"
 
 #include <SDL.h>

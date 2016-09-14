@@ -5,9 +5,9 @@
 #include <unordered_map>
 #include <memory>
 
-#include "resource/ESceneInfo.hpp"
+#include "resource/EScene.hpp"
 #include "resource/ESpriteType.hpp"
-#include "resource/EImageResourceInfo.hpp"
+#include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"
 
 class EResourceLoaderInterface;

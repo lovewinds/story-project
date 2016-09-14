@@ -3,7 +3,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EImageResourceInfo.hpp"
+#include "resource/EImageResource.hpp"
 
 EImageResource::EImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
 {

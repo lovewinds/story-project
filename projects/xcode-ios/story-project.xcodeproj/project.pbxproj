@@ -44,10 +44,10 @@
 		F42169DB1D05598B00C50450 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C41D05598B00C50450 /* Ecore.hpp */; };
 		F42169DC1D05598B00C50450 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C51D05598B00C50450 /* ESceneManager.hpp */; };
 		F42169DD1D05598B00C50450 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C61D05598B00C50450 /* EScreenManager.hpp */; };
-		F42169DE1D05598B00C50450 /* EImageResourceInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C81D05598B00C50450 /* EImageResourceInfo.hpp */; };
+		F42169DE1D05598B00C50450 /* EImageResource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C81D05598B00C50450 /* EImageResource.hpp */; };
 		F42169DF1D05598B00C50450 /* EResourceLoaderInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */; };
 		F42169E01D05598B00C50450 /* EResourceManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CA1D05598B00C50450 /* EResourceManager.hpp */; };
-		F42169E11D05598B00C50450 /* ESceneInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CB1D05598B00C50450 /* ESceneInfo.hpp */; };
+		F42169E11D05598B00C50450 /* EScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CB1D05598B00C50450 /* EScene.hpp */; };
 		F42169E21D05598B00C50450 /* ESpriteType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CC1D05598B00C50450 /* ESpriteType.hpp */; };
 		F42169E31D05598B00C50450 /* XMLResourceLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */; };
 		F42169E41D05598B00C50450 /* EDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = F42169D01D05598B00C50450 /* EDrawable.h */; };
@@ -119,10 +119,10 @@
 		F42169C41D05598B00C50450 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
 		F42169C51D05598B00C50450 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
 		F42169C61D05598B00C50450 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
-		F42169C81D05598B00C50450 /* EImageResourceInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResourceInfo.hpp; sourceTree = "<group>"; };
+		F42169C81D05598B00C50450 /* EImageResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResource.hpp; sourceTree = "<group>"; };
 		F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceLoaderInterface.hpp; sourceTree = "<group>"; };
 		F42169CA1D05598B00C50450 /* EResourceManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceManager.hpp; sourceTree = "<group>"; };
-		F42169CB1D05598B00C50450 /* ESceneInfo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneInfo.hpp; sourceTree = "<group>"; };
+		F42169CB1D05598B00C50450 /* EScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScene.hpp; sourceTree = "<group>"; };
 		F42169CC1D05598B00C50450 /* ESpriteType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESpriteType.hpp; sourceTree = "<group>"; };
 		F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMLResourceLoader.hpp; sourceTree = "<group>"; };
 		F42169D01D05598B00C50450 /* EDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDrawable.h; sourceTree = "<group>"; };
@@ -320,10 +320,10 @@
 		F42169C71D05598B00C50450 /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				F42169C81D05598B00C50450 /* EImageResourceInfo.hpp */,
+				F42169C81D05598B00C50450 /* EImageResource.hpp */,
 				F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */,
 				F42169CA1D05598B00C50450 /* EResourceManager.hpp */,
-				F42169CB1D05598B00C50450 /* ESceneInfo.hpp */,
+				F42169CB1D05598B00C50450 /* EScene.hpp */,
 				F42169CC1D05598B00C50450 /* ESpriteType.hpp */,
 				F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */,
 			);
@@ -387,7 +387,7 @@
 			files = (
 				F42169E61D05598B00C50450 /* EImageTexture.hpp in Headers */,
 				F42169E51D05598B00C50450 /* EFigure.h in Headers */,
-				F42169DE1D05598B00C50450 /* EImageResourceInfo.hpp in Headers */,
+				F42169DE1D05598B00C50450 /* EImageResource.hpp in Headers */,
 				F42169DF1D05598B00C50450 /* EResourceLoaderInterface.hpp in Headers */,
 				F42169DB1D05598B00C50450 /* Ecore.hpp in Headers */,
 				F42169E91D05598B00C50450 /* ETexture.h in Headers */,
@@ -401,7 +401,7 @@
 				F42169E81D05598B00C50450 /* ETextTexture.hpp in Headers */,
 				F42169DD1D05598B00C50450 /* EScreenManager.hpp in Headers */,
 				F42169E41D05598B00C50450 /* EDrawable.h in Headers */,
-				F42169E11D05598B00C50450 /* ESceneInfo.hpp in Headers */,
+				F42169E11D05598B00C50450 /* EScene.hpp in Headers */,
 				F42169EA1D05598B00C50450 /* JsonHelper.hpp in Headers */,
 				F42169E71D05598B00C50450 /* ESprite.hpp in Headers */,
 			);

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "Ecore.hpp"
-#include "resource/ESceneInfo.hpp"
+#include "resource/EScene.hpp"
 
 enum TextureType {
 	TEXTURE_TYPE_FONT,

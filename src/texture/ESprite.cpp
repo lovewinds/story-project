@@ -1,6 +1,6 @@
 #include "Ecore.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EImageResourceInfo.hpp"
+#include "resource/EImageResource.hpp"
 #include "util/LogHelper.hpp"
 
 #include "texture/ESprite.hpp"

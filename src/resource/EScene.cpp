@@ -3,7 +3,7 @@
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
 
-#include "resource/ESceneInfo.hpp"
+#include "resource/EScene.hpp"
 
 EScene::EScene(std::string name)
 : sprite_map(_sprite_map)
