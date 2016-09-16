@@ -3,7 +3,7 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/drawable/EDrawable.h"
+#include "texture/drawable/EDrawable.hpp"
 
 EDrawable::EDrawable()
 {
@@ -32,10 +32,22 @@ EDrawable::~EDrawable()
 
 }
 
-void EDrawable::animateStart(Uint32 start)
+void EDrawable::deallocate()
+{
+
+}
+
+void EDrawable::startAnimation()
 {
 	animating = true;
-	startTime = start;
+	startTime = SDL_GetTicks();
+
+	ETexture::startAnimation();
+}
+
+void EDrawable::stopAnimation()
+{
+	animating = false;
 }
 
 void EDrawable::update(Uint32 currentTime, Uint32 accumulator)
@@ -81,6 +93,14 @@ void EDrawable::render()
 	if (renderer == NULL)
 		return;
 
+	SDL_Window* window = Ecore::getInstance()->getWindow();
+	int width = 0, height = 0;
+	SDL_GetWindowSize(window, &width, &height);
+
+	boxRGBA(renderer, 0, height-200, width, height,
+		0x70, 0xC6, 0xFF, 0xAA );
+
+#if 0
 	if (animating == false)
 		return;
 	if (alpha <= 240 && alpha > 0) {
@@ -96,5 +116,6 @@ void EDrawable::render()
 		30,
 		270, radian + 270,
 		0x70, 0xC6, 0xFF, alpha);
+#endif
 #endif
 }

@@ -2,9 +2,8 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
-#include "texture/EImageTexture.hpp"
 
-#include <SDL.h>
+#include "texture/EImageTexture.hpp"
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
@@ -53,8 +52,10 @@ bool EImageTexture::allocate()
 	if (!image)
 		return false;
 
-	mWidth = image->getWidth();
-	mHeight = image->getHeight();
+	if (mWidth == 0)
+		mWidth = image->getWidth();
+	if (mHeight == 0)
+		mHeight = image->getHeight();
 
 	/* Get shared texture from Resource Manager */
 	mTexture = image->getTexture();
@@ -70,42 +71,10 @@ void EImageTexture::deallocate()
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
-	static double dir = 1.0f;
-	static unsigned int count = 0;
-	static double accel = 0.026;
-	static double velo = 1.0;
-
-	static Uint32 prevTime = 0;
-	static const Uint32 startTime = currentTime;
-	Uint32 compensatedTime = currentTime;
-	Uint32 atomicTime = (compensatedTime - startTime);
-	Uint32 delta = atomicTime - prevTime;
-	static double prev_y = 0;
-
-	if (atomicTime == 0) {
-		velo = 1.0;
-		accel = 0.0;
+	/* Animation */
+	if (animation) {
+		animation->update(currentTime, accumulator);
 	}
-
-	if (!animating)	return;
-	if (atomicTime > 1000) {
-		animating = false;
-	}
-
-	accel = 0.0;
-	velo = 0.1;
-
-	prev_y = p_y + velo * ((atomicTime > 375) ? 375 : atomicTime);
-
-	if (atomicTime > 375) {
-		delta = atomicTime - 375;
-		accel = -0.00026;
-		//velo = 1.0 - (1.0 / 375.0) * (delta - 375);
-		velo += accel * delta;
-		prev_y += velo * delta;
-	}
-
-	prevTime = delta;
 }
 
 void EImageTexture::render()
@@ -113,6 +82,7 @@ void EImageTexture::render()
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	int width = 0, height = 0;
 	SDL_Rect rect = { 0, };
+	double ani_x = 0.0, ani_y = 0.0;
 
 	SDL_GetWindowSize(window, &width, &height);
 	//rect.w = width;
@@ -120,13 +90,20 @@ void EImageTexture::render()
 	rect.w = mWidth;
 	rect.h = mHeight;
 
+	if (animation) {
+		ani_x = animation->getX();
+		ani_y = animation->getY();
+	}
+
 	if (mTexture) {
 		//texture_render(0, 0, &rect);
 		//texture_render((int)p_x, (int)p_y, &rect);
 		if (wRatio != 1.0 || hRatio != 1.0)
-			texture_render_resize((int)p_x, (int)p_y, &rect, wRatio, hRatio);
+			texture_render_resize(
+				(int)(p_x + ani_x), (int)(p_y + ani_y),
+				&rect, wRatio, hRatio);
 		else
-			texture_render((int)p_x, (int)p_y, &rect);
+			texture_render((int)(p_x + ani_x), (int)(p_y + ani_y), &rect);
 	}
 }
 

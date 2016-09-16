@@ -10,6 +10,7 @@ ESceneManager::ESceneManager()
 	/* TEMP: Input state handle */
 	testState = DIR_STOP;
 	testBackgroundState = DIR_STOP;
+	overlayState = false;
 }
 
 ESceneManager::~ESceneManager()
@@ -56,6 +57,19 @@ void ESceneManager::startCurrentScene()
 		currentScene->setActiveState(true);
 }
 
+void ESceneManager::initDebugScene()
+{
+	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+	debug_overlay = resMgr.createScene(SCENE_DEBUG, "debug");
+	if (nullptr == debug_overlay) {
+		LOG_ERR("Failed to create debug scene !");
+	}
+	else {
+		if (false == resMgr.allocateScene(std::string("debug")))
+			LOG_ERR("Failed to allocate debug scene !");
+	}
+}
+
 void ESceneManager::handleEvent(SDL_Event e)
 {
 	/* Handler inter-scene events */
@@ -80,6 +94,22 @@ void ESceneManager::handleEvent(SDL_Event e)
 		case SDLK_4:
 			startCurrentScene();
 			break;
+		case SDLK_BACKQUOTE:
+			if (overlayState) {
+				overlayState = false;
+				overlay = nullptr;
+			}
+			else {
+				overlayState = true;
+				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				std::string sname = "vnovel";
+				if (resMgr.allocateScene(sname)) {
+					overlay = resMgr.getScene(sname);
+					LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
+				}
+			}
+
+			break;
 		}
 	}
 	else if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -90,6 +120,9 @@ void ESceneManager::handleEvent(SDL_Event e)
 	/* Propagate event into Scene instance */
 	if (currentScene) {
 		currentScene->handleEvent(e);
+	}
+	if (overlay) {
+		overlay->handleEvent(e);
 	}
 #if 0
 	static Uint32 latestEventTime = 0;
@@ -140,7 +173,7 @@ void ESceneManager::handleEvent(SDL_Event e)
 		if (ax + ay > 50)
 			removeTexture();
 	} else if (e.type == SDL_KEYDOWN) {
-		LOG_INFO("Pressed [%d]", e.key.keysym.sym)
+		LOG_INFO("Pressed [%d]", e.key.keysym.sym);
 		switch (e.key.keysym.sym) {
 		case SDLK_RIGHT:
 			testState &= (DIR_ALL ^ DIR_LEFT);
@@ -237,12 +270,24 @@ void ESceneManager::render()
 {
 	if (currentScene)
 		currentScene->render();
+
+	if (overlay)
+		overlay->render();
+
+	if (debug_overlay)
+		debug_overlay->render();
 }
 
 void ESceneManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (currentScene)
 		currentScene->update(currentTime, accumulator);
+
+	if (overlay)
+		overlay->update(currentTime, accumulator);
+
+	if (debug_overlay)
+		debug_overlay->update(currentTime, accumulator);
 }
 
 void ESceneManager::temp_moveBackGround(double dx, double dy)

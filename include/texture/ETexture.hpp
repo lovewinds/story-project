@@ -30,10 +30,10 @@ public:
 
 	/* Animation */
 	void setAnimation(std::shared_ptr<EAnimation> animation);
-	void startAnimation();
-	void stopAnimation();
-	void pauseAnimation();
-	void resumeAnimation();
+	virtual void startAnimation();
+	virtual void stopAnimation();
+	virtual void pauseAnimation();
+	virtual void resumeAnimation();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
 	virtual void render() = 0;
@@ -47,8 +47,8 @@ protected:
 	double p_y;
 
 	/* Texture dimensions */
-	int mWidth;
-	int mHeight;
+	int mWidth = 0;
+	int mHeight = 0;
 
 	/* Animation */
 	std::shared_ptr<EAnimation> animation;

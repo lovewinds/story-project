@@ -39,9 +39,14 @@ public:
 	void pauseCurrentScene();
 	void startCurrentScene();
 
+	void initDebugScene();
+
 private:
 	std::shared_ptr<EScene> currentScene;
 	std::shared_ptr<EScene> overlay;
+	std::shared_ptr<EScene> debug_overlay;
+
+	bool overlayState;
 
 	int testState;
 	int testBackgroundState;

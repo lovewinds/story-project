@@ -56,7 +56,8 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Co
 	/* Render text surface */
 	//surface = TTF_RenderText_Solid(gFont, text.c_str(), textColor);
 	//surface = TTF_RenderText_Shaded(gFont, text.c_str(), textColor, bgColor);
-	surface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
+	//surface = TTF_RenderText_Blended(gFont, text.c_str(), textColor);
+	surface = TTF_RenderUTF8_Blended(gFont, text.c_str(), textColor);
 	if (surface == nullptr)
 	{
 		LOG_ERR("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());

@@ -13,7 +13,6 @@ ETextTexture::ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgCo
 	this->textColor = textColor;
 }
 
-
 ETextTexture::~ETextTexture()
 {
 }
@@ -48,14 +47,6 @@ void ETextTexture::deallocate()
 
 void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
-	/* Handle Text Texture */
-	static char str[256] = { 0, };
-
-	/* Update Text */
-	double d_fps = Ecore::getInstance()->GetFPS();
-	SDL_snprintf(str, 256, "FPS: %0.2f", d_fps);
-
-	setText(str);
 }
 
 void ETextTexture::setText(const std::string& text)
@@ -73,9 +64,12 @@ void ETextTexture::setText(const std::string& text)
 
 void ETextTexture::render()
 {
+	int x, y;
+	x = (animation) ? (int)(p_x + animation->getX()) : (int)p_x;
+	y = (animation) ? (int)(p_y + animation->getY()) : (int)p_y;
 	//texture_render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
 	if (mTexture) {
 		//LOG_INFO("Text render [%s] (%d,%d)", message.c_str(), (int)p_x, (int)p_y);
-		texture_render(30, 30);
+		texture_render(x, y);
 	}
 }

@@ -1,3 +1,5 @@
+#include <stdarg.h>
+
 #include "Ecore.hpp"
 #include "texture/ETexture.hpp"
 #include "EScreenManager.hpp"
@@ -368,11 +370,11 @@ bool Ecore::loadResources()
 	bool success = true;
 
 	/* Load Font */
-	gFont = TTF_OpenFont("../res/FreeSans.ttf", 28);
+	gFont = TTF_OpenFont("../res/NanumGothic.ttf", 28);
 	if (gFont == NULL)
 	{
 		/* Android can handle under /assets directory */
-		gFont = TTF_OpenFont("FreeSans.ttf", 28);
+		gFont = TTF_OpenFont("NanumGothic.ttf", 28);
 		if (gFont == NULL) {
 			LOG_ERR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
 			return false;
@@ -391,6 +393,12 @@ bool Ecore::loadResources()
 		return false;
 	}
 	//success = screenManager->loadResources(std::string("sample_scene.xml"));
+
+	/* Create debug scene
+	 *   It displays some helpful variables on transparent screen.
+	 *     e.g. FPS
+	 */
+	screenManager->initDebugScene();
 
 	/* Play default scene
 	 *   This logic allocates all required resources into memory

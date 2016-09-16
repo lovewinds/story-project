@@ -15,6 +15,7 @@ public:
 	EScreenManager(EScreenManager& self) = delete;
 
 	bool playScene(std::string scene_name);
+	void initDebugScene();
 
 	/* Primitive functions */
 	void render();

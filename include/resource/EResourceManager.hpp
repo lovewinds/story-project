@@ -28,7 +28,7 @@ public:
  * Scene Functions
  */
 	/* Create scene with name and ready for allocation */
-	std::shared_ptr<EScene> createScene(std::string scene_name);
+	std::shared_ptr<EScene> createScene(ESceneType type, std::string scene_name);
 	std::shared_ptr<EScene> getScene(std::string scene_name);
 
 	/* Allocate specific scene and related resource(i.e. sprites) into memory */

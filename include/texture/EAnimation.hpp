@@ -16,15 +16,15 @@ public:
 	EAnimation();
 	virtual ~EAnimation();
 
-	void start();
-	void stop();
-    void pause();
-    void resume();
+	virtual void start();
+	virtual void stop();
+    virtual void pause();
+    virtual void resume();
 
     double getX();
     double getY();
 
-    void update(Uint32 currentTime, Uint32 accumulator = 0);
+    virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
 protected:
     Uint32 startTime;

@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
 	<GlobalResources type="global"></GlobalResources>
-	<Scene name="main" class="Template_RPG">
+	<Scene name="main" class="RPG">
 		<Resources>
 			<Images>
 				<Image src="japanvillage.jpg" name="Background"
 					 type="background" width="636" height="475"/>
-				<Image src="f071.png" name="Standing"
-					 type="background" width="600" height="800"/>
 				<Image src="moderngirl02.png" name="Character"
 					 type="sprite" width="128" height="192"/>
 			</Images>
@@ -29,12 +27,20 @@
 			</Sprites>
 		</Resources>
 		<Layer name="base">
-			<Image type="Background" name="bg" x="0" y="0" width="100%" height="100%"/>
-			<Image type="Standing" name="char" x="0" y="50" width="25%" height="25%"/>
-			<Image type="Standing" name="char2" x="200" y="0" width="50%" height="50%"/>
-			<Image type="Standing" name="char3" x="400" y="0" width="50%" height="50%"/>
-			<Sprite type="loading_circle" name="c1" x="0" y="256" />
-			<Sprite type="loading_circle" name="c2" x="32" y="256" />
+			<Image name="bg" source="Background" x="0" y="0" width="1024" height="768"/>
+			<Sprite name="c1" source="loading_circle" x="0" y="256" />
+			<Sprite name="c2" source="loading_circle" x="32" y="256" />
+		</Layer>
+	</Scene>
+	<Scene name="vnovel" class="VNovel">
+		<Resources>
+			<Images>
+				<Image src="f071.png" name="Standing"
+					 type="background" width="600" height="800"/>
+			</Images>
+		</Resources>
+		<Layer name="talk">
+			<Image name="char" source="Standing" x="200" y="100" width="50%" height="50%"/>
 		</Layer>
 	</Scene>
 </SceneRoot>

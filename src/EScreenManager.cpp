@@ -17,6 +17,11 @@ EScreenManager::~EScreenManager()
 	}
 }
 
+void EScreenManager::initDebugScene()
+{
+	sceneManager->initDebugScene();
+}
+
 bool EScreenManager::playScene(std::string scene_name)
 {
 	bool success = true;
@@ -55,8 +60,9 @@ void EScreenManager::handleEvent(SDL_Event e)
 		|| e.type == SDL_FINGERDOWN
 		|| e.type == SDL_FINGERMOTION)
 	{
-		static Uint32 latestEventTime = 0;
 		LOG_INFO("Event : [%x]", e.type);
+
+		/* Propagate event into scene */
 		sceneManager->handleEvent(e);
 	}
 #if 0

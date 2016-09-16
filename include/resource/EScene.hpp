@@ -9,6 +9,7 @@
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EAnimation.hpp"
+#include "texture/drawable/EDrawable.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -17,6 +18,13 @@
  * When scene is changed, SceneManager allocates actual Scene instance
  * with this SceneInfo instance on ResourceManager.
  */
+
+enum ESceneType
+{
+	SCENE_RPG = 0,
+	SCENE_VISUAL_NOVEL,
+	SCENE_DEBUG,
+};
 
 /* Scene
  *
@@ -32,9 +40,9 @@ public:
 	virtual ~EScene();
 
 	/* Primitive Scene actions */
-	void handleEvent(SDL_Event e);
-	void render();
-	void update(Uint32 currentTime, Uint32 accumulator);
+	virtual void handleEvent(SDL_Event e);
+	virtual void render();
+	virtual void update(Uint32 currentTime, Uint32 accumulator);
 
 	/* Should handle creation of resources with Resource manager */
 	bool addSprite(std::shared_ptr<ESprite> sprite);
@@ -49,7 +57,6 @@ public:
 	void deallocate();
 
 	void setActiveState(bool active);
-	void testAnimation(AnimationState state);
 
 	std::string getName();
 
@@ -58,6 +65,7 @@ public:
 //	const std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>>& texture_map;
 
 protected:
+	EScene();
 	std::string name;
 
 	/* TODO: Scene is allocated on memory */
@@ -80,4 +88,6 @@ protected:
 	//std::map<std::string, std::shared_ptr<EImageResource>> _img_resource_map;
 
 	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
+
+	std::map<std::string, std::shared_ptr<EDrawable>> _drawable_map;
 };

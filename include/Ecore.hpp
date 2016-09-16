@@ -30,6 +30,11 @@ public:
 
 	/* Provide current FPS */
 	double GetFPS();
+
+	EResourceManager& getResourceManager();
+	EScreenManager& getScreenManager();
+
+	/* Utility functions */
 	static const char* getBasePath();
 	static const char* getStorePath();
 	static std::string makeBasePath(std::string child_dir);
@@ -37,9 +42,6 @@ public:
 	static std::string getResourcePath(std::string file_name);
 	static std::string getPlatform();
 	static bool checkPlatform(std::string);
-
-	EResourceManager& getResourceManager();
-	EScreenManager& getScreenManager();
 
 private:
 	Ecore();

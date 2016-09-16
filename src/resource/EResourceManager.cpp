@@ -8,6 +8,10 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
+#include "resource/ERPGScene.hpp"
+#include "resource/EVisualNovelScene.hpp"
+#include "resource/EDbgOverlayScene.hpp"
+
 EResourceManager::EResourceManager()
 {
 	/* TODO: Get specific loader from factory class */
@@ -57,10 +61,28 @@ bool EResourceManager::loadResources(std::string res_file)
 	return loader->loadResources(path);
 }
 
-std::shared_ptr<EScene> EResourceManager::createScene(std::string scene_name)
+std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::string scene_name)
 {
 	LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
-	std::shared_ptr<EScene> scene(new EScene(scene_name));
+	//std::shared_ptr<EScene> scene(new EScene(scene_name));
+	std::shared_ptr<EScene> scene;
+
+	switch (type)
+	{
+	case SCENE_RPG:
+		scene = std::shared_ptr<EScene>(new ERPGScene(scene_name));
+		break;
+	case SCENE_VISUAL_NOVEL:
+		scene = std::shared_ptr<EScene>(new EVisualNovelScene(scene_name));
+		break;
+	case SCENE_DEBUG:
+		scene = std::shared_ptr<EScene>(new EDbgOverlayScene(scene_name));
+		break;
+	default:
+		/* TODO: If new scene type added, should be created here */
+		return nullptr;
+		break;
+	}
 
 	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
 	auto result = scene_map.emplace(scene_name, scene);
