@@ -51,6 +51,19 @@ void ETexture::setAnimation(std::shared_ptr<EAnimation> animation)
 	this->animation = animation;
 }
 
+std::shared_ptr<EAnimation> ETexture::getAnimation()
+{
+	return animation;
+}
+
+AnimationState ETexture::getAnimationState()
+{
+	if (nullptr == animation)
+		return ANI_NONE;
+
+	return animation->getState();
+}
+
 void ETexture::startAnimation()
 {
 	if (animation) {
@@ -77,6 +90,15 @@ void ETexture::resumeAnimation()
 	if (animation) {
 		animation->resume();
 	}
+}
+
+void ETexture::finishedAnimationCallback(double delta_x, double delta_y)
+{
+	LOG_DBG("Animation Finished. update position");
+	p_x += delta_x;
+	p_y += delta_y;
+
+	animation = nullptr;
 }
 
 void ETexture::dealloc()

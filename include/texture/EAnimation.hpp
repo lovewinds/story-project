@@ -2,12 +2,16 @@
 
 #include <SDL.h>
 
+/* Avoid circular reference */
+class ETexture;
+
 enum AnimationState
 {
-	ANI_STOP = 0,
-	ANI_START = 1,
-	ANI_PAUSE = 2,
-	ANI_RESUME = 3,
+	ANI_NONE,
+	ANI_STOP,
+	ANI_START,
+	ANI_PAUSE,
+	ANI_RESUME,
 };
 
 class EAnimation
@@ -23,6 +27,9 @@ public:
 
     double getX();
     double getY();
+	AnimationState getState();
+
+	void setCaller(std::shared_ptr<ETexture> caller);
 
     virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
@@ -30,6 +37,12 @@ protected:
     Uint32 startTime;
     Uint32 elapsedTime;
     AnimationState state;
+
+	/* This model only supports one callback at one time. */
+	/* TODO: Use callback list */
+	//std::weak_ptr<ETexture> caller;
+
+	std::weak_ptr<ETexture> caller;
 
 	/* Position */
 	double a_x;

@@ -1,5 +1,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
+#include "texture/ETexture.hpp"
+
 #include "texture/EAnimation.hpp"
 
 EAnimation::EAnimation() :
@@ -35,6 +37,10 @@ void EAnimation::stop()
 {
     startTime = 0;
     state = ANI_STOP;
+
+	std::shared_ptr<ETexture> t = caller.lock();
+	if (t)
+		t->finishedAnimationCallback(a_x, a_y);
 }
 
 void EAnimation::pause()
@@ -47,6 +53,17 @@ void EAnimation::resume()
 {
     startTime = SDL_GetTicks() - elapsedTime;
     state = ANI_START;
+}
+
+AnimationState EAnimation::getState()
+{
+	return state;
+}
+
+void EAnimation::setCaller(std::shared_ptr<ETexture> clr)
+{
+	/* Store weak_ptr to avoid circular reference */
+	caller = clr;
 }
 
 void EAnimation::update(Uint32 currentTime, Uint32 accumulator)

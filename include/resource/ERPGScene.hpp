@@ -10,6 +10,7 @@
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EAnimation.hpp"
+#include "texture/EGridMoveAnimation.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -38,6 +39,7 @@ public:
 	virtual void update(Uint32 currentTime, Uint32 accumulator);
 
 	void testAnimation(AnimationState state);
+	void handleMove(GridMoveDir dir);
 
 protected:
 };

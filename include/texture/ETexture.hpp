@@ -30,10 +30,13 @@ public:
 
 	/* Animation */
 	void setAnimation(std::shared_ptr<EAnimation> animation);
+	std::shared_ptr<EAnimation> getAnimation();
+	AnimationState getAnimationState();
 	virtual void startAnimation();
 	virtual void stopAnimation();
 	virtual void pauseAnimation();
 	virtual void resumeAnimation();
+	virtual void finishedAnimationCallback(double delta_x, double delta_y);
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
 	virtual void render() = 0;

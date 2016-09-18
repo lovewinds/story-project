@@ -2,6 +2,7 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
+#include "texture/EGridMoveAnimation.hpp"
 
 #include "resource/ERPGScene.hpp"
 
@@ -38,7 +39,7 @@ void ERPGScene::testAnimation(AnimationState state)
 			sprite->stopAnimation();
 			break;
 		case ANI_START:
-			ani = std::shared_ptr<EAnimation>(new EAnimation());
+			ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
 			sprite->setAnimation(ani);
 			sprite->startAnimation();
 			/* Update position animation finished? */
@@ -48,6 +49,45 @@ void ERPGScene::testAnimation(AnimationState state)
 			break;
 		case ANI_RESUME:
 			sprite->resumeAnimation();
+			break;
+		}
+	}
+}
+
+void ani_finished(void *caller, double delta_x, double delta_y)
+{
+	ERPGScene *scene = static_cast<ERPGScene*>(caller);
+
+	if (nullptr == scene)
+		return;
+
+
+}
+
+void ERPGScene::handleMove(GridMoveDir dir)
+{
+	std::shared_ptr<EAnimation> ani;
+	EGridMoveAnimation* grid = nullptr;
+	for (auto& it : _sprite_map)
+	{
+		auto& sprite = it.second;
+		switch (sprite->getAnimationState())
+		{
+		case ANI_NONE:
+			ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation(dir));
+			ani->setCaller(sprite);
+			sprite->setAnimation(ani);
+			sprite->startAnimation();
+			break;
+		case ANI_STOP:
+			ani = sprite->getAnimation();
+			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+			if (grid) {
+				grid->setDirection(dir);
+			}
+			sprite->startAnimation();
+			break;
+		default:
 			break;
 		}
 	}
@@ -75,6 +115,23 @@ void ERPGScene::handleEvent(SDL_Event e)
 		case SDLK_EQUALS:
 			LOG_INFO("Resume Animation");
 			testAnimation(ANI_RESUME);
+			break;
+
+		case SDLK_UP:
+			LOG_INFO("Move : UP");
+			handleMove(DIR_UP);
+			break;
+		case SDLK_DOWN:
+			LOG_INFO("Move : DOWN");
+			handleMove(DIR_DOWN);
+			break;
+		case SDLK_LEFT:
+			LOG_INFO("Move : LEFT");
+			handleMove(DIR_LEFT);
+			break;
+		case SDLK_RIGHT:
+			LOG_INFO("Move : RIGHT");
+			handleMove(DIR_RIGHT);
 			break;
 		}
 	}

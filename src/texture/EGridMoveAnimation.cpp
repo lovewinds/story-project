@@ -5,7 +5,11 @@
 
 EGridMoveAnimation::EGridMoveAnimation()
 {
-	decrease = false;
+}
+
+EGridMoveAnimation::EGridMoveAnimation(GridMoveDir dir)
+{
+	direction = dir;
 }
 
 EGridMoveAnimation::~EGridMoveAnimation()
@@ -17,16 +21,13 @@ void EGridMoveAnimation::start()
 	startTime = SDL_GetTicks();
 	state = ANI_START;
 
-	velo = 10.0;
-	accel = 0.0;
+	velo = 20.0;
 	prevTime = 0;
-	decrease = false;
 }
 
 void EGridMoveAnimation::stop()
 {
-	startTime = 0;
-	state = ANI_STOP;
+	EAnimation::stop();
 }
 
 void EGridMoveAnimation::pause()
@@ -41,6 +42,11 @@ void EGridMoveAnimation::resume()
 	state = ANI_START;
 }
 
+void EGridMoveAnimation::setDirection(GridMoveDir dir)
+{
+	direction = dir;
+}
+
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
@@ -48,26 +54,43 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	Uint32 delta = atomicTime - prevTime;
 	double dt = delta * 0.001;
 
-	if (atomicTime > 300) {
-		decrease = true;
-		accel = -0.25;
-	}
-
 	if (ANI_START != state)	return;
 
 	prevTime = delta;
 
-	if (decrease) {
-		velo += accel * dt;
-	}
-
 	/* Move position */
-	a_x += velo * dt;
-
-	/* End animation */
-	if (velo <= 0.0) {
-		velo = 0.0;
-		accel = 0.0;
-		stop();
+	switch (direction){
+	case DIR_UP:
+		a_y -= velo * dt;
+		if (a_y <= -32.0) {
+			velo = 0.0;
+			a_y = -32.0;
+			stop();
+		}
+		break;
+	case DIR_DOWN:
+		a_y += velo * dt;
+		if (a_y >= 32.0) {
+			velo = 0.0;
+			a_y = 32.0;
+			stop();
+		}
+		break;
+	case DIR_LEFT:
+		a_x -= velo * dt;
+		if (a_x <= -32.0) {
+			velo = 0.0;
+			a_x = -32.0;
+			stop();
+		}
+		break;
+	case DIR_RIGHT:
+		a_x += velo * dt;
+		if (a_x >= 32.0) {
+			velo = 0.0;
+			a_x = 32.0;
+			stop();
+		}
+		break;
 	}
 }

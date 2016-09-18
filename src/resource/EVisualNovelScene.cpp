@@ -4,7 +4,7 @@
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/drawable/EDrawable.hpp"
-#include "texture/EGridMoveAnimation.hpp"
+#include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
 
 #include "resource/EVisualNovelScene.hpp"
@@ -55,7 +55,7 @@ void EVisualNovelScene::testAnimation(AnimationState state)
 			sprite->stopAnimation();
 			break;
 		case ANI_START:
-			ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
+			ani = std::shared_ptr<EAnimation>(new EAccelAnimation());
 			sprite->setAnimation(ani);
 			sprite->startAnimation();
 			/* Update position animation finished? */

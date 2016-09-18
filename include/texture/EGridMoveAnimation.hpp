@@ -2,10 +2,19 @@
 
 #include "texture/EAnimation.hpp"
 
+enum GridMoveDir {
+	DIR_NONE,
+	DIR_UP,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
+};
+
 class EGridMoveAnimation : public EAnimation
 {
 public:
 	EGridMoveAnimation();
+	EGridMoveAnimation(GridMoveDir dir);
 	virtual ~EGridMoveAnimation();
 
 	virtual void start();
@@ -13,11 +22,14 @@ public:
 	virtual void pause();
 	virtual void resume();
 
+	virtual void setDirection(GridMoveDir dir);
+
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
 protected:
-	bool decrease;
 	double accel = 0.026;
-	double velo = 1.0;
+	double velo = 10.0;
 	Uint32 prevTime = 0;
+
+	GridMoveDir direction = DIR_NONE;
 };
