@@ -75,6 +75,7 @@ void ESceneManager::handleEvent(SDL_Event e)
 	/* Handler inter-scene events */
 	bool ret = false;
 	std::string default_scene("main");
+	static int ax = 0, ay = 0;
 
 	if (e.type == SDL_KEYDOWN) {
 		LOG_INFO("Pressed [%d]", e.key.keysym.sym);
@@ -114,7 +115,33 @@ void ESceneManager::handleEvent(SDL_Event e)
 	}
 	else if (e.type == SDL_MOUSEBUTTONDOWN)
 	{
+	}
+	else if (e.type == SDL_FINGERDOWN) {
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
+		if (overlayState) {
+			overlayState = false;
+			overlay = nullptr;
+		}
+		else {
+			overlayState = true;
+			EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+			std::string sname = "vnovel";
+			if (resMgr.allocateScene(sname)) {
+				overlay = resMgr.getScene(sname);
+				LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
+			}
+		}
+	} else if (e.type == SDL_FINGERMOTION) {
+		/* Touch & swipe clears textures */
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		int ax = (int)(((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000);
+		int ay = (int)(((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000);
+
+		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
+		LOG_INFO("dx / dy : [%f / %f]", te->dx, te->dy);
+		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
 	}
 
 	/* Propagate event into Scene instance */

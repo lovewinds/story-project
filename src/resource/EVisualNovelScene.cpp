@@ -1,4 +1,4 @@
-#pragma execution_character_set("utf-8")
+﻿#pragma execution_character_set("utf-8")
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
@@ -17,6 +17,8 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	SDL_Window* window = Ecore::getInstance()->getWindow();
+	int width = 0, height = 0;
 
 	std::shared_ptr<EDrawable> dr(new EDrawable(100, 100));
 	auto result = _drawable_map.emplace("Talkbox", dr);
@@ -26,8 +28,9 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 
 	/* TODO: It would be better not to use utf-8 char directly. */
 	std::shared_ptr<ETextTexture> txt(
-		new ETextTexture("�ȳ�?", textColor, bgColor));
-	txt->movePositionTo(10, 700);
+		new ETextTexture("안녕?", textColor, bgColor));
+	SDL_GetWindowSize(window, &width, &height);
+	txt->movePositionTo(10, height - 200);
 
 	auto result2 = _text_texture_map.emplace("text", txt);
 	if (!result2.second) {

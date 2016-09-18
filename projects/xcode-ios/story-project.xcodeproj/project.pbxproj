@@ -11,26 +11,6 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
-		F42169961D05592A00C50450 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169791D05592A00C50450 /* Ecore.cpp */; };
-		F42169971D05592A00C50450 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421697A1D05592A00C50450 /* ESceneManager.cpp */; };
-		F42169981D05592A00C50450 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421697B1D05592A00C50450 /* EScreenManager.cpp */; };
-		F42169991D05592A00C50450 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421697C1D05592A00C50450 /* main.cpp */; };
-		F421699A1D05592A00C50450 /* EImageResourceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421697E1D05592A00C50450 /* EImageResourceInfo.cpp */; };
-		F421699B1D05592A00C50450 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421697F1D05592A00C50450 /* EResourceLoaderInterface.cpp */; };
-		F421699C1D05592A00C50450 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169801D05592A00C50450 /* EResourceManager.cpp */; };
-		F421699D1D05592A00C50450 /* ESceneInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169811D05592A00C50450 /* ESceneInfo.cpp */; };
-		F421699E1D05592A00C50450 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169821D05592A00C50450 /* ESpriteType.cpp */; };
-		F421699F1D05592A00C50450 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169831D05592A00C50450 /* XMLResourceLoader.cpp */; };
-		F42169A41D05592A00C50450 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421698B1D05592A00C50450 /* EDrawable.cpp */; };
-		F42169A51D05592A00C50450 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421698C1D05592A00C50450 /* EFigure.cpp */; };
-		F42169A61D05592A00C50450 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421698D1D05592A00C50450 /* EImageTexture.cpp */; };
-		F42169A71D05592A00C50450 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421698E1D05592A00C50450 /* ESprite.cpp */; };
-		F42169A81D05592A00C50450 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F421698F1D05592A00C50450 /* ETextTexture.cpp */; };
-		F42169A91D05592A00C50450 /* ETexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169901D05592A00C50450 /* ETexture.cpp */; };
-		F42169AA1D05592A00C50450 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169921D05592A00C50450 /* JsonHelper.cpp */; };
-		F42169AB1D05592A00C50450 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169931D05592A00C50450 /* LogHelper.cpp */; };
-		F42169AC1D05592A00C50450 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169941D05592A00C50450 /* SDLWrap.cpp */; };
-		F42169AD1D05592A00C50450 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42169951D05592A00C50450 /* XmlHelper.cpp */; };
 		F42169B81D05593A00C50450 /* BerryGarden.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169AE1D05593A00C50450 /* BerryGarden.png */; };
 		F42169B91D05593A00C50450 /* bg-black.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169AF1D05593A00C50450 /* bg-black.png */; };
 		F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F42169B01D05593A00C50450 /* FreeSans.ttf */; };
@@ -41,33 +21,83 @@
 		F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B51D05593A00C50450 /* moderngirl02x2.png */; };
 		F42169C01D05593A00C50450 /* sample_scene.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B61D05593A00C50450 /* sample_scene.xml */; };
 		F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B71D05593A00C50450 /* sample_scene2.xml */; };
-		F42169DB1D05598B00C50450 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C41D05598B00C50450 /* Ecore.hpp */; };
-		F42169DC1D05598B00C50450 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C51D05598B00C50450 /* ESceneManager.hpp */; };
-		F42169DD1D05598B00C50450 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C61D05598B00C50450 /* EScreenManager.hpp */; };
-		F42169DE1D05598B00C50450 /* EImageResource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C81D05598B00C50450 /* EImageResource.hpp */; };
-		F42169DF1D05598B00C50450 /* EResourceLoaderInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */; };
-		F42169E01D05598B00C50450 /* EResourceManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CA1D05598B00C50450 /* EResourceManager.hpp */; };
-		F42169E11D05598B00C50450 /* EScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CB1D05598B00C50450 /* EScene.hpp */; };
-		F42169E21D05598B00C50450 /* ESpriteType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CC1D05598B00C50450 /* ESpriteType.hpp */; };
-		F42169E31D05598B00C50450 /* XMLResourceLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */; };
-		F42169E41D05598B00C50450 /* EDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = F42169D01D05598B00C50450 /* EDrawable.h */; };
-		F42169E51D05598B00C50450 /* EFigure.h in Headers */ = {isa = PBXBuildFile; fileRef = F42169D11D05598B00C50450 /* EFigure.h */; };
-		F42169E61D05598B00C50450 /* EImageTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D21D05598B00C50450 /* EImageTexture.hpp */; };
-		F42169E71D05598B00C50450 /* ESprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D31D05598B00C50450 /* ESprite.hpp */; };
-		F42169E81D05598B00C50450 /* ETextTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D41D05598B00C50450 /* ETextTexture.hpp */; };
-		F42169E91D05598B00C50450 /* ETexture.h in Headers */ = {isa = PBXBuildFile; fileRef = F42169D51D05598B00C50450 /* ETexture.h */; };
-		F42169EA1D05598B00C50450 /* JsonHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D71D05598B00C50450 /* JsonHelper.hpp */; };
-		F42169EB1D05598B00C50450 /* LogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D81D05598B00C50450 /* LogHelper.hpp */; };
-		F42169EC1D05598B00C50450 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169D91D05598B00C50450 /* SDLWrap.hpp */; };
-		F42169ED1D05598B00C50450 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F42169DA1D05598B00C50450 /* XmlHelper.hpp */; };
-		F42169F31D0559B300C50450 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42169EE1D0559B300C50450 /* libpugixml.a */; };
-		F42169F41D0559B300C50450 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42169EF1D0559B300C50450 /* libSDL2_gfx.a */; };
-		F42169F51D0559B300C50450 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42169F01D0559B300C50450 /* libSDL2_image.a */; };
-		F42169F61D0559B300C50450 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42169F11D0559B300C50450 /* libSDL2_ttf.a */; };
-		F42169F71D0559B300C50450 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F42169F21D0559B300C50450 /* libSDL2.a */; };
 		F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */; };
 		F43DB9E01C78B59400BE5C9A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
+		F4A37EE61D8D926C00186118 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC61D8D926C00186118 /* Ecore.hpp */; };
+		F4A37EE71D8D926C00186118 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC71D8D926C00186118 /* ESceneManager.hpp */; };
+		F4A37EE81D8D926C00186118 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC81D8D926C00186118 /* EScreenManager.hpp */; };
+		F4A37EE91D8D926C00186118 /* EDbgOverlayScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECA1D8D926C00186118 /* EDbgOverlayScene.hpp */; };
+		F4A37EEA1D8D926C00186118 /* EImageResource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECB1D8D926C00186118 /* EImageResource.hpp */; };
+		F4A37EEB1D8D926C00186118 /* EResourceLoaderInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECC1D8D926C00186118 /* EResourceLoaderInterface.hpp */; };
+		F4A37EEC1D8D926C00186118 /* EResourceManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECD1D8D926C00186118 /* EResourceManager.hpp */; };
+		F4A37EED1D8D926C00186118 /* ERPGScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECE1D8D926C00186118 /* ERPGScene.hpp */; };
+		F4A37EEE1D8D926C00186118 /* EScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ECF1D8D926C00186118 /* EScene.hpp */; };
+		F4A37EEF1D8D926D00186118 /* ESpriteType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED01D8D926C00186118 /* ESpriteType.hpp */; };
+		F4A37EF01D8D926D00186118 /* EVisualNovelScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED11D8D926C00186118 /* EVisualNovelScene.hpp */; };
+		F4A37EF11D8D926D00186118 /* XMLResourceLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED21D8D926C00186118 /* XMLResourceLoader.hpp */; };
+		F4A37EF31D8D926D00186118 /* EDrawable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED71D8D926C00186118 /* EDrawable.hpp */; };
+		F4A37EF41D8D926D00186118 /* EAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED81D8D926C00186118 /* EAnimation.hpp */; };
+		F4A37EF51D8D926D00186118 /* EFigure.h in Headers */ = {isa = PBXBuildFile; fileRef = F4A37ED91D8D926C00186118 /* EFigure.h */; };
+		F4A37EF61D8D926D00186118 /* EGridMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EDA1D8D926C00186118 /* EGridMoveAnimation.hpp */; };
+		F4A37EF71D8D926D00186118 /* EImageTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EDB1D8D926C00186118 /* EImageTexture.hpp */; };
+		F4A37EF81D8D926D00186118 /* ESprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EDC1D8D926C00186118 /* ESprite.hpp */; };
+		F4A37EF91D8D926D00186118 /* ETextTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EDD1D8D926C00186118 /* ETextTexture.hpp */; };
+		F4A37EFA1D8D926E00186118 /* ETexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EDE1D8D926C00186118 /* ETexture.hpp */; };
+		F4A37EFC1D8D926E00186118 /* JsonHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EE11D8D926C00186118 /* JsonHelper.hpp */; };
+		F4A37EFD1D8D926E00186118 /* LogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EE21D8D926C00186118 /* LogHelper.hpp */; };
+		F4A37EFE1D8D926E00186118 /* PythonScript.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EE31D8D926C00186118 /* PythonScript.hpp */; };
+		F4A37EFF1D8D926E00186118 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EE41D8D926C00186118 /* SDLWrap.hpp */; };
+		F4A37F001D8D926E00186118 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EE51D8D926C00186118 /* XmlHelper.hpp */; };
+		F4A37F221D8D928100186118 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F011D8D928100186118 /* Ecore.cpp */; };
+		F4A37F231D8D928100186118 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F021D8D928100186118 /* ESceneManager.cpp */; };
+		F4A37F241D8D928100186118 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F031D8D928100186118 /* EScreenManager.cpp */; };
+		F4A37F251D8D928100186118 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F041D8D928100186118 /* main.cpp */; };
+		F4A37F261D8D928100186118 /* EDbgOverlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F061D8D928100186118 /* EDbgOverlayScene.cpp */; };
+		F4A37F271D8D928100186118 /* EImageResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F071D8D928100186118 /* EImageResource.cpp */; };
+		F4A37F281D8D928100186118 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F081D8D928100186118 /* EResourceLoaderInterface.cpp */; };
+		F4A37F291D8D928100186118 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F091D8D928100186118 /* EResourceManager.cpp */; };
+		F4A37F2A1D8D928100186118 /* ERPGScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F0A1D8D928100186118 /* ERPGScene.cpp */; };
+		F4A37F2B1D8D928100186118 /* EScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F0B1D8D928100186118 /* EScene.cpp */; };
+		F4A37F2C1D8D928100186118 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F0C1D8D928100186118 /* ESpriteType.cpp */; };
+		F4A37F2D1D8D928100186118 /* EVisualNovelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F0D1D8D928100186118 /* EVisualNovelScene.cpp */; };
+		F4A37F2E1D8D928100186118 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F0E1D8D928100186118 /* XMLResourceLoader.cpp */; };
+		F4A37F301D8D928100186118 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F131D8D928100186118 /* EDrawable.cpp */; };
+		F4A37F311D8D928100186118 /* EAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F141D8D928100186118 /* EAnimation.cpp */; };
+		F4A37F321D8D928100186118 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F151D8D928100186118 /* EFigure.cpp */; };
+		F4A37F331D8D928100186118 /* EGridMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F161D8D928100186118 /* EGridMoveAnimation.cpp */; };
+		F4A37F341D8D928100186118 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F171D8D928100186118 /* EImageTexture.cpp */; };
+		F4A37F351D8D928100186118 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F181D8D928100186118 /* ESprite.cpp */; };
+		F4A37F361D8D928100186118 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F191D8D928100186118 /* ETextTexture.cpp */; };
+		F4A37F371D8D928100186118 /* ETexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F1A1D8D928100186118 /* ETexture.cpp */; };
+		F4A37F391D8D928100186118 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F1D1D8D928100186118 /* JsonHelper.cpp */; };
+		F4A37F3A1D8D928100186118 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F1E1D8D928100186118 /* LogHelper.cpp */; };
+		F4A37F3B1D8D928100186118 /* PythonScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F1F1D8D928100186118 /* PythonScript.cpp */; };
+		F4A37F3C1D8D928100186118 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F201D8D928100186118 /* SDLWrap.cpp */; };
+		F4A37F3D1D8D928100186118 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F211D8D928100186118 /* XmlHelper.cpp */; };
+		F4A37F4A1D8D929400186118 /* f069.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3E1D8D929400186118 /* f069.png */; };
+		F4A37F4B1D8D929400186118 /* f071.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3F1D8D929400186118 /* f071.png */; };
+		F4A37F4C1D8D929400186118 /* gom-002.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F401D8D929400186118 /* gom-002.png */; };
+		F4A37F4D1D8D929400186118 /* gom-003.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F411D8D929400186118 /* gom-003.png */; };
+		F4A37F4E1D8D929400186118 /* gom-004.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F421D8D929400186118 /* gom-004.png */; };
+		F4A37F4F1D8D929400186118 /* JewelSaviorFREE-readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F431D8D929400186118 /* JewelSaviorFREE-readme.txt */; };
+		F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F441D8D929400186118 /* NanumBarunpenR.ttf */; };
+		F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F451D8D929400186118 /* NanumGothic.ttf */; };
+		F4A37F521D8D929400186118 /* __init__.py in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F471D8D929400186118 /* __init__.py */; };
+		F4A37F531D8D929400186118 /* __init__.pyc in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F481D8D929400186118 /* __init__.pyc */; };
+		F4A37F541D8D929400186118 /* py_test.py in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F491D8D929400186118 /* py_test.py */; };
+		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
+		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
+		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
+		F4A37F5C1D8D965100186118 /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5B1D8D965100186118 /* libg3logger.a */; };
+		F4A37F5E1D8D966100186118 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5D1D8D966100186118 /* libgtest.a */; };
+		F4A37F601D8D966D00186118 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5F1D8D966D00186118 /* libprotobuf.a */; };
+		F4A37F621D8D967D00186118 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F611D8D967D00186118 /* libpugixml.a */; };
+		F4BF51C31D8E2E9F00221614 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */; };
+		F4BF51C41D8E2E9F00221614 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */; };
+		F4BF51C51D8E2E9F00221614 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */; };
+		F4BF51C61D8E2E9F00221614 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C21D8E2E9F00221614 /* libSDL2.a */; };
+		F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BF51BD1D8E2C1800221614 /* Images.xcassets */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -82,30 +112,6 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F42169791D05592A00C50450 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ecore.cpp; path = ../../src/Ecore.cpp; sourceTree = "<group>"; };
-		F421697A1D05592A00C50450 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ESceneManager.cpp; path = ../../src/ESceneManager.cpp; sourceTree = "<group>"; };
-		F421697B1D05592A00C50450 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EScreenManager.cpp; path = ../../src/EScreenManager.cpp; sourceTree = "<group>"; };
-		F421697C1D05592A00C50450 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = "<group>"; };
-		F421697E1D05592A00C50450 /* EImageResourceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResourceInfo.cpp; sourceTree = "<group>"; };
-		F421697F1D05592A00C50450 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
-		F42169801D05592A00C50450 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
-		F42169811D05592A00C50450 /* ESceneInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneInfo.cpp; sourceTree = "<group>"; };
-		F42169821D05592A00C50450 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
-		F42169831D05592A00C50450 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
-		F42169851D05592A00C50450 /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		F42169861D05592A00C50450 /* __init__.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = __init__.pyc; sourceTree = "<group>"; };
-		F42169871D05592A00C50450 /* py_test.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = py_test.py; sourceTree = "<group>"; };
-		F42169881D05592A00C50450 /* py_test.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = py_test.pyc; sourceTree = "<group>"; };
-		F421698B1D05592A00C50450 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
-		F421698C1D05592A00C50450 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
-		F421698D1D05592A00C50450 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
-		F421698E1D05592A00C50450 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
-		F421698F1D05592A00C50450 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
-		F42169901D05592A00C50450 /* ETexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETexture.cpp; sourceTree = "<group>"; };
-		F42169921D05592A00C50450 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
-		F42169931D05592A00C50450 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
-		F42169941D05592A00C50450 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
-		F42169951D05592A00C50450 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
 		F42169AE1D05593A00C50450 /* BerryGarden.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BerryGarden.png; path = ../../res/BerryGarden.png; sourceTree = "<group>"; };
 		F42169AF1D05593A00C50450 /* bg-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-black.png"; path = "../../res/bg-black.png"; sourceTree = "<group>"; };
 		F42169B01D05593A00C50450 /* FreeSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FreeSans.ttf; path = ../../res/FreeSans.ttf; sourceTree = "<group>"; };
@@ -116,35 +122,86 @@
 		F42169B51D05593A00C50450 /* moderngirl02x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moderngirl02x2.png; path = ../../res/moderngirl02x2.png; sourceTree = "<group>"; };
 		F42169B61D05593A00C50450 /* sample_scene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample_scene.xml; path = ../../res/sample_scene.xml; sourceTree = "<group>"; };
 		F42169B71D05593A00C50450 /* sample_scene2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample_scene2.xml; path = ../../res/sample_scene2.xml; sourceTree = "<group>"; };
-		F42169C41D05598B00C50450 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
-		F42169C51D05598B00C50450 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
-		F42169C61D05598B00C50450 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
-		F42169C81D05598B00C50450 /* EImageResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResource.hpp; sourceTree = "<group>"; };
-		F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceLoaderInterface.hpp; sourceTree = "<group>"; };
-		F42169CA1D05598B00C50450 /* EResourceManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceManager.hpp; sourceTree = "<group>"; };
-		F42169CB1D05598B00C50450 /* EScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScene.hpp; sourceTree = "<group>"; };
-		F42169CC1D05598B00C50450 /* ESpriteType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESpriteType.hpp; sourceTree = "<group>"; };
-		F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMLResourceLoader.hpp; sourceTree = "<group>"; };
-		F42169D01D05598B00C50450 /* EDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDrawable.h; sourceTree = "<group>"; };
-		F42169D11D05598B00C50450 /* EFigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EFigure.h; sourceTree = "<group>"; };
-		F42169D21D05598B00C50450 /* EImageTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageTexture.hpp; sourceTree = "<group>"; };
-		F42169D31D05598B00C50450 /* ESprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESprite.hpp; sourceTree = "<group>"; };
-		F42169D41D05598B00C50450 /* ETextTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETextTexture.hpp; sourceTree = "<group>"; };
-		F42169D51D05598B00C50450 /* ETexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ETexture.h; sourceTree = "<group>"; };
-		F42169D71D05598B00C50450 /* JsonHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonHelper.hpp; sourceTree = "<group>"; };
-		F42169D81D05598B00C50450 /* LogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogHelper.hpp; sourceTree = "<group>"; };
-		F42169D91D05598B00C50450 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
-		F42169DA1D05598B00C50450 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
-		F42169EE1D0559B300C50450 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = built/lib/libpugixml.a; sourceTree = "<group>"; };
-		F42169EF1D0559B300C50450 /* libSDL2_gfx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_gfx.a; path = built/lib/libSDL2_gfx.a; sourceTree = "<group>"; };
-		F42169F01D0559B300C50450 /* libSDL2_image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_image.a; path = built/lib/libSDL2_image.a; sourceTree = "<group>"; };
-		F42169F11D0559B300C50450 /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = built/lib/libSDL2_ttf.a; sourceTree = "<group>"; };
-		F42169F21D0559B300C50450 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = built/lib/libSDL2.a; sourceTree = "<group>"; };
 		F43DB9D91C78B41700BE5C9A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F43DB9DD1C78B51300BE5C9A /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		F4A37EC61D8D926C00186118 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
+		F4A37EC71D8D926C00186118 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
+		F4A37EC81D8D926C00186118 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
+		F4A37ECA1D8D926C00186118 /* EDbgOverlayScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDbgOverlayScene.hpp; sourceTree = "<group>"; };
+		F4A37ECB1D8D926C00186118 /* EImageResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResource.hpp; sourceTree = "<group>"; };
+		F4A37ECC1D8D926C00186118 /* EResourceLoaderInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceLoaderInterface.hpp; sourceTree = "<group>"; };
+		F4A37ECD1D8D926C00186118 /* EResourceManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceManager.hpp; sourceTree = "<group>"; };
+		F4A37ECE1D8D926C00186118 /* ERPGScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERPGScene.hpp; sourceTree = "<group>"; };
+		F4A37ECF1D8D926C00186118 /* EScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScene.hpp; sourceTree = "<group>"; };
+		F4A37ED01D8D926C00186118 /* ESpriteType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESpriteType.hpp; sourceTree = "<group>"; };
+		F4A37ED11D8D926C00186118 /* EVisualNovelScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EVisualNovelScene.hpp; sourceTree = "<group>"; };
+		F4A37ED21D8D926C00186118 /* XMLResourceLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMLResourceLoader.hpp; sourceTree = "<group>"; };
+		F4A37ED71D8D926C00186118 /* EDrawable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDrawable.hpp; sourceTree = "<group>"; };
+		F4A37ED81D8D926C00186118 /* EAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAnimation.hpp; sourceTree = "<group>"; };
+		F4A37ED91D8D926C00186118 /* EFigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EFigure.h; sourceTree = "<group>"; };
+		F4A37EDA1D8D926C00186118 /* EGridMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMoveAnimation.hpp; sourceTree = "<group>"; };
+		F4A37EDB1D8D926C00186118 /* EImageTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageTexture.hpp; sourceTree = "<group>"; };
+		F4A37EDC1D8D926C00186118 /* ESprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESprite.hpp; sourceTree = "<group>"; };
+		F4A37EDD1D8D926C00186118 /* ETextTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETextTexture.hpp; sourceTree = "<group>"; };
+		F4A37EDE1D8D926C00186118 /* ETexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETexture.hpp; sourceTree = "<group>"; };
+		F4A37EE11D8D926C00186118 /* JsonHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonHelper.hpp; sourceTree = "<group>"; };
+		F4A37EE21D8D926C00186118 /* LogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogHelper.hpp; sourceTree = "<group>"; };
+		F4A37EE31D8D926C00186118 /* PythonScript.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PythonScript.hpp; sourceTree = "<group>"; };
+		F4A37EE41D8D926C00186118 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
+		F4A37EE51D8D926C00186118 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
+		F4A37F011D8D928100186118 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ecore.cpp; path = ../../src/Ecore.cpp; sourceTree = "<group>"; };
+		F4A37F021D8D928100186118 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ESceneManager.cpp; path = ../../src/ESceneManager.cpp; sourceTree = "<group>"; };
+		F4A37F031D8D928100186118 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EScreenManager.cpp; path = ../../src/EScreenManager.cpp; sourceTree = "<group>"; };
+		F4A37F041D8D928100186118 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = "<group>"; };
+		F4A37F061D8D928100186118 /* EDbgOverlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDbgOverlayScene.cpp; sourceTree = "<group>"; };
+		F4A37F071D8D928100186118 /* EImageResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResource.cpp; sourceTree = "<group>"; };
+		F4A37F081D8D928100186118 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
+		F4A37F091D8D928100186118 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
+		F4A37F0A1D8D928100186118 /* ERPGScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERPGScene.cpp; sourceTree = "<group>"; };
+		F4A37F0B1D8D928100186118 /* EScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScene.cpp; sourceTree = "<group>"; };
+		F4A37F0C1D8D928100186118 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
+		F4A37F0D1D8D928100186118 /* EVisualNovelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EVisualNovelScene.cpp; sourceTree = "<group>"; };
+		F4A37F0E1D8D928100186118 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
+		F4A37F131D8D928100186118 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
+		F4A37F141D8D928100186118 /* EAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAnimation.cpp; sourceTree = "<group>"; };
+		F4A37F151D8D928100186118 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
+		F4A37F161D8D928100186118 /* EGridMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMoveAnimation.cpp; sourceTree = "<group>"; };
+		F4A37F171D8D928100186118 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
+		F4A37F181D8D928100186118 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
+		F4A37F191D8D928100186118 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
+		F4A37F1A1D8D928100186118 /* ETexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETexture.cpp; sourceTree = "<group>"; };
+		F4A37F1D1D8D928100186118 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
+		F4A37F1E1D8D928100186118 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
+		F4A37F1F1D8D928100186118 /* PythonScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonScript.cpp; sourceTree = "<group>"; };
+		F4A37F201D8D928100186118 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
+		F4A37F211D8D928100186118 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
+		F4A37F3E1D8D929400186118 /* f069.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f069.png; path = ../../res/f069.png; sourceTree = "<group>"; };
+		F4A37F3F1D8D929400186118 /* f071.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f071.png; path = ../../res/f071.png; sourceTree = "<group>"; };
+		F4A37F401D8D929400186118 /* gom-002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-002.png"; path = "../../res/gom-002.png"; sourceTree = "<group>"; };
+		F4A37F411D8D929400186118 /* gom-003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-003.png"; path = "../../res/gom-003.png"; sourceTree = "<group>"; };
+		F4A37F421D8D929400186118 /* gom-004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-004.png"; path = "../../res/gom-004.png"; sourceTree = "<group>"; };
+		F4A37F431D8D929400186118 /* JewelSaviorFREE-readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "JewelSaviorFREE-readme.txt"; path = "../../res/JewelSaviorFREE-readme.txt"; sourceTree = "<group>"; };
+		F4A37F441D8D929400186118 /* NanumBarunpenR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumBarunpenR.ttf; path = ../../res/NanumBarunpenR.ttf; sourceTree = "<group>"; };
+		F4A37F451D8D929400186118 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumGothic.ttf; path = ../../res/NanumGothic.ttf; sourceTree = "<group>"; };
+		F4A37F471D8D929400186118 /* __init__.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
+		F4A37F481D8D929400186118 /* __init__.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = __init__.pyc; sourceTree = "<group>"; };
+		F4A37F491D8D929400186118 /* py_test.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = py_test.py; sourceTree = "<group>"; };
+		F4A37F551D8D94D800186118 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/sources/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
+		F4A37F571D8D94EB00186118 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/sources/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
+		F4A37F591D8D94F900186118 /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ipc.pb.cc; path = ../../scripting/ipc.pb.cc; sourceTree = "<group>"; };
+		F4A37F5B1D8D965100186118 /* libg3logger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libg3logger.a; path = ../../external/built/lib/libg3logger.a; sourceTree = "<group>"; };
+		F4A37F5D1D8D966100186118 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = ../../external/built/lib/libgtest.a; sourceTree = "<group>"; };
+		F4A37F5F1D8D966D00186118 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../external/built/lib/libprotobuf.a; sourceTree = "<group>"; };
+		F4A37F611D8D967D00186118 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = ../../external/built/lib/libpugixml.a; sourceTree = "<group>"; };
+		F4A37F631D8D96A000186118 /* libzmq-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzmq-static.a"; path = "../../external/built/lib/libzmq-static.a"; sourceTree = "<group>"; };
+		F4BF51BD1D8E2C1800221614 /* Images.xcassets */ = {isa = PBXFileReference; explicitFileType = wrapper.application; name = Images.xcassets; path = "___PROJECTNAME___/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_gfx.a; path = ../../external/built/lib/libSDL2_gfx.a; sourceTree = "<group>"; };
+		F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_image.a; path = ../../external/built/lib/libSDL2_image.a; sourceTree = "<group>"; };
+		F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = ../../external/built/lib/libSDL2_ttf.a; sourceTree = "<group>"; };
+		F4BF51C21D8E2E9F00221614 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../external/built/lib/libSDL2.a; sourceTree = "<group>"; };
 		FA8B4B96196703B400F8EB7C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FAE0E9641BAF967F0098DFA4 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -157,11 +214,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F42169F31D0559B300C50450 /* libpugixml.a in Frameworks */,
-				F42169F41D0559B300C50450 /* libSDL2_gfx.a in Frameworks */,
-				F42169F51D0559B300C50450 /* libSDL2_image.a in Frameworks */,
-				F42169F61D0559B300C50450 /* libSDL2_ttf.a in Frameworks */,
-				F42169F71D0559B300C50450 /* libSDL2.a in Frameworks */,
+				F4A37F621D8D967D00186118 /* libpugixml.a in Frameworks */,
+				F4A37F601D8D966D00186118 /* libprotobuf.a in Frameworks */,
+				F4A37F5E1D8D966100186118 /* libgtest.a in Frameworks */,
+				F4A37F5C1D8D965100186118 /* libg3logger.a in Frameworks */,
+				F4BF51C61D8E2E9F00221614 /* libSDL2.a in Frameworks */,
+				F4BF51C41D8E2E9F00221614 /* libSDL2_image.a in Frameworks */,
+				F4BF51C51D8E2E9F00221614 /* libSDL2_ttf.a in Frameworks */,
+				F4BF51C31D8E2E9F00221614 /* libSDL2_gfx.a in Frameworks */,
 				F43DB9E01C78B59400BE5C9A /* MobileCoreServices.framework in Frameworks */,
 				F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */,
 				FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */,
@@ -190,6 +250,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F4A37F591D8D94F900186118 /* ipc.pb.cc */,
+				F4A37F571D8D94EB00186118 /* pugixml.cpp */,
+				F4A37F551D8D94D800186118 /* jsoncpp.cpp */,
 				F42169C31D05598B00C50450 /* include */,
 				F43DB9B01C78B02F00BE5C9A /* src */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -202,6 +265,16 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4BF51BD1D8E2C1800221614 /* Images.xcassets */,
+				F4A37F3E1D8D929400186118 /* f069.png */,
+				F4A37F3F1D8D929400186118 /* f071.png */,
+				F4A37F401D8D929400186118 /* gom-002.png */,
+				F4A37F411D8D929400186118 /* gom-003.png */,
+				F4A37F421D8D929400186118 /* gom-004.png */,
+				F4A37F431D8D929400186118 /* JewelSaviorFREE-readme.txt */,
+				F4A37F441D8D929400186118 /* NanumBarunpenR.ttf */,
+				F4A37F451D8D929400186118 /* NanumGothic.ttf */,
+				F4A37F461D8D929400186118 /* scripts */,
 				F42169AE1D05593A00C50450 /* BerryGarden.png */,
 				F42169AF1D05593A00C50450 /* bg-black.png */,
 				F42169B01D05593A00C50450 /* FreeSans.ttf */,
@@ -221,11 +294,15 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F42169EE1D0559B300C50450 /* libpugixml.a */,
-				F42169EF1D0559B300C50450 /* libSDL2_gfx.a */,
-				F42169F01D0559B300C50450 /* libSDL2_image.a */,
-				F42169F11D0559B300C50450 /* libSDL2_ttf.a */,
-				F42169F21D0559B300C50450 /* libSDL2.a */,
+				F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */,
+				F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */,
+				F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */,
+				F4BF51C21D8E2E9F00221614 /* libSDL2.a */,
+				F4A37F631D8D96A000186118 /* libzmq-static.a */,
+				F4A37F611D8D967D00186118 /* libpugixml.a */,
+				F4A37F5F1D8D966D00186118 /* libprotobuf.a */,
+				F4A37F5D1D8D966100186118 /* libgtest.a */,
+				F4A37F5B1D8D965100186118 /* libg3logger.a */,
 				F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */,
 				F43DB9DD1C78B51300BE5C9A /* AVKit.framework */,
 				F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */,
@@ -243,139 +320,149 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F421697D1D05592A00C50450 /* resource */ = {
-			isa = PBXGroup;
-			children = (
-				F421697E1D05592A00C50450 /* EImageResourceInfo.cpp */,
-				F421697F1D05592A00C50450 /* EResourceLoaderInterface.cpp */,
-				F42169801D05592A00C50450 /* EResourceManager.cpp */,
-				F42169811D05592A00C50450 /* ESceneInfo.cpp */,
-				F42169821D05592A00C50450 /* ESpriteType.cpp */,
-				F42169831D05592A00C50450 /* XMLResourceLoader.cpp */,
-			);
-			name = resource;
-			path = ../../src/resource;
-			sourceTree = "<group>";
-		};
-		F42169841D05592A00C50450 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				F42169851D05592A00C50450 /* __init__.py */,
-				F42169861D05592A00C50450 /* __init__.pyc */,
-				F42169871D05592A00C50450 /* py_test.py */,
-				F42169881D05592A00C50450 /* py_test.pyc */,
-			);
-			name = scripts;
-			path = ../../src/scripts;
-			sourceTree = "<group>";
-		};
-		F42169891D05592A00C50450 /* texture */ = {
-			isa = PBXGroup;
-			children = (
-				F421698A1D05592A00C50450 /* drawable */,
-				F421698C1D05592A00C50450 /* EFigure.cpp */,
-				F421698D1D05592A00C50450 /* EImageTexture.cpp */,
-				F421698E1D05592A00C50450 /* ESprite.cpp */,
-				F421698F1D05592A00C50450 /* ETextTexture.cpp */,
-				F42169901D05592A00C50450 /* ETexture.cpp */,
-			);
-			name = texture;
-			path = ../../src/texture;
-			sourceTree = "<group>";
-		};
-		F421698A1D05592A00C50450 /* drawable */ = {
-			isa = PBXGroup;
-			children = (
-				F421698B1D05592A00C50450 /* EDrawable.cpp */,
-			);
-			path = drawable;
-			sourceTree = "<group>";
-		};
-		F42169911D05592A00C50450 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				F42169921D05592A00C50450 /* JsonHelper.cpp */,
-				F42169931D05592A00C50450 /* LogHelper.cpp */,
-				F42169941D05592A00C50450 /* SDLWrap.cpp */,
-				F42169951D05592A00C50450 /* XmlHelper.cpp */,
-			);
-			name = util;
-			path = ../../src/util;
-			sourceTree = "<group>";
-		};
 		F42169C31D05598B00C50450 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				F42169C41D05598B00C50450 /* Ecore.hpp */,
-				F42169C51D05598B00C50450 /* ESceneManager.hpp */,
-				F42169C61D05598B00C50450 /* EScreenManager.hpp */,
-				F42169C71D05598B00C50450 /* resource */,
-				F42169CE1D05598B00C50450 /* texture */,
-				F42169D61D05598B00C50450 /* util */,
+				F4A37EC61D8D926C00186118 /* Ecore.hpp */,
+				F4A37EC71D8D926C00186118 /* ESceneManager.hpp */,
+				F4A37EC81D8D926C00186118 /* EScreenManager.hpp */,
+				F4A37EC91D8D926C00186118 /* resource */,
+				F4A37ED51D8D926C00186118 /* texture */,
+				F4A37EDF1D8D926C00186118 /* util */,
 			);
 			name = include;
 			path = ../../include;
 			sourceTree = "<group>";
 		};
-		F42169C71D05598B00C50450 /* resource */ = {
+		F43DB9B01C78B02F00BE5C9A /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F42169C81D05598B00C50450 /* EImageResource.hpp */,
-				F42169C91D05598B00C50450 /* EResourceLoaderInterface.hpp */,
-				F42169CA1D05598B00C50450 /* EResourceManager.hpp */,
-				F42169CB1D05598B00C50450 /* EScene.hpp */,
-				F42169CC1D05598B00C50450 /* ESpriteType.hpp */,
-				F42169CD1D05598B00C50450 /* XMLResourceLoader.hpp */,
+				F4A37F011D8D928100186118 /* Ecore.cpp */,
+				F4A37F021D8D928100186118 /* ESceneManager.cpp */,
+				F4A37F031D8D928100186118 /* EScreenManager.cpp */,
+				F4A37F041D8D928100186118 /* main.cpp */,
+				F4A37F051D8D928100186118 /* resource */,
+				F4A37F111D8D928100186118 /* texture */,
+				F4A37F1B1D8D928100186118 /* util */,
+			);
+			name = src;
+			path = ../include;
+			sourceTree = "<group>";
+		};
+		F4A37EC91D8D926C00186118 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				F4A37ECA1D8D926C00186118 /* EDbgOverlayScene.hpp */,
+				F4A37ECB1D8D926C00186118 /* EImageResource.hpp */,
+				F4A37ECC1D8D926C00186118 /* EResourceLoaderInterface.hpp */,
+				F4A37ECD1D8D926C00186118 /* EResourceManager.hpp */,
+				F4A37ECE1D8D926C00186118 /* ERPGScene.hpp */,
+				F4A37ECF1D8D926C00186118 /* EScene.hpp */,
+				F4A37ED01D8D926C00186118 /* ESpriteType.hpp */,
+				F4A37ED11D8D926C00186118 /* EVisualNovelScene.hpp */,
+				F4A37ED21D8D926C00186118 /* XMLResourceLoader.hpp */,
 			);
 			path = resource;
 			sourceTree = "<group>";
 		};
-		F42169CE1D05598B00C50450 /* texture */ = {
+		F4A37ED51D8D926C00186118 /* texture */ = {
 			isa = PBXGroup;
 			children = (
-				F42169CF1D05598B00C50450 /* drawable */,
-				F42169D11D05598B00C50450 /* EFigure.h */,
-				F42169D21D05598B00C50450 /* EImageTexture.hpp */,
-				F42169D31D05598B00C50450 /* ESprite.hpp */,
-				F42169D41D05598B00C50450 /* ETextTexture.hpp */,
-				F42169D51D05598B00C50450 /* ETexture.h */,
+				F4A37ED61D8D926C00186118 /* drawable */,
+				F4A37ED81D8D926C00186118 /* EAnimation.hpp */,
+				F4A37ED91D8D926C00186118 /* EFigure.h */,
+				F4A37EDA1D8D926C00186118 /* EGridMoveAnimation.hpp */,
+				F4A37EDB1D8D926C00186118 /* EImageTexture.hpp */,
+				F4A37EDC1D8D926C00186118 /* ESprite.hpp */,
+				F4A37EDD1D8D926C00186118 /* ETextTexture.hpp */,
+				F4A37EDE1D8D926C00186118 /* ETexture.hpp */,
 			);
 			path = texture;
 			sourceTree = "<group>";
 		};
-		F42169CF1D05598B00C50450 /* drawable */ = {
+		F4A37ED61D8D926C00186118 /* drawable */ = {
 			isa = PBXGroup;
 			children = (
-				F42169D01D05598B00C50450 /* EDrawable.h */,
+				F4A37ED71D8D926C00186118 /* EDrawable.hpp */,
 			);
 			path = drawable;
 			sourceTree = "<group>";
 		};
-		F42169D61D05598B00C50450 /* util */ = {
+		F4A37EDF1D8D926C00186118 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				F42169D71D05598B00C50450 /* JsonHelper.hpp */,
-				F42169D81D05598B00C50450 /* LogHelper.hpp */,
-				F42169D91D05598B00C50450 /* SDLWrap.hpp */,
-				F42169DA1D05598B00C50450 /* XmlHelper.hpp */,
+				F4A37EE11D8D926C00186118 /* JsonHelper.hpp */,
+				F4A37EE21D8D926C00186118 /* LogHelper.hpp */,
+				F4A37EE31D8D926C00186118 /* PythonScript.hpp */,
+				F4A37EE41D8D926C00186118 /* SDLWrap.hpp */,
+				F4A37EE51D8D926C00186118 /* XmlHelper.hpp */,
 			);
 			path = util;
 			sourceTree = "<group>";
 		};
-		F43DB9B01C78B02F00BE5C9A /* src */ = {
+		F4A37F051D8D928100186118 /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				F42169791D05592A00C50450 /* Ecore.cpp */,
-				F421697A1D05592A00C50450 /* ESceneManager.cpp */,
-				F421697B1D05592A00C50450 /* EScreenManager.cpp */,
-				F421697C1D05592A00C50450 /* main.cpp */,
-				F421697D1D05592A00C50450 /* resource */,
-				F42169841D05592A00C50450 /* scripts */,
-				F42169891D05592A00C50450 /* texture */,
-				F42169911D05592A00C50450 /* util */,
+				F4A37F061D8D928100186118 /* EDbgOverlayScene.cpp */,
+				F4A37F071D8D928100186118 /* EImageResource.cpp */,
+				F4A37F081D8D928100186118 /* EResourceLoaderInterface.cpp */,
+				F4A37F091D8D928100186118 /* EResourceManager.cpp */,
+				F4A37F0A1D8D928100186118 /* ERPGScene.cpp */,
+				F4A37F0B1D8D928100186118 /* EScene.cpp */,
+				F4A37F0C1D8D928100186118 /* ESpriteType.cpp */,
+				F4A37F0D1D8D928100186118 /* EVisualNovelScene.cpp */,
+				F4A37F0E1D8D928100186118 /* XMLResourceLoader.cpp */,
 			);
-			name = src;
-			path = ../include;
+			name = resource;
+			path = ../../src/resource;
+			sourceTree = "<group>";
+		};
+		F4A37F111D8D928100186118 /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				F4A37F121D8D928100186118 /* drawable */,
+				F4A37F141D8D928100186118 /* EAnimation.cpp */,
+				F4A37F151D8D928100186118 /* EFigure.cpp */,
+				F4A37F161D8D928100186118 /* EGridMoveAnimation.cpp */,
+				F4A37F171D8D928100186118 /* EImageTexture.cpp */,
+				F4A37F181D8D928100186118 /* ESprite.cpp */,
+				F4A37F191D8D928100186118 /* ETextTexture.cpp */,
+				F4A37F1A1D8D928100186118 /* ETexture.cpp */,
+			);
+			name = texture;
+			path = ../../src/texture;
+			sourceTree = "<group>";
+		};
+		F4A37F121D8D928100186118 /* drawable */ = {
+			isa = PBXGroup;
+			children = (
+				F4A37F131D8D928100186118 /* EDrawable.cpp */,
+			);
+			path = drawable;
+			sourceTree = "<group>";
+		};
+		F4A37F1B1D8D928100186118 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				F4A37F1D1D8D928100186118 /* JsonHelper.cpp */,
+				F4A37F1E1D8D928100186118 /* LogHelper.cpp */,
+				F4A37F1F1D8D928100186118 /* PythonScript.cpp */,
+				F4A37F201D8D928100186118 /* SDLWrap.cpp */,
+				F4A37F211D8D928100186118 /* XmlHelper.cpp */,
+			);
+			name = util;
+			path = ../../src/util;
+			sourceTree = "<group>";
+		};
+		F4A37F461D8D929400186118 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				F4A37F471D8D929400186118 /* __init__.py */,
+				F4A37F481D8D929400186118 /* __init__.pyc */,
+				F4A37F491D8D929400186118 /* py_test.py */,
+			);
+			name = scripts;
+			path = ../../res/scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -385,25 +472,31 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F42169E61D05598B00C50450 /* EImageTexture.hpp in Headers */,
-				F42169E51D05598B00C50450 /* EFigure.h in Headers */,
-				F42169DE1D05598B00C50450 /* EImageResource.hpp in Headers */,
-				F42169DF1D05598B00C50450 /* EResourceLoaderInterface.hpp in Headers */,
-				F42169DB1D05598B00C50450 /* Ecore.hpp in Headers */,
-				F42169E91D05598B00C50450 /* ETexture.h in Headers */,
-				F42169E21D05598B00C50450 /* ESpriteType.hpp in Headers */,
-				F42169E31D05598B00C50450 /* XMLResourceLoader.hpp in Headers */,
-				F42169EB1D05598B00C50450 /* LogHelper.hpp in Headers */,
-				F42169DC1D05598B00C50450 /* ESceneManager.hpp in Headers */,
-				F42169ED1D05598B00C50450 /* XmlHelper.hpp in Headers */,
-				F42169EC1D05598B00C50450 /* SDLWrap.hpp in Headers */,
-				F42169E01D05598B00C50450 /* EResourceManager.hpp in Headers */,
-				F42169E81D05598B00C50450 /* ETextTexture.hpp in Headers */,
-				F42169DD1D05598B00C50450 /* EScreenManager.hpp in Headers */,
-				F42169E41D05598B00C50450 /* EDrawable.h in Headers */,
-				F42169E11D05598B00C50450 /* EScene.hpp in Headers */,
-				F42169EA1D05598B00C50450 /* JsonHelper.hpp in Headers */,
-				F42169E71D05598B00C50450 /* ESprite.hpp in Headers */,
+				F4A37EF41D8D926D00186118 /* EAnimation.hpp in Headers */,
+				F4A37EEA1D8D926C00186118 /* EImageResource.hpp in Headers */,
+				F4A37EFE1D8D926E00186118 /* PythonScript.hpp in Headers */,
+				F4A37EEB1D8D926C00186118 /* EResourceLoaderInterface.hpp in Headers */,
+				F4A37EF61D8D926D00186118 /* EGridMoveAnimation.hpp in Headers */,
+				F4A37EEC1D8D926C00186118 /* EResourceManager.hpp in Headers */,
+				F4A37EFD1D8D926E00186118 /* LogHelper.hpp in Headers */,
+				F4A37EEF1D8D926D00186118 /* ESpriteType.hpp in Headers */,
+				F4A37EF81D8D926D00186118 /* ESprite.hpp in Headers */,
+				F4A37EF71D8D926D00186118 /* EImageTexture.hpp in Headers */,
+				F4A37EE91D8D926C00186118 /* EDbgOverlayScene.hpp in Headers */,
+				F4A37EF91D8D926D00186118 /* ETextTexture.hpp in Headers */,
+				F4A37EF51D8D926D00186118 /* EFigure.h in Headers */,
+				F4A37EFF1D8D926E00186118 /* SDLWrap.hpp in Headers */,
+				F4A37EE61D8D926C00186118 /* Ecore.hpp in Headers */,
+				F4A37EE71D8D926C00186118 /* ESceneManager.hpp in Headers */,
+				F4A37EF11D8D926D00186118 /* XMLResourceLoader.hpp in Headers */,
+				F4A37EF31D8D926D00186118 /* EDrawable.hpp in Headers */,
+				F4A37EFC1D8D926E00186118 /* JsonHelper.hpp in Headers */,
+				F4A37EEE1D8D926C00186118 /* EScene.hpp in Headers */,
+				F4A37EE81D8D926C00186118 /* EScreenManager.hpp in Headers */,
+				F4A37EED1D8D926C00186118 /* ERPGScene.hpp in Headers */,
+				F4A37F001D8D926E00186118 /* XmlHelper.hpp in Headers */,
+				F4A37EFA1D8D926E00186118 /* ETexture.hpp in Headers */,
+				F4A37EF01D8D926D00186118 /* EVisualNovelScene.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,17 +558,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A37F4C1D8D929400186118 /* gom-002.png in Resources */,
+				F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */,
 				F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */,
+				F4A37F4E1D8D929400186118 /* gom-004.png in Resources */,
 				F42169B81D05593A00C50450 /* BerryGarden.png in Resources */,
+				F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */,
+				F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */,
 				F42169B91D05593A00C50450 /* bg-black.png in Resources */,
 				F42169BC1D05593A00C50450 /* JapaneseVillage.png in Resources */,
 				F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */,
+				F4A37F541D8D929400186118 /* py_test.py in Resources */,
 				F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */,
 				F42169C01D05593A00C50450 /* sample_scene.xml in Resources */,
 				F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */,
+				F4A37F4A1D8D929400186118 /* f069.png in Resources */,
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
+				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
+				F4A37F4D1D8D929400186118 /* gom-003.png in Resources */,
 				F42169BB1D05593A00C50450 /* grid-base.png in Resources */,
+				F4A37F531D8D929400186118 /* __init__.pyc in Resources */,
+				F4A37F521D8D929400186118 /* __init__.py in Resources */,
+				F4A37F4F1D8D929400186118 /* JewelSaviorFREE-readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,26 +591,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F42169A61D05592A00C50450 /* EImageTexture.cpp in Sources */,
-				F421699C1D05592A00C50450 /* EResourceManager.cpp in Sources */,
-				F421699B1D05592A00C50450 /* EResourceLoaderInterface.cpp in Sources */,
-				F42169A91D05592A00C50450 /* ETexture.cpp in Sources */,
-				F42169A41D05592A00C50450 /* EDrawable.cpp in Sources */,
-				F42169A81D05592A00C50450 /* ETextTexture.cpp in Sources */,
-				F42169A51D05592A00C50450 /* EFigure.cpp in Sources */,
-				F42169AD1D05592A00C50450 /* XmlHelper.cpp in Sources */,
-				F42169AC1D05592A00C50450 /* SDLWrap.cpp in Sources */,
-				F42169971D05592A00C50450 /* ESceneManager.cpp in Sources */,
-				F421699E1D05592A00C50450 /* ESpriteType.cpp in Sources */,
-				F421699F1D05592A00C50450 /* XMLResourceLoader.cpp in Sources */,
-				F42169981D05592A00C50450 /* EScreenManager.cpp in Sources */,
-				F42169991D05592A00C50450 /* main.cpp in Sources */,
-				F42169A71D05592A00C50450 /* ESprite.cpp in Sources */,
-				F421699A1D05592A00C50450 /* EImageResourceInfo.cpp in Sources */,
-				F42169AB1D05592A00C50450 /* LogHelper.cpp in Sources */,
-				F421699D1D05592A00C50450 /* ESceneInfo.cpp in Sources */,
-				F42169AA1D05592A00C50450 /* JsonHelper.cpp in Sources */,
-				F42169961D05592A00C50450 /* Ecore.cpp in Sources */,
+				F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */,
+				F4A37F3B1D8D928100186118 /* PythonScript.cpp in Sources */,
+				F4A37F231D8D928100186118 /* ESceneManager.cpp in Sources */,
+				F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */,
+				F4A37F241D8D928100186118 /* EScreenManager.cpp in Sources */,
+				F4A37F301D8D928100186118 /* EDrawable.cpp in Sources */,
+				F4A37F351D8D928100186118 /* ESprite.cpp in Sources */,
+				F4A37F311D8D928100186118 /* EAnimation.cpp in Sources */,
+				F4A37F261D8D928100186118 /* EDbgOverlayScene.cpp in Sources */,
+				F4A37F281D8D928100186118 /* EResourceLoaderInterface.cpp in Sources */,
+				F4A37F321D8D928100186118 /* EFigure.cpp in Sources */,
+				F4A37F371D8D928100186118 /* ETexture.cpp in Sources */,
+				F4A37F251D8D928100186118 /* main.cpp in Sources */,
+				F4A37F2D1D8D928100186118 /* EVisualNovelScene.cpp in Sources */,
+				F4A37F291D8D928100186118 /* EResourceManager.cpp in Sources */,
+				F4A37F2C1D8D928100186118 /* ESpriteType.cpp in Sources */,
+				F4A37F3C1D8D928100186118 /* SDLWrap.cpp in Sources */,
+				F4A37F2B1D8D928100186118 /* EScene.cpp in Sources */,
+				F4A37F331D8D928100186118 /* EGridMoveAnimation.cpp in Sources */,
+				F4A37F391D8D928100186118 /* JsonHelper.cpp in Sources */,
+				F4A37F221D8D928100186118 /* Ecore.cpp in Sources */,
+				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
+				F4A37F341D8D928100186118 /* EImageTexture.cpp in Sources */,
+				F4A37F3A1D8D928100186118 /* LogHelper.cpp in Sources */,
+				F4A37F3D1D8D928100186118 /* XmlHelper.cpp in Sources */,
+				F4A37F2E1D8D928100186118 /* XMLResourceLoader.cpp in Sources */,
+				F4A37F271D8D928100186118 /* EImageResource.cpp in Sources */,
+				F4A37F361D8D928100186118 /* ETextTexture.cpp in Sources */,
+				F4A37F2A1D8D928100186118 /* ERPGScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +630,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -525,6 +641,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../external/built/include",
 					"$(PROJECT_DIR)/../../external/built/include/SDL2",
+					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
+					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
+					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
+					"$(PROJECT_DIR)/../../external/sources/cppzmq",
+					"$(PROJECT_DIR)/../../external/sources/zeromq/include",
+					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -532,10 +654,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../external/built/lib",
 				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"-DUSE_SDL_LOG",
-					"$(OTHER_CFLAGS)",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -547,6 +666,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -554,6 +675,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../external/built/include",
 					"$(PROJECT_DIR)/../../external/built/include/SDL2",
+					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
+					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
+					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
+					"$(PROJECT_DIR)/../../external/sources/cppzmq",
+					"$(PROJECT_DIR)/../../external/sources/zeromq/include",
+					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -561,10 +688,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../external/built/lib",
 				);
-				OTHER_CPLUSPLUSFLAGS = (
-					"-DUSE_SDL_LOG",
-					"$(OTHER_CFLAGS)",
-				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -1,3 +1,14 @@
+#include "util/PythonScript.hpp"
+#include "util/LogHelper.hpp"
+#include "util/IPCHelper.hpp"
+#include "Ecore.hpp"
+
+
+std::vector<std::string> PythonScript::path_list;
+PythonScript* PythonScript::instance = nullptr;
+void* PythonScript::handle = nullptr;
+
+#ifdef __PYTHON_AVAILABLE
 #include <stdio.h>
 #include <stdlib.h>
 /* To remove python debug lib - not found error */
@@ -9,15 +20,6 @@
 #else
   #include <Python.h>
 #endif
-
-#include "util/PythonScript.hpp"
-#include "util/LogHelper.hpp"
-#include "util/IPCHelper.hpp"
-#include "Ecore.hpp"
-
-std::vector<std::string> PythonScript::path_list;
-PythonScript* PythonScript::instance = nullptr;
-void* PythonScript::handle = nullptr;
 
 void PrintMyFunc() {
 	//PyObject *module = PyImport_ImportModule("scripts.story");
@@ -76,14 +78,6 @@ void PythonScript::addPath(std::string script_path)
 	if (!script_path.empty()) {
 		path_list.push_back(script_path);
 	}
-}
-
-PythonScript::PythonScript()
-{
-}
-
-PythonScript::~PythonScript()
-{
 }
 
 void PythonScript::initialize()
@@ -146,4 +140,32 @@ void PythonScript::finalize()
 			Py_Finalize();
 		instance = nullptr;
 	}
+}
+#else
+
+void PythonScript::initialize()
+{
+	LOG_DBG("Cannot use Python");
+}
+
+void PythonScript::finalize()
+{
+	LOG_DBG("Cannot use Python");
+}
+
+void PythonScript::addPath(std::string script_path)
+{
+	if (!script_path.empty()) {
+		path_list.push_back(script_path);
+	}
+}
+
+#endif
+
+PythonScript::PythonScript()
+{
+}
+
+PythonScript::~PythonScript()
+{
 }
