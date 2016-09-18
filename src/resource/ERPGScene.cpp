@@ -135,6 +135,27 @@ void ERPGScene::handleEvent(SDL_Event e)
 			break;
 		}
 	}
+	else if (e.type == SDL_FINGERDOWN) {
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
+
+		if (te->x < 0.25) {
+			LOG_INFO("Move : LEFT");
+			handleMove(DIR_LEFT);
+		} else if (te->x >= 0.75) {
+			LOG_INFO("Move : RIGHT");
+			handleMove(DIR_RIGHT);
+		}
+	} else if (e.type == SDL_FINGERMOTION) {
+		/* Touch & swipe clears textures */
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		int ax = (int)(((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000);
+		int ay = (int)(((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000);
+
+		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
+		LOG_INFO("dx / dy : [%f / %f]", te->dx, te->dy);
+		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
+	}
 }
 
 void ERPGScene::render()

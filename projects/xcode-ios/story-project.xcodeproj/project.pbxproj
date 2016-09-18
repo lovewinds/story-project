@@ -98,6 +98,8 @@
 		F4BF51C51D8E2E9F00221614 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */; };
 		F4BF51C61D8E2E9F00221614 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C21D8E2E9F00221614 /* libSDL2.a */; };
 		F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BF51BD1D8E2C1800221614 /* Images.xcassets */; };
+		F4EF97101D8EB027002F19FC /* EAccelAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */; };
+		F4EF97121D8EB02D002F19FC /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -202,6 +204,8 @@
 		F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_image.a; path = ../../external/built/lib/libSDL2_image.a; sourceTree = "<group>"; };
 		F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = ../../external/built/lib/libSDL2_ttf.a; sourceTree = "<group>"; };
 		F4BF51C21D8E2E9F00221614 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../external/built/lib/libSDL2.a; sourceTree = "<group>"; };
+		F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAccelAnimation.hpp; sourceTree = "<group>"; };
+		F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
 		FA8B4B96196703B400F8EB7C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FAE0E9641BAF967F0098DFA4 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -368,6 +372,7 @@
 		F4A37ED51D8D926C00186118 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */,
 				F4A37ED61D8D926C00186118 /* drawable */,
 				F4A37ED81D8D926C00186118 /* EAnimation.hpp */,
 				F4A37ED91D8D926C00186118 /* EFigure.h */,
@@ -420,6 +425,7 @@
 		F4A37F111D8D928100186118 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */,
 				F4A37F121D8D928100186118 /* drawable */,
 				F4A37F141D8D928100186118 /* EAnimation.cpp */,
 				F4A37F151D8D928100186118 /* EFigure.cpp */,
@@ -480,6 +486,7 @@
 				F4A37EEC1D8D926C00186118 /* EResourceManager.hpp in Headers */,
 				F4A37EFD1D8D926E00186118 /* LogHelper.hpp in Headers */,
 				F4A37EEF1D8D926D00186118 /* ESpriteType.hpp in Headers */,
+				F4EF97101D8EB027002F19FC /* EAccelAnimation.hpp in Headers */,
 				F4A37EF81D8D926D00186118 /* ESprite.hpp in Headers */,
 				F4A37EF71D8D926D00186118 /* EImageTexture.hpp in Headers */,
 				F4A37EE91D8D926C00186118 /* EDbgOverlayScene.hpp in Headers */,
@@ -596,6 +603,7 @@
 				F4A37F231D8D928100186118 /* ESceneManager.cpp in Sources */,
 				F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */,
 				F4A37F241D8D928100186118 /* EScreenManager.cpp in Sources */,
+				F4EF97121D8EB02D002F19FC /* EAccelAnimation.cpp in Sources */,
 				F4A37F301D8D928100186118 /* EDrawable.cpp in Sources */,
 				F4A37F351D8D928100186118 /* ESprite.cpp in Sources */,
 				F4A37F311D8D928100186118 /* EAnimation.cpp in Sources */,
