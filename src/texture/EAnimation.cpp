@@ -43,6 +43,14 @@ void EAnimation::stop()
 		t->finishedAnimationCallback(a_x, a_y);
 }
 
+void EAnimation::sync()
+{
+	std::shared_ptr<ETexture> t = caller.lock();
+	if (t)
+		t->syncAnimationCallback(a_x, a_y);
+}
+
+
 void EAnimation::pause()
 {
     elapsedTime = SDL_GetTicks() - startTime;

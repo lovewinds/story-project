@@ -24,6 +24,7 @@ public:
 	virtual void stop();
     virtual void pause();
     virtual void resume();
+	virtual void sync();
 
     double getX();
     double getY();

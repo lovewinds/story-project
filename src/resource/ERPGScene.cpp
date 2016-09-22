@@ -54,20 +54,11 @@ void ERPGScene::testAnimation(AnimationState state)
 	}
 }
 
-void ani_finished(void *caller, double delta_x, double delta_y)
-{
-	ERPGScene *scene = static_cast<ERPGScene*>(caller);
-
-	if (nullptr == scene)
-		return;
-
-
-}
-
 void ERPGScene::handleMove(GridMoveDir dir)
 {
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
+
 	for (auto& it : _sprite_map)
 	{
 		auto& sprite = it.second;
@@ -80,6 +71,7 @@ void ERPGScene::handleMove(GridMoveDir dir)
 			sprite->startAnimation();
 			break;
 		case ANI_STOP:
+			LOG_DBG("Stopped. set new one and start again!");
 			ani = sprite->getAnimation();
 			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
 			if (grid) {
@@ -88,6 +80,11 @@ void ERPGScene::handleMove(GridMoveDir dir)
 			sprite->startAnimation();
 			break;
 		default:
+			ani = sprite->getAnimation();
+			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+			if (grid) {
+				grid->setNextDirection(dir);
+			}
 			break;
 		}
 	}
@@ -98,7 +95,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 	/* Handler events for Scene instance */
 	bool ret = false;
 	if (e.type == SDL_KEYDOWN) {
-		LOG_INFO("Pressed [%d]", e.key.keysym.sym);
 		switch (e.key.keysym.sym) {
 		case SDLK_9:
 			LOG_INFO("Play Animation");
@@ -118,19 +114,19 @@ void ERPGScene::handleEvent(SDL_Event e)
 			break;
 
 		case SDLK_UP:
-			LOG_INFO("Move : UP");
+			//LOG_INFO("Move : UP");
 			handleMove(DIR_UP);
 			break;
 		case SDLK_DOWN:
-			LOG_INFO("Move : DOWN");
+			//LOG_INFO("Move : DOWN");
 			handleMove(DIR_DOWN);
 			break;
 		case SDLK_LEFT:
-			LOG_INFO("Move : LEFT");
+			//LOG_INFO("Move : LEFT");
 			handleMove(DIR_LEFT);
 			break;
 		case SDLK_RIGHT:
-			LOG_INFO("Move : RIGHT");
+			//LOG_INFO("Move : RIGHT");
 			handleMove(DIR_RIGHT);
 			break;
 		}
@@ -139,13 +135,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
-		if (te->x < 0.25) {
-			LOG_INFO("Move : LEFT");
-			handleMove(DIR_LEFT);
-		} else if (te->x >= 0.75) {
-			LOG_INFO("Move : RIGHT");
-			handleMove(DIR_RIGHT);
-		}
 	} else if (e.type == SDL_FINGERMOTION) {
 		/* Touch & swipe clears textures */
 		SDL_TouchFingerEvent *te = &e.tfinger;
@@ -155,6 +144,15 @@ void ERPGScene::handleEvent(SDL_Event e)
 		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
 		LOG_INFO("dx / dy : [%f / %f]", te->dx, te->dy);
 		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
+
+		if (te->x < 0.5) {
+			LOG_INFO("Move : LEFT");
+			handleMove(DIR_LEFT);
+		}
+		else if (te->x > 0.5) {
+			LOG_INFO("Move : RIGHT");
+			handleMove(DIR_RIGHT);
+		}
 	}
 }
 

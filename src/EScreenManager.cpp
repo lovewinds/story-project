@@ -60,7 +60,7 @@ void EScreenManager::handleEvent(SDL_Event e)
 		|| e.type == SDL_FINGERDOWN
 		|| e.type == SDL_FINGERMOTION)
 	{
-		LOG_INFO("Event : [%x]", e.type);
+		//LOG_INFO("Event : [%x]", e.type);
 
 		/* Propagate event into scene */
 		sceneManager->handleEvent(e);

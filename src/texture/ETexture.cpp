@@ -101,6 +101,13 @@ void ETexture::finishedAnimationCallback(double delta_x, double delta_y)
 	animation = nullptr;
 }
 
+void ETexture::syncAnimationCallback(double delta_x, double delta_y)
+{
+	LOG_DBG("update position");
+	p_x += delta_x;
+	p_y += delta_y;
+}
+
 void ETexture::dealloc()
 {
 	/* Free texture if it exists */

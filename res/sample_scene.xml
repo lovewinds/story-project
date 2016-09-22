@@ -29,7 +29,7 @@
 		<Layer name="base">
 			<Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/>
 			<Sprite name="c1" source="loading_circle" x="0" y="256" />
-			<Sprite name="c2" source="loading_circle" x="32" y="256" />
+			<!--Sprite name="c2" source="loading_circle" x="32" y="256" /-->
 		</Layer>
 	</Scene>
 	<Scene name="vnovel" class="VNovel">

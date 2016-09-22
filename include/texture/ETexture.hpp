@@ -37,6 +37,7 @@ public:
 	virtual void pauseAnimation();
 	virtual void resumeAnimation();
 	virtual void finishedAnimationCallback(double delta_x, double delta_y);
+	virtual void syncAnimationCallback(double delta_x, double delta_y);
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
 	virtual void render() = 0;
