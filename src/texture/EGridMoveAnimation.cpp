@@ -57,13 +57,15 @@ void EGridMoveAnimation::setNextDirection(GridMoveDir dir)
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
-	Uint32 atomicTime = (prevTime==0) ? 0 : (compensatedTime - prevTime);
+	Uint32 atomicTime = (prevTime==0) ? 0 : (abs(compensatedTime - prevTime));
 	Uint32 delta = atomicTime - prevTime;
 	double dt = atomicTime * 0.01;
 	double accu = 0.0;
 	bool checkFinished = false;
 
 	if (ANI_START != state)	return;
+
+	LOG_DBG("Time: %d / Prev: %d / dt: %lf", compensatedTime, prevTime, dt);
 
 	prevTime = compensatedTime;
 

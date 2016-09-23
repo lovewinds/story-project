@@ -98,7 +98,7 @@ void ETexture::finishedAnimationCallback(double delta_x, double delta_y)
 	p_x += delta_x;
 	p_y += delta_y;
 
-	animation = nullptr;
+	//animation = nullptr;
 }
 
 void ETexture::syncAnimationCallback(double delta_x, double delta_y)

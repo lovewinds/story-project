@@ -315,7 +315,7 @@ bool Ecore::init()
 		}
 
 		/* Create window */
-		gWindow = SDL_CreateWindow("SDL Tutorial",
+		gWindow = SDL_CreateWindow("Story",
 				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 				SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)

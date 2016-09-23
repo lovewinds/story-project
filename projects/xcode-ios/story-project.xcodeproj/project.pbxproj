@@ -89,15 +89,15 @@
 		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
 		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
-		F4A37F5C1D8D965100186118 /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5B1D8D965100186118 /* libg3logger.a */; };
-		F4A37F5E1D8D966100186118 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5D1D8D966100186118 /* libgtest.a */; };
-		F4A37F601D8D966D00186118 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F5F1D8D966D00186118 /* libprotobuf.a */; };
-		F4A37F621D8D967D00186118 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A37F611D8D967D00186118 /* libpugixml.a */; };
-		F4BF51C31D8E2E9F00221614 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */; };
-		F4BF51C41D8E2E9F00221614 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */; };
-		F4BF51C51D8E2E9F00221614 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */; };
-		F4BF51C61D8E2E9F00221614 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BF51C21D8E2E9F00221614 /* libSDL2.a */; };
 		F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BF51BD1D8E2C1800221614 /* Images.xcassets */; };
+		F4EB2B3E1D95784B007E0338 /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B361D95784B007E0338 /* libg3logger.a */; };
+		F4EB2B3F1D95784B007E0338 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B371D95784B007E0338 /* libgtest.a */; };
+		F4EB2B401D95784B007E0338 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B381D95784B007E0338 /* libprotobuf.a */; };
+		F4EB2B411D95784B007E0338 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B391D95784B007E0338 /* libpugixml.a */; };
+		F4EB2B421D95784B007E0338 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B3A1D95784B007E0338 /* libSDL2_gfx.a */; };
+		F4EB2B431D95784B007E0338 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B3B1D95784B007E0338 /* libSDL2_image.a */; };
+		F4EB2B441D95784B007E0338 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B3C1D95784B007E0338 /* libSDL2_ttf.a */; };
+		F4EB2B451D95784B007E0338 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B3D1D95784B007E0338 /* libSDL2.a */; };
 		F4EF97101D8EB027002F19FC /* EAccelAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */; };
 		F4EF97121D8EB02D002F19FC /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
@@ -194,16 +194,15 @@
 		F4A37F551D8D94D800186118 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/sources/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
 		F4A37F571D8D94EB00186118 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/sources/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
 		F4A37F591D8D94F900186118 /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ipc.pb.cc; path = ../../scripting/ipc.pb.cc; sourceTree = "<group>"; };
-		F4A37F5B1D8D965100186118 /* libg3logger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libg3logger.a; path = ../../external/built/lib/libg3logger.a; sourceTree = "<group>"; };
-		F4A37F5D1D8D966100186118 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = ../../external/built/lib/libgtest.a; sourceTree = "<group>"; };
-		F4A37F5F1D8D966D00186118 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../external/built/lib/libprotobuf.a; sourceTree = "<group>"; };
-		F4A37F611D8D967D00186118 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = ../../external/built/lib/libpugixml.a; sourceTree = "<group>"; };
-		F4A37F631D8D96A000186118 /* libzmq-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzmq-static.a"; path = "../../external/built/lib/libzmq-static.a"; sourceTree = "<group>"; };
 		F4BF51BD1D8E2C1800221614 /* Images.xcassets */ = {isa = PBXFileReference; explicitFileType = wrapper.application; name = Images.xcassets; path = "___PROJECTNAME___/Images.xcassets"; sourceTree = SOURCE_ROOT; };
-		F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_gfx.a; path = ../../external/built/lib/libSDL2_gfx.a; sourceTree = "<group>"; };
-		F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_image.a; path = ../../external/built/lib/libSDL2_image.a; sourceTree = "<group>"; };
-		F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = ../../external/built/lib/libSDL2_ttf.a; sourceTree = "<group>"; };
-		F4BF51C21D8E2E9F00221614 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../external/built/lib/libSDL2.a; sourceTree = "<group>"; };
+		F4EB2B361D95784B007E0338 /* libg3logger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libg3logger.a; path = "../../external/built/lib-ios/libg3logger.a"; sourceTree = "<group>"; };
+		F4EB2B371D95784B007E0338 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = "../../external/built/lib-ios/libgtest.a"; sourceTree = "<group>"; };
+		F4EB2B381D95784B007E0338 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = "../../external/built/lib-ios/libprotobuf.a"; sourceTree = "<group>"; };
+		F4EB2B391D95784B007E0338 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = "../../external/built/lib-ios/libpugixml.a"; sourceTree = "<group>"; };
+		F4EB2B3A1D95784B007E0338 /* libSDL2_gfx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_gfx.a; path = "../../external/built/lib-ios/libSDL2_gfx.a"; sourceTree = "<group>"; };
+		F4EB2B3B1D95784B007E0338 /* libSDL2_image.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_image.a; path = "../../external/built/lib-ios/libSDL2_image.a"; sourceTree = "<group>"; };
+		F4EB2B3C1D95784B007E0338 /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = "../../external/built/lib-ios/libSDL2_ttf.a"; sourceTree = "<group>"; };
+		F4EB2B3D1D95784B007E0338 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = "../../external/built/lib-ios/libSDL2.a"; sourceTree = "<group>"; };
 		F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAccelAnimation.hpp; sourceTree = "<group>"; };
 		F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
 		FA8B4B96196703B400F8EB7C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -218,14 +217,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A37F621D8D967D00186118 /* libpugixml.a in Frameworks */,
-				F4A37F601D8D966D00186118 /* libprotobuf.a in Frameworks */,
-				F4A37F5E1D8D966100186118 /* libgtest.a in Frameworks */,
-				F4A37F5C1D8D965100186118 /* libg3logger.a in Frameworks */,
-				F4BF51C61D8E2E9F00221614 /* libSDL2.a in Frameworks */,
-				F4BF51C41D8E2E9F00221614 /* libSDL2_image.a in Frameworks */,
-				F4BF51C51D8E2E9F00221614 /* libSDL2_ttf.a in Frameworks */,
-				F4BF51C31D8E2E9F00221614 /* libSDL2_gfx.a in Frameworks */,
+				F4EB2B3E1D95784B007E0338 /* libg3logger.a in Frameworks */,
+				F4EB2B3F1D95784B007E0338 /* libgtest.a in Frameworks */,
+				F4EB2B401D95784B007E0338 /* libprotobuf.a in Frameworks */,
+				F4EB2B411D95784B007E0338 /* libpugixml.a in Frameworks */,
+				F4EB2B421D95784B007E0338 /* libSDL2_gfx.a in Frameworks */,
+				F4EB2B431D95784B007E0338 /* libSDL2_image.a in Frameworks */,
+				F4EB2B441D95784B007E0338 /* libSDL2_ttf.a in Frameworks */,
+				F4EB2B451D95784B007E0338 /* libSDL2.a in Frameworks */,
 				F43DB9E01C78B59400BE5C9A /* MobileCoreServices.framework in Frameworks */,
 				F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */,
 				FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */,
@@ -298,15 +297,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F4BF51BF1D8E2E9F00221614 /* libSDL2_gfx.a */,
-				F4BF51C01D8E2E9F00221614 /* libSDL2_image.a */,
-				F4BF51C11D8E2E9F00221614 /* libSDL2_ttf.a */,
-				F4BF51C21D8E2E9F00221614 /* libSDL2.a */,
-				F4A37F631D8D96A000186118 /* libzmq-static.a */,
-				F4A37F611D8D967D00186118 /* libpugixml.a */,
-				F4A37F5F1D8D966D00186118 /* libprotobuf.a */,
-				F4A37F5D1D8D966100186118 /* libgtest.a */,
-				F4A37F5B1D8D965100186118 /* libg3logger.a */,
+				F4EB2B361D95784B007E0338 /* libg3logger.a */,
+				F4EB2B371D95784B007E0338 /* libgtest.a */,
+				F4EB2B381D95784B007E0338 /* libprotobuf.a */,
+				F4EB2B391D95784B007E0338 /* libpugixml.a */,
+				F4EB2B3A1D95784B007E0338 /* libSDL2_gfx.a */,
+				F4EB2B3B1D95784B007E0338 /* libSDL2_image.a */,
+				F4EB2B3C1D95784B007E0338 /* libSDL2_ttf.a */,
+				F4EB2B3D1D95784B007E0338 /* libSDL2.a */,
 				F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */,
 				F43DB9DD1C78B51300BE5C9A /* AVKit.framework */,
 				F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */,
@@ -657,10 +655,10 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../external/built/lib",
+					"$(PROJECT_DIR)/../../external/built/lib-ios",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
@@ -691,10 +689,10 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../external/built/lib",
+					"$(PROJECT_DIR)/../../external/built/lib-ios",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
