@@ -59,6 +59,7 @@ void ERPGScene::handleMove(GridMoveDir dir)
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
 
+	LOG_INFO("handleMove [%d]", dir);
 	for (auto& it : _sprite_map)
 	{
 		auto& sprite = it.second;

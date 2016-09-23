@@ -3,7 +3,7 @@
 
 #include "texture/EGridMoveAnimation.hpp"
 
-#define TEST_VELO	20.0
+#define TEST_VELO	16.0
 
 EGridMoveAnimation::EGridMoveAnimation()
 {
@@ -21,7 +21,7 @@ EGridMoveAnimation::~EGridMoveAnimation()
 void EGridMoveAnimation::start()
 {
 	velo = TEST_VELO;
-	prevTime = 0;
+	prevTime = SDL_GetTicks();
 
 	EAnimation::start();
 }
@@ -57,17 +57,15 @@ void EGridMoveAnimation::setNextDirection(GridMoveDir dir)
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
-	Uint32 atomicTime = (compensatedTime - startTime);
+	Uint32 atomicTime = (prevTime==0) ? 0 : (compensatedTime - prevTime);
 	Uint32 delta = atomicTime - prevTime;
-	double dt = delta * 0.001;
+	double dt = atomicTime * 0.01;
 	double accu = 0.0;
 	bool checkFinished = false;
 
-	LOG_INFO("PrevTime : %d / dt : %lf", prevTime, dt);
-
 	if (ANI_START != state)	return;
 
-	prevTime = delta;
+	prevTime = compensatedTime;
 
 	/* Move position */
 	switch (direction){
@@ -148,7 +146,7 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 
 			/* Reset state */
 			velo = TEST_VELO;
-			prevTime = atomicTime;
+			//prevTime = compensatedTime;
 			direction = next_dir;
 			next_dir = DIR_NONE;
 
