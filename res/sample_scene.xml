@@ -10,7 +10,7 @@
 					 type="sprite" width="128" height="192"/>
 				<Image src="gom-sprite.png" name="Gom"
 					 type="sprite" width="256" height="64"/>
-				<Image src="japaneseVillage.png" name="MapTile"
+				<Image src="JapaneseVillage.png" name="MapTile"
 					 type="background" width="256" height="1312"/>
 			</Images>
 			<Sprites>

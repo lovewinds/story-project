@@ -15,7 +15,6 @@
 		F42169B91D05593A00C50450 /* bg-black.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169AF1D05593A00C50450 /* bg-black.png */; };
 		F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F42169B01D05593A00C50450 /* FreeSans.ttf */; };
 		F42169BB1D05593A00C50450 /* grid-base.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B11D05593A00C50450 /* grid-base.png */; };
-		F42169BC1D05593A00C50450 /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B21D05593A00C50450 /* JapaneseVillage.png */; };
 		F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42169B31D05593A00C50450 /* japanvillage.jpg */; };
 		F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B41D05593A00C50450 /* moderngirl02.png */; };
 		F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B51D05593A00C50450 /* moderngirl02x2.png */; };
@@ -25,6 +24,10 @@
 		F43DB9E01C78B59400BE5C9A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
+		F486175C1D96C370008641CB /* EGridMapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F486175B1D96C370008641CB /* EGridMapTexture.cpp */; };
+		F486175E1D96C37B008641CB /* EGridMapTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F486175D1D96C37B008641CB /* EGridMapTexture.hpp */; };
+		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
+		F48617621D96C691008641CB /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F48617611D96C691008641CB /* JapaneseVillage.png */; };
 		F4A37EE61D8D926C00186118 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC61D8D926C00186118 /* Ecore.hpp */; };
 		F4A37EE71D8D926C00186118 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC71D8D926C00186118 /* ESceneManager.hpp */; };
 		F4A37EE81D8D926C00186118 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC81D8D926C00186118 /* EScreenManager.hpp */; };
@@ -118,7 +121,6 @@
 		F42169AF1D05593A00C50450 /* bg-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-black.png"; path = "../../res/bg-black.png"; sourceTree = "<group>"; };
 		F42169B01D05593A00C50450 /* FreeSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FreeSans.ttf; path = ../../res/FreeSans.ttf; sourceTree = "<group>"; };
 		F42169B11D05593A00C50450 /* grid-base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grid-base.png"; path = "../../res/grid-base.png"; sourceTree = "<group>"; };
-		F42169B21D05593A00C50450 /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
 		F42169B31D05593A00C50450 /* japanvillage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = japanvillage.jpg; path = ../../res/japanvillage.jpg; sourceTree = "<group>"; };
 		F42169B41D05593A00C50450 /* moderngirl02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moderngirl02.png; path = ../../res/moderngirl02.png; sourceTree = "<group>"; };
 		F42169B51D05593A00C50450 /* moderngirl02x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moderngirl02x2.png; path = ../../res/moderngirl02x2.png; sourceTree = "<group>"; };
@@ -130,6 +132,10 @@
 		F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
+		F486175B1D96C370008641CB /* EGridMapTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMapTexture.cpp; sourceTree = "<group>"; };
+		F486175D1D96C37B008641CB /* EGridMapTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMapTexture.hpp; sourceTree = "<group>"; };
+		F486175F1D96C44F008641CB /* gom-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-sprite.png"; path = "../../res/gom-sprite.png"; sourceTree = "<group>"; };
+		F48617611D96C691008641CB /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
 		F4A37EC61D8D926C00186118 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
 		F4A37EC71D8D926C00186118 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
 		F4A37EC81D8D926C00186118 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
@@ -268,6 +274,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F48617611D96C691008641CB /* JapaneseVillage.png */,
+				F486175F1D96C44F008641CB /* gom-sprite.png */,
 				F4468A051D96392A003AB89B /* Images-2.xcassets */,
 				F4A37F3E1D8D929400186118 /* f069.png */,
 				F4A37F3F1D8D929400186118 /* f071.png */,
@@ -282,7 +290,6 @@
 				F42169AF1D05593A00C50450 /* bg-black.png */,
 				F42169B01D05593A00C50450 /* FreeSans.ttf */,
 				F42169B11D05593A00C50450 /* grid-base.png */,
-				F42169B21D05593A00C50450 /* JapaneseVillage.png */,
 				F42169B31D05593A00C50450 /* japanvillage.jpg */,
 				F42169B41D05593A00C50450 /* moderngirl02.png */,
 				F42169B51D05593A00C50450 /* moderngirl02x2.png */,
@@ -370,6 +377,7 @@
 		F4A37ED51D8D926C00186118 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F486175D1D96C37B008641CB /* EGridMapTexture.hpp */,
 				F4EF970F1D8EB027002F19FC /* EAccelAnimation.hpp */,
 				F4A37ED61D8D926C00186118 /* drawable */,
 				F4A37ED81D8D926C00186118 /* EAnimation.hpp */,
@@ -423,6 +431,7 @@
 		F4A37F111D8D928100186118 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F486175B1D96C370008641CB /* EGridMapTexture.cpp */,
 				F4EF97111D8EB02D002F19FC /* EAccelAnimation.cpp */,
 				F4A37F121D8D928100186118 /* drawable */,
 				F4A37F141D8D928100186118 /* EAnimation.cpp */,
@@ -484,6 +493,7 @@
 				F4A37EEC1D8D926C00186118 /* EResourceManager.hpp in Headers */,
 				F4A37EFD1D8D926E00186118 /* LogHelper.hpp in Headers */,
 				F4A37EEF1D8D926D00186118 /* ESpriteType.hpp in Headers */,
+				F486175E1D96C37B008641CB /* EGridMapTexture.hpp in Headers */,
 				F4EF97101D8EB027002F19FC /* EAccelAnimation.hpp in Headers */,
 				F4A37EF81D8D926D00186118 /* ESprite.hpp in Headers */,
 				F4A37EF71D8D926D00186118 /* EImageTexture.hpp in Headers */,
@@ -570,7 +580,7 @@
 				F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */,
 				F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */,
 				F42169B91D05593A00C50450 /* bg-black.png in Resources */,
-				F42169BC1D05593A00C50450 /* JapaneseVillage.png in Resources */,
+				F48617601D96C44F008641CB /* gom-sprite.png in Resources */,
 				F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */,
 				F4A37F541D8D929400186118 /* py_test.py in Resources */,
 				F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */,
@@ -580,6 +590,7 @@
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
+				F48617621D96C691008641CB /* JapaneseVillage.png in Resources */,
 				F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */,
 				F4A37F4D1D8D929400186118 /* gom-003.png in Resources */,
 				F42169BB1D05593A00C50450 /* grid-base.png in Resources */,
@@ -605,6 +616,7 @@
 				F4A37F301D8D928100186118 /* EDrawable.cpp in Sources */,
 				F4A37F351D8D928100186118 /* ESprite.cpp in Sources */,
 				F4A37F311D8D928100186118 /* EAnimation.cpp in Sources */,
+				F486175C1D96C370008641CB /* EGridMapTexture.cpp in Sources */,
 				F4A37F261D8D928100186118 /* EDbgOverlayScene.cpp in Sources */,
 				F4A37F281D8D928100186118 /* EResourceLoaderInterface.cpp in Sources */,
 				F4A37F321D8D928100186118 /* EFigure.cpp in Sources */,
