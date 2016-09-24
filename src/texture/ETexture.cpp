@@ -121,6 +121,15 @@ void ETexture::dealloc()
 	}
 }
 
+bool ETexture::allocate()
+{
+	return true;
+}
+
+void ETexture::deallocate()
+{
+}
+
 void ETexture::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();

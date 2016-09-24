@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <SDL.h>
 
 class SDL_Surface_Wrap
@@ -10,6 +11,7 @@ public:
 	SDL_Surface_Wrap(SDL_Surface *);
 	SDL_Surface_Wrap(std::string path);
 	SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	SDL_Surface_Wrap(std::vector<std::vector<short> > gridMap);
 	virtual ~SDL_Surface_Wrap();
 	SDL_Surface_Wrap& operator=(SDL_Surface_Wrap&& other);
 
@@ -26,6 +28,7 @@ public:
 	SDL_Texture_Wrap(SDL_Surface *);
 	SDL_Texture_Wrap(std::string path);
 	SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	SDL_Texture_Wrap(std::vector<std::vector<short> > gridMap);
 	virtual ~SDL_Texture_Wrap();
 
 	SDL_Texture_Wrap(SDL_Texture_Wrap&) = delete;

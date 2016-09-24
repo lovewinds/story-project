@@ -201,6 +201,14 @@ EResourceManager::allocateTextTexture(std::string text, SDL_Color textColor, SDL
 	return texture;
 }
 
+std::shared_ptr<SDL_Texture_Wrap>
+EResourceManager::allocateGridMapTexture(std::vector<std::vector<short> > map)
+{
+	std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(map));
+	LOG_ERR("[ResMgr] texture [%p]", &texture);
+	return texture;
+}
+
 // TODO: Need to deallocate texture here if caching is applied.
 void EResourceManager::releaseTexture(std::string path)
 {

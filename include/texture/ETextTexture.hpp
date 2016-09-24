@@ -15,8 +15,8 @@ public:
 	/* Update String */
 	virtual void setText(const std::string& text);
 
-	bool allocate();
-	void deallocate();
+	virtual bool allocate();
+	virtual void deallocate();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();

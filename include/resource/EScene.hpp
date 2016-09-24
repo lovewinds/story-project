@@ -77,6 +77,7 @@ protected:
 	bool allocateSprites();
 	bool allocateImages();
 	bool allocateTexts();
+	bool allocateRawTexture();
 
 	/* Sprite map for cache
 	 *   These sprites use allocated image texture on video memory.
@@ -90,4 +91,7 @@ protected:
 	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 
 	std::map<std::string, std::shared_ptr<EDrawable>> _drawable_map;
+
+	/* Not classified textures */
+	std::map<std::string, std::shared_ptr<ETexture>> _raw_texture_map;
 };

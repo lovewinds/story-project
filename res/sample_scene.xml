@@ -8,6 +8,10 @@
 					 type="background" width="636" height="475"/>
 				<Image src="moderngirl02.png" name="Character"
 					 type="sprite" width="128" height="192"/>
+				<Image src="gom-sprite.png" name="Gom"
+					 type="sprite" width="256" height="64"/>
+				<Image src="japaneseVillage.png" name="MapTile"
+					 type="background" width="256" height="1312"/>
 			</Images>
 			<Sprites>
 				<Sprite source="Character" name="loading_circle" width="32" height="48">
@@ -24,11 +28,18 @@
 					<Index>11</Index>
 					<Index linear="end">12</Index>
 				</Sprite>
+				<Sprite source="Gom" name="sleeping_gom" width="64" height="64">
+					<Index linear="start">1</Index>
+					<Index>2</Index>
+					<Index>3</Index>
+					<Index linear="end">4</Index>
+				</Sprite>
 			</Sprites>
 		</Resources>
 		<Layer name="base">
-			<Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/>
+			<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
 			<Sprite name="c1" source="loading_circle" x="0" y="256" />
+			<Sprite name="g1" source="sleeping_gom" x="128" y="128" />
 			<!--Sprite name="c2" source="loading_circle" x="32" y="256" /-->
 		</Layer>
 	</Scene>

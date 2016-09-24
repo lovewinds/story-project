@@ -21,6 +21,13 @@ ERPGScene::ERPGScene(std::string name)
 		LOG_ERR("Failed to insert text set !");
 	}
 #endif
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
+	gridMap = map;
+	auto result = _raw_texture_map.emplace("GridMap", map);
+	if (!result.second) {
+		LOG_ERR("Failed to insert texture!");
+	}
 }
 
 ERPGScene::~ERPGScene()
@@ -59,9 +66,10 @@ void ERPGScene::handleMove(GridMoveDir dir)
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
 
-	LOG_INFO("handleMove [%d]", dir);
 	for (auto& it : _sprite_map)
 	{
+		if (it.first.compare("g1") == 0)	continue;
+
 		auto& sprite = it.second;
 		switch (sprite->getAnimationState())
 		{
@@ -159,6 +167,8 @@ void ERPGScene::handleEvent(SDL_Event e)
 
 void ERPGScene::render()
 {
+	gridMap->render();
+
 	for (auto &it : _img_texture_map)
 	{
 		it.second->render();
@@ -199,4 +209,6 @@ void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
 	{
 		it.second->update(currentTime, accumulator);
 	}
+
+	gridMap->update(currentTime, accumulator);
 }

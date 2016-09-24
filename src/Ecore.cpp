@@ -370,7 +370,7 @@ bool Ecore::loadResources()
 	bool success = true;
 
 	/* Load Font */
-	gFont = TTF_OpenFont("../res/NanumGothic.ttf", 28);
+	gFont = TTF_OpenFont("../res/NanumBarunpenR.ttf", 28);
 	if (gFont == NULL)
 	{
 		/* Android can handle under /assets directory */

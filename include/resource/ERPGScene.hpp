@@ -9,6 +9,7 @@
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
+#include "texture/EGridMapTexture.hpp"
 #include "texture/EAnimation.hpp"
 #include "texture/EGridMoveAnimation.hpp"
 
@@ -42,4 +43,5 @@ public:
 	void handleMove(GridMoveDir dir);
 
 protected:
+	std::shared_ptr<EGridMapTexture>	gridMap;
 };

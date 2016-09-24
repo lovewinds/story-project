@@ -125,12 +125,25 @@ bool EScene::allocateTexts()
 	return true;
 }
 
+bool EScene::allocateRawTexture()
+{
+	if (_raw_texture_map.empty())
+		return false;
+
+	for (auto &it : _raw_texture_map) {
+		LOG_DBG("  Allocate texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->allocate();
+	}
+	return true;
+}
+
 bool EScene::allocate()
 {
 	bool res = false;
 	res |= allocateSprites();
 	res |= allocateImages();
 	res |= allocateTexts();
+	res |= allocateRawTexture();
 
 	if (false == res) {
 		LOG_ERR("Failed to allocate !");
@@ -162,6 +175,10 @@ void EScene::deallocate()
 		LOG_DBG("  DeAllocate drawable texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
 		it.second->deallocate();
 	}
+	for (auto &it : _raw_texture_map) {
+		LOG_DBG("  DeAllocate texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
+		it.second->deallocate();
+	}
 
 	isAllocated = false;
 	isActivated = false;
@@ -190,6 +207,11 @@ void EScene::render()
 	}
 
 	for (auto& it : _text_texture_map)
+	{
+		it.second->render();
+	}
+
+	for (auto& it : _raw_texture_map)
 	{
 		it.second->render();
 	}
@@ -226,6 +248,11 @@ void EScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	for(auto& it : _text_texture_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for(auto& it : _raw_texture_map)
 	{
 		it.second->update(currentTime, accumulator);
 	}

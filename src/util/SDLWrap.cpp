@@ -65,6 +65,24 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Co
 	}
 }
 
+SDL_Surface_Wrap::SDL_Surface_Wrap(std::vector<std::vector<short> > map)
+{
+	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	Uint32 rmask, gmask, bmask, amask;
+	/* TODO: Below size should be taken from arg */
+	const int TILE_SIZE = 32;
+	int width = 8 * TILE_SIZE;
+	int height = 10 * TILE_SIZE;
+
+	/* Use default masks */
+	surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+	if (nullptr == surface)
+	{
+		LOG_ERR("Unable to create GridMap surface!");
+		return;
+	}
+}
+
 SDL_Surface_Wrap::~SDL_Surface_Wrap()
 {
 	if (surface) {
@@ -150,6 +168,28 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Co
 
 	if (surf) {
 		createFromSurface(surf->getSurface());
+	} else {
+		LOG_ERR("Failed to create surface !");
+	}
+}
+
+SDL_Texture_Wrap::SDL_Texture_Wrap(std::vector<std::vector<short> > map)
+: texture(nullptr)
+{
+	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(map));
+
+	if (surf) {
+		if (createFromSurface(surf->getSurface()))
+		{
+			/* Set rendering target */
+			SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+			SDL_SetRenderTarget(gRenderer, texture);
+
+			
+
+			/* Reset rendering target */
+			SDL_SetRenderTarget(gRenderer, NULL);
+		}
 	} else {
 		LOG_ERR("Failed to create surface !");
 	}

@@ -12,6 +12,9 @@ public:
 	ETexture();
 	virtual ~ETexture();
 
+	virtual bool allocate();
+	virtual void deallocate();
+
 	/* Deallocates texture */
 	virtual void dealloc();
 

@@ -77,6 +77,12 @@ public:
 	allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
 
 /*
+ * Grid texture map
+ */
+ 	std::shared_ptr<SDL_Texture_Wrap>
+	allocateGridMapTexture(std::vector<std::vector<short> > map);
+
+/*
  * Texture Functions
  */
 	std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);

@@ -74,7 +74,12 @@ void ESprite::deallocate()
 
 void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 {
-	if (currentTime - prevTime > 100)
+	int tick = 100;
+
+	if (gSpriteClips.size() == 4)
+		tick = 1000;
+
+	if (currentTime - prevTime > tick)
 	{
 		prevTime = currentTime;
 

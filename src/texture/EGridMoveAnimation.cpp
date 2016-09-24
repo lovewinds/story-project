@@ -50,14 +50,16 @@ void EGridMoveAnimation::setDirection(GridMoveDir dir)
 
 void EGridMoveAnimation::setNextDirection(GridMoveDir dir)
 {
-	LOG_DBG("Update next : [%x] -> [%x]", dir, next_dir);
+	//LOG_DBG("Update next : [%x] -> [%x]", dir, next_dir);
 	next_dir = dir;
 }
 
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
-	Uint32 atomicTime = (prevTime==0) ? 0 : (abs(compensatedTime - prevTime));
+	/* Bug fix for iOS */
+	Uint32 atomicTime = (prevTime==0) ? 0 : (
+		(compensatedTime > prevTime) ? (compensatedTime - prevTime) : (prevTime - compensatedTime));
 	Uint32 delta = atomicTime - prevTime;
 	double dt = atomicTime * 0.01;
 	double accu = 0.0;
@@ -65,7 +67,7 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 
 	if (ANI_START != state)	return;
 
-	LOG_DBG("Time: %d / Prev: %d / dt: %lf", compensatedTime, prevTime, dt);
+	//LOG_DBG("Time: %d / Prev: %d / dt: %lf", compensatedTime, prevTime, dt);
 
 	prevTime = compensatedTime;
 
@@ -73,7 +75,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	switch (direction){
 	case DIR_UP:
 		a_y -= velo * dt;
-		LOG_INFO("a : %lf", a_y);
 		if (a_y <= -32.0) {
 			if (next_dir != DIR_NONE && next_dir != direction) {
 				accu = abs(a_y - (-32.0));
@@ -84,7 +85,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		break;
 	case DIR_DOWN:
 		a_y += velo * dt;
-		LOG_INFO("a : %lf", a_y);
 		if (a_y >= 32.0) {
 			if (next_dir != DIR_NONE && next_dir != direction) {
 				accu = abs(a_y - (32.0));
@@ -95,7 +95,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		break;
 	case DIR_LEFT:
 		a_x -= velo * dt;
-		LOG_INFO("a : %lf", a_x);
 		if (a_x <= -32.0) {
 			if (next_dir != DIR_NONE && next_dir != direction) {
 				accu = abs(a_x - (-32.0));
@@ -106,11 +105,9 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		break;
 	case DIR_RIGHT:
 		a_x += velo * dt;
-		LOG_INFO("a : %lf", a_x);
 		if (a_x >= 32.0) {
-			LOG_DBG("Next right? [%s]", (next_dir == DIR_RIGHT) ? "True" : "False");
+			//LOG_DBG("Next right? [%s]", (next_dir == DIR_RIGHT) ? "True" : "False");
 			if (next_dir != DIR_NONE && next_dir != direction) {
-				LOG_DBG("Cut");
 				accu = abs(a_x - (32.0));
 				a_x = 32.0;
 			}
@@ -132,19 +129,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			EAnimation::sync();
 			a_x = 0;
 			a_y = 0;
-			LOG_DBG("Next : [%d] / acc : [%lf] / a [%lf : %lf]", next_dir, accu, a_x, a_y);
-			/*
-			switch (next_dir) {
-			case DIR_UP:
-			case DIR_DOWN:
-				a_y += accu;
-				break;
-			case DIR_LEFT:
-			case DIR_RIGHT:
-				a_x += accu;
-				break;
-			}
-			*/
 
 			/* Reset state */
 			velo = TEST_VELO;
