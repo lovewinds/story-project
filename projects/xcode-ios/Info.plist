@@ -37,7 +37,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>UIRequiresFullScreen</key>
-	<true/>
+	<false/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarStyle</key>

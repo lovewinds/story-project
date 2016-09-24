@@ -120,17 +120,19 @@ void ESceneManager::handleEvent(SDL_Event e)
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
 
-		if (overlayState) {
-			overlayState = false;
-			overlay = nullptr;
-		}
-		else {
-			overlayState = true;
-			EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
-			std::string sname = "vnovel";
-			if (resMgr.allocateScene(sname)) {
-				overlay = resMgr.getScene(sname);
-				LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
+		if (te->x >= 0.3 && te-> x <= 0.6 && te->y >= 0.5) {
+			if (overlayState) {
+				overlayState = false;
+				overlay = nullptr;
+			}
+			else {
+				overlayState = true;
+				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				std::string sname = "vnovel";
+				if (resMgr.allocateScene(sname)) {
+					overlay = resMgr.getScene(sname);
+					LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
+				}
 			}
 		}
 	} else if (e.type == SDL_FINGERMOTION) {

@@ -146,11 +146,11 @@ void ERPGScene::handleEvent(SDL_Event e)
 		LOG_INFO("dx / dy : [%f / %f]", te->dx, te->dy);
 		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
 
-		if (te->x < 0.5) {
+		if (te->x <= 0.3) {
 			LOG_INFO("Move : LEFT");
 			handleMove(DIR_LEFT);
 		}
-		else if (te->x > 0.5) {
+		else if (te->x >= 0.6) {
 			LOG_INFO("Move : RIGHT");
 			handleMove(DIR_RIGHT);
 		}

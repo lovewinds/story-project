@@ -24,6 +24,7 @@
 		F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */; };
 		F43DB9E01C78B59400BE5C9A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
+		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
 		F4A37EE61D8D926C00186118 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC61D8D926C00186118 /* Ecore.hpp */; };
 		F4A37EE71D8D926C00186118 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC71D8D926C00186118 /* ESceneManager.hpp */; };
 		F4A37EE81D8D926C00186118 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A37EC81D8D926C00186118 /* EScreenManager.hpp */; };
@@ -89,7 +90,6 @@
 		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
 		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
-		F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4BF51BD1D8E2C1800221614 /* Images.xcassets */; };
 		F4EB2B3E1D95784B007E0338 /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B361D95784B007E0338 /* libg3logger.a */; };
 		F4EB2B3F1D95784B007E0338 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B371D95784B007E0338 /* libgtest.a */; };
 		F4EB2B401D95784B007E0338 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4EB2B381D95784B007E0338 /* libprotobuf.a */; };
@@ -129,6 +129,7 @@
 		F43DB9DD1C78B51300BE5C9A /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
 		F4A37EC61D8D926C00186118 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
 		F4A37EC71D8D926C00186118 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
 		F4A37EC81D8D926C00186118 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
@@ -194,7 +195,6 @@
 		F4A37F551D8D94D800186118 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/sources/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
 		F4A37F571D8D94EB00186118 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/sources/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
 		F4A37F591D8D94F900186118 /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ipc.pb.cc; path = ../../scripting/ipc.pb.cc; sourceTree = "<group>"; };
-		F4BF51BD1D8E2C1800221614 /* Images.xcassets */ = {isa = PBXFileReference; explicitFileType = wrapper.application; name = Images.xcassets; path = "___PROJECTNAME___/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		F4EB2B361D95784B007E0338 /* libg3logger.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libg3logger.a; path = "../../external/built/lib-ios/libg3logger.a"; sourceTree = "<group>"; };
 		F4EB2B371D95784B007E0338 /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = "../../external/built/lib-ios/libgtest.a"; sourceTree = "<group>"; };
 		F4EB2B381D95784B007E0338 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = "../../external/built/lib-ios/libprotobuf.a"; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F4BF51BD1D8E2C1800221614 /* Images.xcassets */,
+				F4468A051D96392A003AB89B /* Images-2.xcassets */,
 				F4A37F3E1D8D929400186118 /* f069.png */,
 				F4A37F3F1D8D929400186118 /* f071.png */,
 				F4A37F401D8D929400186118 /* gom-002.png */,
@@ -564,7 +564,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4A37F4C1D8D929400186118 /* gom-002.png in Resources */,
-				F4C03C321D8E7B2D002B07C5 /* Images.xcassets in Resources */,
 				F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */,
 				F4A37F4E1D8D929400186118 /* gom-004.png in Resources */,
 				F42169B81D05593A00C50450 /* BerryGarden.png in Resources */,
@@ -581,6 +580,7 @@
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
+				F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */,
 				F4A37F4D1D8D929400186118 /* gom-003.png in Resources */,
 				F42169BB1D05593A00C50450 /* grid-base.png in Resources */,
 				F4A37F531D8D929400186118 /* __init__.pyc in Resources */,
@@ -663,7 +663,7 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
 			};
 			name = Debug;
@@ -697,7 +697,7 @@
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
 			};
 			name = Release;

@@ -184,7 +184,7 @@ SDL_Texture_Wrap::~SDL_Texture_Wrap()
 {
 	if (texture != nullptr) {
 		/* Deallocate texture */
-		LOG_DBG("    SDL_Texture removed [%p]", texture);
+		LOG_DBG("    SDL_Texture removed [%d x %d] [%p]", width, height, texture);
 		SDL_DestroyTexture(texture);
 		texture = nullptr;
 	}
