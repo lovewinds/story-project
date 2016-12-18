@@ -304,6 +304,7 @@ EScreenManager& Ecore::getScreenManager()
 
 void* Ecore::GetHwnd()
 {
+#ifdef PLATFORM_WINDOWS
 	struct SDL_SysWMinfo wmInfo;
 
 	/* initialize info structure with SDL version info */
@@ -314,7 +315,7 @@ void* Ecore::GetHwnd()
 
 		return wmInfo.info.win.window;
 	}
-
+#endif
 	return NULL;
 }
 
@@ -342,9 +343,6 @@ bool Ecore::init(void* hwnd)
 	}
 
 	/* Create window */
-	LOG_ERR("HWND : [%p]", hwnd);
-	LOG_ERR("HWND : [%p]", hwnd);
-	LOG_ERR("HWND : [%p]", hwnd);
 	LOG_ERR("HWND : [%p]", hwnd);
 	if (hwnd != NULL) {
 #if 1
@@ -412,8 +410,12 @@ bool Ecore::init(void* hwnd)
 
 	if (success)
 		initialized = true;
+#ifdef PLATFORM_WINDOWS
+	/* TODO: Should be check
+		this app can be executed with internal window state on other platforms */
 	if (success && hwnd != NULL)
 		SetParent((HWND)GetHwnd(), (HWND)hwnd);
+#endif
 
 	return success;
 }
