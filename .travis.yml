@@ -15,12 +15,13 @@ before_install:
   - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 # command to run tests
+# NOTE: 'make -j N' can affect sequential build. just use one worker.
 script: 
   - gcc --version
   - mkdir build
   - cd build
   - cmake ..
-  - make -j 4
+  - make
 
 install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
@@ -42,7 +43,7 @@ addons:
       name: "lovewinds/story-project"
       description: "Story project for static code verification"
     notification_email: lovewinds.4i@gmail.com
-    build_command_prepend: "mkdir build && cd build && cmake .."
-    build_command:   "make -j 4"
+    build_command_prepend: ""
+    build_command:   "mkdir build && cd build && cmake .. && make"
     branch_pattern: coverity_scan
 
