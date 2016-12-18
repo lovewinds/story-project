@@ -1,5 +1,7 @@
 #include <stdarg.h>
 
+#include <SDL_syswm.h>
+
 #include "Ecore.hpp"
 #include "texture/ETexture.hpp"
 #include "EScreenManager.hpp"
@@ -31,6 +33,8 @@ gFont(NULL)
 	PythonScript::addPath(makeBasePath("..\\lib"));
 	PythonScript::addPath(makeBasePath("..\\lib\\python"));
 	PythonScript::initialize();
+
+	Ecore::instance = this;
 }
 
 Ecore::~Ecore()
@@ -70,6 +74,15 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 		{
 			result = false;
 		}
+		else if (e->type == SDL_WINDOWEVENT)
+		{
+			LOG_DBG("SDL_WINDOWEVENT : [%X]", e->window.event);
+			switch (e->window.event) {
+			case SDL_WINDOWEVENT_CLOSE:
+				result = false;
+				break;
+			}
+		}
 		else if (e->type == SDL_KEYDOWN)
 		{
 			switch (e->key.keysym.sym)
@@ -85,153 +98,152 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 void Ecore::Start()
 {
 	/* Start up SDL and create window */
-	if (init() == false)
+	if (initialized == false) {
+		if (init(nullptr) == false) {
+			LOG_ERR("Failed to initialize!");
+			return;
+		}
+		initialized = true;
+	}
+
+	screenManager = new EScreenManager();
+	resManager = new EResourceManager();
+
+	/* Load game resources */
+	if (loadResources() == false)
 	{
-		LOG_ERR("Failed to initialize!");
+		LOG_ERR("Failed to load media!");
 	}
 	else
 	{
-		screenManager = new EScreenManager();
-		resManager = new EResourceManager();
+		/* Main loop flag */
+		bool quit = false;
 
-		/* Load game resources */
-		if (loadResources() == false)
+		/* Event handler */
+		SDL_Event e;
+
+		/* Flip type */
+		SDL_RendererFlip flipType = SDL_FLIP_NONE;
+
+		/* Time management */
+		const Uint32 MAX_FRAMESKIP = 5;			/* Maximun count of skipping frame rendering */
+		const Uint32 UPDATE_TICKS_PER_SECOND = 25;	/* Tick time for each update function. it affects game speed */
+		const Uint32 RENDER_TICKS_PER_SECOND = 59;	/* Tick time for each render function. it affects FPS */
+		Uint32 t = 0;
+		const Uint32 SKIP_UPDATE_TICKS = 1000 / UPDATE_TICKS_PER_SECOND;
+		const Uint32 SKIP_RENDER_TICKS = 1000 / RENDER_TICKS_PER_SECOND;
+
+		Uint32 accumulator = 0;
+		Uint32 prevTime = SDL_GetTicks();
+		Uint32 currentTime = prevTime;
+		Uint32 nextUpdateTick = prevTime;
+		Uint32 nextRenderTick = prevTime;
+		Uint32 frameTime = 0;
+		Uint32 prevCalculated = prevTime;
+		int loops = 0;
+		int updated = 0;
+		int rendered = 0;
+		double alpha = 0.0;
+
+		LOG_INFO("Start !!");
+		/* While application is running */
+		while (!quit)
 		{
-			LOG_ERR("Failed to load media!");
-		}
-		else
-		{
-			/* Main loop flag */
-			bool quit = false;
-
-			/* Event handler */
-			SDL_Event e;
-
-			/* Flip type */
-			SDL_RendererFlip flipType = SDL_FLIP_NONE;
-
-			/* Time management */
-			const Uint32 MAX_FRAMESKIP = 5;			/* Maximun count of skipping frame rendering */
-			const Uint32 UPDATE_TICKS_PER_SECOND = 25;	/* Tick time for each update function. it affects game speed */
-			const Uint32 RENDER_TICKS_PER_SECOND = 59;	/* Tick time for each render function. it affects FPS */
-			Uint32 t = 0;
-			const Uint32 SKIP_UPDATE_TICKS = 1000 / UPDATE_TICKS_PER_SECOND;
-			const Uint32 SKIP_RENDER_TICKS = 1000 / RENDER_TICKS_PER_SECOND;
-
-			Uint32 accumulator = 0;
-			Uint32 prevTime = SDL_GetTicks();
-			Uint32 currentTime = prevTime;
-			Uint32 nextUpdateTick = prevTime;
-			Uint32 nextRenderTick = prevTime;
-			Uint32 frameTime = 0;
-			Uint32 prevCalculated = prevTime;
-			int loops = 0;
-			int updated = 0;
-			int rendered = 0;
-			double alpha = 0.0;
-
-			LOG_INFO("Start !!");
-			/* While application is running */
-			while (!quit)
-			{
-				/* Check Event */
-				while (SDL_PollEvent(&e) != 0) {
-					if (handleEvent(&e) == false) {
-						quit = true;
-					}
-
-					screenManager->handleEvent(e);
+			/* Check Event */
+			while (SDL_PollEvent(&e) != 0) {
+				if (handleEvent(&e) == false) {
+					quit = true;
 				}
 
-				currentTime = SDL_GetTicks();
-				frameTime = currentTime - prevTime;	/* elapsed time from last frame rendering */
-				//accumulator += frameTime;
-
-				//SDL_Log("Prev: %f / Curr: %f / frameTime: %f", prevTime, currentTime, frameTime);
-				//INFO("Prev: %d / Curr: %d / frameTime: %d", prevTime, currentTime, frameTime);
-
-				//frameTime = SDL_min(frameTime, maxFrameTime);
-				//while (frameTime > 0.0)	{
-				//while (accumulator > 0.0)	{
-				loops = 0;
-				accumulator = 0;
-				while (currentTime > nextUpdateTick && loops < MAX_FRAMESKIP)
-				{
-					//const Uint32 deltaTime = SDL_min(accumulator, dt);
-
-					//frameTime -= deltaTime;
-					//accumulator -= deltaTime;
-					//accumulator -= frameTime;
-
-					// minus value of Uint32
-					//accumulator -= SKIP_UPDATE_TICKS;
-					//t += deltaTime;
-
-					/* Update Sprites */
-					//Update(currentTime, deltaTime);
-					//alpha = accumulator / SKIP_UPDATE_TICKS;
-					Update(currentTime);
-					accumulator += currentTime - nextUpdateTick;
-
-					/* Set next tick time */
-					nextUpdateTick += SKIP_UPDATE_TICKS;
-
-					loops++;
-
-					//SDL_Log("t: %f / frameTime: %f / dt: %f", t, frameTime, dt);
-#if 0
-					INFO("Curr [%d] / next [%d] / diff [%d] / ACC [%d]",
-						currentTime, nextUpdateTick, nextUpdateTick - currentTime, accumulator);
-#endif
-
-					currentTime = SDL_GetTicks();
-				}
-				updated += loops;
-
-				/* Calculate alpha accumulator */
-				//alpha = double(currentTime + SKIP_UPDATE_TICKS - nextUpdateTick) / double(SKIP_UPDATE_TICKS);
-				alpha = double(accumulator) / double(SKIP_UPDATE_TICKS);
-
-				//SDL_Log("Render !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				//INFO("Render !! / Updated : [%d] times", loops);
-#if 1
-				/* Limit frames */
-				//currentTime = SDL_GetTicks();
-				//if (currentTime - prevTime <= 1000 / 60) {
-				if (currentTime - prevCalculated > 1000) {
-					//SDL_Delay(1000 / 60);
-					LOG_INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
-					updated = 0;
-					rendered = 0;
-					//continue;
-					prevCalculated = currentTime;
-				}
-#endif
-				prevTime = currentTime;
-
-				currentTime = SDL_GetTicks();
-				if (currentTime <= nextRenderTick) {
-					//nextRenderTick += SKIP_RENDER_TICKS;
-					continue;
-				}
-				nextRenderTick += SKIP_RENDER_TICKS;
-				//INFO("currentTime: [%d] / nextRenderTick [%d]", currentTime, nextRenderTick);
-
-				/* Render screen */
-				Render(currentTime, accumulator);
-
-				rendered++;
-
-				/* Put a delay to lower CPU usage */
-				SDL_Delay(1);
+				screenManager->handleEvent(e);
 			}
+
+			currentTime = SDL_GetTicks();
+			frameTime = currentTime - prevTime;	/* elapsed time from last frame rendering */
+			//accumulator += frameTime;
+
+			//SDL_Log("Prev: %f / Curr: %f / frameTime: %f", prevTime, currentTime, frameTime);
+			//INFO("Prev: %d / Curr: %d / frameTime: %d", prevTime, currentTime, frameTime);
+
+			//frameTime = SDL_min(frameTime, maxFrameTime);
+			//while (frameTime > 0.0)	{
+			//while (accumulator > 0.0)	{
+			loops = 0;
+			accumulator = 0;
+			while (currentTime > nextUpdateTick && loops < MAX_FRAMESKIP)
+			{
+				//const Uint32 deltaTime = SDL_min(accumulator, dt);
+
+				//frameTime -= deltaTime;
+				//accumulator -= deltaTime;
+				//accumulator -= frameTime;
+
+				// minus value of Uint32
+				//accumulator -= SKIP_UPDATE_TICKS;
+				//t += deltaTime;
+
+				/* Update Sprites */
+				//Update(currentTime, deltaTime);
+				//alpha = accumulator / SKIP_UPDATE_TICKS;
+				Update(currentTime);
+				accumulator += currentTime - nextUpdateTick;
+
+				/* Set next tick time */
+				nextUpdateTick += SKIP_UPDATE_TICKS;
+
+				loops++;
+
+				//SDL_Log("t: %f / frameTime: %f / dt: %f", t, frameTime, dt);
+#if 0
+				INFO("Curr [%d] / next [%d] / diff [%d] / ACC [%d]",
+					currentTime, nextUpdateTick, nextUpdateTick - currentTime, accumulator);
+#endif
+
+				currentTime = SDL_GetTicks();
+			}
+			updated += loops;
+
+			/* Calculate alpha accumulator */
+			//alpha = double(currentTime + SKIP_UPDATE_TICKS - nextUpdateTick) / double(SKIP_UPDATE_TICKS);
+			alpha = double(accumulator) / double(SKIP_UPDATE_TICKS);
+
+			//SDL_Log("Render !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//INFO("Render !! / Updated : [%d] times", loops);
+#if 1
+			/* Limit frames */
+			//currentTime = SDL_GetTicks();
+			//if (currentTime - prevTime <= 1000 / 60) {
+			if (currentTime - prevCalculated > 1000) {
+				//SDL_Delay(1000 / 60);
+				LOG_INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
+				updated = 0;
+				rendered = 0;
+				//continue;
+				prevCalculated = currentTime;
+			}
+#endif
+			prevTime = currentTime;
+
+			currentTime = SDL_GetTicks();
+			if (currentTime <= nextRenderTick) {
+				//nextRenderTick += SKIP_RENDER_TICKS;
+				continue;
+			}
+			nextRenderTick += SKIP_RENDER_TICKS;
+			//INFO("currentTime: [%d] / nextRenderTick [%d]", currentTime, nextRenderTick);
+
+			/* Render screen */
+			Render(currentTime, accumulator);
+
+			rendered++;
+
+			/* Put a delay to lower CPU usage */
+			SDL_Delay(1);
 		}
 	}
 
 	/* Free resources and close SDL */
 	//deinit();
-
-	return ;
 }
 
 void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
@@ -290,7 +302,23 @@ EScreenManager& Ecore::getScreenManager()
 	return *screenManager;
 }
 
-bool Ecore::init()
+void* Ecore::GetHwnd()
+{
+	struct SDL_SysWMinfo wmInfo;
+
+	/* initialize info structure with SDL version info */
+	SDL_VERSION(&wmInfo.version);
+
+	if (gWindow) {
+		SDL_GetWindowWMInfo(gWindow, &wmInfo);
+
+		return wmInfo.info.win.window;
+	}
+
+	return NULL;
+}
+
+bool Ecore::init(void* hwnd)
 {
 	//createJson();
 	//readJson();
@@ -304,62 +332,88 @@ bool Ecore::init()
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG_ERR("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		return false;
+	}
+
+	/* Set texture filtering to linear */
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+	{
+		LOG_ERR("Warning: Linear texture filtering not enabled!");
+	}
+
+	/* Create window */
+	LOG_ERR("HWND : [%p]", hwnd);
+	LOG_ERR("HWND : [%p]", hwnd);
+	LOG_ERR("HWND : [%p]", hwnd);
+	LOG_ERR("HWND : [%p]", hwnd);
+	if (hwnd != NULL) {
+#if 1
+		//SDL_Window* tmp = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_BORDERLESS);
+		//char sBuf[64];
+		//if (tmp != 0) {
+			//SDL_snprintf(sBuf, 64, "%p", tmp);
+
+			/* Set SDL hint to display external window properly */
+			//if (SDL_SetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT, sBuf) == false) {
+			//	LOG_ERR("Warning: Hint for external window failed !");
+			//}
+			gWindow = SDL_CreateWindowFrom(hwnd);
+			//SDL_SetHint(SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT, nullptr);
+			//SDL_DestroyWindow(tmp);
+		//}
+#else
+		gWindow = SDL_CreateWindow("Story",
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+			SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+#endif
+	}
+	else {
+		gWindow = SDL_CreateWindow("Story",
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+			SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	}
+	if (gWindow == NULL) {
+		LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
+		return false;
+	}
+
+	/* Create vsynced renderer for window */
+	/* VSync: SDL_RENDERER_PRESENTVSYNC */
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+	if (gRenderer == NULL)
+	{
+		LOG_ERR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 		success = false;
 	}
 	else
 	{
-		/* Set texture filtering to linear */
-		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			LOG_ERR("Warning: Linear texture filtering not enabled!");
-		}
+		/* Disable text input */
+		SDL_StopTextInput();
 
-		/* Create window */
-		gWindow = SDL_CreateWindow("Story",
-				SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-				SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
+		/* Initialize renderer color */
+		//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x33, 0x99, 0xFF);
+
+		/* Initialize PNG loading */
+		int imgFlags = IMG_INIT_PNG;
+		if (!(IMG_Init(imgFlags) & imgFlags))
 		{
-			LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
+			LOG_ERR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 			success = false;
 		}
-		else
+
+		/* Initialize SDL_ttf */
+		if (TTF_Init() == -1)
 		{
-			/* Create vsynced renderer for window */
-			/* VSync: SDL_RENDERER_PRESENTVSYNC */
-			gRenderer = SDL_CreateRenderer(gWindow, -1,
-					SDL_RENDERER_ACCELERATED);
-			if (gRenderer == NULL)
-			{
-				LOG_ERR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
-			{
-				/* Disable text input */
-				SDL_StopTextInput();
-
-				/* Initialize renderer color */
-				//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
-				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x33, 0x99, 0xFF);
-
-				/* Initialize PNG loading */
-				int imgFlags = IMG_INIT_PNG;
-				if (!(IMG_Init(imgFlags) & imgFlags))
-				{
-					LOG_ERR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-					success = false;
-				}
-
-				/* Initialize SDL_ttf */
-				if (TTF_Init() == -1)
-				{
-					LOG_ERR("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-					success = false;
-				}
-			}
+			LOG_ERR("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+			success = false;
 		}
 	}
+
+	if (success)
+		initialized = true;
+	if (success && hwnd != NULL)
+		SetParent((HWND)GetHwnd(), (HWND)hwnd);
 
 	return success;
 }

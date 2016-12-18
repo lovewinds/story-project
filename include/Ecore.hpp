@@ -12,6 +12,7 @@ class EResourceManager;
 class Ecore
 {
 public:
+	Ecore();
 	~Ecore();
 	static Ecore*	getInstance();
 	static void		releaseInstance();
@@ -22,7 +23,8 @@ public:
 	SDL_Window* getWindow();
 
 	/* Starts up SDL and creates window */
-	bool init();
+	bool init(void* hwnd);
+	void* GetHwnd();
 
 	void Start();
 	void Render(Uint32 currentTime, Uint32 accumulator);
@@ -44,15 +46,17 @@ public:
 	static bool checkPlatform(std::string);
 
 private:
-	Ecore();
+	
 
 	static Ecore*	instance;
 
+	/* Frees media and shuts down SDL */
+	void deinit();
+
+	bool initialized = false;
+
 	/* Loads game resource */
 	bool loadResources();
-
-	//Frees media and shuts down SDL
-	void deinit();
 
 	inline bool handleEvent(SDL_Event *e);
 
