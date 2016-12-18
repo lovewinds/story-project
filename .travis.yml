@@ -4,24 +4,44 @@ language: cpp
 compiler:
   - gcc
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "HSoWxjReZA8lWHbPkadtFdzx5r+Cf1+XGG2AuOnI8HfuMrY6fumG3H8PFHQt5PAQ53fFaHvsxg2qqrdUX3qdh/95K2tlGDyCete+hpCVrujIN9fG3OdODAytj2RnqR9sXqpicELbLekNGLH5I0GxchAnhJpzbaHQyWz6FiZULNvHcwherfOOX+WmBn/UQ85TDy1J9hmiMv5opZyKPBSS1o4ASHZs5ZGrYGsJQoCctv6H74ZcIA7q+xP0+HFZxTsnNoh95WgoMpPuVIZQJdiw++NnDtjuGNS+AghG4cEeoipVkIRE2dSUM58geGOxUCkOUwKCbVVGw9ZZZ3Mkw/6WrwiP/HTuysFJmFc/kf6n+u2PlJd2bPjxsTkAJf3SgmTJnk0KDFWmAGxnJZzMxYHaMFSLEcLBI6ehIJciGB/ex09fAp6x7IU+gdqaVx3RCQGDIBuJm4qx8IrjkASnyIOiR3NCeXZ5yqLJOR+HEszznj3RdtHl6Kobx3RdmZLuKf0A33MJUJVBO2wrbUYhGdq/9ThzPgbbuPaqGr1gOB/J68edktGjYG9QNFqEE5ANc2TCE/iN9jm9sgYwOQmVoDtH/Qq/4wXUTRx2S3dbvfEXYLYIxswI+hlo9g3hadY/2E1kaETvYliDZjG0jQHdb6iP6y7/1G+8A2i3hk2gEuW7Yas="
+
+
+before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
 # command to run tests
 script: 
   - gcc --version
   - mkdir build
   - cd build
   - cmake ..
-  - make
+  - make -j 4
 
 install:
 - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
-    - kalakris-cmake
+      - ubuntu-toolchain-r-test
+      - kalakris-cmake
     packages:
-    - gcc-4.9
-    - g++-4.9
-    - clang
-    - python-dev
-    - cmake
+      - gcc-4.9
+      - g++-4.9
+      - clang
+      - python-dev
+      - cmake
+
+  coverity_scan:
+    project:
+      name: "lovewinds/story-project"
+      description: "Story project"
+    notification_email: lovewinds.4i@gmail.com
+    build_command_prepend: "mkdir build && cd build && cmake .."
+    build_command:   "make -j 4"
+    branch_pattern: coverity_scan
