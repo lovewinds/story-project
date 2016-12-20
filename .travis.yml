@@ -18,6 +18,7 @@ before_install:
 # NOTE: 'make -j N' can affect sequential build. just use one worker.
 script: 
   - gcc --version
+  - rm -rf build
   - mkdir build
   - cd build
   - cmake ..
@@ -43,7 +44,6 @@ addons:
       name: "lovewinds/story-project"
       description: "Story project for static code verification"
     notification_email: lovewinds.4i@gmail.com
-    build_command_prepend: ""
-    build_command:   "mkdir build && cd build && cmake .. && make"
+    build_command_prepend: "rm -rf build && mkdir build && cd build"
+    build_command:  "cmake .. && make"
     branch_pattern: coverity_scan
-
