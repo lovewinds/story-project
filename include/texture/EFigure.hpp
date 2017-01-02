@@ -1,13 +1,13 @@
 #pragma once
-#include "texture/ETexture.hpp"
+#include "ETexture.hpp"
 
-class EDrawable : public ETexture
+class EFigure : public ETexture
 {
 public:
-	EDrawable();
-	EDrawable(int x, int y);
+	EFigure();
+	EFigure(int x, int y);
 
-	virtual ~EDrawable();
+	virtual ~EFigure();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
