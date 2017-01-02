@@ -4,11 +4,11 @@
 #include <memory>
 #include <vector>
 
-#include "ETexture.hpp"
+#include "EDrawable.hpp"
 
 class EImageResource;
 
-class ESprite : public ETexture
+class ESprite : public EDrawable
 {
 public:
 	ESprite(std::string name, std::string base_image, std::vector<SDL_Rect>& cells);

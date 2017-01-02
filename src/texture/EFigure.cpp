@@ -42,7 +42,7 @@ void EFigure::startAnimation()
 	animating = true;
 	startTime = SDL_GetTicks();
 
-	ETexture::startAnimation();
+	EDrawable::startAnimation();
 }
 
 void EFigure::stopAnimation()

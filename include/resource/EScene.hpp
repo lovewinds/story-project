@@ -93,5 +93,5 @@ protected:
 	std::map<std::string, std::shared_ptr<EFigure>> _drawable_map;
 
 	/* Not classified textures */
-	std::map<std::string, std::shared_ptr<ETexture>> _raw_texture_map;
+	std::map<std::string, std::shared_ptr<EDrawable>> _raw_texture_map;
 };

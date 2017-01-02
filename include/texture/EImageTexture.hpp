@@ -3,11 +3,11 @@
 #include <string>
 #include <cmath>
 
-#include "ETexture.hpp"
+#include "EDrawable.hpp"
 
 class EImageResource;
 
-class EImageTexture : public ETexture
+class EImageTexture : public EDrawable
 {
 public:
 	/* Initializes variables */

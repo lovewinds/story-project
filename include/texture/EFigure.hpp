@@ -1,7 +1,7 @@
 #pragma once
-#include "ETexture.hpp"
+#include "EDrawable.hpp"
 
-class EFigure : public ETexture
+class EFigure : public EDrawable
 {
 public:
 	EFigure();

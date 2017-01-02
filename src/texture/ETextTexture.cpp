@@ -6,7 +6,7 @@
 #include "util/LogHelper.hpp"
 
 ETextTexture::ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
- : ETexture()
+ : EDrawable()
 {
 	this->message = text;
 	this->bgColor = bgColor;

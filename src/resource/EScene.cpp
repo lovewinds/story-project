@@ -257,7 +257,7 @@ void EScene::update(Uint32 currentTime, Uint32 accumulator)
 		it.second->update(currentTime, accumulator);
 	}
 #if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
+	//std::list<EDrawable*>::iterator	iter = textureList.begin();
 	std::list<EFigure*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
 		EFigure* texture = *iter;

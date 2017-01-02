@@ -10,7 +10,7 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 EImageTexture::EImageTexture(std::string name, std::string base_image) :
-	ETexture(),
+	EDrawable(),
 	m_degrees(0.0),
 	wRatio(1.0), hRatio(1.0)
 {
@@ -21,7 +21,7 @@ EImageTexture::EImageTexture(std::string name, std::string base_image) :
 }
 
 EImageTexture::EImageTexture(int x, int y) :
-	ETexture(),
+	EDrawable(),
 	m_degrees(0.0),
 	wRatio(1.0), hRatio(1.0)
 {

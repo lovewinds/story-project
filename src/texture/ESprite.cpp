@@ -6,7 +6,7 @@
 #include "texture/ESprite.hpp"
 
 ESprite::ESprite(std::string _name, std::string _base_image, std::vector<SDL_Rect>& cells) :
-	ETexture()
+	EDrawable()
 {
 	sprite_index = 0;
 	sprite_change = 1;

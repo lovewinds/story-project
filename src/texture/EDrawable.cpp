@@ -1,8 +1,8 @@
 #include "Ecore.hpp"
-#include "texture/ETexture.hpp"
+#include "texture/EDrawable.hpp"
 #include "util/LogHelper.hpp"
 
-ETexture::ETexture() :
+EDrawable::EDrawable() :
 p_x(0), p_y(0)
 {
 	/* Initialize */
@@ -11,52 +11,52 @@ p_x(0), p_y(0)
 	mHeight = 0;
 }
 
-ETexture::~ETexture()
+EDrawable::~EDrawable()
 {
 	dealloc();
 }
 
-void ETexture::setBlendMode(SDL_BlendMode blending)
+void EDrawable::setBlendMode(SDL_BlendMode blending)
 {
 	/* Set blending function */
 	SDL_SetTextureBlendMode(mTexture->getTexture(), blending);
 }
 
-void ETexture::setAlpha(Uint8 alpha)
+void EDrawable::setAlpha(Uint8 alpha)
 {
 	/* Modulate texture alpha */
 	SDL_SetTextureAlphaMod(mTexture->getTexture(), alpha);
 }
 
-void ETexture::setColor(Uint8 red, Uint8 green, Uint8 blue)
+void EDrawable::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
 	/* Modulate texture rgb */
 	SDL_SetTextureColorMod(mTexture->getTexture(), red, green, blue);
 }
 
-void ETexture::movePositionTo(double x, double y)
+void EDrawable::movePositionTo(double x, double y)
 {
 	p_x = x;
 	p_y = y;
 }
 
-void ETexture::movePositionBy(double delta_x, double delta_y)
+void EDrawable::movePositionBy(double delta_x, double delta_y)
 {
 	p_x += delta_x;
 	p_y += delta_y;
 }
 
-void ETexture::setAnimation(std::shared_ptr<EAnimation> animation)
+void EDrawable::setAnimation(std::shared_ptr<EAnimation> animation)
 {
 	this->animation = animation;
 }
 
-std::shared_ptr<EAnimation> ETexture::getAnimation()
+std::shared_ptr<EAnimation> EDrawable::getAnimation()
 {
 	return animation;
 }
 
-AnimationState ETexture::getAnimationState()
+AnimationState EDrawable::getAnimationState()
 {
 	if (nullptr == animation)
 		return ANI_NONE;
@@ -64,35 +64,35 @@ AnimationState ETexture::getAnimationState()
 	return animation->getState();
 }
 
-void ETexture::startAnimation()
+void EDrawable::startAnimation()
 {
 	if (animation) {
 		animation->start();
 	}
 }
 
-void ETexture::stopAnimation()
+void EDrawable::stopAnimation()
 {
 	if (animation) {
 		animation->stop();
 	}
 }
 
-void ETexture::pauseAnimation()
+void EDrawable::pauseAnimation()
 {
 	if (animation) {
 		animation->pause();
 	}
 }
 
-void ETexture::resumeAnimation()
+void EDrawable::resumeAnimation()
 {
 	if (animation) {
 		animation->resume();
 	}
 }
 
-void ETexture::finishedAnimationCallback(double delta_x, double delta_y)
+void EDrawable::finishedAnimationCallback(double delta_x, double delta_y)
 {
 	LOG_DBG("Animation Finished. update position");
 	p_x += delta_x;
@@ -101,14 +101,14 @@ void ETexture::finishedAnimationCallback(double delta_x, double delta_y)
 	//animation = nullptr;
 }
 
-void ETexture::syncAnimationCallback(double delta_x, double delta_y)
+void EDrawable::syncAnimationCallback(double delta_x, double delta_y)
 {
 	LOG_DBG("update position");
 	p_x += delta_x;
 	p_y += delta_y;
 }
 
-void ETexture::dealloc()
+void EDrawable::dealloc()
 {
 	/* Free texture if it exists */
 	if (mTexture)
@@ -121,16 +121,16 @@ void ETexture::dealloc()
 	}
 }
 
-bool ETexture::allocate()
+bool EDrawable::allocate()
 {
 	return true;
 }
 
-void ETexture::deallocate()
+void EDrawable::deallocate()
 {
 }
 
-void ETexture::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -148,7 +148,7 @@ void ETexture::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Po
 	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }
 
-void ETexture::texture_render_resize(int x, int y, SDL_Rect* clip, double ratio_w, double ratio_h, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip, double ratio_w, double ratio_h, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 

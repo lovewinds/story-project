@@ -1,6 +1,6 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/ETexture.hpp"
+#include "texture/EDrawable.hpp"
 
 #include "texture/EAnimation.hpp"
 
@@ -38,14 +38,14 @@ void EAnimation::stop()
     startTime = 0;
     state = ANI_STOP;
 
-	std::shared_ptr<ETexture> t = caller.lock();
+	std::shared_ptr<EDrawable> t = caller.lock();
 	if (t)
 		t->finishedAnimationCallback(a_x, a_y);
 }
 
 void EAnimation::sync()
 {
-	std::shared_ptr<ETexture> t = caller.lock();
+	std::shared_ptr<EDrawable> t = caller.lock();
 	if (t)
 		t->syncAnimationCallback(a_x, a_y);
 }
@@ -68,7 +68,7 @@ AnimationState EAnimation::getState()
 	return state;
 }
 
-void EAnimation::setCaller(std::shared_ptr<ETexture> clr)
+void EAnimation::setCaller(std::shared_ptr<EDrawable> clr)
 {
 	/* Store weak_ptr to avoid circular reference */
 	caller = clr;
