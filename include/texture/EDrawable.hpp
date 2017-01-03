@@ -6,11 +6,11 @@
 #include "util/SDLWrap.hpp"
 #include "texture/EAnimation.hpp"
 
-class ETexture
+class EDrawable
 {
 public:
-	ETexture();
-	virtual ~ETexture();
+	EDrawable();
+	virtual ~EDrawable();
 
 	virtual bool allocate();
 	virtual void deallocate();

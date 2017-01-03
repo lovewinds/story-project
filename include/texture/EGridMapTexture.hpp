@@ -4,11 +4,11 @@
 #include <cmath>
 #include <vector>
 
-#include "ETexture.hpp"
+#include "EDrawable.hpp"
 
 class EImageResource;
 
-class EGridMapTexture : public ETexture
+class EGridMapTexture : public EDrawable
 {
 public:
 	/* Initializes variables */

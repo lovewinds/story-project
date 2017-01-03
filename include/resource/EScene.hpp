@@ -9,7 +9,7 @@
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EAnimation.hpp"
-#include "texture/drawable/EDrawable.hpp"
+#include "texture/EFigure.hpp"
 
 /* TODO: Inherit serializable class */
 /*
@@ -90,8 +90,8 @@ protected:
 
 	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 
-	std::map<std::string, std::shared_ptr<EDrawable>> _drawable_map;
+	std::map<std::string, std::shared_ptr<EFigure>> _drawable_map;
 
 	/* Not classified textures */
-	std::map<std::string, std::shared_ptr<ETexture>> _raw_texture_map;
+	std::map<std::string, std::shared_ptr<EDrawable>> _raw_texture_map;
 };

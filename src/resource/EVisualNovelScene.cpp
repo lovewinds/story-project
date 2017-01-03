@@ -3,7 +3,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
-#include "texture/drawable/EDrawable.hpp"
+#include "texture/EFigure.hpp"
 #include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
 
@@ -20,7 +20,7 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	int width = 0, height = 0;
 
-	std::shared_ptr<EDrawable> dr(new EDrawable(100, 100));
+	std::shared_ptr<EFigure> dr(new EFigure(100, 100));
 	auto result = _drawable_map.emplace("Talkbox", dr);
 	if (!result.second) {
 		LOG_ERR("Failed to insert Drawable !");

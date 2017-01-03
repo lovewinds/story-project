@@ -3,7 +3,7 @@
 #include <SDL_syswm.h>
 
 #include "Ecore.hpp"
-#include "texture/ETexture.hpp"
+#include "texture/EDrawable.hpp"
 #include "EScreenManager.hpp"
 #include "resource/EResourceManager.hpp"
 

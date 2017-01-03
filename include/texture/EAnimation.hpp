@@ -3,7 +3,7 @@
 #include <SDL.h>
 
 /* Avoid circular reference */
-class ETexture;
+class EDrawable;
 
 enum AnimationState
 {
@@ -30,7 +30,7 @@ public:
     double getY();
 	AnimationState getState();
 
-	void setCaller(std::shared_ptr<ETexture> caller);
+	void setCaller(std::shared_ptr<EDrawable> caller);
 
     virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
@@ -41,9 +41,9 @@ protected:
 
 	/* This model only supports one callback at one time. */
 	/* TODO: Use callback list */
-	//std::weak_ptr<ETexture> caller;
+	//std::weak_ptr<EDrawable> caller;
 
-	std::weak_ptr<ETexture> caller;
+	std::weak_ptr<EDrawable> caller;
 
 	/* Position */
 	double a_x;

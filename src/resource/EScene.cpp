@@ -216,14 +216,14 @@ void EScene::render()
 		it.second->render();
 	}
 #if 0
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
+	std::list<EFigure*>::iterator	iter = textureList.begin();
 	Uint32 current = SDL_GetTicks();
 
 	/* TODO: Handle this texture same with others */
 	background->render();
 
 	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
+		EFigure* texture = *iter;
 		if (texture != NULL) {
 			texture->render();
 			//LOG_INFO("List Texture(%p) rendered !", texture);
@@ -257,10 +257,10 @@ void EScene::update(Uint32 currentTime, Uint32 accumulator)
 		it.second->update(currentTime, accumulator);
 	}
 #if 0
-	//std::list<ETexture*>::iterator	iter = textureList.begin();
-	std::list<EDrawable*>::iterator	iter = textureList.begin();
+	//std::list<EDrawable*>::iterator	iter = textureList.begin();
+	std::list<EFigure*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
-		EDrawable* texture = *iter;
+		EFigure* texture = *iter;
 		if (texture != NULL) {
 			//texture->calculate(currentTime, accumulator);
 			texture->update(currentTime, accumulator);

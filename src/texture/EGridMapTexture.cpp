@@ -9,7 +9,7 @@
 #define T2	327
 
 EGridMapTexture::EGridMapTexture(std::string name, std::string base_image) :
-	ETexture()
+	EDrawable()
 {
 	this->name = name;
 	this->base_image = base_image;

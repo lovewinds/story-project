@@ -4,9 +4,9 @@
 
 #include <SDL.h>
 
-#include "ETexture.hpp"
+#include "EDrawable.hpp"
 
-class ETextTexture : public ETexture
+class ETextTexture : public EDrawable
 {
 public:
 	ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
