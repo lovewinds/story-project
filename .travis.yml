@@ -31,8 +31,8 @@ addons:
       name: "lovewinds/story-project"
       description: "Story project for static code verification"
     notification_email: lovewinds.4i@gmail.com
-    build_command_prepend: "rm -rf build && mkdir build && cd build"
-    build_command:  "pwd && ls -la && cmake .. && make"
+    build_command_prepend: "pwd ; rm -rf build ; mkdir build ; cd build"
+    build_command:  "pwd ; ls -la ; cmake .. ; make"
     branch_pattern: coverity_scan
 
 # command to run tests
