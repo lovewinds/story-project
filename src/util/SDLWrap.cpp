@@ -5,22 +5,22 @@
 #include "util/LogHelper.hpp"
 
 
-SDL_Surface_Wrap::SDL_Surface_Wrap(const SDL_Surface_Wrap& other)
+SDLSurfaceWrap::SDLSurfaceWrap(const SDLSurfaceWrap& other)
 : surface(nullptr)
 {
-	SDL_Surface_Wrap& managed = const_cast<SDL_Surface_Wrap&>(other);
+	SDLSurfaceWrap& managed = const_cast<SDLSurfaceWrap&>(other);
 	surface = managed.surface;
 	managed.surface = nullptr;
 }
 
-SDL_Surface_Wrap::SDL_Surface_Wrap(SDL_Surface *_surf)
+SDLSurfaceWrap::SDLSurfaceWrap(SDL_Surface *_surf)
 : surface(nullptr)
 {
 	if (_surf)
 		surface = _surf;
 }
 
-SDL_Surface_Wrap::SDL_Surface_Wrap(std::string path)
+SDLSurfaceWrap::SDLSurfaceWrap(std::string path)
 : surface(nullptr)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
@@ -42,7 +42,7 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::string path)
 	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0xFF, 0xFF));
 }
 
-SDL_Surface_Wrap::SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+SDLSurfaceWrap::SDLSurfaceWrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
 : surface(nullptr)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
@@ -65,7 +65,7 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Co
 	}
 }
 
-SDL_Surface_Wrap::SDL_Surface_Wrap(std::vector<std::vector<short> > map)
+SDLSurfaceWrap::SDLSurfaceWrap(std::vector<std::vector<short> > map)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 	Uint32 rmask, gmask, bmask, amask;
@@ -83,7 +83,7 @@ SDL_Surface_Wrap::SDL_Surface_Wrap(std::vector<std::vector<short> > map)
 	}
 }
 
-SDL_Surface_Wrap::~SDL_Surface_Wrap()
+SDLSurfaceWrap::~SDLSurfaceWrap()
 {
 	if (surface) {
 		/* Deallocate loaded surface */
@@ -92,7 +92,7 @@ SDL_Surface_Wrap::~SDL_Surface_Wrap()
 	}
 }
 
-SDL_Surface_Wrap& SDL_Surface_Wrap::operator=(SDL_Surface_Wrap&& other)
+SDLSurfaceWrap& SDLSurfaceWrap::operator=(SDLSurfaceWrap&& other)
 {
 	if (&other == this)
 		return *this;
@@ -103,7 +103,7 @@ SDL_Surface_Wrap& SDL_Surface_Wrap::operator=(SDL_Surface_Wrap&& other)
 	return *this;
 }
 
-SDL_Surface* SDL_Surface_Wrap::getSurface()
+SDL_Surface* SDLSurfaceWrap::getSurface()
 {
 	return surface;
 }
@@ -112,10 +112,10 @@ SDL_Surface* SDL_Surface_Wrap::getSurface()
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// SDL_Texture_Wrap
+// SDLTextureWrap
 //
 ///////////////////////////////////////////////////////////////////////////////
-bool SDL_Texture_Wrap::createFromSurface(SDL_Surface *surface)
+bool SDLTextureWrap::createFromSurface(SDL_Surface *surface)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -135,7 +135,7 @@ bool SDL_Texture_Wrap::createFromSurface(SDL_Surface *surface)
 	return true;
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture *_texture)
+SDLTextureWrap::SDLTextureWrap(SDL_Texture *_texture)
 : texture(nullptr)
 {
 	if (_texture)
@@ -143,16 +143,16 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture *_texture)
 	LOG_DBG("    SDL_Texture created");
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Surface *surface)
+SDLTextureWrap::SDLTextureWrap(SDL_Surface *surface)
 : texture(nullptr)
 {
 	createFromSurface(surface);
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(std::string path)
+SDLTextureWrap::SDLTextureWrap(std::string path)
 : texture(nullptr)
 {
-	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(path));
+	std::shared_ptr<SDLSurfaceWrap> surf(new SDLSurfaceWrap(path));
 
 	if (surf) {
 		createFromSurface(surf->getSurface());
@@ -161,10 +161,10 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(std::string path)
 	}
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+SDLTextureWrap::SDLTextureWrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
 : texture(nullptr)
 {
-	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(text, textColor, bgColor));
+	std::shared_ptr<SDLSurfaceWrap> surf(new SDLSurfaceWrap(text, textColor, bgColor));
 
 	if (surf) {
 		createFromSurface(surf->getSurface());
@@ -173,10 +173,10 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Co
 	}
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(std::vector<std::vector<short> > map)
+SDLTextureWrap::SDLTextureWrap(std::vector<std::vector<short> > map)
 : texture(nullptr)
 {
-	std::shared_ptr<SDL_Surface_Wrap> surf(new SDL_Surface_Wrap(map));
+	std::shared_ptr<SDLSurfaceWrap> surf(new SDLSurfaceWrap(map));
 
 	if (surf) {
 		if (createFromSurface(surf->getSurface()))
@@ -195,20 +195,20 @@ SDL_Texture_Wrap::SDL_Texture_Wrap(std::vector<std::vector<short> > map)
 	}
 }
 #if 0
-SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture_Wrap&& t) : texture(t.texture)
+SDLTextureWrap::SDLTextureWrap(SDLTextureWrap&& t) : texture(t.texture)
 {
 	LOG_ERR("Move constructor");
 	t.texture = nullptr;
 }
 
-SDL_Texture_Wrap::SDL_Texture_Wrap(SDL_Texture_Wrap& other)
+SDLTextureWrap::SDLTextureWrap(SDLTextureWrap& other)
 {
 	LOG_ERR("const Copy constructor");
 	texture = other.texture;
 	other.texture = nullptr;
 }
 
-SDL_Texture_Wrap& SDL_Texture_Wrap::operator=(SDL_Texture_Wrap&& other)
+SDLTextureWrap& SDLTextureWrap::operator=(SDLTextureWrap&& other)
 {
 	LOG_ERR("allocate constructor");
 	if (&other == this)
@@ -220,7 +220,7 @@ SDL_Texture_Wrap& SDL_Texture_Wrap::operator=(SDL_Texture_Wrap&& other)
 	return *this;
 }
 #endif
-SDL_Texture_Wrap::~SDL_Texture_Wrap()
+SDLTextureWrap::~SDLTextureWrap()
 {
 	if (texture != nullptr) {
 		/* Deallocate texture */
@@ -230,17 +230,17 @@ SDL_Texture_Wrap::~SDL_Texture_Wrap()
 	}
 }
 
-SDL_Texture* SDL_Texture_Wrap::getTexture()
+SDL_Texture* SDLTextureWrap::getTexture()
 {
 	return texture;
 }
 
-int SDL_Texture_Wrap::getWidth()
+int SDLTextureWrap::getWidth()
 {
 	return width;
 }
 
-int SDL_Texture_Wrap::getHeight()
+int SDLTextureWrap::getHeight()
 {
 	return height;
 }

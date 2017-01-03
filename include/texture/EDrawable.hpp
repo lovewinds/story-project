@@ -47,7 +47,7 @@ public:
 
 protected:
 	/* The actual SDL texture */
-	std::shared_ptr<SDL_Texture_Wrap> mTexture;
+	std::shared_ptr<SDLTextureWrap> mTexture;
 
 	/* Position */
 	double p_x;

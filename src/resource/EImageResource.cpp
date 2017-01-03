@@ -45,7 +45,7 @@ unsigned int EImageResource::getHeight() const
 	return height;
 }
 
-std::shared_ptr<SDL_Texture_Wrap> EImageResource::getTexture()
+std::shared_ptr<SDLTextureWrap> EImageResource::getTexture()
 {
 	if (texture == nullptr) {
 		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();

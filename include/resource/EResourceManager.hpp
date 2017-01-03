@@ -73,19 +73,19 @@ public:
 /*
  * Text texture Functions
  */
-	std::shared_ptr<SDL_Texture_Wrap>
+	std::shared_ptr<SDLTextureWrap>
 	allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
 
 /*
  * Grid texture map
  */
- 	std::shared_ptr<SDL_Texture_Wrap>
+ 	std::shared_ptr<SDLTextureWrap>
 	allocateGridMapTexture(std::vector<std::vector<short> > map);
 
 /*
  * Texture Functions
  */
-	std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);
+	std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
 
 	void releaseTexture(std::string path);
 
@@ -113,5 +113,5 @@ protected:
 	/* Texture map for cache
 	 *   These textures are already allocated on video memory.
 	 */
-	std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>> _texture_map;
+	std::unordered_map<std::string, std::shared_ptr<SDLTextureWrap>> _texture_map;
 };

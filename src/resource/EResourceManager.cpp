@@ -151,22 +151,22 @@ bool EResourceManager::deallocateScene(std::string scene_name)
 	return true;
 }
 
-std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string path)
+std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string path)
 {
 #if 0
-	std::shared_ptr<SDL_Texture_Wrap> result;
+	std::shared_ptr<SDLTextureWrap> result;
 	if (currentScene)
 		result = currentScene->allocateTexture(path);
 #endif
-	std::shared_ptr<SDL_Texture_Wrap> result;
+	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
 
 	if (found == _texture_map.end()) {
 		/* Texture is not exist. allocate one */
-		std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(path));
+		std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(path));
 		if (texture) {
 			//auto insert = _texture_map.emplace(path, texture);
-			std::pair<std::string, std::shared_ptr<SDL_Texture_Wrap>> p(path, texture);
+			std::pair<std::string, std::shared_ptr<SDLTextureWrap>> p(path, texture);
 			auto insert = _texture_map.insert(p);
 			//auto insert = texture_map.insert(path, texture);
 			if (insert.second) {
@@ -193,18 +193,18 @@ std::shared_ptr<SDL_Texture_Wrap> EResourceManager::allocateTexture(std::string 
 	return result;
 }
 
-std::shared_ptr<SDL_Texture_Wrap>
+std::shared_ptr<SDLTextureWrap>
 EResourceManager::allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
 {
-	std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(text, textColor, bgColor));
+	std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(text, textColor, bgColor));
 	LOG_ERR("[ResMgr] texture [%p]", &texture);
 	return texture;
 }
 
-std::shared_ptr<SDL_Texture_Wrap>
+std::shared_ptr<SDLTextureWrap>
 EResourceManager::allocateGridMapTexture(std::vector<std::vector<short> > map)
 {
-	std::shared_ptr<SDL_Texture_Wrap> texture(new SDL_Texture_Wrap(map));
+	std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(map));
 	LOG_ERR("[ResMgr] texture [%p]", &texture);
 	return texture;
 }
@@ -216,7 +216,7 @@ void EResourceManager::releaseTexture(std::string path)
 	if (_texture_map.empty())
 		return;
 
-	std::shared_ptr<SDL_Texture_Wrap> result;
+	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
 
 	if (found != _texture_map.end()) {

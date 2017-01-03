@@ -50,7 +50,7 @@ public:
 	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
 
 	/* Resource manager allocates image resource */
-	//std::shared_ptr<SDL_Texture_Wrap> allocateTexture(std::string path);
+	//std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
 	//void releaseTexture(std::string path);
 
 	bool allocate();
@@ -62,7 +62,7 @@ public:
 
 	/* Export read-only resources */
 	const std::map<std::string, std::shared_ptr<ESprite>>& sprite_map;
-//	const std::unordered_map<std::string, std::shared_ptr<SDL_Texture_Wrap>>& texture_map;
+//	const std::unordered_map<std::string, std::shared_ptr<SDLTextureWrap>>& texture_map;
 
 protected:
 	EScene();

@@ -21,7 +21,7 @@ public:
 	unsigned int getWidth() const;
 	unsigned int getHeight() const;
 
-	std::shared_ptr<SDL_Texture_Wrap>	getTexture();
+	std::shared_ptr<SDLTextureWrap>	getTexture();
 	void releaseTexture();
 
 protected:
@@ -29,5 +29,5 @@ protected:
 	std::string path;
 	unsigned int width;
 	unsigned int height;
-	std::shared_ptr<SDL_Texture_Wrap>	texture;
+	std::shared_ptr<SDLTextureWrap>	texture;
 };

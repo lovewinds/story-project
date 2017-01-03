@@ -4,16 +4,16 @@
 #include <vector>
 #include <SDL.h>
 
-class SDL_Surface_Wrap
+class SDLSurfaceWrap
 {
 public:
-	SDL_Surface_Wrap(const SDL_Surface_Wrap&);
-	SDL_Surface_Wrap(SDL_Surface *);
-	SDL_Surface_Wrap(std::string path);
-	SDL_Surface_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
-	SDL_Surface_Wrap(std::vector<std::vector<short> > gridMap);
-	virtual ~SDL_Surface_Wrap();
-	SDL_Surface_Wrap& operator=(SDL_Surface_Wrap&& other);
+	SDLSurfaceWrap(const SDLSurfaceWrap&);
+	SDLSurfaceWrap(SDL_Surface *);
+	SDLSurfaceWrap(std::string path);
+	SDLSurfaceWrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	SDLSurfaceWrap(std::vector<std::vector<short> > gridMap);
+	virtual ~SDLSurfaceWrap();
+	SDLSurfaceWrap& operator=(SDLSurfaceWrap&& other);
 
 	SDL_Surface* getSurface();
 
@@ -21,23 +21,23 @@ protected:
 	SDL_Surface* surface;
 };
 
-class SDL_Texture_Wrap
+class SDLTextureWrap
 {
 public:
-	SDL_Texture_Wrap(SDL_Texture *);
-	SDL_Texture_Wrap(SDL_Surface *);
-	SDL_Texture_Wrap(std::string path);
-	SDL_Texture_Wrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
-	SDL_Texture_Wrap(std::vector<std::vector<short> > gridMap);
-	virtual ~SDL_Texture_Wrap();
+	SDLTextureWrap(SDL_Texture *);
+	SDLTextureWrap(SDL_Surface *);
+	SDLTextureWrap(std::string path);
+	SDLTextureWrap(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	SDLTextureWrap(std::vector<std::vector<short> > gridMap);
+	virtual ~SDLTextureWrap();
 
-	SDL_Texture_Wrap(SDL_Texture_Wrap&) = delete;
-	/*SDL_Texture_Wrap(const SDL_Texture_Wrap& other) = delete;*/
-	SDL_Texture_Wrap(SDL_Texture_Wrap&& t) = delete;
+	SDLTextureWrap(SDLTextureWrap&) = delete;
+	/*SDLTextureWrap(const SDLTextureWrap& other) = delete;*/
+	SDLTextureWrap(SDLTextureWrap&& t) = delete;
 
-	SDL_Texture_Wrap operator=(SDL_Texture_Wrap** t) = delete;
-	SDL_Texture_Wrap& operator=(SDL_Texture_Wrap&& other) = delete;
-	SDL_Texture_Wrap& operator=(const SDL_Texture_Wrap& other) = delete;
+	SDLTextureWrap operator=(SDLTextureWrap** t) = delete;
+	SDLTextureWrap& operator=(SDLTextureWrap&& other) = delete;
+	SDLTextureWrap& operator=(const SDLTextureWrap& other) = delete;
 
 	SDL_Texture* getTexture();
 	int getWidth();
