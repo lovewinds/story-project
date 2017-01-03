@@ -14,19 +14,6 @@ env:
 before_install:
   - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
-# command to run tests
-# NOTE: 'make -j N' can affect sequential build. just use one worker.
-script: 
-  - gcc --version
-  - rm -rf build
-  - mkdir build
-  - cd build
-  - cmake ..
-  - make
-
-install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-
 addons:
   apt:
     sources:
@@ -44,6 +31,16 @@ addons:
       name: "lovewinds/story-project"
       description: "Story project for static code verification"
     notification_email: lovewinds.4i@gmail.com
-    build_command_prepend: "rm -rf build && mkdir build && cd build"
-    build_command:  "cmake .. && make"
+    build_command_prepend: "cov-configure --comptype gcc --compiler gcc-4.9 --template ; rm -rf build ; mkdir build ; cd build ; cmake .."
+    build_command:  "make"
     branch_pattern: coverity_scan
+
+# command to run tests
+# NOTE: 'make -j N' can affect sequential build. just use one worker.
+script: 
+  - mkdir -p build
+  - cd build
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake .. && make ; fi
+
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
