@@ -3,6 +3,7 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
+#include "resource/ESceneDesc.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
@@ -33,6 +34,77 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 	/* TODO: Foreach for all scenes */
 	try {
 		std::stringstream s;
+
+		/* Load Global image resources */
+		s.str(std::string());
+		s.clear();
+		s << "/SceneRoot/GlobalResources/ImageResourceGroup/ImageResource";
+		std::string img_path = s.str();
+		pugi::xpath_node_set sel = doc.select_nodes(img_path.c_str());
+		for (pugi::xpath_node_set::const_iterator it = sel.begin(); it != sel.end(); ++it) {
+			pugi::xpath_node node = *it;
+			std::string name(node.node().attribute("name").value());
+			std::string image(node.node().attribute("path").value());
+			std::string width(node.node().attribute("width").value());
+			std::string height(node.node().attribute("height").value());
+			unsigned int _width = 0;
+			unsigned int _height = 0;
+			try {
+				_width = std::stoi(width);
+				_height = std::stoi(height);
+			}
+			catch (std::exception &e) {
+				LOG_ERR("%s", e.what());
+				LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
+				continue;
+			}
+			resManager->createImageResource(name, image, _width, _height);
+		}
+
+		/* Load SpriteType Templete */
+		//"/SceneRoot/Scene/Resources/Sprites/Sprite/Index[text()<5]/..");
+		s.str(std::string());
+		s.clear();
+		s << "/SceneRoot/GlobalResources/SpriteTypeGroup/SpriteType";
+		std::string sprite_path = s.str();
+		pugi::xpath_node_set spr = doc.select_nodes(sprite_path.c_str());
+		LOG_INFO("[%lu] SpriteTypes:", spr.size());
+		for (pugi::xpath_node_set::const_iterator it = spr.begin(); it != spr.end(); ++it) {
+			pugi::xpath_node node = *it;
+			std::string name(node.node().attribute("name").value());
+			std::string source(node.node().attribute("source").value());
+			std::string width(node.node().attribute("width").value());
+			std::string height(node.node().attribute("height").value());
+			unsigned int _width = 0;
+			unsigned int _height = 0;
+			try {
+				_width = std::stoi(width);
+				_height = std::stoi(height);
+			}
+			catch (std::exception &e) {
+				LOG_ERR("%s", e.what());
+				LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
+				continue;
+			}
+
+			std::shared_ptr<ESpriteType> spriteType(new ESpriteType(name, source));
+			bool res = spriteType->setCellInfo(_width, _height);
+			if (false == res) {
+				LOG_ERR("Failed to initiate SpriteType");
+				continue;
+			}
+			for (pugi::xml_node idx : node.node().children())
+			{
+				std::string idxNumber(idx.text().get());
+				if (idxNumber.empty()) continue;
+				int val = atoi(idxNumber.c_str());
+				LOG_DBG("   Index : %s", idxNumber.c_str());
+				spriteType->appendSpriteCell(val);
+			}
+			resManager->createSpriteType(spriteType);
+		}
+
+		/* Load scene-specific resources */
 		//pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene[@name='main']");
 		pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene");
 		for (pugi::xpath_node_set::const_iterator it = scene_sel.begin(); it != scene_sel.end(); ++it) {
@@ -48,76 +120,6 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			if (nullptr == scene) {
 				LOG_ERR("Failed to create scene");
 				continue;
-			}
-
-			/* Load scene-specific image resources */
-			s.str(std::string());
-			s.clear();
-			s << "/SceneRoot/Scene[@name='" << scene_name << "']/Resources/Images/Image";
-			std::string img_path = s.str();
-			pugi::xpath_node_set sel = doc.select_nodes(img_path.c_str());
-			for (pugi::xpath_node_set::const_iterator it = sel.begin(); it != sel.end(); ++it) {
-				pugi::xpath_node node = *it;
-				std::string name(node.node().attribute("name").value());
-				std::string image(node.node().attribute("src").value());
-				std::string width(node.node().attribute("width").value());
-				std::string height(node.node().attribute("height").value());
-				unsigned int _width = 0;
-				unsigned int _height = 0;
-				try {
-					_width = std::stoi(width);
-					_height = std::stoi(height);
-				}
-				catch (std::exception &e) {
-					LOG_ERR("%s", e.what());
-					LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
-					continue;
-				}
-				resManager->createImageResource(name, image, _width, _height);
-			}
-
-			/* TODO: Create sprite information instances */
-			/* Examples: sprite selection */
-			//"/SceneRoot/Scene/Resources/Sprites/Sprite/Index[text()<5]/..");
-			s.str(std::string());
-			s.clear();
-			s << "/SceneRoot/Scene[@name='" << scene_name << "']/Resources/Sprites/Sprite";
-			std::string sprite_path = s.str();
-			pugi::xpath_node_set spr = doc.select_nodes(sprite_path.c_str());
-			LOG_INFO("[%lu] Sprites:", spr.size());
-			for (pugi::xpath_node_set::const_iterator it = spr.begin(); it != spr.end(); ++it) {
-				pugi::xpath_node node = *it;
-				std::string name(node.node().attribute("name").value());
-				std::string source(node.node().attribute("source").value());
-				std::string width(node.node().attribute("width").value());
-				std::string height(node.node().attribute("height").value());
-				unsigned int _width = 0;
-				unsigned int _height = 0;
-				try {
-					_width = std::stoi(width);
-					_height = std::stoi(height);
-				}
-				catch (std::exception &e) {
-					LOG_ERR("%s", e.what());
-					LOG_ERR("   Invalid width/height [%s / %s]", width.c_str(), height.c_str());
-					continue;
-				}
-
-				std::shared_ptr<ESpriteType> spriteType(new ESpriteType(name, source));
-				bool res = spriteType->setCellInfo(_width, _height);
-				if (false == res) {
-					LOG_ERR("Failed to initiate Sprite Type");
-					continue;
-				}
-				for (pugi::xml_node idx : node.node().children())
-				{
-					std::string idxNumber(idx.text().get());
-					if (idxNumber.empty()) continue;
-					int val = atoi(idxNumber.c_str());
-					LOG_DBG("   Index : %s", idxNumber.c_str());
-					spriteType->appendSpriteCell(val);
-				}
-				resManager->createSpriteType(spriteType);
 			}
 
 			/* Load all scene layers */
@@ -175,6 +177,11 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 						LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
 					}
 					idx++;
+
+					/* New way */
+					std::shared_ptr<ESpriteDesc> spriteDesc(
+						new ESpriteDesc(itm_name, itm_source, p_x, p_y)
+					);
 				}
 				else if (itm_node.compare("Image") == 0) {
 					/* Image instance */

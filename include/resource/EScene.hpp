@@ -11,21 +11,6 @@
 #include "texture/EAnimation.hpp"
 #include "texture/EFigure.hpp"
 
-/* TODO: Inherit serializable class */
-/*
- * This class stores only resource information for actual allocation.
- * All of these ~~Info classes are stored in ResourceManager.
- * When scene is changed, SceneManager allocates actual Scene instance
- * with this SceneInfo instance on ResourceManager.
- */
-
-enum ESceneType
-{
-	SCENE_RPG = 0,
-	SCENE_VISUAL_NOVEL,
-	SCENE_DEBUG,
-};
-
 /* Scene
  *
  * This class indicates specific scene on screen.

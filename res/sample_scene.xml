@@ -1,42 +1,43 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
-	<GlobalResources type="global"></GlobalResources>
+	<GlobalResources type="global">
+		<ImageResourceGroup>
+			<ImageResource path="japanvillage.jpg" name="Background"
+					type="background" width="636" height="475"/>
+			<ImageResource path="moderngirl02.png" name="Character"
+					type="sprite" width="128" height="192"/>
+			<ImageResource path="gom-sprite.png" name="Gom"
+					type="sprite" width="256" height="64"/>
+			<ImageResource path="JapaneseVillage.png" name="MapTile"
+					type="background" width="256" height="1312"/>
+			<ImageResource path="f071.png" name="Standing"
+					type="background" width="600" height="800"/>
+		</ImageResourceGroup>
+		<SpriteTypeGroup>
+			<SpriteType source="Character" name="loading_circle" width="32" height="48">
+				<Index linear="start">1</Index>
+				<Index>2</Index>
+				<Index>3</Index>
+				<Index>4</Index>
+				<Index>5</Index>
+				<Index>6</Index>
+				<Index>7</Index>
+				<Index>8</Index>
+				<Index>9</Index>
+				<Index>10</Index>
+				<Index>11</Index>
+				<Index linear="end">12</Index>
+			</SpriteType>
+			<SpriteType source="Gom" name="sleeping_gom" width="64" height="64">
+				<Index linear="start">1</Index>
+				<Index>2</Index>
+				<Index>3</Index>
+				<Index linear="end">4</Index>
+			</SpriteType>
+		</SpriteTypeGroup>
+	</GlobalResources>
 	<Scene name="main" class="RPG">
-		<Resources>
-			<Images>
-				<Image src="japanvillage.jpg" name="Background"
-					 type="background" width="636" height="475"/>
-				<Image src="moderngirl02.png" name="Character"
-					 type="sprite" width="128" height="192"/>
-				<Image src="gom-sprite.png" name="Gom"
-					 type="sprite" width="256" height="64"/>
-				<Image src="JapaneseVillage.png" name="MapTile"
-					 type="background" width="256" height="1312"/>
-			</Images>
-			<Sprites>
-				<Sprite source="Character" name="loading_circle" width="32" height="48">
-					<Index linear="start">1</Index>
-					<Index>2</Index>
-					<Index>3</Index>
-					<Index>4</Index>
-					<Index>5</Index>
-					<Index>6</Index>
-					<Index>7</Index>
-					<Index>8</Index>
-					<Index>9</Index>
-					<Index>10</Index>
-					<Index>11</Index>
-					<Index linear="end">12</Index>
-				</Sprite>
-				<Sprite source="Gom" name="sleeping_gom" width="64" height="64">
-					<Index linear="start">1</Index>
-					<Index>2</Index>
-					<Index>3</Index>
-					<Index linear="end">4</Index>
-				</Sprite>
-			</Sprites>
-		</Resources>
-		<Layer name="base">
+		<Layer name="base" depth="1">
 			<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
 			<Sprite name="c1" source="loading_circle" x="0" y="256" />
 			<Sprite name="g1" source="sleeping_gom" x="128" y="128" />
@@ -44,13 +45,7 @@
 		</Layer>
 	</Scene>
 	<Scene name="vnovel" class="VNovel">
-		<Resources>
-			<Images>
-				<Image src="f071.png" name="Standing"
-					 type="background" width="600" height="800"/>
-			</Images>
-		</Resources>
-		<Layer name="talk">
+		<Layer name="talk" depth="1">
 			<Image name="char" source="Standing" x="240" y="0" width="50%" height="50%"/>
 		</Layer>
 	</Scene>

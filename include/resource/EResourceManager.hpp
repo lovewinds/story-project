@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "resource/EScene.hpp"
+#include "resource/ESceneDesc.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"
@@ -27,9 +28,19 @@ public:
 /*
  * Scene Functions
  */
+	/* Create scene descriptor with given parameters */
+	std::shared_ptr<EScene> addSceneDesc(ESceneType type, std::string scene_name);
+
+	/* Register Scene descriptor into ResourceManager */
+	bool registerScene(ESceneType type, std::string scene_name);
+
+/* Deprecated */
+#if 1
 	/* Create scene with name and ready for allocation */
 	std::shared_ptr<EScene> createScene(ESceneType type, std::string scene_name);
 	std::shared_ptr<EScene> getScene(std::string scene_name);
+#endif
+/* Deprecated */
 
 	/* Allocate specific scene and related resource(i.e. sprites) into memory */
 	bool allocateScene(std::string scene_name);
