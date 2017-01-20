@@ -13,6 +13,26 @@ ESpriteDesc::ESpriteDesc(std::string name, std::string sourceType, int x, int y)
 	this->pos_y = y;
 }
 
+std::string ESpriteDesc::getName()
+{
+	return name;
+}
+
+std::string ESpriteDesc::getType()
+{
+	return name;
+}
+
+int ESpriteDesc::getX()
+{
+	return pos_x;
+}
+
+int ESpriteDesc::getY()
+{
+	return pos_y;
+}
+
 EImageDesc::EImageDesc(std::string name, std::string sourceType, int x, int y)
 {
 	this->name = name;
@@ -41,31 +61,67 @@ void EImageDesc::setHeightRatio(double height)
 	this->height_ratio = height;
 }
 
+std::string EImageDesc::getName()
+{
+	return name;
+}
+
+std::string EImageDesc::getType()
+{
+	return name;
+}
+
+int EImageDesc::getX()
+{
+	return pos_x;
+}
+
+int EImageDesc::getY()
+{
+	return pos_y;
+}
+
 /**
  * ESceneLayerDesc class
  */
 
-ESceneLayerDesc::ESceneLayerDesc(std::string name)
+ESceneLayerDesc::ESceneLayerDesc(std::string name) :
+	sprite_list(_sprite_list),
+	image_list(_image_list)
 {
 	this->name = name;
 }
 
-bool ESceneLayerDesc::addSpriteDesc(std::string name, std::string sourceResource,
-		int x, int y)
+void ESceneLayerDesc::addSpriteDesc(std::shared_ptr<ESpriteDesc> desc)
 {
-	std::shared_ptr<ESpriteDesc> desc
-		 = std::shared_ptr<ESpriteDesc>(new ESpriteDesc(name, sourceResource, x, y));
-
-	sprite_list.push_back(desc);
+	if (nullptr != desc)
+		_sprite_list.push_back(desc);
 }
 
-bool ESceneLayerDesc::addImageDesc(std::string name, std::string sourceResource,
-			int x, int y,
-			int width, int height,
-			int width_percent, int height_percent)
+void ESceneLayerDesc::addImageDesc(std::shared_ptr<EImageDesc> desc)
 {
-	std::shared_ptr<ESpriteDesc> desc
-		 = std::shared_ptr<ESpriteDesc>(new ESpriteDesc(name, sourceResource, x, y));
+	if (nullptr != desc)
+		_image_list.push_back(desc);
+}
 
-	sprite_list.push_back(desc);
+/**
+ * ESceneDesc class
+ */
+
+ESceneDesc::ESceneDesc(std::string name, ESceneType type)
+: layer_list(_layer_list)
+{
+	this->name = name;
+	this->type = type;
+}
+
+void ESceneDesc::appendLayerDesc(std::shared_ptr<ESceneLayerDesc> layer)
+{
+	if (nullptr != layer)
+		_layer_list.push_back(layer);
+}
+
+ESceneType ESceneDesc::getType()
+{
+	return type;
 }

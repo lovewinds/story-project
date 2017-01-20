@@ -33,6 +33,11 @@ class ESpriteDesc
 public:
 	ESpriteDesc(std::string name, std::string sourceType, int x, int y);
 
+	std::string getName();
+	std::string getType();
+	int getX();
+	int getY();
+
 protected:
 	std::string name;
 	std::string type;
@@ -50,6 +55,11 @@ public:
 	void setWidthRatio(double width);
 	void setHeightRatio(double height);
 
+	std::string getName();
+	std::string getType();
+	int getX();
+	int getY();
+
 protected:
 	std::string name;
 	std::string type;
@@ -63,7 +73,7 @@ protected:
 
 /**
  * ESceneLayerDesc
- * It stores 
+ * 		It stores descriptor divided for each layer
  */
 class ESceneLayerDesc
 {
@@ -71,17 +81,18 @@ public:
 	ESceneLayerDesc(std::string name);
 
 	/* Should handle creation of resources with Resource manager */
-	bool addSpriteDesc(std::string name, std::string sourceResource,
-			int x, int y);
+	void addSpriteDesc(std::shared_ptr<ESpriteDesc> sprite_desc);
+	void addImageDesc(std::shared_ptr<EImageDesc> image_desc);
 
-	bool addImageDesc(std::string name, std::string sourceResource,
-			int x, int y,
-			int width, int height,
-			int width_percent, int height_percent);
+	/* Export read-only resources */
+	const std::vector<std::shared_ptr<ESpriteDesc>>& sprite_list;
+	const std::vector<std::shared_ptr<EImageDesc>>& image_list;
 
 protected:
-	std::vector<std::shared_ptr<ESpriteDesc>> sprite_list;
 	std::string name;
+
+	std::vector<std::shared_ptr<ESpriteDesc>> _sprite_list;
+	std::vector<std::shared_ptr<EImageDesc>> _image_list;
 };
 
 /**
@@ -96,18 +107,18 @@ class ESceneDesc
 {
 public:
 	ESceneDesc(std::string name, ESceneType type);
-	virtual ~ESceneDesc();
 
-	bool appendLayerDesc(std::shared_ptr<ESceneLayerDesc> layer);
-	std::shared_ptr<ESceneLayerDesc>
-	getLayerDesc(int index);
+	void appendLayerDesc(std::shared_ptr<ESceneLayerDesc> layer);
 
 	std::string getName();
+	ESceneType getType();
+
+	const std::vector<std::shared_ptr<ESceneLayerDesc>>& layer_list;
 
 protected:
 	ESceneDesc();
 
 	std::string name;
 	ESceneType type;
-	std::vector<std::shared_ptr<ESceneLayerDesc>> layer_list;
+	std::vector<std::shared_ptr<ESceneLayerDesc>> _layer_list;
 };

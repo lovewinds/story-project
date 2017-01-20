@@ -461,7 +461,8 @@ bool Ecore::loadResources()
 	 *   and launch specific screen.
 	 */
 	std::string default_scene("main");
-	success = screenManager->playScene(default_scene);
+	//success = screenManager->playScene(default_scene);
+	success = false;
 	if (!success) {
 		LOG_ERR("Failed to play scene [%s] !", default_scene.c_str());
 		return false;

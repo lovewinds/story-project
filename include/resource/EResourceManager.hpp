@@ -26,7 +26,7 @@ public:
 	bool loadResources(std::string res_file);
 
 /*
- * Scene Functions
+ * SceneDesc Functions
  */
 	/* Create scene descriptor with given parameters */
 	std::shared_ptr<EScene> addSceneDesc(ESceneType type, std::string scene_name);

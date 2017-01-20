@@ -104,21 +104,30 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			resManager->createSpriteType(spriteType);
 		}
 
-		/* Load scene-specific resources */
+		/* Create Scene descriptor */
 		//pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene[@name='main']");
 		pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene");
 		for (pugi::xpath_node_set::const_iterator it = scene_sel.begin(); it != scene_sel.end(); ++it) {
-			std::shared_ptr<EScene> scene = nullptr;
+			std::shared_ptr<ESceneDesc> sceneDesc = nullptr;
+			ESceneType sceneType;
 			pugi::xpath_node node = *it;
 			std::string scene_name(node.node().attribute("name").value());
-			std::string scene_class(node.node().attribute("class").value());
+			std::string scene_type(node.node().attribute("type").value());
 
-			if (scene_class == "RPG")
-				scene = resManager->createScene(SCENE_RPG, scene_name);
-			else if (scene_class == "VNovel")
-				scene = resManager->createScene(SCENE_VISUAL_NOVEL, scene_name);
-			if (nullptr == scene) {
-				LOG_ERR("Failed to create scene");
+			if (scene_type == "RPG")
+				sceneType = SCENE_RPG;
+				//scene = resManager->createScene(SCENE_RPG, scene_name);
+			else if (scene_type == "VNovel")
+				sceneType = SCENE_VISUAL_NOVEL;
+				//scene = resManager->createScene(SCENE_VISUAL_NOVEL, scene_name);
+			else {
+				LOG_ERR("Undefined scene type [%s]", scene_type.c_str());
+				continue;
+			}
+
+			sceneDesc = std::shared_ptr<ESceneDesc>(new ESceneDesc(scene_name, sceneType));
+			if (nullptr == sceneDesc) {
+				LOG_ERR("Failed to create Scene descriptor");
 				continue;
 			}
 
@@ -128,8 +137,13 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer/*";
 			std::string layer_path = s.str();
 			pugi::xpath_node_set sel_layer = doc.select_nodes(layer_path.c_str());
+			std::string layer_name(node.node().attribute("name").value());
 			LOG_INFO("[%lu] Layer items:", sel_layer.size());
-			/* TEMPORARY */
+
+			/* Create Layer descriptor */
+			std::shared_ptr<ESceneLayerDesc> layerDesc(new ESceneLayerDesc(layer_name));
+
+			/* Layer contents */
 			int idx = 0;
 			for (pugi::xpath_node_set::const_iterator it = sel_layer.begin(); it != sel_layer.end(); ++it) {
 				pugi::xpath_node node = *it;
@@ -165,9 +179,15 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 				}
 
 				/* Below logic just prepare for allocation.
-				 * Instance will be allocated when scene enters 'Play' state. */
+				 * Instance will be allocated when scene class is created. */
 				if (itm_node.compare("Sprite") == 0) {
-					/* Sprite instance */
+					/* Sprite descriptor */
+					LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
+						itm_name.c_str(), itm_source.c_str(), p_x, p_y);
+					std::shared_ptr<ESpriteDesc> spriteDesc(
+						new ESpriteDesc(itm_name, itm_source, p_x, p_y)
+					);
+					#if 0
 					LOG_DBG("Searching sprite source [%s]", itm_source.c_str());
 					std::shared_ptr<ESpriteType> spriteType = resManager->getSpriteType(itm_source);
 					if (spriteType) {
@@ -177,14 +197,12 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 						LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
 					}
 					idx++;
-
-					/* New way */
-					std::shared_ptr<ESpriteDesc> spriteDesc(
-						new ESpriteDesc(itm_name, itm_source, p_x, p_y)
-					);
+					#endif
+					layerDesc->addSpriteDesc(spriteDesc);
 				}
 				else if (itm_node.compare("Image") == 0) {
-					/* Image instance */
+					/* Image descriptor */
+					#if 0
 					LOG_DBG("Searching image source [%s]", itm_source.c_str());
 					auto img = resManager->createImageTexture(itm_name, itm_source);
 					if (img) {
@@ -203,8 +221,27 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					else {
 						LOG_ERR("Failed to create ImageTexture !");
 					}
+					#endif
+					LOG_INFO("Create Image descriptor [%s](T:%s) into (%3d, %3d)",
+						itm_name.c_str(), itm_source.c_str(), p_x, p_y);
+					std::shared_ptr<EImageDesc> imageDesc(
+						new EImageDesc(itm_name, itm_source, p_x, p_y)
+					);
+					if (width_percent)
+						imageDesc->setWidthRatio(p_w);
+					else
+						imageDesc->setWidth(p_w);
+					if (height_percent)
+						imageDesc->setHeightRatio(p_h);
+					else
+						imageDesc->setHeight(p_h);
+
+					layerDesc->addImageDesc(imageDesc);
 				}
-			} /* Layer loop */
+			} /* Layer items loop */
+
+			/* Add layer descriptor into scene descriptor */
+			sceneDesc->appendLayerDesc(layerDesc);
 		} /* Scene loop */
 
 		/* Examples: linear sprite selection */

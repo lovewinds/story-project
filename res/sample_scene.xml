@@ -36,7 +36,7 @@
 			</SpriteType>
 		</SpriteTypeGroup>
 	</GlobalResources>
-	<Scene name="main" class="RPG">
+	<Scene name="main" type="RPG">
 		<Layer name="base" depth="1">
 			<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
 			<Sprite name="c1" source="loading_circle" x="0" y="256" />
@@ -44,7 +44,7 @@
 			<!--Sprite name="c2" source="loading_circle" x="32" y="256" /-->
 		</Layer>
 	</Scene>
-	<Scene name="vnovel" class="VNovel">
+	<Scene name="vnovel" type="VNovel">
 		<Layer name="talk" depth="1">
 			<Image name="char" source="Standing" x="240" y="0" width="50%" height="50%"/>
 		</Layer>
