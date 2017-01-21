@@ -6,6 +6,7 @@
 #include "texture/EDrawable.hpp"
 #include "EScreenManager.hpp"
 #include "resource/EResourceManager.hpp"
+#include "resource/EResourceFactory.hpp"
 
 #include "util/LogHelper.hpp"
 #include "util/JsonHelper.hpp"
@@ -108,6 +109,7 @@ void Ecore::Start()
 
 	screenManager = new EScreenManager();
 	resManager = new EResourceManager();
+	resFactory = new EResourceFactory();
 
 	/* Load game resources */
 	if (loadResources() == false)
@@ -297,6 +299,11 @@ EResourceManager& Ecore::getResourceManager()
 	return *resManager;
 }
 
+EResourceFactory& Ecore::getResourceFactory()
+{
+	return *resFactory;
+}
+
 EScreenManager& Ecore::getScreenManager()
 {
 	return *screenManager;
@@ -461,8 +468,7 @@ bool Ecore::loadResources()
 	 *   and launch specific screen.
 	 */
 	std::string default_scene("main");
-	//success = screenManager->playScene(default_scene);
-	success = false;
+	success = screenManager->playScene(default_scene);
 	if (!success) {
 		LOG_ERR("Failed to play scene [%s] !", default_scene.c_str());
 		return false;

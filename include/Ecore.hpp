@@ -8,6 +8,7 @@
 
 class EScreenManager;
 class EResourceManager;
+class EResourceFactory;
 
 class Ecore
 {
@@ -34,6 +35,7 @@ public:
 	double GetFPS();
 
 	EResourceManager& getResourceManager();
+	EResourceFactory& getResourceFactory();
 	EScreenManager& getScreenManager();
 
 	/* Utility functions */
@@ -74,6 +76,7 @@ private:
 	 * Handle these as a pointer type for obvious resource deallocation.
 	 */
 	EResourceManager* resManager;
+	EResourceFactory* resFactory;
 	EScreenManager* screenManager;
 
 	static std::string getParentPath(std::string path, std::string::size_type level);

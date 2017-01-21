@@ -84,6 +84,8 @@ public:
 	void addSpriteDesc(std::shared_ptr<ESpriteDesc> sprite_desc);
 	void addImageDesc(std::shared_ptr<EImageDesc> image_desc);
 
+	std::string getName();
+
 	/* Export read-only resources */
 	const std::vector<std::shared_ptr<ESpriteDesc>>& sprite_list;
 	const std::vector<std::shared_ptr<EImageDesc>>& image_list;

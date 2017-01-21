@@ -5,6 +5,7 @@
 #include "resource/ESpriteType.hpp"
 
 ESpriteType::ESpriteType(std::string name, std::string base_image)
+: cells(_cell)
 {
 	LOG_INFO("ESpriteType[%s] created", name.c_str());
 
@@ -28,6 +29,11 @@ ESpriteType::~ESpriteType()
 std::string ESpriteType::getName()
 {
 	return name;
+}
+
+std::string ESpriteType::getBaseImage()
+{
+	return base_image;
 }
 
 bool ESpriteType::setCellInfo(unsigned int cell_width, unsigned int cell_height)
@@ -74,18 +80,7 @@ bool ESpriteType::appendSpriteCell(unsigned int index)
 	rect.h = cell_height;
 	LOG_DBG("Cell [%d] (%d,%d) [%d/%d]", index, rect.x, rect.y, rect.w, rect.h);
 
-	cell.push_back(rect);
+	_cell.push_back(rect);
 
 	return true;
-}
-
-std::shared_ptr<ESprite> ESpriteType::createSprite(std::string spriteID, int x, int y)
-{
-	if (spriteID.empty() || base_image.empty() || cell.size() == 0 )
-		return nullptr;
-
-	std::shared_ptr<ESprite> sprite(new ESprite(spriteID, base_image, cell));
-	if (sprite)
-		sprite->movePositionTo(x, y);
-	return sprite;
 }

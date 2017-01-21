@@ -107,7 +107,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 		/* Create Scene descriptor */
 		//pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene[@name='main']");
 		pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene");
-		for (pugi::xpath_node_set::const_iterator it = scene_sel.begin(); it != scene_sel.end(); ++it) {
+		for (auto it = scene_sel.begin(); it != scene_sel.end(); ++it) {
 			std::shared_ptr<ESceneDesc> sceneDesc = nullptr;
 			ESceneType sceneType;
 			pugi::xpath_node node = *it;
@@ -134,114 +134,129 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			/* Load all scene layers */
 			s.str(std::string());
 			s.clear();
-			s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer/*";
+			s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer";
 			std::string layer_path = s.str();
-			pugi::xpath_node_set sel_layer = doc.select_nodes(layer_path.c_str());
-			std::string layer_name(node.node().attribute("name").value());
-			LOG_INFO("[%lu] Layer items:", sel_layer.size());
+			pugi::xpath_node_set layer_sel = doc.select_nodes(layer_path.c_str());
+			for (auto layer_it = layer_sel.begin(); layer_it != layer_sel.end(); ++layer_it) {
+				/* Load all layer items */
+				pugi::xpath_node layer_node = *it;
+				std::string layer_name(layer_node.node().attribute("name").value());
 
-			/* Create Layer descriptor */
-			std::shared_ptr<ESceneLayerDesc> layerDesc(new ESceneLayerDesc(layer_name));
+				/* Create Layer descriptor */
+				std::shared_ptr<ESceneLayerDesc> layerDesc(new ESceneLayerDesc(layer_name));
 
-			/* Layer contents */
-			int idx = 0;
-			for (pugi::xpath_node_set::const_iterator it = sel_layer.begin(); it != sel_layer.end(); ++it) {
-				pugi::xpath_node node = *it;
-				std::string itm_node(node.node().name());
-				std::string itm_source(node.node().attribute("source").value());
-				std::string itm_name(node.node().attribute("name").value());
-				std::string itm_p_x(node.node().attribute("x").value());
-				std::string itm_p_y(node.node().attribute("y").value());
-				std::string itm_p_w(node.node().attribute("width").value());
-				std::string itm_p_h(node.node().attribute("height").value());
-				int p_x = 0, p_y = 0;
-				int p_w = 0, p_h = 0;
-				bool width_percent = false;
-				bool height_percent = false;
-				try {
-					p_x = std::stoi(itm_p_x);
-					p_y = std::stoi(itm_p_y);
-					if (itm_p_w.empty() == false) {
-						p_w = std::stoi(itm_p_w);
-						if (itm_p_w.length() > 1 && itm_p_w.substr(itm_p_w.length() - 1, 1) == std::string("%"))
-							width_percent = true;
-					}
-					if (itm_p_h.empty() == false) {
-						p_h = std::stoi(itm_p_h);
-						if (itm_p_h.length() > 1 && itm_p_h.substr(itm_p_h.length() - 1, 1) == std::string("%"))
-							height_percent = true;
-					}
-				}
-				catch (std::exception &e) {
-					LOG_ERR("%s", e.what());
-					LOG_ERR("   Invalid position x/y [%s / %s]. use default pos (0,0)",
-						itm_p_x.c_str(), itm_p_y.c_str());
-				}
+				/* Layer contents */
+				int idx = 0;
 
-				/* Below logic just prepare for allocation.
-				 * Instance will be allocated when scene class is created. */
-				if (itm_node.compare("Sprite") == 0) {
-					/* Sprite descriptor */
-					LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
-						itm_name.c_str(), itm_source.c_str(), p_x, p_y);
-					std::shared_ptr<ESpriteDesc> spriteDesc(
-						new ESpriteDesc(itm_name, itm_source, p_x, p_y)
-					);
-					#if 0
-					LOG_DBG("Searching sprite source [%s]", itm_source.c_str());
-					std::shared_ptr<ESpriteType> spriteType = resManager->getSpriteType(itm_source);
-					if (spriteType) {
-						auto s = spriteType->createSprite(itm_name, p_x, p_y);
-						s->setIndex(idx * 4);
-						scene->addSprite(s);
-						LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
+				s.str(std::string());
+				s.clear();
+				s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer/*";
+				std::string layer_item_path = s.str();
+				pugi::xpath_node_set layer_items = doc.select_nodes(layer_item_path.c_str());
+				LOG_INFO("Layer[%s] has [%lu] items:",
+						layer_name.c_str(), layer_items.size());
+
+				/* auto = pugi::xpath_node_set::const_iterator */
+				for (auto layer_items_it = layer_items.begin(); layer_items_it != layer_items.end(); ++layer_items_it) {
+					pugi::xpath_node node = *layer_items_it;
+					std::string itm_node(node.node().name());
+					std::string itm_source(node.node().attribute("source").value());
+					std::string itm_name(node.node().attribute("name").value());
+					std::string itm_p_x(node.node().attribute("x").value());
+					std::string itm_p_y(node.node().attribute("y").value());
+					std::string itm_p_w(node.node().attribute("width").value());
+					std::string itm_p_h(node.node().attribute("height").value());
+					int p_x = 0, p_y = 0;
+					int p_w = 0, p_h = 0;
+					bool width_percent = false;
+					bool height_percent = false;
+					try {
+						p_x = std::stoi(itm_p_x);
+						p_y = std::stoi(itm_p_y);
+						if (itm_p_w.empty() == false) {
+							p_w = std::stoi(itm_p_w);
+							if (itm_p_w.length() > 1 && itm_p_w.substr(itm_p_w.length() - 1, 1) == std::string("%"))
+								width_percent = true;
+						}
+						if (itm_p_h.empty() == false) {
+							p_h = std::stoi(itm_p_h);
+							if (itm_p_h.length() > 1 && itm_p_h.substr(itm_p_h.length() - 1, 1) == std::string("%"))
+								height_percent = true;
+						}
 					}
-					idx++;
-					#endif
-					layerDesc->addSpriteDesc(spriteDesc);
-				}
-				else if (itm_node.compare("Image") == 0) {
-					/* Image descriptor */
-					#if 0
-					LOG_DBG("Searching image source [%s]", itm_source.c_str());
-					auto img = resManager->createImageTexture(itm_name, itm_source);
-					if (img) {
+					catch (std::exception &e) {
+						LOG_ERR("%s", e.what());
+						LOG_ERR("   Invalid position x/y [%s / %s]. use default (0,0)",
+							itm_p_x.c_str(), itm_p_y.c_str());
+					}
+
+					/* Below logic just prepare for allocation.
+					 * Instance will be allocated when scene class is created. */
+					if (itm_node.compare("Sprite") == 0) {
+						/* Sprite descriptor */
+						LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
+							itm_name.c_str(), itm_source.c_str(), p_x, p_y);
+						std::shared_ptr<ESpriteDesc> spriteDesc(
+							new ESpriteDesc(itm_name, itm_source, p_x, p_y)
+						);
+						#if 0
+						LOG_DBG("Searching sprite source [%s]", itm_source.c_str());
+						std::shared_ptr<ESpriteType> spriteType = resManager->getSpriteType(itm_source);
+						if (spriteType) {
+							auto s = spriteType->createSprite(itm_name, p_x, p_y);
+							s->setIndex(idx * 4);
+							scene->addSprite(s);
+							LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
+						}
+						idx++;
+						#endif
+						layerDesc->addSpriteDesc(spriteDesc);
+					}
+					else if (itm_node.compare("Image") == 0) {
+						/* Image descriptor */
+						#if 0
+						LOG_DBG("Searching image source [%s]", itm_source.c_str());
+						auto img = resManager->createImageTexture(itm_name, itm_source);
+						if (img) {
+							if (width_percent)
+								img->setWidth(p_w, true);
+							else
+								img->setWidth(p_w, false);
+							if (height_percent)
+								img->setHeight(p_h, true);
+							else
+								img->setHeight(p_h, false);
+							img->setPos(p_x, p_y);
+							scene->addImage(img);
+							LOG_INFO("   [Image] %s prepared", itm_name.c_str());
+						}
+						else {
+							LOG_ERR("Failed to create ImageTexture !");
+						}
+						#endif
+						LOG_INFO("Create Image descriptor [%s](T:%s) into (%3d, %3d)",
+							itm_name.c_str(), itm_source.c_str(), p_x, p_y);
+						std::shared_ptr<EImageDesc> imageDesc(
+							new EImageDesc(itm_name, itm_source, p_x, p_y)
+						);
 						if (width_percent)
-							img->setWidth(p_w, true);
+							imageDesc->setWidthRatio(p_w);
 						else
-							img->setWidth(p_w, false);
+							imageDesc->setWidth(p_w);
 						if (height_percent)
-							img->setHeight(p_h, true);
+							imageDesc->setHeightRatio(p_h);
 						else
-							img->setHeight(p_h, false);
-						img->setPos(p_x, p_y);
-						scene->addImage(img);
-						LOG_INFO("   [Image] %s prepared", itm_name.c_str());
-					}
-					else {
-						LOG_ERR("Failed to create ImageTexture !");
-					}
-					#endif
-					LOG_INFO("Create Image descriptor [%s](T:%s) into (%3d, %3d)",
-						itm_name.c_str(), itm_source.c_str(), p_x, p_y);
-					std::shared_ptr<EImageDesc> imageDesc(
-						new EImageDesc(itm_name, itm_source, p_x, p_y)
-					);
-					if (width_percent)
-						imageDesc->setWidthRatio(p_w);
-					else
-						imageDesc->setWidth(p_w);
-					if (height_percent)
-						imageDesc->setHeightRatio(p_h);
-					else
-						imageDesc->setHeight(p_h);
+							imageDesc->setHeight(p_h);
 
-					layerDesc->addImageDesc(imageDesc);
-				}
-			} /* Layer items loop */
+						layerDesc->addImageDesc(imageDesc);
+					}
+				} /* Layer items loop */
 
-			/* Add layer descriptor into scene descriptor */
-			sceneDesc->appendLayerDesc(layerDesc);
+				/* Add layer descriptor into scene descriptor */
+				sceneDesc->appendLayerDesc(layerDesc);
+			}
+			/* Store scene descriptor into Resource manager */
+			resManager->addSceneDesc(sceneDesc->getName(), sceneDesc);
 		} /* Scene loop */
 
 		/* Examples: linear sprite selection */

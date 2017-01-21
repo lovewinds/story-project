@@ -24,20 +24,21 @@ public:
 	/* Store sprite cell information to create */
 	bool appendSpriteCell(unsigned int index);
 
-	/* Allocate sprite with related image resource into memory */
-	std::shared_ptr<ESprite> createSprite(std::string spriteID, int x = 0, int y = 0);
 	//bool allocateSprite(int startIndex, int endIndex);
 	//bool allocateSprite(std::vector<int> indexList);
 
 	std::string getName();
+	std::string getBaseImage();
 	unsigned int getWidth() const;
 	unsigned int getHeight() const;
+
+	const std::vector<SDL_Rect>& cells;
 
 protected:
 	std::string name;
 	std::string base_image;
 
-	std::vector<SDL_Rect>	cell;
+	std::vector<SDL_Rect>	_cell;
 
 	/* Width and Height of each cell */
 	unsigned int cell_width;

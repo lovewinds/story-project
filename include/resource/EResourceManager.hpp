@@ -29,7 +29,9 @@ public:
  * SceneDesc Functions
  */
 	/* Create scene descriptor with given parameters */
-	std::shared_ptr<EScene> addSceneDesc(ESceneType type, std::string scene_name);
+	bool addSceneDesc(std::string name, std::shared_ptr<ESceneDesc> desc);
+
+	std::shared_ptr<ESceneDesc> getSceneDesc(std::string name);
 
 	/* Register Scene descriptor into ResourceManager */
 	bool registerScene(ESceneType type, std::string scene_name);
@@ -101,12 +103,18 @@ public:
 	void releaseTexture(std::string path);
 
 protected:
+	/* Allocate sprite with related image resource into memory */
+	std::shared_ptr<ESprite>
+	_createSpriteFromTypeDesc(std::string spriteID,
+			std::shared_ptr<ESpriteType> spriteType);
+
 	EResourceLoaderInterface *loader;
 
 	/* Cache for current playing scene */
 	std::shared_ptr<EScene>	currentScene;
 
 	std::map<std::string, std::shared_ptr<EScene>> scene_map;
+	std::map<std::string, std::shared_ptr<ESceneDesc>> scene_desc_map;
 
 	/* image map uses path as a key, it can have simillar prefix.
 	 * unordered_map can be more effecient for this case */

@@ -5,7 +5,7 @@
 
 #include "texture/ESprite.hpp"
 
-ESprite::ESprite(std::string _name, std::string _base_image, std::vector<SDL_Rect>& cells) :
+ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :
 	EDrawable()
 {
 	sprite_index = 0;
@@ -17,9 +17,11 @@ ESprite::ESprite(std::string _name, std::string _base_image, std::vector<SDL_Rec
 	//setBlendMode(SDL_BLENDMODE_NONE);
 
 	name = _name;
-	base_image_name = _base_image;
+	base_image_name = spriteType->getBaseImage();
+	const std::vector<SDL_Rect>& cells = spriteType->cells;
+
 	LOG_DBG("spriteID : %s", name.c_str());
-	LOG_DBG("baseID   : %s", base_image_name.c_str());
+	LOG_DBG("  baseID : %s", base_image_name.c_str());
 
 	/* Vector copy */
 	gSpriteClips.assign(cells.begin(), cells.end());
@@ -27,6 +29,7 @@ ESprite::ESprite(std::string _name, std::string _base_image, std::vector<SDL_Rec
 	//resource = std::shared_ptr<EImageResourceInfo>(new EImageResourceInfo(name, path));
 	//LOG_INFO("resource ref. count: [%lu]", resource.use_count());
 	///mTexture = _texture;
+	allocate();
 }
 
 ESprite::~ESprite()
@@ -53,6 +56,11 @@ bool ESprite::allocate()
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	if (base_image_name.empty()) {
 		LOG_ERR("base_image_name is empty !");
+		return false;
+	}
+
+	if (nullptr != mTexture) {
+		LOG_DBG("Already allocated.");
 		return false;
 	}
 

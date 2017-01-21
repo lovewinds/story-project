@@ -20,7 +20,7 @@ std::string ESpriteDesc::getName()
 
 std::string ESpriteDesc::getType()
 {
-	return name;
+	return type;
 }
 
 int ESpriteDesc::getX()
@@ -68,7 +68,7 @@ std::string EImageDesc::getName()
 
 std::string EImageDesc::getType()
 {
-	return name;
+	return type;
 }
 
 int EImageDesc::getX()
@@ -104,6 +104,11 @@ void ESceneLayerDesc::addImageDesc(std::shared_ptr<EImageDesc> desc)
 		_image_list.push_back(desc);
 }
 
+std::string ESceneLayerDesc::getName()
+{
+	return name;
+}
+
 /**
  * ESceneDesc class
  */
@@ -119,6 +124,11 @@ void ESceneDesc::appendLayerDesc(std::shared_ptr<ESceneLayerDesc> layer)
 {
 	if (nullptr != layer)
 		_layer_list.push_back(layer);
+}
+
+std::string ESceneDesc::getName()
+{
+	return name;
 }
 
 ESceneType ESceneDesc::getType()

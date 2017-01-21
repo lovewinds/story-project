@@ -26,8 +26,14 @@ EResourceManager::~EResourceManager()
 		loader = NULL;
 	}
 
-	scene_map.clear();
+	scene_desc_map.clear();
+	sprite_types.clear();
+
+	_image_texture_map.clear();
+	_texture_map.clear();
+	_sprite_map.clear();
 	image_map.clear();
+	scene_map.clear();
 
 	LOG_DBG("Bye ResourceManager !");
 }
@@ -59,6 +65,31 @@ bool EResourceManager::loadResources(std::string res_file)
 	}
 
 	return loader->loadResources(path);
+}
+
+bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<ESceneDesc> desc)
+{
+	auto result = scene_desc_map.emplace(name, desc);
+	if (!result.second) {
+		LOG_ERR("Failed to insert scene descriptor !");
+		return false;
+	}
+
+	return true;
+}
+
+std::shared_ptr<ESceneDesc> EResourceManager::getSceneDesc(std::string name)
+{
+	std::shared_ptr<ESceneDesc> result = nullptr;
+	auto sceneDesc = scene_desc_map.find(name);
+
+	if (sceneDesc != scene_desc_map.end()) {
+		result = sceneDesc->second;
+	} else {
+		result = nullptr;
+	}
+
+	return result;
 }
 
 std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::string scene_name)
@@ -215,11 +246,12 @@ void EResourceManager::releaseTexture(std::string path)
 	LOG_ERR("  Count of texture map items [%lu]", _texture_map.size());
 	if (_texture_map.empty())
 		return;
-
+LOG_DBG("1");
 	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
-
+LOG_DBG("2");
 	if (found != _texture_map.end()) {
+LOG_DBG("3");
 		LOG_DBG("  texture [%s] count [%lu]", found->first.c_str(), found->second.use_count());
 		/* Reference counting logic
 		 * If use_count is 1, it is not owned by all activated scenes.
@@ -258,11 +290,21 @@ EResourceManager::getSpriteType(std::string type_name)
 }
 
 std::shared_ptr<ESprite>
+EResourceManager::_createSpriteFromTypeDesc(std::string spriteID,
+		std::shared_ptr<ESpriteType> spriteType)
+{
+	if (spriteID.empty() || (nullptr == spriteType) )
+		return nullptr;
+
+	std::shared_ptr<ESprite> sprite(new ESprite(spriteID, spriteType));
+	return sprite;
+}
+
+std::shared_ptr<ESprite>
 EResourceManager::createSprite(std::string type, std::string name)
 {
 	LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
 
-	//std::shared_ptr<ESprite> sprite(new ESprite(name, base_image));
 	/* Find sprite template type */
 
 	//std::pair<std::map<std::string, std::shared_ptr<ESpriteType>>::iterator, bool> result;
@@ -272,12 +314,9 @@ EResourceManager::createSprite(std::string type, std::string name)
 		return nullptr;
 	}
 
+	/* Create sprite from descriptor */
 	std::shared_ptr<ESpriteType> spriteType = t->second;
-	if (!spriteType) {
-		LOG_ERR("Sprite type [%s] is invalid.", t->first.c_str());
-		return nullptr;
-	}
-	std::shared_ptr<ESprite> sprite = spriteType->createSprite(name);
+	std::shared_ptr<ESprite> sprite = _createSpriteFromTypeDesc(name, spriteType);
 	if (!sprite) {
 		LOG_ERR("Failed to allocate sprite! [Type:%s]", spriteType->getName().c_str());
 		return nullptr;
@@ -298,6 +337,7 @@ EResourceManager::createSprite(std::string type, std::string name)
 		//auto t = it.second.get();
 		LOG_DBG("   %s", it.first.c_str());
 	}
+	LOG_DBG("================");
 #endif
 	return sprite;
 }

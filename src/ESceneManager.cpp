@@ -2,6 +2,7 @@
 
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
+#include "resource/EResourceFactory.hpp"
 
 ESceneManager::ESceneManager()
 {
@@ -22,15 +23,12 @@ ESceneManager::~ESceneManager()
 bool ESceneManager::playScene(std::string scene_name)
 {
 	std::shared_ptr<EScene> scene;
-	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
-	bool success = resMgr.allocateScene(scene_name);
+	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
-	if (success) {
-		scene = resMgr.getScene(scene_name);
-		LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
+	scene = resFactory.createScene(scene_name);
+	LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
-		currentScene = scene;
-	}
+	currentScene = scene;
 
 	return true;
 }
