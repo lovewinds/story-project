@@ -151,10 +151,10 @@ bool EResourceManager::allocateScene(std::string scene_name)
 	auto scene = scene_map.find(scene_name);
 	if (scene != scene_map.end()) {
 		/* Scene found. Allocate Image resources */
-		currentScene = scene->second;
+		//currentScene = scene->second;
 
 		/* Allocate all resources on specific scene */
-		currentScene->allocate();
+		//currentScene->allocate();
 	} else {
 		/* Scene is not found ! */
 		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
@@ -246,12 +246,10 @@ void EResourceManager::releaseTexture(std::string path)
 	LOG_ERR("  Count of texture map items [%lu]", _texture_map.size());
 	if (_texture_map.empty())
 		return;
-LOG_DBG("1");
+
 	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
-LOG_DBG("2");
 	if (found != _texture_map.end()) {
-LOG_DBG("3");
 		LOG_DBG("  texture [%s] count [%lu]", found->first.c_str(), found->second.use_count());
 		/* Reference counting logic
 		 * If use_count is 1, it is not owned by all activated scenes.
@@ -382,8 +380,6 @@ EResourceManager::getImageResource(std::string resource_name)
 
 	if (imgRes != image_map.end()) {
 		/* ImageResource found */
-
-		// Return weak_ptr of imageResource
 		found = imgRes->second;
 	} else {
 		found = nullptr;

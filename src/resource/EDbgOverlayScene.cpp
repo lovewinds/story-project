@@ -7,9 +7,9 @@
 #include "resource/EDbgOverlayScene.hpp"
 
 EDbgOverlayScene::EDbgOverlayScene(std::string name)
+ : EScene(name)
 {
 	LOG_INFO("EDbgOverlayScene[%s] created", name.c_str());
-	this->name = name;
 
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };

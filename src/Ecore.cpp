@@ -276,6 +276,7 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 
 	/* Render Screen */
 	screenManager->render();
+
 	// Render Color
 	//colorTexture.draw();
 	//colorTexture.render_resize(64, 64, 0, drawed_frames / 10, 0, SDL_FLIP_NONE);

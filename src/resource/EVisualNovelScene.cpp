@@ -10,9 +10,9 @@
 #include "resource/EVisualNovelScene.hpp"
 
 EVisualNovelScene::EVisualNovelScene(std::string name)
+ : EScene(name)
 {
 	LOG_INFO("EVisualNovelScene[%s] created", name.c_str());
-	this->name = name;
 
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };

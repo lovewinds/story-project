@@ -29,8 +29,8 @@ bool EScreenManager::playScene(std::string scene_name)
 	/* Scene handler will allocate textures with scene instance */
 	success = sceneManager->playScene(scene_name);
 
-	std::string platform = Ecore::getInstance()->getPlatform();
 #if 0
+	std::string platform = Ecore::getInstance()->getPlatform();
 	if (Ecore::checkPlatform("Linux")) {
 		LOG_INFO("Platform: [%s]", platform.c_str());
 		success = false;

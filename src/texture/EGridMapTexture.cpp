@@ -115,6 +115,7 @@ void EGridMapTexture::render()
     unsigned int index = 0;
 
     if (row_count == 0 || col_count == 0) {
+    	LOG_ERR("Invalid map information");
 		return;
     }
 

@@ -17,15 +17,8 @@ EScene::EScene(std::string name)
 	LOG_INFO("EScene[%s] created", name.c_str());
 	this->name = name;
 
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
-	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
-	tt->movePositionTo(10, 100);
-	auto result = _text_texture_map.emplace("test string", tt);
-	if (!result.second) {
-		LOG_ERR("Failed to insert text set !");
-	}
+	isAllocated = true;
+	isActivated = true;
 }
 
 EScene::~EScene()
@@ -144,13 +137,13 @@ bool EScene::allocate()
 	res |= allocateImages();
 	res |= allocateTexts();
 	res |= allocateRawTexture();
-
+#if 1
 	if (false == res) {
 		LOG_ERR("Failed to allocate !");
 		deallocate();
 		return false;
 	}
-
+#endif
 	isAllocated = true;
 	isActivated = true;
 
@@ -179,6 +172,7 @@ void EScene::deallocate()
 		LOG_DBG("  DeAllocate texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
 		it.second->deallocate();
 	}
+	LOG_ERR("Deallocated.");
 
 	isAllocated = false;
 	isActivated = false;
@@ -187,6 +181,7 @@ void EScene::deallocate()
 void EScene::setActiveState(bool active)
 {
 	isActivated = active;
+LOG_ERR("Activation changed [%s]", active ? "True" : "False");
 }
 
 void EScene::handleEvent(SDL_Event e)

@@ -25,10 +25,15 @@ bool ESceneManager::playScene(std::string scene_name)
 	std::shared_ptr<EScene> scene;
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
-	scene = resFactory.createScene(scene_name);
-	LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
+	if (nullptr == currentScene) {
+		scene = resFactory.createScene(scene_name);
+		LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
-	currentScene = scene;
+		currentScene = scene;
+	} else {
+		LOG_ERR("Scene [%s] is now playing", currentScene->getName().c_str());
+		return false;
+	}
 
 	return true;
 }
@@ -58,6 +63,8 @@ void ESceneManager::startCurrentScene()
 void ESceneManager::initDebugScene()
 {
 	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+
+	LOG_DBG("Create debug overlay scene");
 	debug_overlay = resMgr.createScene(SCENE_DEBUG, "debug");
 	if (nullptr == debug_overlay) {
 		LOG_ERR("Failed to create debug scene !");
@@ -88,10 +95,10 @@ void ESceneManager::handleEvent(SDL_Event e)
 			stopCurrentScene();
 			break;
 		case SDLK_3:
-			pauseCurrentScene();
+			startCurrentScene();
 			break;
 		case SDLK_4:
-			startCurrentScene();
+			pauseCurrentScene();
 			break;
 		case SDLK_BACKQUOTE:
 			if (overlayState) {
@@ -100,12 +107,17 @@ void ESceneManager::handleEvent(SDL_Event e)
 			}
 			else {
 				overlayState = true;
-				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 				std::string sname = "vnovel";
+
+				overlay = resFactory.createScene(sname);
+				LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
+				#if 0
 				if (resMgr.allocateScene(sname)) {
 					overlay = resMgr.getScene(sname);
-					LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
+					
 				}
+				#endif
 			}
 
 			break;

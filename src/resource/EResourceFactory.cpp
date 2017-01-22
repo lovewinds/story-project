@@ -36,6 +36,8 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 	}
 
 	LOG_DBG("Creating scene [%s].....", sceneDesc->getName().c_str());
+	scene = resManager.createScene(sceneDesc->getType(), scene_name);
+
 	/* For each layer */
 	for (auto& layer_iter : sceneDesc->layer_list)
 	{
@@ -46,18 +48,24 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 		for (auto& sprite_it : layer->sprite_list)
 		{
 			std::shared_ptr<ESpriteDesc> spriteDesc = sprite_it;
+			std::shared_ptr<ESprite> sprite;
 			LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
 
-			createSprite(spriteDesc);
+			sprite = createSprite(spriteDesc);
+			sprite->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
+			scene->addSprite(sprite);
 		}
 
 		/* Create images from image descriptor */
 		for (auto& image_it : layer->image_list)
 		{
 			std::shared_ptr<EImageDesc> imageDesc = image_it;
+			std::shared_ptr<EImageTexture> image;
 			LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
 
-			//resManager->createImage();
+			image = createImageTexture(imageDesc);
+			image->movePositionTo(imageDesc->getX(), imageDesc->getY());
+			scene->addImage(image);
 		}
 	}
 
@@ -82,7 +90,7 @@ EResourceFactory::createImageTexture(std::shared_ptr<EImageDesc> imageDesc)
 	if (nullptr == imageDesc)
 		return nullptr;
 
-	//image = resManager.createSprite(imageDesc->getType(), imageDesc->getName());
+	image = resManager.createImageTexture(imageDesc->getName(), imageDesc->getType());
 
 	return image;
 }

@@ -7,9 +7,9 @@
 #include "resource/ERPGScene.hpp"
 
 ERPGScene::ERPGScene(std::string name)
+ : EScene(name)
 {
 	LOG_INFO("ERPGScene[%s] created", name.c_str());
-	this->name = name;
 #if 0
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
@@ -28,6 +28,7 @@ ERPGScene::ERPGScene(std::string name)
 	if (!result.second) {
 		LOG_ERR("Failed to insert texture!");
 	}
+	gridMap->allocate();
 }
 
 ERPGScene::~ERPGScene()
