@@ -31,26 +31,28 @@ EImageTexture::EImageTexture(int x, int y) :
 	/* Set Position */
 	p_x = x;
 	p_y = y;
+
+	_createTexture();
 }
 
 EImageTexture::~EImageTexture()
 {
 	/* Deallocate */
-	deallocate();
+	_removeTexture();
 }
 
-bool EImageTexture::allocate()
+void EImageTexture::_createTexture()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	if (base_image.empty()) {
 		LOG_ERR("base_image is empty !");
-		return false;
+		return;
 	}
 
 	image = resManager.getImageResource(base_image);
 
 	if (!image)
-		return false;
+		return;
 
 	if (mWidth == 0)
 		mWidth = image->getWidth();
@@ -59,10 +61,9 @@ bool EImageTexture::allocate()
 
 	/* Get shared texture from Resource Manager */
 	mTexture = image->getTexture();
-	return true;
 }
 
-void EImageTexture::deallocate()
+void EImageTexture::_removeTexture()
 {
 	mTexture.reset();
 	if (nullptr != image)

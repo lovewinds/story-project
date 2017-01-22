@@ -29,12 +29,12 @@ ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :
 	//resource = std::shared_ptr<EImageResourceInfo>(new EImageResourceInfo(name, path));
 	//LOG_INFO("resource ref. count: [%lu]", resource.use_count());
 	///mTexture = _texture;
-	allocate();
+	_createTexture();
 }
 
 ESprite::~ESprite()
 {
-	deallocate();
+	_removeTexture();
 	gSpriteClips.clear();
 }
 
@@ -51,30 +51,29 @@ void ESprite::setIndex(unsigned int index)
 	}
 }
 
-bool ESprite::allocate()
+void ESprite::_createTexture()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	if (base_image_name.empty()) {
 		LOG_ERR("base_image_name is empty !");
-		return false;
+		return;
 	}
 
 	if (nullptr != mTexture) {
-		LOG_DBG("Already allocated.");
-		return false;
+		LOG_ERR("Already allocated.");
+		return;
 	}
 
-	/* TODO: Allocate a new texture for each sprite */
+	/* Get texture from ResourceManager */
 	sprite_base = resManager.getImageResource(base_image_name);
 
 	if (!sprite_base)
-		return false;
+		return;
 
 	mTexture = sprite_base->getTexture();
-	return true;
 }
 
-void ESprite::deallocate()
+void ESprite::_removeTexture()
 {
 	mTexture.reset();
 	sprite_base->releaseTexture();

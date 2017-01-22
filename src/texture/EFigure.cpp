@@ -32,11 +32,6 @@ EFigure::~EFigure()
 
 }
 
-void EFigure::deallocate()
-{
-
-}
-
 void EFigure::startAnimation()
 {
 	animating = true;

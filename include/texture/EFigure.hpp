@@ -12,8 +12,6 @@ public:
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
 
-	void deallocate();
-
 	/* Animation */
 	virtual void startAnimation();
 	virtual void stopAnimation();

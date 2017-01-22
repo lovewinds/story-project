@@ -11,13 +11,16 @@ ETextTexture::ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgCo
 	this->message = text;
 	this->bgColor = bgColor;
 	this->textColor = textColor;
+
+	_createTexture();
 }
 
 ETextTexture::~ETextTexture()
 {
+	_removeTexture();
 }
 
-bool ETextTexture::allocate()
+void ETextTexture::_createTexture()
 {
 	TTF_Font* gFont = Ecore::getInstance()->getFont();
 	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
@@ -31,15 +34,14 @@ bool ETextTexture::allocate()
 	//LOG_ERR("[Text] texture [%p]", &mTexture);
 	if (!mTexture) {
 		LOG_ERR("Failed to allocate text texture!");
-		return false;
+		return;
 	}
 
 	mWidth = mTexture->getWidth();
 	mHeight = mTexture->getHeight();
-	return true;
 }
 
-void ETextTexture::deallocate()
+void ETextTexture::_removeTexture()
 {
 	if (mTexture)
 		mTexture.reset();
@@ -58,7 +60,7 @@ void ETextTexture::setText(const std::string& text)
 	{
 		//LOG_INFO("****** Update String! [%s -> %s]", message.c_str(), text.c_str());
 		message = text;
-		allocate();
+		_createTexture();
 	}
 }
 

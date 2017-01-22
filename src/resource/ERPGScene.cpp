@@ -28,7 +28,6 @@ ERPGScene::ERPGScene(std::string name)
 	if (!result.second) {
 		LOG_ERR("Failed to insert texture!");
 	}
-	gridMap->allocate();
 }
 
 ERPGScene::~ERPGScene()

@@ -15,9 +15,6 @@ public:
 	EGridMapTexture(std::string name, std::string base_image);
 	~EGridMapTexture();
 
-	virtual bool allocate();
-	virtual void deallocate();
-
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
 
@@ -28,6 +25,9 @@ public:
 	std::string getName();
 
 protected:
+	void _createTexture();
+	void _removeTexture();
+
 	Uint32 wTileCount;
     Uint32 hTileCount;
 

@@ -42,7 +42,6 @@ void ESceneManager::stopCurrentScene()
 {
 	if (currentScene) {
 		EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
-		bool success = resMgr.deallocateScene(currentScene->getName());
 
 		currentScene = nullptr;
 	}
@@ -68,10 +67,6 @@ void ESceneManager::initDebugScene()
 	debug_overlay = resMgr.createScene(SCENE_DEBUG, "debug");
 	if (nullptr == debug_overlay) {
 		LOG_ERR("Failed to create debug scene !");
-	}
-	else {
-		if (false == resMgr.allocateScene(std::string("debug")))
-			LOG_ERR("Failed to allocate debug scene !");
 	}
 }
 
@@ -112,12 +107,6 @@ void ESceneManager::handleEvent(SDL_Event e)
 
 				overlay = resFactory.createScene(sname);
 				LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
-				#if 0
-				if (resMgr.allocateScene(sname)) {
-					overlay = resMgr.getScene(sname);
-					
-				}
-				#endif
 			}
 
 			break;
@@ -137,12 +126,11 @@ void ESceneManager::handleEvent(SDL_Event e)
 			}
 			else {
 				overlayState = true;
-				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 				std::string sname = "vnovel";
-				if (resMgr.allocateScene(sname)) {
-					overlay = resMgr.getScene(sname);
-					LOG_INFO("   Play scene [%s] / %p", sname.c_str(), overlay.get());
-				}
+				
+				overlay = resFactory.createScene(sname);
+				LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
 			}
 		}
 	} else if (e.type == SDL_FINGERMOTION) {

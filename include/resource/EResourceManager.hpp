@@ -36,18 +36,9 @@ public:
 	/* Register Scene descriptor into ResourceManager */
 	bool registerScene(ESceneType type, std::string scene_name);
 
-/* Deprecated */
-#if 1
-	/* Create scene with name and ready for allocation */
+	/* Create scene with name
+	 * (for some debug purpose) */
 	std::shared_ptr<EScene> createScene(ESceneType type, std::string scene_name);
-	std::shared_ptr<EScene> getScene(std::string scene_name);
-#endif
-/* Deprecated */
-
-	/* Allocate specific scene and related resource(i.e. sprites) into memory */
-	bool allocateScene(std::string scene_name);
-
-	bool deallocateScene(std::string scene_name);
 
 /*
  * Image Resource Functions
@@ -75,13 +66,8 @@ public:
 	std::shared_ptr<ESpriteType>
 	getSpriteType(std::string type_name);
 
-	/* ResourceManager holds sprite resource to handle its repetitive usage */
 	std::shared_ptr<ESprite>
 	createSprite(std::string type, std::string name);
-
-	/* Create sprite with name and ready for allocation */
-	//	std::shared_ptr<ESpriteInfo>
-	//	createSprite(std::string sprite_name, std::weak_ptr<EImageResource> img_resource);
 
 /*
  * Text texture Functions
@@ -110,10 +96,6 @@ protected:
 
 	EResourceLoaderInterface *loader;
 
-	/* Cache for current playing scene */
-	std::shared_ptr<EScene>	currentScene;
-
-	std::map<std::string, std::shared_ptr<EScene>> scene_map;
 	std::map<std::string, std::shared_ptr<ESceneDesc>> scene_desc_map;
 
 	/* image map uses path as a key, it can have simillar prefix.
@@ -123,8 +105,8 @@ protected:
 	/* Store sprite info here for caching */
 	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;
 
-	/* Allocated sprite instances */
-	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
+	/* TODO: Remove unnecessary resource maps also */
+	//std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 
 	/* Allocated Image Texture instances */
 	std::map<std::string, std::shared_ptr<EImageTexture>> _image_texture_map;

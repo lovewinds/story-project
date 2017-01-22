@@ -15,13 +15,13 @@ public:
 	/* Update String */
 	virtual void setText(const std::string& text);
 
-	virtual bool allocate();
-	virtual void deallocate();
-
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
 
 protected:
+	void _createTexture();
+	void _removeTexture();
+
 	/* String to show */
 	std::string message;
 

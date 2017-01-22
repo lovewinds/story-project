@@ -60,26 +60,29 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image) :
     tileMap = arr;
     wTileCount = 40;
     hTileCount = 40;
+
+    _createTexture();
 }
 
 EGridMapTexture::~EGridMapTexture()
 {
 	/* Deallocate */
-	deallocate();
+	_removeTexture();
 }
 
-bool EGridMapTexture::allocate()
+void EGridMapTexture::_createTexture()
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	if (base_image.empty()) {
 		LOG_ERR("base_image is empty !");
-		return false;
+		return;
 	}
 
 	tile_image = resManager.getImageResource(base_image);
-
-	if (!tile_image)
-		return false;
+	if (!tile_image) {
+		LOG_ERR("ImageResource is not found !");
+		return;
+	}
 
 	if (mWidth == 0)
 		mWidth = tile_image->getWidth();
@@ -88,10 +91,9 @@ bool EGridMapTexture::allocate()
 
 	/* Get shared texture from Resource Manager */
 	mTexture = tile_image->getTexture();
-	return true;
 }
 
-void EGridMapTexture::deallocate()
+void EGridMapTexture::_removeTexture()
 {
 	mTexture.reset();
 	if (nullptr != tile_image)

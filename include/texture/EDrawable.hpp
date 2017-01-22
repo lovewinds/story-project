@@ -12,9 +12,6 @@ public:
 	EDrawable();
 	virtual ~EDrawable();
 
-	virtual bool allocate();
-	virtual void deallocate();
-
 	/* Deallocates texture */
 	virtual void dealloc();
 

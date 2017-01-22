@@ -18,14 +18,14 @@ public:
 	std::string getName();
 	void setIndex(unsigned int index);
 
-	virtual bool allocate();
-	virtual void deallocate();
-
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render();
 
 protected:
 	ESprite();
+
+	void _createTexture();
+	void _removeTexture();
 
 	std::string name;
 	std::string base_image_name;

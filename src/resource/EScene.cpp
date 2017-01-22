@@ -9,6 +9,8 @@ EScene::EScene()
 	: sprite_map(_sprite_map)
 {
 	LOG_INFO("Superclass");
+
+	isActivated = true;
 }
 
 EScene::EScene(std::string name)
@@ -17,7 +19,6 @@ EScene::EScene(std::string name)
 	LOG_INFO("EScene[%s] created", name.c_str());
 	this->name = name;
 
-	isAllocated = true;
 	isActivated = true;
 }
 
@@ -26,7 +27,6 @@ EScene::~EScene()
 	_sprite_map.clear();
 	_text_texture_map.clear();
 
-	isAllocated = false;
 	isActivated = false;
 
 	LOG_INFO("EScene[%s] removed", name.c_str());
@@ -37,33 +37,11 @@ std::string EScene::getName()
 	return name;
 }
 
+/**
+ * Store sprites already allocated.
+ */
 bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 {
-#if 0
-	LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
-
-	/* TODO: Move allocation logic into Resource Manager */
-	//std::shared_ptr<ESprite> sprite(new ESprite(name, base_image));
-	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<ESprite> sprite = resMgr.createSprite(type, name);
-
-	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
-	auto result = _sprite_map.emplace(name, sprite);
-
-	if (!result.second) {
-		LOG_ERR("Failed to insert sprite into set !");
-		return nullptr;
-	}
-#if 1
-	LOG_INFO("Current sprites:");
-	for(auto& it : _sprite_map)
-	{
-		//auto t = it.second.get();
-		LOG_INFO("   %s", it.first.c_str());
-	}
-#endif
-	return sprite;
-#endif
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
 		LOG_ERR("Failed to insert sprite set !");
@@ -82,106 +60,9 @@ bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
 	return true;
 }
 
-bool EScene::allocateSprites()
-{
-	if (_sprite_map.empty())
-		return false;
-
-	for(auto &it : _sprite_map) {
-		LOG_DBG("  Allocate sprite [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->allocate();
-	}
-	return true;
-}
-
-bool EScene::allocateImages()
-{
-	if (_img_texture_map.empty())
-		return false;
-
-	for (auto &it : _img_texture_map) {
-		LOG_DBG("  Allocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->allocate();
-	}
-	return true;
-}
-
-bool EScene::allocateTexts()
-{
-	if (_text_texture_map.empty())
-		return false;
-
-	for (auto &it : _text_texture_map) {
-		LOG_DBG("  Allocate text texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->allocate();
-	}
-	return true;
-}
-
-bool EScene::allocateRawTexture()
-{
-	if (_raw_texture_map.empty())
-		return false;
-
-	for (auto &it : _raw_texture_map) {
-		LOG_DBG("  Allocate texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->allocate();
-	}
-	return true;
-}
-
-bool EScene::allocate()
-{
-	bool res = false;
-	res |= allocateSprites();
-	res |= allocateImages();
-	res |= allocateTexts();
-	res |= allocateRawTexture();
-#if 1
-	if (false == res) {
-		LOG_ERR("Failed to allocate !");
-		deallocate();
-		return false;
-	}
-#endif
-	isAllocated = true;
-	isActivated = true;
-
-	return true;
-}
-
-void EScene::deallocate()
-{
-	for(auto &it : _sprite_map) {
-		LOG_DBG("  DeAllocate sprite [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->deallocate();
-	}
-	for(auto &it : _img_texture_map) {
-		LOG_DBG("  DeAllocate image texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->deallocate();
-	}
-	for (auto &it : _text_texture_map) {
-		LOG_DBG("  DeAllocate text texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->deallocate();
-	}
-	for (auto &it : _drawable_map) {
-		LOG_DBG("  DeAllocate drawable texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->deallocate();
-	}
-	for (auto &it : _raw_texture_map) {
-		LOG_DBG("  DeAllocate texture [%s] count [%lu]", it.first.c_str(), it.second.use_count());
-		it.second->deallocate();
-	}
-	LOG_ERR("Deallocated.");
-
-	isAllocated = false;
-	isActivated = false;
-}
-
 void EScene::setActiveState(bool active)
 {
 	isActivated = active;
-LOG_ERR("Activation changed [%s]", active ? "True" : "False");
 }
 
 void EScene::handleEvent(SDL_Event e)

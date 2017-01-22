@@ -31,9 +31,7 @@ EResourceManager::~EResourceManager()
 
 	_image_texture_map.clear();
 	_texture_map.clear();
-	_sprite_map.clear();
 	image_map.clear();
-	scene_map.clear();
 
 	LOG_DBG("Bye ResourceManager !");
 }
@@ -115,80 +113,11 @@ std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::stri
 		break;
 	}
 
-	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
-	auto result = scene_map.emplace(scene_name, scene);
-
-	if (!result.second) {
-		LOG_ERR("Failed to insert scene set !");
-	}
-#if 0
-	LOG_INFO("Current scenes:");
-	for(auto& it : scene_map)
-	{
-		//auto t = it.second.get();
-		LOG_INFO("   %s", it.second->getName().c_str());
-	}
-#endif
 	return scene;
-}
-
-std::shared_ptr<EScene> EResourceManager::getScene(std::string scene_name)
-{
-	std::shared_ptr<EScene> result = nullptr;
-	auto scene = scene_map.find(scene_name);
-
-	if (scene != scene_map.end()) {
-		result = scene->second;
-	} else {
-		result = nullptr;
-	}
-	return result;
-}
-
-bool EResourceManager::allocateScene(std::string scene_name)
-{
-	/* Search target scene with scene name */
-	auto scene = scene_map.find(scene_name);
-	if (scene != scene_map.end()) {
-		/* Scene found. Allocate Image resources */
-		//currentScene = scene->second;
-
-		/* Allocate all resources on specific scene */
-		//currentScene->allocate();
-	} else {
-		/* Scene is not found ! */
-		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
-		return false;
-	}
-
-	/* TODO: Allocate sprite resources on memory */
-	return true;
-}
-
-bool EResourceManager::deallocateScene(std::string scene_name)
-{
-	std::shared_ptr<EScene> s;
-	auto scene = scene_map.find(scene_name);
-
-	if (scene != scene_map.end()) {
-		s = scene->second;
-		s->deallocate();
-	} else {
-		/* Scene is not found ! */
-		LOG_ERR("Scene [%s] is not exist.", scene_name.c_str());
-		return false;
-	}
-
-	return true;
 }
 
 std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string path)
 {
-#if 0
-	std::shared_ptr<SDLTextureWrap> result;
-	if (currentScene)
-		result = currentScene->allocateTexture(path);
-#endif
 	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
 
@@ -320,23 +249,6 @@ EResourceManager::createSprite(std::string type, std::string name)
 		return nullptr;
 	}
 
-	//std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
-	auto result = _sprite_map.emplace(name, sprite);
-
-	if (!result.second) {
-		LOG_ERR("Failed to insert sprite into set !");
-		return nullptr;
-	}
-
-#if 1
-	LOG_DBG("Current sprites:");
-	for(auto& it : _sprite_map)
-	{
-		//auto t = it.second.get();
-		LOG_DBG("   %s", it.first.c_str());
-	}
-	LOG_DBG("================");
-#endif
 	return sprite;
 }
 

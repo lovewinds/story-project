@@ -38,9 +38,6 @@ public:
 	//std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
 	//void releaseTexture(std::string path);
 
-	bool allocate();
-	void deallocate();
-
 	void setActiveState(bool active);
 
 	std::string getName();
@@ -53,16 +50,8 @@ protected:
 	EScene();
 	std::string name;
 
-	/* TODO: Scene is allocated on memory */
-	bool isAllocated;
-
 	/* TODO: Scene is activated, so it perform update and render */
 	bool isActivated;
-
-	bool allocateSprites();
-	bool allocateImages();
-	bool allocateTexts();
-	bool allocateRawTexture();
 
 	/* Sprite map for cache
 	 *   These sprites use allocated image texture on video memory.
