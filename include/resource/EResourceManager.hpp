@@ -51,6 +51,8 @@ public:
 	std::shared_ptr<EImageResource>
 	getImageResource(std::string resource_name);
 
+	void updateImageResourceCache();
+
 	std::shared_ptr<EImageTexture>
 	createImageTexture(std::string name, std::string base_image);
 
@@ -81,23 +83,12 @@ protected:
 
 	EResourceLoaderInterface *loader;
 
+	/* Store sprite info here for caching */
+	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;
+
 	std::map<std::string, std::shared_ptr<ESceneDesc>> scene_desc_map;
 
 	/* image map uses path as a key, it can have simillar prefix.
 	 * unordered_map can be more effecient for this case */
 	std::unordered_map<std::string, std::shared_ptr<EImageResource>> image_map;
-
-	/* Store sprite info here for caching */
-	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;
-
-	/* TODO: Remove unnecessary resource maps also */
-	//std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
-
-	/* Allocated Image Texture instances */
-	std::map<std::string, std::shared_ptr<EImageTexture>> _image_texture_map;
-
-	/* Texture map for cache
-	 *   These textures are already allocated on video memory.
-	 */
-	std::unordered_map<std::string, std::shared_ptr<SDLTextureWrap>> _texture_map;
 };

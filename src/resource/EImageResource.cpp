@@ -50,6 +50,7 @@ std::shared_ptr<SDLTextureWrap> EImageResource::getTexture()
 	if (texture == nullptr) {
 		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
+		LOG_ERR("Texture is not exists. create one");
 		texture = resManager.allocateTexture(path);
 		if (!texture) {
 			LOG_ERR("Failed to allocate resource [%s]", getPath().c_str());
@@ -65,22 +66,6 @@ void EImageResource::releaseTexture()
 	texture.reset();
 	texture = nullptr;
 
-	/* Notify destruction to ResourceManager.
-	* It will deallocate unused resource from memory.
-	*/
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	resManager.releaseTexture(path);
 }
-#if 0
-void EImageResource::allocate()
-{
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-
-	texture = resManager.allocateTexture(path);
-	if (!texture) {
-		LOG_ERR("Failed to allocate resource [%s]", getPath().c_str());
-	}
-
-	return;
-}
-#endif

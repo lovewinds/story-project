@@ -91,26 +91,6 @@ void EScene::render()
 	{
 		it.second->render();
 	}
-#if 0
-	std::list<EFigure*>::iterator	iter = textureList.begin();
-	Uint32 current = SDL_GetTicks();
-
-	/* TODO: Handle this texture same with others */
-	background->render();
-
-	while (iter != textureList.end()) {
-		EFigure* texture = *iter;
-		if (texture != NULL) {
-			texture->render();
-			//LOG_INFO("List Texture(%p) rendered !", texture);
-		} else {
-			LOG_INFO("List Texture is NULL. count: %lu", textureList.size());
-		}
-		iter++;
-	}
-	textTexture->render();
-	sprite->render();
-#endif
 }
 
 void EScene::update(Uint32 currentTime, Uint32 accumulator)
@@ -132,41 +112,4 @@ void EScene::update(Uint32 currentTime, Uint32 accumulator)
 	{
 		it.second->update(currentTime, accumulator);
 	}
-#if 0
-	//std::list<EDrawable*>::iterator	iter = textureList.begin();
-	std::list<EFigure*>::iterator	iter = textureList.begin();
-	while (iter != textureList.end()) {
-		EFigure* texture = *iter;
-		if (texture != NULL) {
-			//texture->calculate(currentTime, accumulator);
-			texture->update(currentTime, accumulator);
-		}
-		iter++;
-	}
-
-	/* TODO: Handle this texture same with others */
-	background->update(currentTime, accumulator);
-
-	textTexture->update(currentTime, accumulator);
-	sprite->update(currentTime, accumulator);
-
-	/* TEST */
-	if (testState & DIR_UP)
-		temp_moveCharacter(0.0, -1.0);
-	if (testState & DIR_DOWN)
-		temp_moveCharacter(0.0, 1.0);
-	if (testState & DIR_LEFT)
-		temp_moveCharacter(-1.0, 0.0);
-	if (testState & DIR_RIGHT)
-		temp_moveCharacter(1.0, 0.0);
-
-	if (testBackgroundState & DIR_UP)
-		temp_moveBackGround(0.0, -1.0);
-	if (testBackgroundState & DIR_DOWN)
-		temp_moveBackGround(0.0, 1.0);
-	if (testBackgroundState & DIR_LEFT)
-		temp_moveBackGround(-1.0, 0.0);
-	if (testBackgroundState & DIR_RIGHT)
-		temp_moveBackGround(1.0, 0.0);
-#endif
 }

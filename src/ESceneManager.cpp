@@ -44,6 +44,7 @@ void ESceneManager::stopCurrentScene()
 		EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 
 		currentScene = nullptr;
+		resMgr.updateImageResourceCache();
 	}
 }
 
@@ -97,8 +98,10 @@ void ESceneManager::handleEvent(SDL_Event e)
 			break;
 		case SDLK_BACKQUOTE:
 			if (overlayState) {
+				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 				overlayState = false;
 				overlay = nullptr;
+				resMgr.updateImageResourceCache();
 			}
 			else {
 				overlayState = true;
@@ -121,8 +124,10 @@ void ESceneManager::handleEvent(SDL_Event e)
 
 		if (te->x >= 0.3 && te-> x <= 0.6 && te->y >= 0.5) {
 			if (overlayState) {
+				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 				overlayState = false;
 				overlay = nullptr;
+				resMgr.updateImageResourceCache();
 			}
 			else {
 				overlayState = true;

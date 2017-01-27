@@ -64,16 +64,20 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 			LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
 
 			image = createImageTexture(imageDesc);
-			if (imageDesc->getWidthRatio() != 0.0)
-				image->setWidth(imageDesc->getWidthRatio(), true);
-			else
-				image->setWidth(imageDesc->getWidth(), false);
-			if (imageDesc->getHeightRatio() != 0.0)
-				image->setHeight(imageDesc->getHeightRatio(), true);
-			else
-				image->setHeight(imageDesc->getHeight(), false);
-			image->movePositionTo(imageDesc->getX(), imageDesc->getY());
-			scene->addImage(image);
+			if (nullptr == image) {
+				LOG_ERR("Failed to create Image !");
+			} else {
+				if (imageDesc->getWidthRatio() != 0.0)
+					image->setWidth(imageDesc->getWidthRatio(), true);
+				else
+					image->setWidth(imageDesc->getWidth(), false);
+				if (imageDesc->getHeightRatio() != 0.0)
+					image->setHeight(imageDesc->getHeightRatio(), true);
+				else
+					image->setHeight(imageDesc->getHeight(), false);
+				image->movePositionTo(imageDesc->getX(), imageDesc->getY());
+				scene->addImage(image);
+			}
 		}
 	}
 

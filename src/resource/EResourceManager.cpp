@@ -29,8 +29,6 @@ EResourceManager::~EResourceManager()
 	scene_desc_map.clear();
 	sprite_types.clear();
 
-	_image_texture_map.clear();
-	_texture_map.clear();
 	image_map.clear();
 
 	LOG_DBG("Bye ResourceManager !");
@@ -118,6 +116,14 @@ std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::stri
 
 std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string path)
 {
+	std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(path));
+
+	LOG_INFO("Creating raw texture for [%s]", path.c_str());
+	if (nullptr == texture) {
+		LOG_ERR("Failed to allocate texture !");
+	}
+
+#if 0
 	std::shared_ptr<SDLTextureWrap> result;
 	auto found = _texture_map.find(path);
 
@@ -149,13 +155,13 @@ std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string pa
 	} else {
 		result = found->second;
 	}
-
-	return result;
+#endif
+	return texture;
 }
 
-// TODO: Need to deallocate texture here if caching is applied.
 void EResourceManager::releaseTexture(std::string path)
 {
+#if 0
 	LOG_ERR("  Count of texture map items [%lu]", _texture_map.size());
 	if (_texture_map.empty())
 		return;
@@ -170,6 +176,7 @@ void EResourceManager::releaseTexture(std::string path)
 		if (found->second.use_count() == 1)
 			_texture_map.erase(found);
 	}
+#endif
 }
 
 bool EResourceManager::createSpriteType(std::shared_ptr<ESpriteType> spriteType)
@@ -285,6 +292,23 @@ EResourceManager::getImageResource(std::string resource_name)
 	return found;
 }
 
+void EResourceManager::updateImageResourceCache()
+{
+	LOG_DBG("Count of allocated image resources: [%lu]", image_map.size());
+	if (image_map.empty())
+		return;
+
+	for (auto it = image_map.begin(); it != image_map.end(); it++) {
+		LOG_INFO("  ImageResource[%s]: [%lu]",
+			it->first.c_str(), it->second.use_count());
+
+		/* Currently, ESprite and EImageTexture refer ImageResource.
+		 * If there is NO reference, deallocate texture */
+		if (it->second.unique())
+			it->second->releaseTexture();
+	}
+}
+
 std::shared_ptr<EImageTexture>
 EResourceManager::createImageTexture(std::string name, std::string base_image)
 {
@@ -293,24 +317,5 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 		LOG_ERR("Failed to create Image texture !!");
 		return nullptr;
 	}
-#if 0
-	//std::pair<std::map<std::string, std::shared_ptr<EImageTexture>>::iterator, bool> result;
-	auto map_result = _image_texture_map.emplace(name, imgTexture);
-
-	if (map_result.second) {
-		LOG_INFO("Created Image texture !!");
-	} else {
-		LOG_ERR("Failed to insert image texture map !");
-	}
-
-#if 1
-	LOG_INFO("Current Image textures:");
-	for(auto& it : _image_texture_map)
-	{
-		//auto t = it.second.get();
-		LOG_INFO("   %s", it.second->getName().c_str());
-	}
-#endif
-#endif
 	return imgTexture;
 }

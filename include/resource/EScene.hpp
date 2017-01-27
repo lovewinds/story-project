@@ -11,10 +11,10 @@
 #include "texture/EAnimation.hpp"
 #include "texture/EFigure.hpp"
 
-/* Scene
+/**
+ * Scene
  *
  * This class indicates specific scene on screen.
- *  - It should handle creation of resources to show.
  *  - It should own textures to show.
  *  - It should perform render and update.
  */
@@ -29,7 +29,9 @@ public:
 	virtual void render();
 	virtual void update(Uint32 currentTime, Uint32 accumulator);
 
-	/* Should handle creation of resources with Resource manager */
+	std::string getName();
+
+	/* Should handle creation of resources with ResourceFactory */
 	bool addSprite(std::shared_ptr<ESprite> sprite);
 
 	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
@@ -40,11 +42,8 @@ public:
 
 	void setActiveState(bool active);
 
-	std::string getName();
-
 	/* Export read-only resources */
 	const std::map<std::string, std::shared_ptr<ESprite>>& sprite_map;
-//	const std::unordered_map<std::string, std::shared_ptr<SDLTextureWrap>>& texture_map;
 
 protected:
 	EScene();
@@ -53,14 +52,16 @@ protected:
 	/* TODO: Scene is activated, so it perform update and render */
 	bool isActivated;
 
-	/* Sprite map for cache
-	 *   These sprites use allocated image texture on video memory.
+	/**
+	 * Texture map
+	 *   - All these pointers of texture resources are stored here
+	 *     to repeated search logic in ResourceManager.
+	 *   - Also, shared_ptr need to be stored here also
+	 *     for increase ref count.
 	 */
-	//std::map<std::string, std::shared_ptr<ESpriteInfo>> _sprite_map;
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 
 	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
-	//std::map<std::string, std::shared_ptr<EImageResource>> _img_resource_map;
 
 	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 

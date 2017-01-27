@@ -28,8 +28,10 @@ void ETextTexture::_createTexture()
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	if (mTexture) {
+		LOG_DBG("Remove previous texture");
 		mTexture.reset();
 	}
+	LOG_DBG("Create a new text texture");
 
 	mTexture = resFactory.createTextTexture(message, textColor, bgColor);
 	//LOG_ERR("[Text] texture [%p]", &mTexture);
