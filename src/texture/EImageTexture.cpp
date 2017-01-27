@@ -16,21 +16,9 @@ EImageTexture::EImageTexture(std::string name, std::string base_image) :
 {
 	radian = 0;
 	animating = false;
+
 	this->name = name;
 	this->base_image = base_image;
-}
-
-EImageTexture::EImageTexture(int x, int y) :
-	EDrawable(),
-	m_degrees(0.0),
-	wRatio(1.0), hRatio(1.0)
-{
-	radian = 0;
-	animating = false;
-
-	/* Set Position */
-	p_x = x;
-	p_y = y;
 
 	_createTexture();
 }
@@ -50,14 +38,17 @@ void EImageTexture::_createTexture()
 	}
 
 	image = resManager.getImageResource(base_image);
-
-	if (!image)
+	if (!image) {
+		LOG_ERR("Failed to get image resource !");
 		return;
+	}
 
 	if (mWidth == 0)
 		mWidth = image->getWidth();
 	if (mHeight == 0)
 		mHeight = image->getHeight();
+
+	LOG_DBG("Created. original image size [%d x %d]", mWidth, mHeight);
 
 	/* Get shared texture from Resource Manager */
 	mTexture = image->getTexture();
@@ -106,6 +97,8 @@ void EImageTexture::render()
 		else
 			texture_render((int)(p_x + ani_x), (int)(p_y + ani_y), &rect);
 	}
+	else
+		LOG_ERR("Texture not exist !");
 }
 
 int EImageTexture::getWidth()
@@ -118,7 +111,7 @@ int EImageTexture::getHeight()
 	return mHeight;
 }
 
-void EImageTexture::setWidth(int width, bool ratio)
+void EImageTexture::setWidth(double width, bool ratio)
 {
 	if (ratio)
 		wRatio = width / 100.0;
@@ -126,7 +119,7 @@ void EImageTexture::setWidth(int width, bool ratio)
 		mWidth = width;
 }
 
-void EImageTexture::setHeight(int height, bool ratio)
+void EImageTexture::setHeight(double height, bool ratio)
 {
 	if (ratio)
 		hRatio = height / 100.0;

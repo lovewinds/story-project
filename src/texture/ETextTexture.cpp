@@ -2,6 +2,7 @@
 
 #include "Ecore.hpp"
 #include "resource/EResourceManager.hpp"
+#include "resource/EResourceFactory.hpp"
 #include "texture/ETextTexture.hpp"
 #include "util/LogHelper.hpp"
 
@@ -24,13 +25,13 @@ void ETextTexture::_createTexture()
 {
 	TTF_Font* gFont = Ecore::getInstance()->getFont();
 	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	if (mTexture) {
 		mTexture.reset();
 	}
 
-	mTexture = resManager.allocateTextTexture(message, textColor, bgColor);
+	mTexture = resFactory.createTextTexture(message, textColor, bgColor);
 	//LOG_ERR("[Text] texture [%p]", &mTexture);
 	if (!mTexture) {
 		LOG_ERR("Failed to allocate text texture!");

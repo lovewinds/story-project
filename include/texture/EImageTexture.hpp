@@ -12,7 +12,6 @@ class EImageTexture : public EDrawable
 public:
 	/* Initializes variables */
 	EImageTexture(std::string name, std::string base_image);
-	EImageTexture(int x, int y);
 
 	/* Deallocates memory */
 	~EImageTexture();
@@ -24,8 +23,8 @@ public:
 	/* Gets image dimensions */
 	int getWidth();
 	int getHeight();
-	void setWidth(int width, bool ratio = false);
-	void setHeight(int height, bool ratio = false);
+	void setWidth(double width, bool ratio = false);
+	void setHeight(double height, bool ratio = false);
 	void setPos(int x, int y);
 	std::string getName();
 

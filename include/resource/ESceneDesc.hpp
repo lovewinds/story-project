@@ -50,8 +50,8 @@ class EImageDesc
 public:
 	EImageDesc(std::string name, std::string sourceType, int x, int y);
 
-	void setWidth(int width);
-	void setHeight(int height);
+	void setWidth(double width);
+	void setHeight(double height);
 	void setWidthRatio(double width);
 	void setHeightRatio(double height);
 
@@ -59,14 +59,18 @@ public:
 	std::string getType();
 	int getX();
 	int getY();
+	double getWidth();
+	double getHeight();
+	double getWidthRatio();
+	double getHeightRatio();
 
 protected:
 	std::string name;
 	std::string type;
 	int pos_x;
 	int pos_y;
-	int width;
-	int height;
+	double width;
+	double height;
 	double width_ratio;
 	double height_ratio;
 };

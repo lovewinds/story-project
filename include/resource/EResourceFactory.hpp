@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <memory>
 
+#include <SDL.h>
+
 #include "resource/EScene.hpp"
 #include "resource/ESceneDesc.hpp"
 #include "resource/ESpriteType.hpp"
@@ -47,4 +49,11 @@ public:
 	createSprite(std::shared_ptr<ESpriteDesc> spriteDesc);
 
 	void removeSprite(std::string name);
+
+/**
+ * Low - layer functions
+ */
+	std::shared_ptr<SDLTextureWrap>
+	createTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
+
 };

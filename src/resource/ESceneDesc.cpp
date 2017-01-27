@@ -41,12 +41,12 @@ EImageDesc::EImageDesc(std::string name, std::string sourceType, int x, int y)
 	this->pos_y = y;
 }
 
-void EImageDesc::setWidth(int width)
+void EImageDesc::setWidth(double width)
 {
 	this->width = width;
 }
 
-void EImageDesc::setHeight(int height)
+void EImageDesc::setHeight(double height)
 {
 	this->height = height;
 }
@@ -79,6 +79,26 @@ int EImageDesc::getX()
 int EImageDesc::getY()
 {
 	return pos_y;
+}
+
+double EImageDesc::getWidth()
+{
+	return width;
+}
+
+double EImageDesc::getHeight()
+{
+	return height;
+}
+
+double EImageDesc::getWidthRatio()
+{
+	return width_ratio;
+}
+
+double EImageDesc::getHeightRatio()
+{
+	return height_ratio;
 }
 
 /**

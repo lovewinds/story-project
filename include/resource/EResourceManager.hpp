@@ -33,9 +33,6 @@ public:
 
 	std::shared_ptr<ESceneDesc> getSceneDesc(std::string name);
 
-	/* Register Scene descriptor into ResourceManager */
-	bool registerScene(ESceneType type, std::string scene_name);
-
 	/* Create scene with name
 	 * (for some debug purpose) */
 	std::shared_ptr<EScene> createScene(ESceneType type, std::string scene_name);
@@ -68,18 +65,6 @@ public:
 
 	std::shared_ptr<ESprite>
 	createSprite(std::string type, std::string name);
-
-/*
- * Text texture Functions
- */
-	std::shared_ptr<SDLTextureWrap>
-	allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
-
-/*
- * Grid texture map
- */
- 	std::shared_ptr<SDLTextureWrap>
-	allocateGridMapTexture(std::vector<std::vector<short> > map);
 
 /*
  * Texture Functions

@@ -64,6 +64,14 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 			LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
 
 			image = createImageTexture(imageDesc);
+			if (imageDesc->getWidthRatio() != 0.0)
+				image->setWidth(imageDesc->getWidthRatio(), true);
+			else
+				image->setWidth(imageDesc->getWidth(), false);
+			if (imageDesc->getHeightRatio() != 0.0)
+				image->setHeight(imageDesc->getHeightRatio(), true);
+			else
+				image->setHeight(imageDesc->getHeight(), false);
 			image->movePositionTo(imageDesc->getX(), imageDesc->getY());
 			scene->addImage(image);
 		}
@@ -120,4 +128,19 @@ EResourceFactory::createSprite(std::shared_ptr<ESpriteDesc> spriteDesc)
 void EResourceFactory::removeSprite(std::string name)
 {
 
+}
+
+/**
+ * Low layer functions
+ */
+std::shared_ptr<SDLTextureWrap>
+EResourceFactory::createTextTexture(std::string text,
+		SDL_Color textColor, SDL_Color bgColor)
+{
+	/* Currently, text textures are not cached */
+	std::shared_ptr<SDLTextureWrap> texture(
+		new SDLTextureWrap(text, textColor, bgColor));
+
+	LOG_DBG("[ResFactory] texture [%p]", &texture);
+	return texture;
 }

@@ -153,22 +153,6 @@ std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string pa
 	return result;
 }
 
-std::shared_ptr<SDLTextureWrap>
-EResourceManager::allocateTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
-{
-	std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(text, textColor, bgColor));
-	LOG_ERR("[ResMgr] texture [%p]", &texture);
-	return texture;
-}
-
-std::shared_ptr<SDLTextureWrap>
-EResourceManager::allocateGridMapTexture(std::vector<std::vector<short> > map)
-{
-	std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(map));
-	LOG_ERR("[ResMgr] texture [%p]", &texture);
-	return texture;
-}
-
 // TODO: Need to deallocate texture here if caching is applied.
 void EResourceManager::releaseTexture(std::string path)
 {
@@ -309,7 +293,7 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 		LOG_ERR("Failed to create Image texture !!");
 		return nullptr;
 	}
-
+#if 0
 	//std::pair<std::map<std::string, std::shared_ptr<EImageTexture>>::iterator, bool> result;
 	auto map_result = _image_texture_map.emplace(name, imgTexture);
 
@@ -327,6 +311,6 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 		LOG_INFO("   %s", it.second->getName().c_str());
 	}
 #endif
-
+#endif
 	return imgTexture;
 }

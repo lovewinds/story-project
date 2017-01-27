@@ -199,41 +199,10 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 						std::shared_ptr<ESpriteDesc> spriteDesc(
 							new ESpriteDesc(itm_name, itm_source, p_x, p_y)
 						);
-						#if 0
-						LOG_DBG("Searching sprite source [%s]", itm_source.c_str());
-						std::shared_ptr<ESpriteType> spriteType = resManager->getSpriteType(itm_source);
-						if (spriteType) {
-							auto s = spriteType->createSprite(itm_name, p_x, p_y);
-							s->setIndex(idx * 4);
-							scene->addSprite(s);
-							LOG_INFO("   [Sprite] %s prepared", s->getName().c_str());
-						}
-						idx++;
-						#endif
 						layerDesc->addSpriteDesc(spriteDesc);
 					}
 					else if (itm_node.compare("Image") == 0) {
 						/* Image descriptor */
-						#if 0
-						LOG_DBG("Searching image source [%s]", itm_source.c_str());
-						auto img = resManager->createImageTexture(itm_name, itm_source);
-						if (img) {
-							if (width_percent)
-								img->setWidth(p_w, true);
-							else
-								img->setWidth(p_w, false);
-							if (height_percent)
-								img->setHeight(p_h, true);
-							else
-								img->setHeight(p_h, false);
-							img->setPos(p_x, p_y);
-							scene->addImage(img);
-							LOG_INFO("   [Image] %s prepared", itm_name.c_str());
-						}
-						else {
-							LOG_ERR("Failed to create ImageTexture !");
-						}
-						#endif
 						LOG_INFO("Create Image descriptor [%s](T:%s) into (%3d, %3d)",
 							itm_name.c_str(), itm_source.c_str(), p_x, p_y);
 						std::shared_ptr<EImageDesc> imageDesc(

@@ -44,7 +44,7 @@ bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 {
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
-		LOG_ERR("Failed to insert sprite set !");
+		LOG_ERR("Failed to insert sprite map!");
 		return false;
 	}
 	return true;
@@ -54,7 +54,7 @@ bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
 {
 	auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
 	if (!result.second) {
-		LOG_ERR("Failed to insert imgTexture set !");
+		LOG_ERR("Failed to insert image map!");
 		return false;
 	}
 	return true;
