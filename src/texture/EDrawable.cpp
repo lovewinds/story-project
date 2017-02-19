@@ -46,66 +46,14 @@ void EDrawable::movePositionBy(double delta_x, double delta_y)
 	p_y += delta_y;
 }
 
-void EDrawable::setAnimation(std::shared_ptr<EAnimation> animation)
+double EDrawable::getPositionX()
 {
-	this->animation = animation;
+	return p_x;
 }
 
-std::shared_ptr<EAnimation> EDrawable::getAnimation()
+double EDrawable::getPositionY()
 {
-	return animation;
-}
-
-AnimationState EDrawable::getAnimationState()
-{
-	if (nullptr == animation)
-		return ANI_NONE;
-
-	return animation->getState();
-}
-
-void EDrawable::startAnimation()
-{
-	if (animation) {
-		animation->start();
-	}
-}
-
-void EDrawable::stopAnimation()
-{
-	if (animation) {
-		animation->stop();
-	}
-}
-
-void EDrawable::pauseAnimation()
-{
-	if (animation) {
-		animation->pause();
-	}
-}
-
-void EDrawable::resumeAnimation()
-{
-	if (animation) {
-		animation->resume();
-	}
-}
-
-void EDrawable::finishedAnimationCallback(double delta_x, double delta_y)
-{
-	LOG_DBG("Animation Finished. update position");
-	p_x += delta_x;
-	p_y += delta_y;
-
-	//animation = nullptr;
-}
-
-void EDrawable::syncAnimationCallback(double delta_x, double delta_y)
-{
-	LOG_DBG("update position");
-	p_x += delta_x;
-	p_y += delta_y;
+	return p_y;
 }
 
 void EDrawable::dealloc()

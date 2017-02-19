@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
@@ -32,30 +34,71 @@ ERPGScene::ERPGScene(std::string name)
 
 ERPGScene::~ERPGScene()
 {
+	gridMap.reset();
+
 	LOG_INFO("ERPGScene[%s] removed", name.c_str());
+}
+
+/* Store Image and Sprite to render position based */
+bool ERPGScene::addSprite(std::shared_ptr<ESprite> sprite)
+{
+	double _x = 0.0;
+	double _y = 0.0;
+	std::ostringstream stringStream;
+	std::string position_str;
+	unsigned long pos = 0;
+
+	LOG_DBG("Check sprite position [%3d, %3d]",
+		(int)sprite->getPositionX(), (int)sprite->getPositionY());
+
+	_x = sprite->getPositionX() * 32.0;
+	_y = sprite->getPositionY() * 32.0;
+	sprite->movePositionTo(_x, _y);
+
+	/* Make position based string
+	 *    YYYYXXXX
+	 */
+	pos = ((unsigned int)_y & 0xFFFF) << 16;
+	pos = pos + ((unsigned int)_x & 0xFFFF);
+  	stringStream << std::hex << std::setfill('0') << std::setw(8)
+  		<< pos << std::dec
+  		<< "_" << sprite->getName();
+	position_str = stringStream.str();
+	LOG_DBG("POS [%s]", position_str.c_str());
+
+	/* Convert into actual position from grid position */
+	auto result = _sprite_map.emplace(position_str, sprite);
+	if (!result.second) {
+		LOG_ERR("Failed to insert sprite map!");
+		return false;
+	}
+	return true;
 }
 
 void ERPGScene::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
-	for (auto& it : _sprite_map)
+	//for (auto& it : _sprite_map)
+	for (auto& it : _object_map)
 	{
-		auto& sprite = it.second;
+		auto& object = it.second;
 		switch (state) {
 		case ANI_STOP:
-			sprite->stopAnimation();
+			object->stopAnimation();
 			break;
 		case ANI_START:
 			ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
-			sprite->setAnimation(ani);
-			sprite->startAnimation();
+			object->setAnimation(ani);
+			object->startAnimation();
 			/* Update position animation finished? */
 			break;
 		case ANI_PAUSE:
-			sprite->pauseAnimation();
+			object->pauseAnimation();
 			break;
 		case ANI_RESUME:
-			sprite->resumeAnimation();
+			object->resumeAnimation();
+			break;
+		default:
 			break;
 		}
 	}
@@ -66,35 +109,36 @@ void ERPGScene::handleMove(GridMoveDir dir)
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
 
-	for (auto& it : _sprite_map)
+	//for (auto& it : _sprite_map)
+	for (auto& it : _object_map)
 	{
-		if (it.first.compare("g1") == 0)	continue;
-
-		auto& sprite = it.second;
-		switch (sprite->getAnimationState())
-		{
-		case ANI_NONE:
-			ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation(dir));
-			ani->setCaller(sprite);
-			sprite->setAnimation(ani);
-			sprite->startAnimation();
-			break;
-		case ANI_STOP:
-			LOG_DBG("Stopped. set new one and start again!");
-			ani = sprite->getAnimation();
-			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-			if (grid) {
-				grid->setDirection(dir);
+		if (it.second->isControllable()) {
+			auto& object = it.second;
+			switch (object->getAnimationState())
+			{
+			case ANI_NONE:
+				ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation(dir));
+				ani->setCaller(object);
+				object->setAnimation(ani);
+				object->startAnimation();
+				break;
+			case ANI_STOP:
+				LOG_DBG("Stopped. set new one and start again!");
+				ani = object->getAnimation();
+				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+				if (grid) {
+					grid->setDirection(dir);
+				}
+				object->startAnimation();
+				break;
+			default:
+				ani = object->getAnimation();
+				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+				if (grid) {
+					grid->setNextDirection(dir);
+				}
+				break;
 			}
-			sprite->startAnimation();
-			break;
-		default:
-			ani = sprite->getAnimation();
-			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-			if (grid) {
-				grid->setNextDirection(dir);
-			}
-			break;
 		}
 	}
 }
@@ -167,26 +211,26 @@ void ERPGScene::handleEvent(SDL_Event e)
 
 void ERPGScene::render()
 {
-	gridMap->render();
+	gridMap->render(0, 0);
 
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _text_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _drawable_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 }
 

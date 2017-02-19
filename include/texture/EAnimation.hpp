@@ -2,8 +2,21 @@
 
 #include <SDL.h>
 
+//#include "texture/GraphicObject.hpp"
+
 /* Avoid circular reference */
-class EDrawable;
+//class EDrawable;
+namespace story {
+	namespace Graphic {
+		class Object;
+	}
+}
+
+enum AnimationRepeatType
+{
+	ANI_NO_REPEAT,
+	ANI_REPEAT
+};
 
 enum AnimationState
 {
@@ -30,7 +43,7 @@ public:
     double getY();
 	AnimationState getState();
 
-	void setCaller(std::shared_ptr<EDrawable> caller);
+	void setCaller(std::shared_ptr<story::Graphic::Object> caller);
 
     virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
@@ -41,9 +54,9 @@ protected:
 
 	/* This model only supports one callback at one time. */
 	/* TODO: Use callback list */
-	//std::weak_ptr<EDrawable> caller;
+	//std::weak_ptr<story::Graphic::Object> caller;
 
-	std::weak_ptr<EDrawable> caller;
+	std::weak_ptr<story::Graphic::Object> caller;
 
 	/* Position */
 	double a_x;

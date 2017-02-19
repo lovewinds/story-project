@@ -16,7 +16,7 @@ public:
 	virtual void setText(const std::string& text);
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void render();
+	virtual void render(int delta_x, int delta_y);
 
 protected:
 	void _createTexture();

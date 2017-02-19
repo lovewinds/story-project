@@ -63,13 +63,9 @@ void EImageTexture::_removeTexture()
 
 void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
-	/* Animation */
-	if (animation) {
-		animation->update(currentTime, accumulator);
-	}
 }
 
-void EImageTexture::render()
+void EImageTexture::render(int delta_x, int delta_y)
 {
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	int width = 0, height = 0;
@@ -82,10 +78,8 @@ void EImageTexture::render()
 	rect.w = mWidth;
 	rect.h = mHeight;
 
-	if (animation) {
-		ani_x = animation->getX();
-		ani_y = animation->getY();
-	}
+	ani_x = delta_x;
+	ani_y = delta_y;
 
 	if (mTexture) {
 		//texture_render(0, 0, &rect);

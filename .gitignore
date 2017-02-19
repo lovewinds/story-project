@@ -27,7 +27,7 @@
 *.app
 
 # Project files
-*.vpw
+*.vpw*
 *.vpj
 *.vpwhist
 

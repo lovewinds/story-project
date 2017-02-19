@@ -11,6 +11,7 @@ ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :
 	sprite_index = 0;
 	sprite_change = 1;
 	prevTime = 0;
+	//controllable = false;
 
 	/* TODO: This logic should be moved proper location */
 	/* No blending */
@@ -94,21 +95,15 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 		if (sprite_index >= (int8_t)gSpriteClips.size())
 			sprite_index = 0;
 	}
-
-	/* Animation */
-	if (animation) {
-		animation->update(currentTime, accumulator);
-	}
 }
 
-void ESprite::render()
+void ESprite::render(int delta_x, int delta_y)
 {
 	double ani_x = 0, ani_y = 0;
 
-	if (animation) {
-		ani_x = animation->getX();
-		ani_y = animation->getY();
-	}
+	ani_x = delta_x;
+	ani_y = delta_y;
+
 	//texture_render(200, 200, &gSpriteClips[sprite_index]);
 	//texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
 	if (mTexture) {

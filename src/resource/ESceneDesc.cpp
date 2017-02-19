@@ -11,6 +11,7 @@ ESpriteDesc::ESpriteDesc(std::string name, std::string sourceType, int x, int y)
 	this->type = sourceType;
 	this->pos_x = x;
 	this->pos_y = y;
+	controllable = false;
 }
 
 std::string ESpriteDesc::getName()
@@ -31,6 +32,16 @@ int ESpriteDesc::getX()
 int ESpriteDesc::getY()
 {
 	return pos_y;
+}
+
+void ESpriteDesc::setControllable(bool controllable)
+{
+	this->controllable = controllable;
+}
+
+bool ESpriteDesc::isControllable()
+{
+	return controllable;
 }
 
 EImageDesc::EImageDesc(std::string name, std::string sourceType, int x, int y)

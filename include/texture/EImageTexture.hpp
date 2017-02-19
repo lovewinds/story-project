@@ -18,7 +18,7 @@ public:
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 	//virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void render();
+	virtual void render(int delta_x, int delta_y);
 
 	/* Gets image dimensions */
 	int getWidth();

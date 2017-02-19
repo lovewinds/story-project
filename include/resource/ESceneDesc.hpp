@@ -33,6 +33,9 @@ class ESpriteDesc
 public:
 	ESpriteDesc(std::string name, std::string sourceType, int x, int y);
 
+	void setControllable(bool controllable);
+	bool isControllable();
+
 	std::string getName();
 	std::string getType();
 	int getX();
@@ -43,6 +46,7 @@ protected:
 	std::string type;
 	int pos_x;
 	int pos_y;
+	bool controllable;
 };
 
 class EImageDesc

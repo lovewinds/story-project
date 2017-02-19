@@ -194,11 +194,19 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					 * Instance will be allocated when scene class is created. */
 					if (itm_node.compare("Sprite") == 0) {
 						/* Sprite descriptor */
+						std::string itm_ctrl(node.node().attribute("controllable").value());
 						LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
 							itm_name.c_str(), itm_source.c_str(), p_x, p_y);
 						std::shared_ptr<ESpriteDesc> spriteDesc(
 							new ESpriteDesc(itm_name, itm_source, p_x, p_y)
 						);
+
+						if (itm_ctrl.empty() == false) {
+							if (itm_ctrl.compare("true") == 0 || itm_ctrl.compare("1") == 0) {
+								spriteDesc->setControllable(true);
+							}
+						}
+
 						layerDesc->addSpriteDesc(spriteDesc);
 					}
 					else if (itm_node.compare("Image") == 0) {
@@ -218,6 +226,14 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 							imageDesc->setHeight(p_h);
 
 						layerDesc->addImageDesc(imageDesc);
+					}
+					else if (itm_node.compare("RawMap") == 0) {
+						/* Raw map data */
+						for (pugi::xml_node map_idx : node.node().children())
+						{
+							std::string pcdata(map_idx.text().get());
+							LOG_DBG("   raw : %s", pcdata.c_str());
+						}
 					}
 				} /* Layer items loop */
 

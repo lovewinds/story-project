@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
+#include "texture/GraphicObject.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
@@ -32,7 +33,8 @@ public:
 	std::string getName();
 
 	/* Should handle creation of resources with ResourceFactory */
-	bool addSprite(std::shared_ptr<ESprite> sprite);
+	virtual bool addSprite(std::shared_ptr<ESprite> sprite);
+	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
 	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
 
@@ -69,4 +71,6 @@ protected:
 
 	/* Not classified textures */
 	std::map<std::string, std::shared_ptr<EDrawable>> _raw_texture_map;
+
+	std::map<std::string, std::shared_ptr<story::Graphic::Object>> _object_map;
 };

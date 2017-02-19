@@ -25,22 +25,13 @@ public:
 	void setColor(Uint8 red, Uint8 green, Uint8 blue);
 
 	/* Position */
+	double getPositionX();
+	double getPositionY();
 	void movePositionTo(double x, double y);
 	void movePositionBy(double delta_x, double delta_y);
 
-	/* Animation */
-	void setAnimation(std::shared_ptr<EAnimation> animation);
-	std::shared_ptr<EAnimation> getAnimation();
-	AnimationState getAnimationState();
-	virtual void startAnimation();
-	virtual void stopAnimation();
-	virtual void pauseAnimation();
-	virtual void resumeAnimation();
-	virtual void finishedAnimationCallback(double delta_x, double delta_y);
-	virtual void syncAnimationCallback(double delta_x, double delta_y);
-
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
-	virtual void render() = 0;
+	virtual void render(int delta_x, int delta_y) = 0;
 
 protected:
 	/* The actual SDL texture */
@@ -53,9 +44,6 @@ protected:
 	/* Texture dimensions */
 	int mWidth = 0;
 	int mHeight = 0;
-
-	/* Animation */
-	std::shared_ptr<EAnimation> animation;
 
 	/* Renders texture at given point */
 	virtual void texture_render(int x, int y,

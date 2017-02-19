@@ -47,28 +47,29 @@ EVisualNovelScene::~EVisualNovelScene()
 void EVisualNovelScene::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
-	for (auto& it : _img_texture_map)
+	//for (auto& it : _img_texture_map)
+	for (auto& it : _object_map)
 	{
-		auto& sprite = it.second;
+		auto& object = it.second;
 		switch (state) {
 		case ANI_STOP:
-			sprite->stopAnimation();
+			object->stopAnimation();
 			break;
 		case ANI_START:
 			ani = std::shared_ptr<EAnimation>(new EAccelAnimation());
-			sprite->setAnimation(ani);
-			sprite->startAnimation();
+			object->setAnimation(ani);
+			object->startAnimation();
 			/* Update position animation finished? */
 			break;
 		case ANI_PAUSE:
-			sprite->pauseAnimation();
+			object->pauseAnimation();
 			break;
 		case ANI_RESUME:
-			sprite->resumeAnimation();
+			object->resumeAnimation();
 			break;
 		}
 	}
-
+#if 0
 	for (auto& it : _drawable_map)
 	{
 		auto& drawable = it.second;
@@ -90,6 +91,7 @@ void EVisualNovelScene::testAnimation(AnimationState state)
 			break;
 		}
 	}
+#endif
 }
 
 void EVisualNovelScene::handleEvent(SDL_Event e)
@@ -123,22 +125,22 @@ void EVisualNovelScene::render()
 {
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _drawable_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _text_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 }
 

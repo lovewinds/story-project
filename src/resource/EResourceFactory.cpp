@@ -6,6 +6,7 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
+#include "texture/GraphicObject.hpp"
 
 #include "resource/ERPGScene.hpp"
 #include "resource/EVisualNovelScene.hpp"
@@ -49,10 +50,16 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 		{
 			std::shared_ptr<ESpriteDesc> spriteDesc = sprite_it;
 			std::shared_ptr<ESprite> sprite;
+			std::shared_ptr<story::Graphic::Object> object;
 			LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
 
 			sprite = createSprite(spriteDesc);
 			sprite->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
+			if (spriteDesc->isControllable())
+				object->setControllable(true);
+
+			object->setSprite(sprite);
+			scene->addObject(object);
 			scene->addSprite(sprite);
 		}
 

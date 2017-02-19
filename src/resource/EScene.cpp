@@ -26,6 +26,7 @@ EScene::~EScene()
 {
 	_sprite_map.clear();
 	_text_texture_map.clear();
+	_object_map.clear();
 
 	isActivated = false;
 
@@ -45,6 +46,16 @@ bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
 		LOG_ERR("Failed to insert sprite map!");
+		return false;
+	}
+	return true;
+}
+
+bool EScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+{
+	auto result = _object_map.emplace(object->getName(), object);
+	if (!result.second) {
+		LOG_ERR("Failed to insert object map!");
 		return false;
 	}
 	return true;
@@ -74,22 +85,27 @@ void EScene::render()
 {
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 
 	for (auto& it : _text_texture_map)
+	{
+		it.second->render(0, 0);
+	}
+
+	for (auto& it : _object_map)
 	{
 		it.second->render();
 	}
 
 	for (auto& it : _raw_texture_map)
 	{
-		it.second->render();
+		it.second->render(0, 0);
 	}
 }
 
@@ -104,6 +120,11 @@ void EScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	for(auto& it : _text_texture_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto& it : _object_map)
 	{
 		it.second->update(currentTime, accumulator);
 	}

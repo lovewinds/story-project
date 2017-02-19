@@ -31,7 +31,7 @@ EFigure::~EFigure()
 {
 
 }
-
+#if 0
 void EFigure::startAnimation()
 {
 	animating = true;
@@ -44,7 +44,7 @@ void EFigure::stopAnimation()
 {
 	animating = false;
 }
-
+#endif
 void EFigure::update(Uint32 currentTime, Uint32 accumulator)
 {
 	static Uint32 prevTime = 0;
@@ -82,7 +82,7 @@ void EFigure::update(Uint32 currentTime, Uint32 accumulator)
 	prevTime = delta;
 }
 
-void EFigure::render()
+void EFigure::render(int delta_x, int delta_y)
 {
 	SDL_Renderer *renderer = Ecore::getInstance()->getRenderer();
 	if (renderer == NULL)
