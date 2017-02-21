@@ -11,7 +11,6 @@ class Object
 {
 public:
 	Object();
-	Object(int x, int y);
 
 	virtual ~Object();
 

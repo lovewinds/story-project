@@ -50,7 +50,8 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 		{
 			std::shared_ptr<ESpriteDesc> spriteDesc = sprite_it;
 			std::shared_ptr<ESprite> sprite;
-			std::shared_ptr<story::Graphic::Object> object;
+			std::shared_ptr<story::Graphic::Object> object
+				(new story::Graphic::Object());
 			LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
 
 			sprite = createSprite(spriteDesc);
