@@ -40,7 +40,7 @@ ERPGScene::~ERPGScene()
 }
 
 /* Store Image and Sprite to render position based */
-bool ERPGScene::addSprite(std::shared_ptr<ESprite> sprite)
+bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 {
 	double _x = 0.0;
 	double _y = 0.0;
@@ -48,12 +48,12 @@ bool ERPGScene::addSprite(std::shared_ptr<ESprite> sprite)
 	std::string position_str;
 	unsigned long pos = 0;
 
-	LOG_DBG("Check sprite position [%3d, %3d]",
-		(int)sprite->getPositionX(), (int)sprite->getPositionY());
+	LOG_DBG("Check object position [%3d, %3d]",
+		(int)object->getPositionX(), (int)object->getPositionY());
 
-	_x = sprite->getPositionX() * 32.0;
-	_y = sprite->getPositionY() * 32.0;
-	sprite->movePositionTo(_x, _y);
+	_x = object->getPositionX() * 32.0;
+	_y = object->getPositionY() * 32.0;
+	object->movePositionTo(_x, _y);
 
 	/* Make position based string
 	 *    YYYYXXXX
@@ -62,14 +62,14 @@ bool ERPGScene::addSprite(std::shared_ptr<ESprite> sprite)
 	pos = pos + ((unsigned int)_x & 0xFFFF);
   	stringStream << std::hex << std::setfill('0') << std::setw(8)
   		<< pos << std::dec
-  		<< "_" << sprite->getName();
+  		<< "_" << object->getName();
 	position_str = stringStream.str();
 	LOG_DBG("POS [%s]", position_str.c_str());
 
 	/* Convert into actual position from grid position */
-	auto result = _sprite_map.emplace(position_str, sprite);
+	auto result = _object_map.emplace(position_str, object);
 	if (!result.second) {
-		LOG_ERR("Failed to insert sprite map!");
+		LOG_ERR("Failed to insert object map!");
 		return false;
 	}
 	return true;
@@ -232,6 +232,11 @@ void ERPGScene::render()
 	{
 		it.second->render(0, 0);
 	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->render();
+	}
 }
 
 void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
@@ -250,6 +255,11 @@ void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	for (auto& it : _drawable_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto& it : _object_map)
 	{
 		it.second->update(currentTime, accumulator);
 	}

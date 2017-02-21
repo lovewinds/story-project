@@ -33,10 +33,7 @@ public:
 	std::string getName();
 
 	/* Should handle creation of resources with ResourceFactory */
-	virtual bool addSprite(std::shared_ptr<ESprite> sprite);
 	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
-
-	bool addImage(std::shared_ptr<EImageTexture> imgTexture);
 
 	/* Resource manager allocates image resource */
 	//std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);

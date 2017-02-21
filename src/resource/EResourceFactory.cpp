@@ -54,14 +54,17 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 				(new story::Graphic::Object());
 			LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
 
+			/* TODO: Creation should be performed with ObjectFactory */
 			sprite = createSprite(spriteDesc);
+			object->setName(spriteDesc->getName());
 			sprite->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
+			object->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
 			if (spriteDesc->isControllable())
 				object->setControllable(true);
 
-			object->setSprite(sprite);
+			object->addSprite(sprite);
 			scene->addObject(object);
-			scene->addSprite(sprite);
+			//scene->addSprite(sprite);
 		}
 
 		/* Create images from image descriptor */
@@ -69,8 +72,11 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 		{
 			std::shared_ptr<EImageDesc> imageDesc = image_it;
 			std::shared_ptr<EImageTexture> image;
+			std::shared_ptr<story::Graphic::Object> object
+				(new story::Graphic::Object());
 			LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
 
+			object->setName(imageDesc->getName());
 			image = createImageTexture(imageDesc);
 			if (nullptr == image) {
 				LOG_ERR("Failed to create Image !");
@@ -84,7 +90,11 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 				else
 					image->setHeight(imageDesc->getHeight(), false);
 				image->movePositionTo(imageDesc->getX(), imageDesc->getY());
-				scene->addImage(image);
+				object->movePositionTo(imageDesc->getX(), imageDesc->getY());
+				
+				object->addImage(image);
+				scene->addObject(object);
+				//scene->addImage(image);
 			}
 		}
 	}

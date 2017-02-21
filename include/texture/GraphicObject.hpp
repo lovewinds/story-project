@@ -1,8 +1,13 @@
 #pragma once
 
+#include <string>
+#include <memory>
+#include <map>
+
 #include "texture/EAnimation.hpp"
 #include "texture/EDrawable.hpp"
 #include "texture/ESprite.hpp"
+#include "texture/EImageTexture.hpp"
 
 namespace story {
 namespace Graphic {
@@ -36,9 +41,11 @@ public:
 
 	/* Primitive */
 	std::string getName();
+	void setName(std::string name);
 	void setVisible(bool visible);
 	void setTransparent(int percent);
-	void setSprite(std::shared_ptr<ESprite> sprite);
+	void addSprite(std::shared_ptr<ESprite> sprite);
+	void addImage(std::shared_ptr<EImageTexture> sprite);
 
 	/* compatibility */
 	void setControllable(bool controllable);
@@ -46,7 +53,9 @@ public:
 
 protected:
 	std::string name;
-	std::shared_ptr<EDrawable>	drawable;
+
+	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
+	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
 
 	/* Animation */
 	std::shared_ptr<EAnimation> animation;

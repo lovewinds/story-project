@@ -171,8 +171,12 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					bool width_percent = false;
 					bool height_percent = false;
 					try {
-						p_x = std::stoi(itm_p_x);
-						p_y = std::stoi(itm_p_y);
+						if (itm_p_x.empty() == false) {
+							p_x = std::stoi(itm_p_x);
+						}
+						if (itm_p_y.empty() == false) {
+							p_y = std::stoi(itm_p_y);
+						}
 						if (itm_p_w.empty() == false) {
 							p_w = std::stoi(itm_p_w);
 							if (itm_p_w.length() > 1 && itm_p_w.substr(itm_p_w.length() - 1, 1) == std::string("%"))

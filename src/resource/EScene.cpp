@@ -38,6 +38,17 @@ std::string EScene::getName()
 	return name;
 }
 
+bool EScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+{
+	auto result = _object_map.emplace(object->getName(), object);
+	if (!result.second) {
+		LOG_ERR("Failed to insert object map!");
+		return false;
+	}
+	return true;
+}
+
+#if 0
 /**
  * Store sprites already allocated.
  */
@@ -46,16 +57,6 @@ bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
 		LOG_ERR("Failed to insert sprite map!");
-		return false;
-	}
-	return true;
-}
-
-bool EScene::addObject(std::shared_ptr<story::Graphic::Object> object)
-{
-	auto result = _object_map.emplace(object->getName(), object);
-	if (!result.second) {
-		LOG_ERR("Failed to insert object map!");
 		return false;
 	}
 	return true;
@@ -70,6 +71,7 @@ bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
 	}
 	return true;
 }
+#endif
 
 void EScene::setActiveState(bool active)
 {

@@ -40,7 +40,7 @@ public:
 	virtual void render();
 	virtual void update(Uint32 currentTime, Uint32 accumulator);
 
-	virtual bool addSprite(std::shared_ptr<ESprite> sprite);
+	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
 	void testAnimation(AnimationState state);
 	void handleMove(GridMoveDir dir);
