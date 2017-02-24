@@ -44,7 +44,7 @@ public:
     double getY();
 	AnimationState getState();
 
-	void setCaller(std::shared_ptr<story::Graphic::Object> caller);
+	void setCaller(std::weak_ptr<story::Graphic::Object> caller);
 
     virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 

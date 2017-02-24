@@ -23,12 +23,29 @@ ERPGScene::ERPGScene(std::string name)
 		LOG_ERR("Failed to insert text set !");
 	}
 #endif
+	/* Create base map textures */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+
 	std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
 	gridMap = map;
 	auto result = _raw_texture_map.emplace("GridMap", map);
 	if (!result.second) {
 		LOG_ERR("Failed to insert texture!");
+	}
+
+	/* Create sprite by manually for test */
+	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+	std::shared_ptr<ESprite> sprite;
+
+	sprite = resManager.createSprite("char_girl", "movingChar");
+	object->setName(sprite->getName());
+	object->movePositionTo(10, 10);
+	object->addSprite(sprite);
+	
+	auto ins = _object_map.emplace("movingChar", object);
+	if (!ins.second) {
+		LOG_ERR("Failed to insert object map!");
 	}
 }
 
@@ -181,6 +198,19 @@ void ERPGScene::handleEvent(SDL_Event e)
 		case SDLK_RIGHT:
 			//LOG_INFO("Move : RIGHT");
 			handleMove(DIR_RIGHT);
+			break;
+		case SDLK_SPACE:
+			LOG_INFO("Animation test");
+			std::shared_ptr<story::Graphic::Object> found;
+			auto search = _object_map.find("movingChar");
+			if (search != _object_map.end()) {
+				found = search->second;
+				if (found->getAnimationState() != ANI_START)
+					found->changeState(found);
+				LOG_DBG("Finished");
+			} else {
+				LOG_ERR("Object was not found !");
+			}
 			break;
 		}
 	}

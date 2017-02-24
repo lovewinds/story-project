@@ -57,7 +57,6 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 			/* TODO: Creation should be performed with ObjectFactory */
 			sprite = createSprite(spriteDesc);
 			object->setName(spriteDesc->getName());
-			sprite->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
 			object->movePositionTo(spriteDesc->getX(), spriteDesc->getY());
 			if (spriteDesc->isControllable())
 				object->setControllable(true);

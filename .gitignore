@@ -30,6 +30,7 @@
 *.vpw*
 *.vpj
 *.vpwhist
+.vscode
 
 # Tag files
 .tags*

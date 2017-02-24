@@ -1,5 +1,8 @@
 #include "Ecore.hpp"
+
 #include "texture/GraphicObject.hpp"
+#include "texture/ELerpAnimation.hpp"
+
 #include "util/LogHelper.hpp"
 
 namespace story {
@@ -11,6 +14,7 @@ p_x(0), p_y(0)
 	/* Initialize */
 	visible = true;
 	transparent = 100;
+	state_value = 0;
 }
 
 Object::~Object()
@@ -94,7 +98,10 @@ void Object::addSprite(std::shared_ptr<ESprite> sprite)
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
 		LOG_ERR("Failed to insert sprite map!");
+		return;
 	}
+
+	sprite->movePositionTo(p_x, p_y);
 }
 
 void Object::addImage(std::shared_ptr<EImageTexture> image)
@@ -102,7 +109,10 @@ void Object::addImage(std::shared_ptr<EImageTexture> image)
 	auto result = _img_texture_map.emplace(image->getName(), image);
 	if (!result.second) {
 		LOG_ERR("Failed to insert image map!");
+		return;
 	}
+
+	image->movePositionTo(p_x, p_y);
 }
 
 void Object::setAnimation(std::shared_ptr<EAnimation> animation)
@@ -113,6 +123,34 @@ void Object::setAnimation(std::shared_ptr<EAnimation> animation)
 std::shared_ptr<EAnimation> Object::getAnimation()
 {
 	return animation;
+}
+
+void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
+{
+	/* Initial state */
+	if (this->state_value == 0) {
+		/* Create animation */
+		ELerpAnimation *ani = new ELerpAnimation();
+		ani->setCaller(self);
+		ani->setStartPosition(10, 0);
+		ani->setEndPosition(100, 0);
+
+		this->setAnimation(std::shared_ptr<EAnimation>(ani));
+		this->startAnimation();
+
+		this->state_value = 1;
+	} else {
+		/* Create animation */
+		ELerpAnimation *ani = new ELerpAnimation();
+		ani->setCaller(self);
+		ani->setStartPosition(10, 0);
+		ani->setEndPosition(100, 0);
+
+		this->setAnimation(std::shared_ptr<EAnimation>(ani));
+		this->startAnimation();
+
+		this->state_value = 0;
+	}
 }
 
 AnimationState Object::getAnimationState()

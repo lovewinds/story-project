@@ -68,7 +68,7 @@ AnimationState EAnimation::getState()
 	return state;
 }
 
-void EAnimation::setCaller(std::shared_ptr<story::Graphic::Object> clr)
+void EAnimation::setCaller(std::weak_ptr<story::Graphic::Object> clr)
 {
 	/* Store weak_ptr to avoid circular reference */
 	caller = clr;

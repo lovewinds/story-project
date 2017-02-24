@@ -39,6 +39,9 @@ public:
 	virtual void finishedAnimationCallback(double delta_x, double delta_y);
 	virtual void syncAnimationCallback(double delta_x, double delta_y);
 
+	/* State */
+	void changeState(std::weak_ptr<story::Graphic::Object> self);
+
 	/* Primitive */
 	std::string getName();
 	void setName(std::string name);
@@ -68,6 +71,8 @@ protected:
 	bool visible;
 	int transparent;
 	bool controllable;
+
+	int state_value;
 };
 
 } /* namespace Graphic */
