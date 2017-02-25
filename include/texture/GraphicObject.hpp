@@ -39,6 +39,8 @@ public:
 	virtual void finishedAnimationCallback(double delta_x, double delta_y);
 	virtual void syncAnimationCallback(double delta_x, double delta_y);
 
+	virtual void moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x, int y);
+
 	/* State */
 	void changeState(std::weak_ptr<story::Graphic::Object> self);
 

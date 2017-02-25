@@ -217,7 +217,18 @@ void ERPGScene::handleEvent(SDL_Event e)
 	else if (e.type == SDL_FINGERDOWN) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
-
+	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+		LOG_INFO("Animation test");
+		std::shared_ptr<story::Graphic::Object> found;
+		auto search = _object_map.find("movingChar");
+		if (search != _object_map.end()) {
+			found = search->second;
+			if (found->getAnimationState() != ANI_START)
+				found->moveWithAnimation(found, e.button.x, e.button.y);
+			LOG_DBG("Finished");
+		} else {
+			LOG_ERR("Object was not found !");
+		}
 	} else if (e.type == SDL_FINGERMOTION) {
 		/* Touch & swipe clears textures */
 		SDL_TouchFingerEvent *te = &e.tfinger;

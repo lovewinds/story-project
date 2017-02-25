@@ -15,6 +15,7 @@ p_x(0), p_y(0)
 	visible = true;
 	transparent = 100;
 	state_value = 0;
+	controllable = false;
 }
 
 Object::~Object()
@@ -123,6 +124,18 @@ void Object::setAnimation(std::shared_ptr<EAnimation> animation)
 std::shared_ptr<EAnimation> Object::getAnimation()
 {
 	return animation;
+}
+
+void Object::moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x, int y)
+{
+	/* Create animation */
+	ELerpAnimation *ani = new ELerpAnimation();
+	ani->setCaller(self);
+	ani->setStartPosition(p_x, p_y);
+	ani->setEndPosition(x, y);
+
+	this->setAnimation(std::shared_ptr<EAnimation>(ani));
+	this->startAnimation();
 }
 
 void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
