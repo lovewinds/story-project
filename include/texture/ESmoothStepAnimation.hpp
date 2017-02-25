@@ -2,11 +2,11 @@
 
 #include "texture/EAnimation.hpp"
 
-class ELerpAnimation : public EAnimation
+class ESmoothStepAnimation : public EAnimation
 {
 public:
-	ELerpAnimation();
-	virtual ~ELerpAnimation();
+	ESmoothStepAnimation();
+	virtual ~ESmoothStepAnimation();
 
 	virtual void start();
 	virtual void stop();

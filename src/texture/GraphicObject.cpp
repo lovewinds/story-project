@@ -1,7 +1,7 @@
 #include "Ecore.hpp"
 
 #include "texture/GraphicObject.hpp"
-#include "texture/ELerpAnimation.hpp"
+#include "texture/ESmoothStepAnimation.hpp"
 
 #include "util/LogHelper.hpp"
 
@@ -129,10 +129,10 @@ std::shared_ptr<EAnimation> Object::getAnimation()
 void Object::moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x, int y)
 {
 	/* Create animation */
-	ELerpAnimation *ani = new ELerpAnimation();
+	ESmoothStepAnimation *ani = new ESmoothStepAnimation();
 	ani->setCaller(self);
-	ani->setStartPosition(p_x, p_y);
-	ani->setEndPosition(x, y);
+	ani->setStartPosition(0, 0);
+	ani->setEndPosition(x - p_x, y - p_y);
 
 	this->setAnimation(std::shared_ptr<EAnimation>(ani));
 	this->startAnimation();
@@ -143,7 +143,7 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 	/* Initial state */
 	if (this->state_value == 0) {
 		/* Create animation */
-		ELerpAnimation *ani = new ELerpAnimation();
+		ESmoothStepAnimation *ani = new ESmoothStepAnimation();
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
@@ -154,7 +154,7 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 		this->state_value = 1;
 	} else {
 		/* Create animation */
-		ELerpAnimation *ani = new ELerpAnimation();
+		ESmoothStepAnimation *ani = new ESmoothStepAnimation();
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
@@ -202,36 +202,40 @@ void Object::resumeAnimation()
 	}
 }
 
-void Object::finishedAnimationCallback(double delta_x, double delta_y)
+void Object::finishedAnimationCallback(double ani_x, double ani_y)
 {
-	LOG_DBG("Animation Finished. update position [%lf, %lf]", delta_x, delta_y);
+	LOG_DBG("Animation Finished. update position [%lf, %lf]", ani_x, ani_y);
 
 	for (auto &it : _img_texture_map)
 	{
-		it.second->movePositionBy(delta_x, delta_y);
+		it.second->movePositionBy(ani_x, ani_y);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->movePositionBy(delta_x, delta_y);
+		it.second->movePositionBy(ani_x, ani_y);
 	}
 
-	//animation = nullptr;
+	p_x += ani_x;
+	p_y += ani_y;
 }
 
-void Object::syncAnimationCallback(double delta_x, double delta_y)
+void Object::syncAnimationCallback(double ani_x, double ani_y)
 {
-	LOG_DBG("update position [%lf, %lf]", delta_x, delta_y);
+	LOG_DBG("update position [%lf, %lf]", ani_x, ani_y);
 
 	for (auto &it : _img_texture_map)
 	{
-		it.second->movePositionBy(delta_x, delta_y);
+		it.second->movePositionBy(ani_x, ani_y);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->movePositionBy(delta_x, delta_y);
+		it.second->movePositionBy(ani_x, ani_y);
 	}
+
+	p_x += ani_x;
+	p_y += ani_y;
 }
 
 void Object::update(Uint32 currentTime, Uint32 accumulator)
