@@ -28,21 +28,27 @@ struct CustomSink {
 
 		if (level.value == WARNING.value + 1) {
 			/* Custom log level for python */
+#if !defined(PLATFORM_IOS)
 			std::cout << "\033[" << color << "m";
+#endif
 			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
 				<< std::setw(4) << std::right;
 			std::cout.fill('0');
 			std::cout << (int)(logEntry.get()._microseconds / 10000) << "] " << std::left;
 			std::cout.fill(' ');
 			std::cout.width(7);
-			std::cout << "[Python] "
-				<< logEntry.get().message()
-				<< "\033[m" << std::endl;
+			std::cout << "[Python] " << logEntry.get().message();
+#if !defined(PLATFORM_IOS)
+			std::cout << "\033[m";
+#endif
+			std::cout << std::endl;
 		} else {
+#if !defined(PLATFORM_IOS)
 			if (level.value == WARNING.value)
 				std::cout << "\033[41m" << "\033[97m";
 			else
 				std::cout << "\033[" << color << "m";
+#endif
 			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << ":"
 				<< std::setw(4) << std::right;
 			std::cout.fill('0');
@@ -52,8 +58,11 @@ struct CustomSink {
 			std::cout << logEntry.get().level()
 				<< " [" << logEntry.get().file()
 				<< ":" << logEntry.get().line() << "]"
-				<< " " << logEntry.get().message()
-				<< "\033[m" << std::endl;
+				<< " " << logEntry.get().message();
+#if !defined(PLATFORM_IOS)
+			std::cout << "\033[m";
+#endif
+			std::cout << std::endl;
 		}
 	}
 };

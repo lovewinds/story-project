@@ -25,7 +25,6 @@ ERPGScene::ERPGScene(std::string name)
 #endif
 	/* Create base map textures */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
 	gridMap = map;
@@ -216,7 +215,24 @@ void ERPGScene::handleEvent(SDL_Event e)
 	}
 	else if (e.type == SDL_FINGERDOWN) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
+		int x = 0, y = 0;
 		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
+
+		x = Ecore::getScreenWidth() * te->x;
+		y = Ecore::getScreenHeight() * te->y;
+		LOG_INFO("Move to [%d, %d]  | [%03d, %03d]", x, y,
+				Ecore::getScreenWidth(), Ecore::getScreenHeight());
+
+		std::shared_ptr<story::Graphic::Object> found;
+		auto search = _object_map.find("movingChar");
+		if (search != _object_map.end()) {
+			found = search->second;
+			if (found->getAnimationState() != ANI_START)
+				found->moveWithAnimation(found, x, y);
+			LOG_DBG("Finished");
+		} else {
+			LOG_ERR("Object was not found !");
+		}
 	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 		LOG_INFO("Animation test");
 		std::shared_ptr<story::Graphic::Object> found;

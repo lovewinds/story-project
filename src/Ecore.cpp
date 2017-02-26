@@ -518,6 +518,24 @@ SDL_Window* Ecore::getWindow()
 	return gWindow;
 }
 
+int Ecore::getScreenWidth()
+{
+	int w;
+	int h;
+	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
+
+	return w;
+}
+
+int Ecore::getScreenHeight()
+{
+	int w;
+	int h;
+	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
+
+	return h;
+}
+
 const char* Ecore::getBasePath()
 {
 	static const char* path = SDL_GetBasePath();

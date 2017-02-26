@@ -47,6 +47,9 @@ public:
 	static std::string getPlatform();
 	static bool checkPlatform(std::string);
 
+	static int getScreenWidth();
+	static int getScreenHeight();
+
 private:
 	
 
