@@ -142,6 +142,11 @@ void EVisualNovelScene::render()
 	{
 		it.second->render(0, 0);
 	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->render();
+	}
 }
 
 void EVisualNovelScene::update(Uint32 currentTime, Uint32 accumulator)
@@ -168,4 +173,10 @@ void EVisualNovelScene::update(Uint32 currentTime, Uint32 accumulator)
 	{
 		it.second->update(currentTime, accumulator);
 	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
 }

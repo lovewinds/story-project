@@ -88,9 +88,8 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 					image->setHeight(imageDesc->getHeightRatio(), true);
 				else
 					image->setHeight(imageDesc->getHeight(), false);
-				image->movePositionTo(imageDesc->getX(), imageDesc->getY());
 				object->movePositionTo(imageDesc->getX(), imageDesc->getY());
-				
+
 				object->addImage(image);
 				scene->addObject(object);
 				//scene->addImage(image);
