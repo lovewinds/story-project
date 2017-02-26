@@ -8,16 +8,19 @@
 #include "util/LogHelper.hpp"
 #include "util/IPCHelper.hpp"
 
+#if !defined(PLATFORM_IOS)
 zmq::context_t IPCServer::context(1);
 zmq::context_t IPCClient::context(1);
 zmq::socket_t IPCServer::socket_server(context, ZMQ_REP);
 zmq::socket_t IPCClient::socket_client(context, ZMQ_REQ);
+#endif
 
 /**************************************************************
  * IPC Server functions
  **************************************************************/
 void * IPCServer::CreateIPC()
 {
+#if !defined(PLATFORM_IOS)
 	try {
 		LOG_DBG("Waiting for IPC client...");
 		/* INPROC only supports inter-thread communication (same process) */
@@ -32,6 +35,9 @@ void * IPCServer::CreateIPC()
 	}
 
 	return socket_server;
+#else
+	return NULL;
+#endif
 }
 
 void IPCServer::DestroyIPC()
@@ -40,6 +46,7 @@ void IPCServer::DestroyIPC()
 
 unsigned long IPCServer::SendIPC(void * hPipe, const void* pData, size_t tDataSize)
 {
+#if !defined(PLATFORM_IOS)
 	zmq::message_t request;
 
 	try {
@@ -52,10 +59,14 @@ unsigned long IPCServer::SendIPC(void * hPipe, const void* pData, size_t tDataSi
 	}
 
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 {
+#if !defined(PLATFORM_IOS)
 	zmq::message_t request;
 
 	try {
@@ -66,6 +77,9 @@ unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 	}
 
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 
@@ -75,6 +89,7 @@ unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
  **************************************************************/
 void * IPCClient::OpenIPC()
 {
+#if !defined(PLATFORM_IOS)
 	try {
 		LOG_DBG("Connecting to IPC server...");
 		//socket_client.connect("inproc://story.ipc");
@@ -87,6 +102,9 @@ void * IPCClient::OpenIPC()
 	}
 
 	return socket_client;
+#else
+	return NULL;
+#endif
 }
 
 void IPCClient::CloseIPC()
@@ -95,6 +113,7 @@ void IPCClient::CloseIPC()
 
 unsigned long IPCClient::SendIPC(void * hPipe, const void* pData, size_t tDataSize)
 {
+#if !defined(PLATFORM_IOS)
 	zmq::message_t request;
 
 	try {
@@ -107,11 +126,15 @@ unsigned long IPCClient::SendIPC(void * hPipe, const void* pData, size_t tDataSi
 	}
 
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////////
 unsigned long IPCClient::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 {
+#if !defined(PLATFORM_IOS)
 	zmq::message_t request;
 
 	try {
@@ -122,4 +145,7 @@ unsigned long IPCClient::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 	}
 
 	return 0;
+#else
+	return 0;
+#endif
 }

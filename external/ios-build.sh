@@ -1,7 +1,7 @@
-export SRC="/Users/ariens/Documents/source/github/story-project"
+export SRC="/Users/ariens/source/story-project"
 export PREFIX="${SRC}/external/built"
 export BINPATH="${SRC}/external/built/bin"
-export LIBPATH="${SRC}/external/built/lib"
+export LIBPATH="${SRC}/external/built/lib/ios"
 export INCLUDEPATH="${SRC}/external/built/include"
 export IOS32_PREFIX="$PREFIX/tmp/ios32"
 export IOS64_PREFIX="$PREFIX/tmp/ios64"
@@ -34,13 +34,13 @@ then
 	export CFLAGS="${CFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CPPFLAGS="${CPPFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AudioToolbox -framework CoreGraphics -framework ImageIO -fembed-bitcode"
+	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
 else
 	echo "Arch : armv7"
 	export CFLAGS="${CFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CPPFLAGS="${CPPFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AudioToolbox -framework CoreGraphics -framework ImageIO -fembed-bitcode"
+	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
 fi
 
 echo "CFLAGS : ${CFLAGS}"
@@ -48,6 +48,8 @@ echo "ARGC : $#"
 echo "ARGS : $0"
 echo "ARGS : $1"
 echo "ARGS : $2"
+
+mkdir -p ${LIBPATH}
 
 if [ 0 -eq $# ]
 then
@@ -60,17 +62,17 @@ fi
 ### /Users/ariens/Documents/source/github/story-project/external/built/include
 case "$1" in
 "SDL2")
-	# path : external/sources/SDL2/Xcode-iOS/SDL
+	# path : external/sources-ios/SDL2/Xcode-iOS/SDL
 	xcodebuild -arch arm64 -arch armv7 HEADER_SEARCH_PATHS=${INCLUDEPATH}/SDL2
 	cp build/Release-iphoneos/libSDL2.a ${LIBPATH}
 	;;
 "SDL2_image")
-	# path : external/sources/SDL2_image/Xcode-iOS
+	# path : external/sources-ios/SDL2_image/Xcode-iOS
 	xcodebuild -arch arm64 -arch armv7 USER_HEADER_SEARCH_PATHS=${INCLUDEPATH}/SDL2
 	cp build/Release-iphoneos/libSDL2_image.a ${LIBPATH}
 	;;
 "SDL2_ttf")
-	# path : external/sources/SDL2_ttf/Xcode-iOS
+	# path : external/sources-ios/SDL2_ttf/Xcode-iOS
 	xcodebuild -arch arm64 -arch armv7 HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1=${INCLUDEPATH}/SDL2/
 	cp build/Release-iphoneos/libSDL2_ttf.a ${LIBPATH}
 	;;
@@ -91,10 +93,14 @@ case "$1" in
 		make
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libSDL2_gfx_armv7.a" ] &&  [ -f "../libSDL2_gfx_arm64.a" ]; then
+		lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output "${LIBPATH}/libSDL2_gfx.a"
+	fi
 	;;
 "pugixml")
-	# Build directory
+	# Build directory : external/sources-ios/pugixml/scripts
 	rm -rf build-ios
 	mkdir build-ios
 	cd build-ios
@@ -108,7 +114,11 @@ case "$1" in
 		make
 		cp libpugixml.a ../libpugixml_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libpugixml_armv7.a" ] &&  [ -f "../libpugixml_arm64.a" ]; then
+		lipo -create ../libpugixml_armv7.a ../libpugixml_arm64.a -output "${LIBPATH}/libpugixml.a"
+	fi
 	;;
 
 "g3log")
@@ -117,16 +127,24 @@ case "$1" in
 	mkdir build-ios
 	cd build-ios
 
+	# Build.cmake file of g3log doesn't accept previous CMAKE_CXX_FLAGS.
+	# Fix to provide additional flags for cross compile.
+	sed -i '' 's/SET(CMAKE_CXX_FLAGS \"-Wall/SET(CMAKE_CXX_FLAGS \"${CMAKE_CXX_FLAGS} -Wall/' ../Build.cmake
+
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
-		make
+		make g3logger
 		cp libg3logger.a ../libg3logger_arm64.a
 	else
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
-		make
+		make g3logger
 		cp libg3logger.a ../libg3logger_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libg3logger_armv7.a" ] &&  [ -f "../libg3logger_arm64.a" ]; then
+		lipo -create ../libg3logger_armv7.a ../libg3logger_arm64.a -output "${LIBPATH}/libg3logger.a"
+	fi
 	;;
 
 "gtest")
@@ -144,11 +162,15 @@ case "$1" in
 		make
 		cp libgtest.a ../libgtest_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libgtest_armv7.a" ] &&  [ -f "../libgtest_arm64.a" ]; then
+		lipo -create ../libgtest_armv7.a ../libgtest_arm64.a -output "${LIBPATH}/libgtest.a"
+	fi
 	;;
 
 "protobuf")
-	# Build directory
+	# Build directory : external/sources-ios/protobuf/cmake
 	rm -rf build-ios
 	mkdir build-ios
 	cd build-ios
@@ -162,7 +184,11 @@ case "$1" in
 		make libprotobuf
 		cp libprotobuf.a ../libprotobuf_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libprotobuf_armv7.a" ] &&  [ -f "../libprotobuf_arm64.a" ]; then
+		lipo -create ../libprotobuf_armv7.a ../libprotobuf_arm64.a -output "${LIBPATH}/libprotobuf.a"
+	fi
 	;;
 
 "zeromq")
@@ -180,7 +206,11 @@ case "$1" in
 		make libzmq-static
 		cp lib/libzmq-static.a ../libzmq-static_armv7.a
 	fi
-	#lipo -create ../libSDL2_gfx_armv7.a ../libSDL2_gfx_arm64.a -output=${LIBPATH}/libSDL2_gfx.a
+
+	# Make fat binary
+	if [ -f "../libzmq-static_armv7.a" ] &&  [ -f "../libzmq-static_arm64.a" ]; then
+		lipo -create ../libzmq-static_armv7.a ../libzmq-static_arm64.a -output "${LIBPATH}/libzmq-static.a"
+	fi
 	;;
 
 *)
@@ -201,7 +231,7 @@ esac
 #../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX}
 
 #pugixml
-#cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+#cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKEƒ_INSTALL_INCLUDEDIR=${INCLUDEPATH}
 
 #SDL2_gfx
 #######../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Ecore.hpp"
 
-int main(int argc, char* args[])
+int main(int argc, char* argv[])
 {
 	Ecore* core = Ecore::getInstance();
 
