@@ -64,39 +64,6 @@
 		F45B1CEA1E62D8EB003C10E2 /* PythonScript.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */; };
 		F45B1CEB1E62D8EB003C10E2 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */; };
 		F45B1CEC1E62D8EB003C10E2 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */; };
-		F45B1D131E62D8F9003C10E2 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CEE1E62D8F8003C10E2 /* Ecore.cpp */; };
-		F45B1D141E62D8F9003C10E2 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CEF1E62D8F8003C10E2 /* ESceneManager.cpp */; };
-		F45B1D151E62D8F9003C10E2 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF01E62D8F8003C10E2 /* EScreenManager.cpp */; };
-		F45B1D161E62D8F9003C10E2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF11E62D8F8003C10E2 /* main.cpp */; };
-		F45B1D171E62D8F9003C10E2 /* EDbgOverlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF31E62D8F8003C10E2 /* EDbgOverlayScene.cpp */; };
-		F45B1D181E62D8F9003C10E2 /* EImageResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF41E62D8F8003C10E2 /* EImageResource.cpp */; };
-		F45B1D191E62D8F9003C10E2 /* EResourceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF51E62D8F8003C10E2 /* EResourceFactory.cpp */; };
-		F45B1D1A1E62D8F9003C10E2 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF61E62D8F8003C10E2 /* EResourceLoaderInterface.cpp */; };
-		F45B1D1B1E62D8F9003C10E2 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF71E62D8F8003C10E2 /* EResourceManager.cpp */; };
-		F45B1D1C1E62D8F9003C10E2 /* ERPGScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF81E62D8F8003C10E2 /* ERPGScene.cpp */; };
-		F45B1D1D1E62D8F9003C10E2 /* EScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CF91E62D8F8003C10E2 /* EScene.cpp */; };
-		F45B1D1E1E62D8F9003C10E2 /* ESceneDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CFA1E62D8F8003C10E2 /* ESceneDesc.cpp */; };
-		F45B1D1F1E62D8F9003C10E2 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CFB1E62D8F8003C10E2 /* ESpriteType.cpp */; };
-		F45B1D201E62D8F9003C10E2 /* EVisualNovelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CFC1E62D8F8003C10E2 /* EVisualNovelScene.cpp */; };
-		F45B1D211E62D8F9003C10E2 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CFD1E62D8F9003C10E2 /* XMLResourceLoader.cpp */; };
-		F45B1D221E62D8F9003C10E2 /* SpLogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1CFF1E62D8F9003C10E2 /* SpLogHelper.cpp */; };
-		F45B1D231E62D8F9003C10E2 /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D011E62D8F9003C10E2 /* EAccelAnimation.cpp */; };
-		F45B1D241E62D8F9003C10E2 /* EAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D021E62D8F9003C10E2 /* EAnimation.cpp */; };
-		F45B1D251E62D8F9003C10E2 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D031E62D8F9003C10E2 /* EDrawable.cpp */; };
-		F45B1D261E62D8F9003C10E2 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D041E62D8F9003C10E2 /* EFigure.cpp */; };
-		F45B1D271E62D8F9003C10E2 /* EGridMapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D051E62D8F9003C10E2 /* EGridMapTexture.cpp */; };
-		F45B1D281E62D8F9003C10E2 /* EGridMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D061E62D8F9003C10E2 /* EGridMoveAnimation.cpp */; };
-		F45B1D291E62D8F9003C10E2 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D071E62D8F9003C10E2 /* EImageTexture.cpp */; };
-		F45B1D2A1E62D8F9003C10E2 /* ESmoothStepAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D081E62D8F9003C10E2 /* ESmoothStepAnimation.cpp */; };
-		F45B1D2B1E62D8F9003C10E2 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D091E62D8F9003C10E2 /* ESprite.cpp */; };
-		F45B1D2C1E62D8F9003C10E2 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D0A1E62D8F9003C10E2 /* ETextTexture.cpp */; };
-		F45B1D2D1E62D8F9003C10E2 /* GraphicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D0B1E62D8F9003C10E2 /* GraphicObject.cpp */; };
-		F45B1D2E1E62D8F9003C10E2 /* IPCHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D0D1E62D8F9003C10E2 /* IPCHelper.cpp */; };
-		F45B1D2F1E62D8F9003C10E2 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D0E1E62D8F9003C10E2 /* JsonHelper.cpp */; };
-		F45B1D301E62D8F9003C10E2 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D0F1E62D8F9003C10E2 /* LogHelper.cpp */; };
-		F45B1D311E62D8F9003C10E2 /* PythonScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D101E62D8F9003C10E2 /* PythonScript.cpp */; };
-		F45B1D321E62D8F9003C10E2 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D111E62D8F9003C10E2 /* SDLWrap.cpp */; };
-		F45B1D331E62D8F9003C10E2 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F45B1D121E62D8F9003C10E2 /* XmlHelper.cpp */; };
 		F45B1D341E62DBEF003C10E2 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6D1E6272D100C14B4E /* libSDL2.a */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F45B1D361E62E1AA003C10E2 /* libzmq-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6E1E6272D100C14B4E /* libzmq-static.a */; };
@@ -116,6 +83,41 @@
 		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
 		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
+		F4A4446C1E64693B001B1A83 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444461E64693B001B1A83 /* Ecore.cpp */; };
+		F4A4446D1E64693B001B1A83 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444471E64693B001B1A83 /* ESceneManager.cpp */; };
+		F4A4446E1E64693B001B1A83 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444481E64693B001B1A83 /* EScreenManager.cpp */; };
+		F4A4446F1E64693B001B1A83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444491E64693B001B1A83 /* main.cpp */; };
+		F4A444701E64693B001B1A83 /* EDbgOverlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */; };
+		F4A444711E64693B001B1A83 /* EImageResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444C1E64693B001B1A83 /* EImageResource.cpp */; };
+		F4A444721E64693B001B1A83 /* EResourceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */; };
+		F4A444731E64693B001B1A83 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */; };
+		F4A444741E64693B001B1A83 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */; };
+		F4A444751E64693B001B1A83 /* ERPGScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444501E64693B001B1A83 /* ERPGScene.cpp */; };
+		F4A444761E64693B001B1A83 /* EScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444511E64693B001B1A83 /* EScene.cpp */; };
+		F4A444771E64693B001B1A83 /* ESceneDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444521E64693B001B1A83 /* ESceneDesc.cpp */; };
+		F4A444781E64693B001B1A83 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444531E64693B001B1A83 /* ESpriteType.cpp */; };
+		F4A444791E64693B001B1A83 /* EVisualNovelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */; };
+		F4A4447A1E64693B001B1A83 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */; };
+		F4A4447B1E64693B001B1A83 /* SpLogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444571E64693B001B1A83 /* SpLogHelper.cpp */; };
+		F4A4447C1E64693B001B1A83 /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */; };
+		F4A4447D1E64693B001B1A83 /* EAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445A1E64693B001B1A83 /* EAnimation.cpp */; };
+		F4A4447E1E64693B001B1A83 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445B1E64693B001B1A83 /* EDrawable.cpp */; };
+		F4A4447F1E64693B001B1A83 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445C1E64693B001B1A83 /* EFigure.cpp */; };
+		F4A444801E64693B001B1A83 /* EGridMapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */; };
+		F4A444811E64693B001B1A83 /* EGridMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */; };
+		F4A444821E64693B001B1A83 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */; };
+		F4A444831E64693B001B1A83 /* ESmoothRotateAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */; };
+		F4A444841E64693B001B1A83 /* ESmoothStepAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */; };
+		F4A444851E64693B001B1A83 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444621E64693B001B1A83 /* ESprite.cpp */; };
+		F4A444861E64693B001B1A83 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444631E64693B001B1A83 /* ETextTexture.cpp */; };
+		F4A444871E64693B001B1A83 /* GraphicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444641E64693B001B1A83 /* GraphicObject.cpp */; };
+		F4A444881E64693B001B1A83 /* IPCHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444661E64693B001B1A83 /* IPCHelper.cpp */; };
+		F4A444891E64693B001B1A83 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444671E64693B001B1A83 /* JsonHelper.cpp */; };
+		F4A4448A1E64693B001B1A83 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444681E64693B001B1A83 /* LogHelper.cpp */; };
+		F4A4448B1E64693B001B1A83 /* PythonScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444691E64693B001B1A83 /* PythonScript.cpp */; };
+		F4A4448C1E64693B001B1A83 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */; };
+		F4A4448D1E64693B001B1A83 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */; };
+		F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -191,39 +193,6 @@
 		F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PythonScript.hpp; sourceTree = "<group>"; };
 		F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
 		F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
-		F45B1CEE1E62D8F8003C10E2 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ecore.cpp; sourceTree = "<group>"; };
-		F45B1CEF1E62D8F8003C10E2 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneManager.cpp; sourceTree = "<group>"; };
-		F45B1CF01E62D8F8003C10E2 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScreenManager.cpp; sourceTree = "<group>"; };
-		F45B1CF11E62D8F8003C10E2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F45B1CF31E62D8F8003C10E2 /* EDbgOverlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDbgOverlayScene.cpp; sourceTree = "<group>"; };
-		F45B1CF41E62D8F8003C10E2 /* EImageResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResource.cpp; sourceTree = "<group>"; };
-		F45B1CF51E62D8F8003C10E2 /* EResourceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceFactory.cpp; sourceTree = "<group>"; };
-		F45B1CF61E62D8F8003C10E2 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
-		F45B1CF71E62D8F8003C10E2 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
-		F45B1CF81E62D8F8003C10E2 /* ERPGScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERPGScene.cpp; sourceTree = "<group>"; };
-		F45B1CF91E62D8F8003C10E2 /* EScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScene.cpp; sourceTree = "<group>"; };
-		F45B1CFA1E62D8F8003C10E2 /* ESceneDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneDesc.cpp; sourceTree = "<group>"; };
-		F45B1CFB1E62D8F8003C10E2 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
-		F45B1CFC1E62D8F8003C10E2 /* EVisualNovelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EVisualNovelScene.cpp; sourceTree = "<group>"; };
-		F45B1CFD1E62D8F9003C10E2 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
-		F45B1CFF1E62D8F9003C10E2 /* SpLogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpLogHelper.cpp; sourceTree = "<group>"; };
-		F45B1D011E62D8F9003C10E2 /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
-		F45B1D021E62D8F9003C10E2 /* EAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAnimation.cpp; sourceTree = "<group>"; };
-		F45B1D031E62D8F9003C10E2 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
-		F45B1D041E62D8F9003C10E2 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
-		F45B1D051E62D8F9003C10E2 /* EGridMapTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMapTexture.cpp; sourceTree = "<group>"; };
-		F45B1D061E62D8F9003C10E2 /* EGridMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMoveAnimation.cpp; sourceTree = "<group>"; };
-		F45B1D071E62D8F9003C10E2 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
-		F45B1D081E62D8F9003C10E2 /* ESmoothStepAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothStepAnimation.cpp; sourceTree = "<group>"; };
-		F45B1D091E62D8F9003C10E2 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
-		F45B1D0A1E62D8F9003C10E2 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
-		F45B1D0B1E62D8F9003C10E2 /* GraphicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicObject.cpp; sourceTree = "<group>"; };
-		F45B1D0D1E62D8F9003C10E2 /* IPCHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPCHelper.cpp; sourceTree = "<group>"; };
-		F45B1D0E1E62D8F9003C10E2 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
-		F45B1D0F1E62D8F9003C10E2 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
-		F45B1D101E62D8F9003C10E2 /* PythonScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonScript.cpp; sourceTree = "<group>"; };
-		F45B1D111E62D8F9003C10E2 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
-		F45B1D121E62D8F9003C10E2 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
 		F486175F1D96C44F008641CB /* gom-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-sprite.png"; path = "../../res/gom-sprite.png"; sourceTree = "<group>"; };
 		F48617611D96C691008641CB /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
 		F4A37F3E1D8D929400186118 /* f069.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f069.png; path = ../../res/f069.png; sourceTree = "<group>"; };
@@ -240,6 +209,41 @@
 		F4A37F551D8D94D800186118 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/sources/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
 		F4A37F571D8D94EB00186118 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/sources/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
 		F4A37F591D8D94F900186118 /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ipc.pb.cc; path = ../../scripting/ipc.pb.cc; sourceTree = "<group>"; };
+		F4A444461E64693B001B1A83 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ecore.cpp; sourceTree = "<group>"; };
+		F4A444471E64693B001B1A83 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneManager.cpp; sourceTree = "<group>"; };
+		F4A444481E64693B001B1A83 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScreenManager.cpp; sourceTree = "<group>"; };
+		F4A444491E64693B001B1A83 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDbgOverlayScene.cpp; sourceTree = "<group>"; };
+		F4A4444C1E64693B001B1A83 /* EImageResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResource.cpp; sourceTree = "<group>"; };
+		F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceFactory.cpp; sourceTree = "<group>"; };
+		F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
+		F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
+		F4A444501E64693B001B1A83 /* ERPGScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERPGScene.cpp; sourceTree = "<group>"; };
+		F4A444511E64693B001B1A83 /* EScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScene.cpp; sourceTree = "<group>"; };
+		F4A444521E64693B001B1A83 /* ESceneDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneDesc.cpp; sourceTree = "<group>"; };
+		F4A444531E64693B001B1A83 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
+		F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EVisualNovelScene.cpp; sourceTree = "<group>"; };
+		F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
+		F4A444571E64693B001B1A83 /* SpLogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpLogHelper.cpp; sourceTree = "<group>"; };
+		F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
+		F4A4445A1E64693B001B1A83 /* EAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAnimation.cpp; sourceTree = "<group>"; };
+		F4A4445B1E64693B001B1A83 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
+		F4A4445C1E64693B001B1A83 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
+		F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMapTexture.cpp; sourceTree = "<group>"; };
+		F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMoveAnimation.cpp; sourceTree = "<group>"; };
+		F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
+		F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothRotateAnimation.cpp; sourceTree = "<group>"; };
+		F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothStepAnimation.cpp; sourceTree = "<group>"; };
+		F4A444621E64693B001B1A83 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
+		F4A444631E64693B001B1A83 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
+		F4A444641E64693B001B1A83 /* GraphicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicObject.cpp; sourceTree = "<group>"; };
+		F4A444661E64693B001B1A83 /* IPCHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPCHelper.cpp; sourceTree = "<group>"; };
+		F4A444671E64693B001B1A83 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
+		F4A444681E64693B001B1A83 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
+		F4A444691E64693B001B1A83 /* PythonScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonScript.cpp; sourceTree = "<group>"; };
+		F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
+		F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
+		F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothRotateAnimation.hpp; sourceTree = "<group>"; };
 		FA8B4B96196703B400F8EB7C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FAE0E9641BAF967F0098DFA4 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -409,6 +413,7 @@
 		F45B1CBA1E62D8EB003C10E2 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */,
 				F45B1CBB1E62D8EB003C10E2 /* EAccelAnimation.hpp */,
 				F45B1CBC1E62D8EB003C10E2 /* EAnimation.hpp */,
 				F45B1CBD1E62D8EB003C10E2 /* EDrawable.hpp */,
@@ -440,74 +445,17 @@
 		F45B1CED1E62D8F8003C10E2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F45B1CEE1E62D8F8003C10E2 /* Ecore.cpp */,
-				F45B1CEF1E62D8F8003C10E2 /* ESceneManager.cpp */,
-				F45B1CF01E62D8F8003C10E2 /* EScreenManager.cpp */,
-				F45B1CF11E62D8F8003C10E2 /* main.cpp */,
-				F45B1CF21E62D8F8003C10E2 /* resource */,
-				F45B1CFE1E62D8F9003C10E2 /* scripting */,
-				F45B1D001E62D8F9003C10E2 /* texture */,
-				F45B1D0C1E62D8F9003C10E2 /* util */,
+				F4A444461E64693B001B1A83 /* Ecore.cpp */,
+				F4A444471E64693B001B1A83 /* ESceneManager.cpp */,
+				F4A444481E64693B001B1A83 /* EScreenManager.cpp */,
+				F4A444491E64693B001B1A83 /* main.cpp */,
+				F4A4444A1E64693B001B1A83 /* resource */,
+				F4A444561E64693B001B1A83 /* scripting */,
+				F4A444581E64693B001B1A83 /* texture */,
+				F4A444651E64693B001B1A83 /* util */,
 			);
 			name = src;
 			path = ../../src;
-			sourceTree = "<group>";
-		};
-		F45B1CF21E62D8F8003C10E2 /* resource */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1CF31E62D8F8003C10E2 /* EDbgOverlayScene.cpp */,
-				F45B1CF41E62D8F8003C10E2 /* EImageResource.cpp */,
-				F45B1CF51E62D8F8003C10E2 /* EResourceFactory.cpp */,
-				F45B1CF61E62D8F8003C10E2 /* EResourceLoaderInterface.cpp */,
-				F45B1CF71E62D8F8003C10E2 /* EResourceManager.cpp */,
-				F45B1CF81E62D8F8003C10E2 /* ERPGScene.cpp */,
-				F45B1CF91E62D8F8003C10E2 /* EScene.cpp */,
-				F45B1CFA1E62D8F8003C10E2 /* ESceneDesc.cpp */,
-				F45B1CFB1E62D8F8003C10E2 /* ESpriteType.cpp */,
-				F45B1CFC1E62D8F8003C10E2 /* EVisualNovelScene.cpp */,
-				F45B1CFD1E62D8F9003C10E2 /* XMLResourceLoader.cpp */,
-			);
-			path = resource;
-			sourceTree = "<group>";
-		};
-		F45B1CFE1E62D8F9003C10E2 /* scripting */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1CFF1E62D8F9003C10E2 /* SpLogHelper.cpp */,
-			);
-			path = scripting;
-			sourceTree = "<group>";
-		};
-		F45B1D001E62D8F9003C10E2 /* texture */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1D011E62D8F9003C10E2 /* EAccelAnimation.cpp */,
-				F45B1D021E62D8F9003C10E2 /* EAnimation.cpp */,
-				F45B1D031E62D8F9003C10E2 /* EDrawable.cpp */,
-				F45B1D041E62D8F9003C10E2 /* EFigure.cpp */,
-				F45B1D051E62D8F9003C10E2 /* EGridMapTexture.cpp */,
-				F45B1D061E62D8F9003C10E2 /* EGridMoveAnimation.cpp */,
-				F45B1D071E62D8F9003C10E2 /* EImageTexture.cpp */,
-				F45B1D081E62D8F9003C10E2 /* ESmoothStepAnimation.cpp */,
-				F45B1D091E62D8F9003C10E2 /* ESprite.cpp */,
-				F45B1D0A1E62D8F9003C10E2 /* ETextTexture.cpp */,
-				F45B1D0B1E62D8F9003C10E2 /* GraphicObject.cpp */,
-			);
-			path = texture;
-			sourceTree = "<group>";
-		};
-		F45B1D0C1E62D8F9003C10E2 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1D0D1E62D8F9003C10E2 /* IPCHelper.cpp */,
-				F45B1D0E1E62D8F9003C10E2 /* JsonHelper.cpp */,
-				F45B1D0F1E62D8F9003C10E2 /* LogHelper.cpp */,
-				F45B1D101E62D8F9003C10E2 /* PythonScript.cpp */,
-				F45B1D111E62D8F9003C10E2 /* SDLWrap.cpp */,
-				F45B1D121E62D8F9003C10E2 /* XmlHelper.cpp */,
-			);
-			path = util;
 			sourceTree = "<group>";
 		};
 		F4A37F461D8D929400186118 /* scripts */ = {
@@ -521,6 +469,64 @@
 			path = ../../res/scripts;
 			sourceTree = "<group>";
 		};
+		F4A4444A1E64693B001B1A83 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */,
+				F4A4444C1E64693B001B1A83 /* EImageResource.cpp */,
+				F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */,
+				F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */,
+				F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */,
+				F4A444501E64693B001B1A83 /* ERPGScene.cpp */,
+				F4A444511E64693B001B1A83 /* EScene.cpp */,
+				F4A444521E64693B001B1A83 /* ESceneDesc.cpp */,
+				F4A444531E64693B001B1A83 /* ESpriteType.cpp */,
+				F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */,
+				F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		F4A444561E64693B001B1A83 /* scripting */ = {
+			isa = PBXGroup;
+			children = (
+				F4A444571E64693B001B1A83 /* SpLogHelper.cpp */,
+			);
+			path = scripting;
+			sourceTree = "<group>";
+		};
+		F4A444581E64693B001B1A83 /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */,
+				F4A4445A1E64693B001B1A83 /* EAnimation.cpp */,
+				F4A4445B1E64693B001B1A83 /* EDrawable.cpp */,
+				F4A4445C1E64693B001B1A83 /* EFigure.cpp */,
+				F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */,
+				F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */,
+				F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */,
+				F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */,
+				F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */,
+				F4A444621E64693B001B1A83 /* ESprite.cpp */,
+				F4A444631E64693B001B1A83 /* ETextTexture.cpp */,
+				F4A444641E64693B001B1A83 /* GraphicObject.cpp */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
+		F4A444651E64693B001B1A83 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				F4A444661E64693B001B1A83 /* IPCHelper.cpp */,
+				F4A444671E64693B001B1A83 /* JsonHelper.cpp */,
+				F4A444681E64693B001B1A83 /* LogHelper.cpp */,
+				F4A444691E64693B001B1A83 /* PythonScript.cpp */,
+				F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */,
+				F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -532,6 +538,7 @@
 				F45B1CDE1E62D8EB003C10E2 /* EDrawable.hpp in Headers */,
 				F45B1CD91E62D8EB003C10E2 /* EVisualNovelScene.hpp in Headers */,
 				F45B1CD31E62D8EB003C10E2 /* EResourceLoaderInterface.hpp in Headers */,
+				F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */,
 				F45B1CE51E62D8EB003C10E2 /* ETextTexture.hpp in Headers */,
 				F45B1CD61E62D8EB003C10E2 /* EScene.hpp in Headers */,
 				F45B1CD11E62D8EB003C10E2 /* EImageResource.hpp in Headers */,
@@ -656,42 +663,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F45B1D1E1E62D8F9003C10E2 /* ESceneDesc.cpp in Sources */,
-				F45B1D131E62D8F9003C10E2 /* Ecore.cpp in Sources */,
-				F45B1D321E62D8F9003C10E2 /* SDLWrap.cpp in Sources */,
-				F45B1D2A1E62D8F9003C10E2 /* ESmoothStepAnimation.cpp in Sources */,
-				F45B1D151E62D8F9003C10E2 /* EScreenManager.cpp in Sources */,
-				F45B1D181E62D8F9003C10E2 /* EImageResource.cpp in Sources */,
-				F45B1D211E62D8F9003C10E2 /* XMLResourceLoader.cpp in Sources */,
-				F45B1D231E62D8F9003C10E2 /* EAccelAnimation.cpp in Sources */,
+				F4A444771E64693B001B1A83 /* ESceneDesc.cpp in Sources */,
+				F4A4446C1E64693B001B1A83 /* Ecore.cpp in Sources */,
+				F4A4446E1E64693B001B1A83 /* EScreenManager.cpp in Sources */,
+				F4A444711E64693B001B1A83 /* EImageResource.cpp in Sources */,
+				F4A444861E64693B001B1A83 /* ETextTexture.cpp in Sources */,
+				F4A444871E64693B001B1A83 /* GraphicObject.cpp in Sources */,
+				F4A444851E64693B001B1A83 /* ESprite.cpp in Sources */,
+				F4A4447A1E64693B001B1A83 /* XMLResourceLoader.cpp in Sources */,
+				F4A4447C1E64693B001B1A83 /* EAccelAnimation.cpp in Sources */,
+				F4A444831E64693B001B1A83 /* ESmoothRotateAnimation.cpp in Sources */,
 				F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */,
-				F45B1D301E62D8F9003C10E2 /* LogHelper.cpp in Sources */,
+				F4A444891E64693B001B1A83 /* JsonHelper.cpp in Sources */,
+				F4A4448D1E64693B001B1A83 /* XmlHelper.cpp in Sources */,
 				F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */,
-				F45B1D161E62D8F9003C10E2 /* main.cpp in Sources */,
-				F45B1D1C1E62D8F9003C10E2 /* ERPGScene.cpp in Sources */,
-				F45B1D1A1E62D8F9003C10E2 /* EResourceLoaderInterface.cpp in Sources */,
-				F45B1D241E62D8F9003C10E2 /* EAnimation.cpp in Sources */,
+				F4A4446F1E64693B001B1A83 /* main.cpp in Sources */,
+				F4A444751E64693B001B1A83 /* ERPGScene.cpp in Sources */,
+				F4A444731E64693B001B1A83 /* EResourceLoaderInterface.cpp in Sources */,
+				F4A4447D1E64693B001B1A83 /* EAnimation.cpp in Sources */,
 				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
-				F45B1D2E1E62D8F9003C10E2 /* IPCHelper.cpp in Sources */,
-				F45B1D291E62D8F9003C10E2 /* EImageTexture.cpp in Sources */,
-				F45B1D251E62D8F9003C10E2 /* EDrawable.cpp in Sources */,
-				F45B1D271E62D8F9003C10E2 /* EGridMapTexture.cpp in Sources */,
-				F45B1D141E62D8F9003C10E2 /* ESceneManager.cpp in Sources */,
-				F45B1D311E62D8F9003C10E2 /* PythonScript.cpp in Sources */,
-				F45B1D261E62D8F9003C10E2 /* EFigure.cpp in Sources */,
-				F45B1D2D1E62D8F9003C10E2 /* GraphicObject.cpp in Sources */,
-				F45B1D1D1E62D8F9003C10E2 /* EScene.cpp in Sources */,
-				F45B1D1B1E62D8F9003C10E2 /* EResourceManager.cpp in Sources */,
-				F45B1D191E62D8F9003C10E2 /* EResourceFactory.cpp in Sources */,
-				F45B1D331E62D8F9003C10E2 /* XmlHelper.cpp in Sources */,
-				F45B1D201E62D8F9003C10E2 /* EVisualNovelScene.cpp in Sources */,
-				F45B1D2F1E62D8F9003C10E2 /* JsonHelper.cpp in Sources */,
-				F45B1D2C1E62D8F9003C10E2 /* ETextTexture.cpp in Sources */,
-				F45B1D1F1E62D8F9003C10E2 /* ESpriteType.cpp in Sources */,
-				F45B1D2B1E62D8F9003C10E2 /* ESprite.cpp in Sources */,
-				F45B1D221E62D8F9003C10E2 /* SpLogHelper.cpp in Sources */,
-				F45B1D281E62D8F9003C10E2 /* EGridMoveAnimation.cpp in Sources */,
-				F45B1D171E62D8F9003C10E2 /* EDbgOverlayScene.cpp in Sources */,
+				F4A444821E64693B001B1A83 /* EImageTexture.cpp in Sources */,
+				F4A4447E1E64693B001B1A83 /* EDrawable.cpp in Sources */,
+				F4A444801E64693B001B1A83 /* EGridMapTexture.cpp in Sources */,
+				F4A4446D1E64693B001B1A83 /* ESceneManager.cpp in Sources */,
+				F4A4447F1E64693B001B1A83 /* EFigure.cpp in Sources */,
+				F4A444761E64693B001B1A83 /* EScene.cpp in Sources */,
+				F4A444841E64693B001B1A83 /* ESmoothStepAnimation.cpp in Sources */,
+				F4A4448C1E64693B001B1A83 /* SDLWrap.cpp in Sources */,
+				F4A444741E64693B001B1A83 /* EResourceManager.cpp in Sources */,
+				F4A444721E64693B001B1A83 /* EResourceFactory.cpp in Sources */,
+				F4A444881E64693B001B1A83 /* IPCHelper.cpp in Sources */,
+				F4A4448A1E64693B001B1A83 /* LogHelper.cpp in Sources */,
+				F4A444791E64693B001B1A83 /* EVisualNovelScene.cpp in Sources */,
+				F4A444781E64693B001B1A83 /* ESpriteType.cpp in Sources */,
+				F4A4447B1E64693B001B1A83 /* SpLogHelper.cpp in Sources */,
+				F4A4448B1E64693B001B1A83 /* PythonScript.cpp in Sources */,
+				F4A444811E64693B001B1A83 /* EGridMoveAnimation.cpp in Sources */,
+				F4A444701E64693B001B1A83 /* EDbgOverlayScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

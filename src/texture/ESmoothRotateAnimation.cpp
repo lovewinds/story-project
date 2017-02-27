@@ -78,7 +78,10 @@ for (i = 0; i < N; i++) {
 		checkFinished = true;
 
 	v = SMOOTHSTEP(dt);
-	a_angle = (360.0f * v) + (0.0f * (1 - v));
+	if (direction == ROTATE_CLOCKWISE)
+		a_angle = (360.0f * v) + (0.0f * (1 - v));
+	else
+		a_angle = (0.0f * v) + (360.0f * (1 - v));
 
 	if (checkFinished) {
 		LOG_DBG("Finished");
