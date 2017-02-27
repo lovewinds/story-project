@@ -80,7 +80,7 @@ for (i = 0; i < N; i++) {
 }
 */
 
-	dt = ((float)elapsed) / (1000.0f);
+	dt = ((float)elapsed) / (transition_sec * 1000.0f);
 	if (dt >= 1.0f)
 		checkFinished = true;
 

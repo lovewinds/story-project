@@ -104,7 +104,7 @@ void EGridMapTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 }
 
-void EGridMapTexture::render(int delta_x, int delta_y)
+void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 {
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	SDL_Rect rect = { 0, };

@@ -29,9 +29,11 @@ public:
 	double getPositionY();
 	void movePositionTo(double x, double y);
 	void movePositionBy(double delta_x, double delta_y);
+	int getWidth();
+	int getHeight();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
-	virtual void render(int delta_x, int delta_y) = 0;
+	virtual void render(int delta_x, int delta_y, double delta_angle) = 0;
 
 protected:
 	/* The actual SDL texture */

@@ -27,6 +27,8 @@ public:
 	double getPositionY();
 	void movePositionTo(double x, double y);
 	void movePositionBy(double delta_x, double delta_y);
+	int getWidth();
+	int getHeight();
 
 	/* Animation */
 	void setAnimation(std::shared_ptr<EAnimation> animation);
@@ -43,6 +45,7 @@ public:
 
 	/* State */
 	void changeState(std::weak_ptr<story::Graphic::Object> self);
+	void changeRotateState(std::weak_ptr<story::Graphic::Object> self);
 
 	/* Primitive */
 	std::string getName();
@@ -69,12 +72,16 @@ protected:
 	double p_x;
 	double p_y;
 
+	int width;
+	int height;
+
 	/* */
 	bool visible;
 	int transparent;
 	bool controllable;
 
 	int state_value;
+	int rotate_state_value;
 };
 
 } /* namespace Graphic */

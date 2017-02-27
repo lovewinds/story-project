@@ -82,7 +82,7 @@ void EFigure::update(Uint32 currentTime, Uint32 accumulator)
 	prevTime = delta;
 }
 
-void EFigure::render(int delta_x, int delta_y)
+void EFigure::render(int delta_x, int delta_y, double delta_angle)
 {
 	SDL_Renderer *renderer = Ecore::getInstance()->getRenderer();
 	if (renderer == NULL)

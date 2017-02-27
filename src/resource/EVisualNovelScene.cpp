@@ -125,22 +125,22 @@ void EVisualNovelScene::render()
 {
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _drawable_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _text_texture_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _object_map)

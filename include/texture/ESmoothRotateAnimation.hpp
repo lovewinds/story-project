@@ -2,19 +2,23 @@
 
 #include "texture/EAnimation.hpp"
 
-class ESmoothStepAnimation : public EAnimation
+enum RotateDirection {
+	ROTATE_CLOCKWISE,
+	ROTATE_ANTICLOCKWISE
+};
+
+class ESmoothRotateAnimation : public EAnimation
 {
 public:
-	ESmoothStepAnimation();
-	virtual ~ESmoothStepAnimation();
+	ESmoothRotateAnimation();
+	virtual ~ESmoothRotateAnimation();
 
 	virtual void start();
 	virtual void stop();
 	virtual void pause();
 	virtual void resume();
 
-	virtual void setStartPosition(int x, int y);
-	virtual void setEndPosition(int x, int y);
+	virtual void setRotateDirection(RotateDirection dir);
 	virtual void setTransition(int seconds);
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
@@ -22,9 +26,7 @@ public:
 protected:
 	Uint32 prevTime = 0;
 
-	int start_x = 0;
-	int start_y = 0;
-	int end_x = 0;
-	int end_y = 0;
 	int transition_sec = 1;
+
+	RotateDirection direction;
 };

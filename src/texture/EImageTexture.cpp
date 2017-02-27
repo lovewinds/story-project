@@ -65,7 +65,7 @@ void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 }
 
-void EImageTexture::render(int delta_x, int delta_y)
+void EImageTexture::render(int delta_x, int delta_y, double delta_angle)
 {
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	int width = 0, height = 0;
@@ -87,9 +87,9 @@ void EImageTexture::render(int delta_x, int delta_y)
 		if (wRatio != 1.0 || hRatio != 1.0)
 			texture_render_resize(
 				(int)(p_x + ani_x), (int)(p_y + ani_y),
-				&rect, wRatio, hRatio);
+				&rect, wRatio, hRatio, delta_angle);
 		else
-			texture_render((int)(p_x + ani_x), (int)(p_y + ani_y), &rect);
+			texture_render((int)(p_x + ani_x), (int)(p_y + ani_y), &rect, delta_angle);
 	}
 	else
 		LOG_ERR("Texture not exist !");

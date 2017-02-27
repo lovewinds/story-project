@@ -1,0 +1,90 @@
+#include "Ecore.hpp"
+#include "util/LogHelper.hpp"
+
+#include "texture/ESmoothRotateAnimation.hpp"
+
+ESmoothRotateAnimation::ESmoothRotateAnimation()
+{
+}
+
+ESmoothRotateAnimation::~ESmoothRotateAnimation()
+{
+}
+
+void ESmoothRotateAnimation::start()
+{
+	prevTime = SDL_GetTicks();
+
+	EAnimation::start();
+}
+
+void ESmoothRotateAnimation::stop()
+{
+	EAnimation::stop();
+}
+
+void ESmoothRotateAnimation::pause()
+{
+	elapsedTime = SDL_GetTicks() - startTime;
+	state = ANI_PAUSE;
+}
+
+void ESmoothRotateAnimation::resume()
+{
+	startTime = SDL_GetTicks() - elapsedTime;
+	state = ANI_START;
+}
+
+void ESmoothRotateAnimation::setRotateDirection(RotateDirection dir)
+{
+	direction = dir;
+}
+
+void ESmoothRotateAnimation::setTransition(int seconds)
+{
+	transition_sec = seconds;
+}
+
+#define SMOOTHSTEP(x) ((x) * (x) * (3 - 2 * (x)))
+
+void ESmoothRotateAnimation::update(Uint32 currentTime, Uint32 accumulator)
+{
+	Uint32 compensatedTime = currentTime + accumulator;
+
+	/* Bug fix for iOS */
+	Uint32 atomicTime = (prevTime==0) ? 0 : (
+		(compensatedTime > prevTime) ? (compensatedTime - prevTime) : (prevTime - compensatedTime));
+	Uint32 elapsed = compensatedTime - startTime;
+	bool checkFinished = false;
+	float v;
+	float dt;
+
+	if (ANI_START != state)	return;
+
+	prevTime = compensatedTime;
+
+	//a_x = ((float)start_x + ((float)(end_x - start_x) * ((float)elapsed / 1000.0f)));
+	//a_y = ((float)start_y + ((float)(end_y - start_y) * ((float)elapsed / 1000.0f)));
+/*
+for (i = 0; i < N; i++) {
+	v = i / N;
+	v = SMOOTHSTEP(v);
+	X = (A * v) + (B * (1 - v));
+}
+*/
+
+	dt = ((float)elapsed) / (transition_sec * 1000.0f);
+	if (dt >= 1.0f)
+		checkFinished = true;
+
+	v = SMOOTHSTEP(dt);
+	a_angle = (360.0f * v) + (0.0f * (1 - v));
+
+	if (checkFinished) {
+		LOG_DBG("Finished");
+		EAnimation::stop();
+		a_angle = 0.0f;
+		startTime = 0;
+		state = ANI_STOP;
+	}
+}

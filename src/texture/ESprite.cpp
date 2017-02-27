@@ -31,6 +31,11 @@ ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :
 	//LOG_INFO("resource ref. count: [%lu]", resource.use_count());
 	///mTexture = _texture;
 	_createTexture();
+
+	if (gSpriteClips.size() > 0) {
+		mWidth = gSpriteClips[0].w;
+		mHeight = gSpriteClips[0].h;
+	}
 }
 
 ESprite::~ESprite()
@@ -97,7 +102,7 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
 	}
 }
 
-void ESprite::render(int delta_x, int delta_y)
+void ESprite::render(int delta_x, int delta_y, double delta_angle)
 {
 	double ani_x = 0, ani_y = 0;
 
@@ -110,7 +115,8 @@ void ESprite::render(int delta_x, int delta_y)
 		texture_render(
 			(int)(p_x + ani_x),
 			(int)(p_y + ani_y),
-			&gSpriteClips[sprite_index]
+			&gSpriteClips[sprite_index],
+			delta_angle
 		);
 	}
 }

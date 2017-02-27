@@ -21,7 +21,7 @@ public:
 	//bool isControllable();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void render(int delta_x, int delta_y);
+	virtual void render(int delta_x, int delta_y, double delta_angle);
 
 protected:
 	ESprite();

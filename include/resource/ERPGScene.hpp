@@ -45,6 +45,8 @@ public:
 	void testAnimation(AnimationState state);
 	void handleMove(GridMoveDir dir);
 
+	bool testRotate(int x, int y);
+
 protected:
 	std::shared_ptr<EGridMapTexture>	gridMap;
 };

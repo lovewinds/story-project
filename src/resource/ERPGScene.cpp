@@ -159,6 +159,37 @@ void ERPGScene::handleMove(GridMoveDir dir)
 	}
 }
 
+bool ERPGScene::testRotate(int x, int y)
+{
+	std::shared_ptr<EAnimation> ani;
+	EGridMoveAnimation* grid = nullptr;
+	bool event_consume = false;
+
+	//for (auto& it : _sprite_map)
+	for (auto& it : _object_map)
+	{
+		std::shared_ptr<story::Graphic::Object> object = it.second;
+		if (nullptr == object) continue;
+
+		int obj_x = object->getPositionX();
+		int obj_y = object->getPositionY();
+		int obj_x2 = object->getPositionX() + object->getWidth();
+		int obj_y2 = object->getPositionY() + object->getHeight();
+
+		if (obj_x <= x && x <= obj_x2 &&
+			obj_y <= y && y <= obj_y2)
+		{
+			LOG_INFO("Rotate [%s]", object->getName().c_str());
+			object->changeRotateState(object);
+
+			event_consume = true;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void ERPGScene::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
@@ -220,8 +251,13 @@ void ERPGScene::handleEvent(SDL_Event e)
 
 		x = Ecore::getScreenWidth() * te->x;
 		y = Ecore::getScreenHeight() * te->y;
-		LOG_INFO("Move to [%d, %d]  | [%03d, %03d]", x, y,
+		LOG_INFO("Touched [%d, %d]  | [%03d, %03d]", x, y,
 				Ecore::getScreenWidth(), Ecore::getScreenHeight());
+
+		/* TODO: event consumer should be handle more efficient way */
+		bool consumed = testRotate(x, y);
+		if (consumed)
+			return;
 
 		std::shared_ptr<story::Graphic::Object> found;
 		auto search = _object_map.find("movingChar");
@@ -234,7 +270,14 @@ void ERPGScene::handleEvent(SDL_Event e)
 			LOG_ERR("Object was not found !");
 		}
 	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
-		LOG_INFO("Animation test");
+		LOG_INFO("Animation test [%03d, %03d]", e.button.x, e.button.y);
+
+		/* TODO: event consumer should be handle more efficient way */
+		bool consumed = testRotate(e.button.x, e.button.y);
+		if (consumed)
+			return;
+
+		/* Move to clicked position */
 		std::shared_ptr<story::Graphic::Object> found;
 		auto search = _object_map.find("movingChar");
 		if (search != _object_map.end()) {
@@ -246,7 +289,7 @@ void ERPGScene::handleEvent(SDL_Event e)
 			LOG_ERR("Object was not found !");
 		}
 	} else if (e.type == SDL_FINGERMOTION) {
-		/* Touch & swipe clears textures */
+#if 0
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		int ax = (int)(((te->dx > 0.0) ? te->dx : te->dx * -1.0) * 1000);
 		int ay = (int)(((te->dy > 0.0) ? te->dy : te->dy * -1.0) * 1000);
@@ -263,31 +306,32 @@ void ERPGScene::handleEvent(SDL_Event e)
 			LOG_INFO("Move : RIGHT");
 			handleMove(DIR_RIGHT);
 		}
+#endif
 	}
 }
 
 void ERPGScene::render()
 {
-	gridMap->render(0, 0);
+	gridMap->render(0, 0, 0);
 
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _text_texture_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _drawable_map)
 	{
-		it.second->render(0, 0);
+		it.second->render(0, 0, 0);
 	}
 
 	for (auto& it : _object_map)

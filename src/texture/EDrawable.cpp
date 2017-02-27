@@ -56,6 +56,16 @@ double EDrawable::getPositionY()
 	return p_y;
 }
 
+int EDrawable::getWidth()
+{
+	return mWidth;
+}
+
+int EDrawable::getHeight()
+{
+	return mHeight;
+}
+
 void EDrawable::dealloc()
 {
 	/* Free texture if it exists */

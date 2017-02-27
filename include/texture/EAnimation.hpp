@@ -42,6 +42,7 @@ public:
 
     double getX();
     double getY();
+	double getAngle();
 	AnimationState getState();
 
 	void setCaller(std::weak_ptr<story::Graphic::Object> caller);
@@ -62,4 +63,5 @@ protected:
 	/* Position */
 	double a_x;
 	double a_y;
+	double a_angle;
 };

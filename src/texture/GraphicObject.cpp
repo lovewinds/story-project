@@ -2,6 +2,7 @@
 
 #include "texture/GraphicObject.hpp"
 #include "texture/ESmoothStepAnimation.hpp"
+#include "texture/ESmoothRotateAnimation.hpp"
 
 #include "util/LogHelper.hpp"
 
@@ -14,7 +15,10 @@ p_x(0), p_y(0)
 	/* Initialize */
 	visible = true;
 	transparent = 100;
+
 	state_value = 0;
+	rotate_state_value = 0;
+
 	controllable = false;
 }
 
@@ -64,6 +68,16 @@ double Object::getPositionY()
 	return p_y;
 }
 
+int Object::getWidth()
+{
+	return width;
+}
+
+int Object::getHeight()
+{
+	return height;
+}
+
 std::string Object::getName()
 {
 	return name;
@@ -103,6 +117,10 @@ void Object::addSprite(std::shared_ptr<ESprite> sprite)
 	}
 
 	sprite->movePositionTo(p_x, p_y);
+
+	/* TODO: support multiple drawbles */
+	width = sprite->getWidth();
+	height = sprite->getHeight();
 }
 
 void Object::addImage(std::shared_ptr<EImageTexture> image)
@@ -114,6 +132,10 @@ void Object::addImage(std::shared_ptr<EImageTexture> image)
 	}
 
 	image->movePositionTo(p_x, p_y);
+
+	/* TODO: support multiple drawbles */
+	width = image->getWidth();
+	height = image->getHeight();
 }
 
 void Object::setAnimation(std::shared_ptr<EAnimation> animation)
@@ -133,6 +155,7 @@ void Object::moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x
 	ani->setCaller(self);
 	ani->setStartPosition(0, 0);
 	ani->setEndPosition(x - p_x, y - p_y);
+	ani->setTransition(1);
 
 	this->setAnimation(std::shared_ptr<EAnimation>(ani));
 	this->startAnimation();
@@ -147,6 +170,7 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
+		ani->setTransition(1);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
@@ -158,11 +182,48 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
+		ani->setTransition(1);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
 
 		this->state_value = 0;
+	}
+}
+
+void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
+{
+	/* Initial state */
+	switch(this->rotate_state_value) {
+	case 0: {
+		/* Create animation */
+		ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
+		ani->setCaller(self);
+		ani->setRotateDirection(ROTATE_CLOCKWISE);
+		ani->setTransition(1);
+
+		this->setAnimation(std::shared_ptr<EAnimation>(ani));
+		this->startAnimation();
+
+		this->rotate_state_value = 1;
+	}
+	break;
+	case 1: {
+		/* Create animation */
+		ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
+		ani->setCaller(self);
+		ani->setRotateDirection(ROTATE_ANTICLOCKWISE);
+		ani->setTransition(1);
+
+		this->setAnimation(std::shared_ptr<EAnimation>(ani));
+		this->startAnimation();
+
+		this->rotate_state_value = 0;
+	}
+	break;
+	default:
+		this->rotate_state_value = 0;
+	break;
 	}
 }
 
@@ -260,20 +321,22 @@ void Object::render()
 {
 	double ani_x = 0.0f;
 	double ani_y = 0.0f;
+	double ani_rotate = 0.0f;
 
 	if (animation) {
 		ani_x = animation->getX();
 		ani_y = animation->getY();
+		ani_rotate = animation->getAngle();
 	}
 
 	for (auto &it : _img_texture_map)
 	{
-		it.second->render(ani_x, ani_y);
+		it.second->render(ani_x, ani_y, ani_rotate);
 	}
 
 	for (auto& it : _sprite_map)
 	{
-		it.second->render(ani_x, ani_y);
+		it.second->render(ani_x, ani_y, ani_rotate);
 	}
 }
 

@@ -5,7 +5,7 @@
 #include "texture/EAnimation.hpp"
 
 EAnimation::EAnimation() :
-a_x(0), a_y(0)
+a_x(0), a_y(0), a_angle(0)
 {
 	startTime = 0;
     elapsedTime = 0;
@@ -25,6 +25,11 @@ double EAnimation::getX()
 double EAnimation::getY()
 {
     return a_y;
+}
+
+double EAnimation::getAngle()
+{
+    return a_angle;
 }
 
 void EAnimation::start()
