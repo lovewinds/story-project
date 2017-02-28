@@ -138,6 +138,35 @@ void Object::addImage(std::shared_ptr<EImageTexture> image)
 	height = image->getHeight();
 }
 
+void Object::addText(std::shared_ptr<ETextTexture> text)
+{
+	auto result = _text_texture_map.emplace("text", text);
+	if (!result.second) {
+		LOG_ERR("Failed to insert text map!");
+		return;
+	}
+
+	text->movePositionTo(p_x, p_y);
+
+	/* TODO: support multiple drawbles */
+	width = text->getWidth();
+	height = text->getHeight();
+}
+
+void Object::updateText(std::string text)
+{
+	for (auto& it : _text_texture_map) {
+		it.second->setText(text);
+	}
+}
+
+void Object::remoteContentAll()
+{
+	_sprite_map.clear();
+	_img_texture_map.clear();
+	_text_texture_map.clear();
+}
+
 void Object::setAnimation(std::shared_ptr<EAnimation> animation)
 {
 	this->animation = animation;
@@ -311,6 +340,11 @@ void Object::update(Uint32 currentTime, Uint32 accumulator)
 		it.second->update(currentTime, accumulator);
 	}
 
+	for (auto& it : _text_texture_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
 	/* Animation */
 	if (animation) {
 		animation->update(currentTime, accumulator);
@@ -338,6 +372,12 @@ void Object::render()
 	{
 		it.second->render(ani_x, ani_y, ani_rotate);
 	}
+
+	for (auto& it : _text_texture_map)
+	{
+		it.second->render(ani_x, ani_y, ani_rotate);
+	}
+
 }
 
 

@@ -1,8 +1,6 @@
 #pragma once
 
 #include <string>
-#include <map>
-#include <unordered_map>
 
 #include "util/SDLWrap.hpp"
 #include "resource/EScene.hpp"

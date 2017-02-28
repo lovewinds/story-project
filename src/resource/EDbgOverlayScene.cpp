@@ -3,6 +3,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
+#include "texture/GraphicObject.hpp"
 
 #include "resource/EDbgOverlayScene.hpp"
 
@@ -15,17 +16,13 @@ EDbgOverlayScene::EDbgOverlayScene(std::string name)
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
 	std::shared_ptr<ETextTexture> tt(new ETextTexture("FPS: 0.0", textColor, bgColor));
+	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
-	SDL_Window* window = Ecore::getInstance()->getWindow();
-	int width = 0, height = 0;
-	SDL_GetWindowSize(window, &width, &height);
-	tt->movePositionTo(width - 160, 10);
-	
+	object->setName("FPS");
+	object->movePositionTo(Ecore::getScreenWidth() - 160, 10);
+	object->addText(tt);
 
-	auto result = _text_texture_map.emplace("fps", tt);
-	if (!result.second) {
-		LOG_ERR("Failed to insert text set !");
-	}
+	addObject(object);
 }
 
 EDbgOverlayScene::~EDbgOverlayScene()
@@ -58,6 +55,11 @@ void EDbgOverlayScene::render()
 	{
 		it.second->render(0, 0, 0);
 	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->render();
+	}
 }
 
 void EDbgOverlayScene::update(Uint32 currentTime, Uint32 accumulator)
@@ -84,9 +86,6 @@ void EDbgOverlayScene::update(Uint32 currentTime, Uint32 accumulator)
 
 	for (auto& it : _text_texture_map)
 	{
-		if (it.first == "fps") {
-			it.second->setText(str);
-		}
 		it.second->update(currentTime, accumulator);
 	}
 
@@ -94,4 +93,13 @@ void EDbgOverlayScene::update(Uint32 currentTime, Uint32 accumulator)
 	{
 		it.second->update(currentTime, accumulator);
 	}
+
+	for (auto& it : _object_map)
+	{
+		if (it.first == "FPS") {
+			it.second->updateText(str);
+		}
+		it.second->update(currentTime, accumulator);
+	}
+
 }

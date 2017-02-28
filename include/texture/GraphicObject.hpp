@@ -8,6 +8,7 @@
 #include "texture/EDrawable.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
+#include "texture/ETextTexture.hpp"
 
 namespace story {
 namespace Graphic {
@@ -52,8 +53,12 @@ public:
 	void setName(std::string name);
 	void setVisible(bool visible);
 	void setTransparent(int percent);
+
 	void addSprite(std::shared_ptr<ESprite> sprite);
-	void addImage(std::shared_ptr<EImageTexture> sprite);
+	void addImage(std::shared_ptr<EImageTexture> image);
+	void addText(std::shared_ptr<ETextTexture> text);
+	void updateText(std::string text);
+	void remoteContentAll();
 
 	/* compatibility */
 	void setControllable(bool controllable);
@@ -64,6 +69,7 @@ protected:
 
 	std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
 	std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
+	std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
 
 	/* Animation */
 	std::shared_ptr<EAnimation> animation;
