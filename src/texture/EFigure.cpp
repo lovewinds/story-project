@@ -5,16 +5,7 @@
 #include "util/LogHelper.hpp"
 #include "texture/EFigure.hpp"
 
-EFigure::EFigure()
-{
-	/* Initialize */
-	mTexture = nullptr;
-	animating = false;
-
-	alpha = 255;
-}
-
-EFigure::EFigure(int x, int y)
+EFigure::EFigure(int x, int y, SDL_Color color)
 {
 	/* Initialize */
 	mTexture = nullptr;
@@ -23,6 +14,7 @@ EFigure::EFigure(int x, int y)
 	/* Set Position */
 	p_x = x;
 	p_y = y;
+	this->color = color;
 
 	alpha = 255;
 }
@@ -31,20 +23,7 @@ EFigure::~EFigure()
 {
 
 }
-#if 0
-void EFigure::startAnimation()
-{
-	animating = true;
-	startTime = SDL_GetTicks();
 
-	EDrawable::startAnimation();
-}
-
-void EFigure::stopAnimation()
-{
-	animating = false;
-}
-#endif
 void EFigure::update(Uint32 currentTime, Uint32 accumulator)
 {
 	static Uint32 prevTime = 0;
@@ -88,12 +67,11 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 	if (renderer == NULL)
 		return;
 
-	SDL_Window* window = Ecore::getInstance()->getWindow();
-	int width = 0, height = 0;
-	SDL_GetWindowSize(window, &width, &height);
+	int width = Ecore::getScreenWidth();
+	int height = Ecore::getScreenHeight();
 
-	boxRGBA(renderer, 0, height-200, width, height,
-		0x70, 0xC6, 0xFF, 0xAA );
+	boxRGBA(renderer, p_x, p_y, p_x + 100, p_y + 40,
+			color.r, color.g, color.b, 0xAA );
 
 #if 0
 	if (animating == false)

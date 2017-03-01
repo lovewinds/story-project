@@ -11,6 +11,7 @@
 #include "resource/ERPGScene.hpp"
 #include "resource/EVisualNovelScene.hpp"
 #include "resource/EDbgOverlayScene.hpp"
+#include "resource/ETitleScene.hpp"
 
 EResourceManager::EResourceManager()
 {
@@ -104,6 +105,9 @@ std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::stri
 		break;
 	case SCENE_DEBUG:
 		scene = std::shared_ptr<EScene>(new EDbgOverlayScene(scene_name));
+		break;
+	case SCENE_TITLE:
+		scene = std::shared_ptr<EScene>(new ETitleScene(scene_name));
 		break;
 	default:
 		/* TODO: If new scene type added, should be created here */
@@ -318,4 +322,17 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 		return nullptr;
 	}
 	return imgTexture;
+}
+
+std::shared_ptr<SDLFontWrap> EResourceManager::getFont(std::string family, int size)
+{
+	std::shared_ptr<SDLFontWrap> font = Ecore::loadFont(family, size);
+
+	/* TODO: Caching */
+	return font;
+}
+
+void EResourceManager::releaseFont(std::shared_ptr<SDLFontWrap>& font)
+{
+	/* TODO: Unref cached font */
 }

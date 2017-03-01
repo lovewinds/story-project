@@ -47,9 +47,9 @@ void ESmoothStepAnimation::setEndPosition(int x, int y)
 	end_y = y;
 }
 
-void ESmoothStepAnimation::setTransition(int seconds)
+void ESmoothStepAnimation::setTransition(int milliseconds)
 {
-	transition_sec = seconds;
+	transition_msec = milliseconds;
 }
 
 #define SMOOTHSTEP(x) ((x) * (x) * (3 - 2 * (x)))
@@ -80,7 +80,7 @@ for (i = 0; i < N; i++) {
 }
 */
 
-	dt = ((float)elapsed) / (transition_sec * 1000.0f);
+	dt = ((float)elapsed) / (float)(transition_msec);
 	if (dt >= 1.0f)
 		checkFinished = true;
 

@@ -42,7 +42,8 @@ public:
 	virtual void finishedAnimationCallback(double delta_x, double delta_y);
 	virtual void syncAnimationCallback(double delta_x, double delta_y);
 
-	virtual void moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x, int y);
+	virtual void animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
+			int x, int y, int transition_msec);
 
 	/* State */
 	void changeState(std::weak_ptr<story::Graphic::Object> self);
@@ -58,7 +59,7 @@ public:
 	void addImage(std::shared_ptr<EImageTexture> image);
 	void addText(std::shared_ptr<ETextTexture> text);
 	void updateText(std::string text);
-	void remoteContentAll();
+	void removeContentAll();
 
 	/* compatibility */
 	void setControllable(bool controllable);

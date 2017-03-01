@@ -120,6 +120,8 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			else if (scene_type == "VNovel")
 				sceneType = SCENE_VISUAL_NOVEL;
 				//scene = resManager->createScene(SCENE_VISUAL_NOVEL, scene_name);
+			else if (scene_type == "Title")
+				sceneType = SCENE_TITLE;
 			else {
 				LOG_ERR("Undefined scene type [%s]", scene_type.c_str());
 				continue;

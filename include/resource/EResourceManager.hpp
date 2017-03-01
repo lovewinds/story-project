@@ -10,6 +10,7 @@
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"
+#include "util/SDLWrap.hpp"
 
 class EResourceLoaderInterface;
 
@@ -72,8 +73,13 @@ public:
  * Texture Functions
  */
 	std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
-
 	void releaseTexture(std::string path);
+
+/*
+ * TextTexture
+ */
+	std::shared_ptr<SDLFontWrap> getFont(std::string family, int size);
+	void releaseFont(std::shared_ptr<SDLFontWrap>& font);
 
 protected:
 	/* Allocate sprite with related image resource into memory */

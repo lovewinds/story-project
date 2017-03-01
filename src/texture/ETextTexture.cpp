@@ -6,14 +6,16 @@
 #include "texture/ETextTexture.hpp"
 #include "util/LogHelper.hpp"
 
-ETextTexture::ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor)
+ETextTexture::ETextTexture(std::string text,
+		SDL_Color textColor, SDL_Color bgColor, int size)
  : EDrawable()
 {
 	this->message = text;
 	this->bgColor = bgColor;
 	this->textColor = textColor;
+	this->size = size;
 
-	_createTexture();
+	_createTexture(size);
 }
 
 ETextTexture::~ETextTexture()
@@ -21,19 +23,24 @@ ETextTexture::~ETextTexture()
 	_removeTexture();
 }
 
-void ETextTexture::_createTexture()
+void ETextTexture::_createTexture(int size)
 {
-	TTF_Font* gFont = Ecore::getInstance()->getFont();
-	SDL_Renderer* gRenderer = Ecore::getInstance()->getRenderer();
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+
+	font = resManager.getFont("NanumBarunpenR", size);
+	if (nullptr == font) {
+		LOG_ERR("Failed to get font[%s] size[%d]", "NanumBarunpenR", size);
+		return;
+	}
 
 	if (mTexture) {
 		LOG_DBG("Remove previous texture");
 		mTexture.reset();
 	}
-	LOG_DBG("Create a new text texture");
+	LOG_DBG("Create a new text texture [%s(%d)]", "NanumBarunpenR", size);
 
-	mTexture = resFactory.createTextTexture(message, textColor, bgColor);
+	mTexture = resFactory.createTextTexture(message, textColor, bgColor, font);
 	//LOG_ERR("[Text] texture [%p]", &mTexture);
 	if (!mTexture) {
 		LOG_ERR("Failed to allocate text texture!");
@@ -63,7 +70,7 @@ void ETextTexture::setText(const std::string& text)
 	{
 		//LOG_INFO("****** Update String! [%s -> %s]", message.c_str(), text.c_str());
 		message = text;
-		_createTexture();
+		_createTexture(size);
 	}
 }
 

@@ -1,0 +1,196 @@
+#pragma execution_character_set("utf-8")
+
+#include "Ecore.hpp"
+#include "util/LogHelper.hpp"
+#include "texture/ESprite.hpp"
+#include "texture/EFigure.hpp"
+#include "texture/EAccelAnimation.hpp"
+#include "resource/EResourceManager.hpp"
+#include "texture/GraphicObject.hpp"
+
+#include "resource/ETitleScene.hpp"
+
+ETitleScene::ETitleScene(std::string name)
+ : EScene(name)
+{
+	LOG_INFO("ETitleScene[%s] created", name.c_str());
+
+	initMenuItem();
+}
+
+ETitleScene::~ETitleScene()
+{
+	LOG_INFO("ETitleScene[%s] removed", name.c_str());
+}
+
+void ETitleScene::initMenuItem()
+{
+	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
+	SDL_Color bgColor = { 0x00, 0x00, 0x00 };
+	SDL_Color listBGColor = { 0x30, 0x30, 0x30 };
+	char str_id[32] = { 0, };
+	char str_text[32];
+
+	/* Menu list items */
+	for (int i = 0; i < 3; i++) {
+		int item_x = 50;
+		int item_y = Ecore::getScreenHeight() - 300 + (50 * i);
+		listBGColor.r = listBGColor.g = listBGColor.b = 0x30 + (0xA * i);
+
+		SDL_snprintf(str_id, 32, "menu_%d", i + 1);
+
+		std::shared_ptr<EFigure> dr(new EFigure(item_x, item_y, listBGColor));
+		auto result = _drawable_map.emplace(str_id, dr);
+		if (!result.second) {
+			LOG_ERR("Failed to insert Drawable !");
+		}
+
+		/* TODO: UTF-8 char should not be used directly. */
+		SDL_snprintf(str_text, 32, "메뉴 %d", i + 1);
+		std::shared_ptr<ETextTexture> txt(
+			new ETextTexture(str_text, textColor, bgColor));
+
+		std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+		object->setName(str_id);
+		object->movePositionTo(item_x, item_y);
+		object->addText(txt);
+		addObject(object);
+	}
+
+	/* Title text */
+	std::shared_ptr<ETextTexture> txt(
+			new ETextTexture("Story Project", textColor, bgColor, 58));
+	std::shared_ptr<story::Graphic::Object> title_obj(new story::Graphic::Object());
+
+	title_obj->setName("title_string");
+	title_obj->movePositionTo(Ecore::getScreenWidth()-400, 100);
+	title_obj->addText(txt);
+	addObject(title_obj);
+}
+
+void ETitleScene::sampleMenuState(std::string id)
+{
+	std::string prefix("menu_");
+
+	for (auto& it : _object_map)
+	{
+		auto& object = it.second;
+		int obj_x = object->getPositionX();
+		int obj_y = object->getPositionY();
+
+		auto res = std::mismatch(prefix.begin(), prefix.end(), object->getName().begin());
+		if (res.first == prefix.end())
+		{
+			/* Prefix matched */
+			if (object->getName() == id) {
+				// Do select
+				LOG_DBG("  + Selected [%s]", object->getName().c_str());
+				object->animatedMoveTo(object, 80, obj_y, 300);
+			} else {
+				// DO unselect
+				LOG_DBG("  - Unselected [%s]", object->getName().c_str());
+				object->animatedMoveTo(object, 50, obj_y, 300);
+			}
+		}
+	}
+}
+
+/* TODO: Logic should be changed to register clickable position
+   for each object */
+bool ETitleScene::checkMenuClicked(int x, int y)
+{
+	for (auto& it : _object_map)
+	{
+		std::shared_ptr<story::Graphic::Object> object = it.second;
+		if (nullptr == object) continue;
+
+		int obj_x = object->getPositionX();
+		int obj_y = object->getPositionY();
+		int obj_x2 = object->getPositionX() + object->getWidth();
+		int obj_y2 = object->getPositionY() + object->getHeight();
+
+		if (obj_x <= x && x <= obj_x2 &&
+			obj_y <= y && y <= obj_y2)
+		{
+			if (object->getAnimationState() != ANI_START) {
+				sampleMenuState(object->getName());
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void ETitleScene::handleEvent(SDL_Event e)
+{
+	/* Handler events for Scene instance */
+	bool ret = false;
+	if (e.type == SDL_MOUSEBUTTONDOWN) {
+		LOG_INFO("Clicked [%03d, %03d]", e.button.x, e.button.y);
+
+		/* TODO: event consumer should be handle more efficient way */
+		bool consumed = checkMenuClicked(e.button.x, e.button.y);
+		if (consumed)
+			return;
+	}
+}
+
+void ETitleScene::render()
+{
+	for (auto &it : _img_texture_map)
+	{
+		it.second->render(0, 0, 0);
+	}
+
+	for (auto& it : _sprite_map)
+	{
+		it.second->render(0, 0, 0);
+	}
+
+	for (auto& it : _drawable_map)
+	{
+		it.second->render(0, 0, 0);
+	}
+
+	for (auto& it : _text_texture_map)
+	{
+		it.second->render(0, 0, 0);
+	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->render();
+	}
+}
+
+void ETitleScene::update(Uint32 currentTime, Uint32 accumulator)
+{
+	if (false == isActivated)
+		return;
+
+	for (auto& it : _sprite_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto &it : _img_texture_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto& it : _drawable_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto& it : _text_texture_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+	for (auto& it : _object_map)
+	{
+		it.second->update(currentTime, accumulator);
+	}
+
+}

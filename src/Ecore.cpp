@@ -20,8 +20,7 @@ Ecore* Ecore::instance = NULL;
 
 Ecore::Ecore() :
 gWindow(NULL),
-gRenderer(NULL),
-gFont(NULL)
+gRenderer(NULL)
 {
 #ifndef USE_SDL_LOG
 	Log::init();
@@ -270,8 +269,8 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	/* Clear screen */
-	//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-	SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+	//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
 	SDL_RenderClear(gRenderer);
 
 	/* Render Screen */
@@ -428,22 +427,35 @@ bool Ecore::init(void* hwnd)
 	return success;
 }
 
+std::shared_ptr<SDLFontWrap> Ecore::loadFont(std::string family, int size)
+{
+	std::shared_ptr<SDLFontWrap> font = nullptr;
+	char font_path[256] = { 0, };
+	TTF_Font *pFont = NULL;
+
+	/* Load Font */
+	SDL_snprintf(font_path, 256, "../res/%s.ttf", family.c_str());
+	pFont = TTF_OpenFont(font_path, size);
+	if (pFont == NULL)
+	{
+		/* Android can handle under /assets directory */
+		SDL_snprintf(font_path, 256, "%s.ttf", family.c_str());
+		pFont = TTF_OpenFont(font_path, size);
+		if (pFont == NULL) {
+			LOG_ERR("Failed to load font[%s]!", family.c_str());
+			LOG_ERR("      SDL_ttf Error: %s", TTF_GetError());
+			return nullptr;
+		}
+	}
+	font = std::shared_ptr<SDLFontWrap>(new SDLFontWrap(pFont, family, size));
+
+	return font;
+}
+
 bool Ecore::loadResources()
 {
 	/* Loading success flag */
 	bool success = true;
-
-	/* Load Font */
-	gFont = TTF_OpenFont("../res/NanumBarunpenR.ttf", 28);
-	if (gFont == NULL)
-	{
-		/* Android can handle under /assets directory */
-		gFont = TTF_OpenFont("NanumGothic.ttf", 28);
-		if (gFont == NULL) {
-			LOG_ERR("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
-			return false;
-		}
-	}
 
 	/* Load resources
 	 * TODO: This logic should 'prepare' to allocate all resources.
@@ -482,9 +494,6 @@ void Ecore::deinit()
 {
 	LOG_DBG("Deinitialize Ecore");
 
-	TTF_CloseFont(gFont);
-	gFont = NULL;
-
 	/* Release resources */
 	delete screenManager;
 	screenManager = NULL;
@@ -506,11 +515,6 @@ void Ecore::deinit()
 SDL_Renderer* Ecore::getRenderer()
 {
 	return gRenderer;
-}
-
-TTF_Font* Ecore::getFont()
-{
-	return gFont;
 }
 
 SDL_Window* Ecore::getWindow()

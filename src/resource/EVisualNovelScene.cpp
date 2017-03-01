@@ -6,6 +6,7 @@
 #include "texture/EFigure.hpp"
 #include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
+#include "texture/GraphicObject.hpp"
 
 #include "resource/EVisualNovelScene.hpp"
 
@@ -14,11 +15,9 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 {
 	LOG_INFO("EVisualNovelScene[%s] created", name.c_str());
 
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	SDL_Window* window = Ecore::getInstance()->getWindow();
-	int width = 0, height = 0;
+	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
 	std::shared_ptr<EFigure> dr(new EFigure(100, 100));
 	auto result = _drawable_map.emplace("Talkbox", dr);
@@ -26,17 +25,14 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 		LOG_ERR("Failed to insert Drawable !");
 	}
 
-	/* TODO: It would be better not to use utf-8 char directly. */
+	/* TODO: UTF-8 char should not be used directly. */
 	std::shared_ptr<ETextTexture> txt(
 		new ETextTexture("안녕?", textColor, bgColor));
-	SDL_GetWindowSize(window, &width, &height);
-	txt->movePositionTo(10, height - 200);
+	object->setName("Message");
+	object->movePositionTo(10, Ecore::getScreenHeight() - 200);
+	object->addText(txt);
 
-	auto result2 = _text_texture_map.emplace("text", txt);
-	if (!result2.second) {
-		LOG_ERR("Failed to insert text set !");
-	}
-
+	addObject(object);
 }
 
 EVisualNovelScene::~EVisualNovelScene()

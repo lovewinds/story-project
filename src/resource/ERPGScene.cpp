@@ -159,10 +159,10 @@ void ERPGScene::handleMove(GridMoveDir dir)
 	}
 }
 
+/* TODO: Logic should be changed to register clickable position
+   for each object */
 bool ERPGScene::testRotate(int x, int y)
 {
-	std::shared_ptr<EAnimation> ani;
-	EGridMoveAnimation* grid = nullptr;
 	bool event_consume = false;
 
 	//for (auto& it : _sprite_map)
@@ -264,7 +264,7 @@ void ERPGScene::handleEvent(SDL_Event e)
 		if (search != _object_map.end()) {
 			found = search->second;
 			if (found->getAnimationState() != ANI_START)
-				found->moveWithAnimation(found, x, y);
+				found->animatedMoveTo(found, x, y, 1000);
 			LOG_DBG("Finished");
 		} else {
 			LOG_ERR("Object was not found !");
@@ -283,7 +283,7 @@ void ERPGScene::handleEvent(SDL_Event e)
 		if (search != _object_map.end()) {
 			found = search->second;
 			if (found->getAnimationState() != ANI_START)
-				found->moveWithAnimation(found, e.button.x, e.button.y);
+				found->animatedMoveTo(found, e.button.x, e.button.y, 1000);
 			LOG_DBG("Finished");
 		} else {
 			LOG_ERR("Object was not found !");

@@ -42,11 +42,12 @@ SDLSurfaceWrap::SDLSurfaceWrap(std::string path)
 	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0xFF, 0xFF));
 }
 
-SDLSurfaceWrap::SDLSurfaceWrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+SDLSurfaceWrap::SDLSurfaceWrap(std::string text,
+		SDL_Color textColor, SDL_Color bgColor,
+		std::shared_ptr<SDLFontWrap> font)
 : surface(nullptr)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
-	TTF_Font* gFont = Ecore::getInstance()->getFont();
+	TTF_Font* gFont = font->getFont();
 
 	if (text.empty()) {
 		LOG_ERR("Text for texture is empty !");
@@ -161,10 +162,13 @@ SDLTextureWrap::SDLTextureWrap(std::string path)
 	}
 }
 
-SDLTextureWrap::SDLTextureWrap(std::string text, SDL_Color textColor, SDL_Color bgColor)
+SDLTextureWrap::SDLTextureWrap(std::string text,
+		SDL_Color textColor, SDL_Color bgColor,
+		std::shared_ptr<SDLFontWrap> font)
 : texture(nullptr)
 {
-	std::shared_ptr<SDLSurfaceWrap> surf(new SDLSurfaceWrap(text, textColor, bgColor));
+	std::shared_ptr<SDLSurfaceWrap> surf(
+			new SDLSurfaceWrap(text, textColor, bgColor, font));
 
 	if (surf) {
 		createFromSurface(surf->getSurface());
@@ -243,4 +247,43 @@ int SDLTextureWrap::getWidth()
 int SDLTextureWrap::getHeight()
 {
 	return height;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// SDLFontWrap
+//
+///////////////////////////////////////////////////////////////////////////////
+
+SDLFontWrap::SDLFontWrap(TTF_Font *font, std::string family, int size)
+: font(nullptr)
+{
+	this->font = font;
+	this->family = family;
+	this->size = size;
+}
+
+SDLFontWrap::~SDLFontWrap()
+{
+	if (font != nullptr) {
+		LOG_ERR("    TTF_Font released [%s] (%d)", family.c_str(), size);
+		TTF_CloseFont(font);
+		font = nullptr;
+	}
+}
+
+TTF_Font* SDLFontWrap::getFont()
+{
+	return font;
+}
+
+std::string SDLFontWrap::getFamily()
+{
+	return family;
+}
+
+int SDLFontWrap::getSize()
+{
+	return size;
 }

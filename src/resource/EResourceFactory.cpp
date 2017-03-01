@@ -155,11 +155,23 @@ void EResourceFactory::removeSprite(std::string name)
  */
 std::shared_ptr<SDLTextureWrap>
 EResourceFactory::createTextTexture(std::string text,
-		SDL_Color textColor, SDL_Color bgColor)
+		SDL_Color textColor, SDL_Color bgColor,
+		std::shared_ptr<SDLFontWrap> font)
 {
+	/* If not provided, create a default one */
+	if (nullptr == font) {
+		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+
+		font = resManager.getFont("NanumGothic", 28);
+		if (nullptr == font) {
+			LOG_ERR("Failed to get font[%s] size[%d]", "NanumGothic", 28);
+			return nullptr;
+		}
+	}
+
 	/* Currently, text textures are not cached */
 	std::shared_ptr<SDLTextureWrap> texture(
-		new SDLTextureWrap(text, textColor, bgColor));
+		new SDLTextureWrap(text, textColor, bgColor, font));
 
 	LOG_DBG("[ResFactory] texture [%p]", &texture);
 	return texture;

@@ -1,11 +1,13 @@
 #pragma once
+
+#include <SDL.h>
+
 #include "EDrawable.hpp"
 
 class EFigure : public EDrawable
 {
 public:
-	EFigure();
-	EFigure(int x, int y);
+	EFigure(int x = 0, int y = 0, SDL_Color color = {0xFF, 0xFF, 0xFF});
 
 	virtual ~EFigure();
 
@@ -24,4 +26,5 @@ protected:
 	/* drawing */
 	int radian;
 	int alpha;
+	SDL_Color color;
 };

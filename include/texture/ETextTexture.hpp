@@ -3,13 +3,15 @@
 #include <string>
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include "EDrawable.hpp"
+#include "util/SDLWrap.hpp"
 
 class ETextTexture : public EDrawable
 {
 public:
-	ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor, int size = 28);
 	virtual ~ETextTexture();
 
 	/* Update String */
@@ -19,7 +21,7 @@ public:
 	virtual void render(int delta_x, int delta_y, double delta_angle);
 
 protected:
-	void _createTexture();
+	void _createTexture(int size);
 	void _removeTexture();
 
 	/* String to show */
@@ -27,4 +29,7 @@ protected:
 
 	SDL_Color textColor;
 	SDL_Color bgColor;
+	int size;
+
+	std::shared_ptr<SDLFontWrap> font;
 };

@@ -160,7 +160,7 @@ void Object::updateText(std::string text)
 	}
 }
 
-void Object::remoteContentAll()
+void Object::removeContentAll()
 {
 	_sprite_map.clear();
 	_img_texture_map.clear();
@@ -177,14 +177,15 @@ std::shared_ptr<EAnimation> Object::getAnimation()
 	return animation;
 }
 
-void Object::moveWithAnimation(std::weak_ptr<story::Graphic::Object> self, int x, int y)
+void Object::animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
+		int dest_x, int dest_y, int transition_msec)
 {
 	/* Create animation */
 	ESmoothStepAnimation *ani = new ESmoothStepAnimation();
 	ani->setCaller(self);
 	ani->setStartPosition(0, 0);
-	ani->setEndPosition(x - p_x, y - p_y);
-	ani->setTransition(1);
+	ani->setEndPosition(dest_x - p_x, dest_y - p_y);
+	ani->setTransition(transition_msec);
 
 	this->setAnimation(std::shared_ptr<EAnimation>(ani));
 	this->startAnimation();
@@ -199,7 +200,7 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
-		ani->setTransition(1);
+		ani->setTransition(1000);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
@@ -211,7 +212,7 @@ void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
 		ani->setCaller(self);
 		ani->setStartPosition(10, 0);
 		ani->setEndPosition(100, 0);
-		ani->setTransition(1);
+		ani->setTransition(1000);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
@@ -229,7 +230,7 @@ void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
 		ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
 		ani->setCaller(self);
 		ani->setRotateDirection(ROTATE_CLOCKWISE);
-		ani->setTransition(1);
+		ani->setTransition(1000);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
@@ -242,7 +243,7 @@ void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
 		ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
 		ani->setCaller(self);
 		ani->setRotateDirection(ROTATE_ANTICLOCKWISE);
-		ani->setTransition(1);
+		ani->setTransition(1000);
 
 		this->setAnimation(std::shared_ptr<EAnimation>(ani));
 		this->startAnimation();
@@ -306,6 +307,11 @@ void Object::finishedAnimationCallback(double ani_x, double ani_y)
 		it.second->movePositionBy(ani_x, ani_y);
 	}
 
+	for (auto& it : _text_texture_map)
+	{
+		it.second->movePositionBy(ani_x, ani_y);
+	}
+
 	p_x += ani_x;
 	p_y += ani_y;
 }
@@ -320,6 +326,11 @@ void Object::syncAnimationCallback(double ani_x, double ani_y)
 	}
 
 	for (auto& it : _sprite_map)
+	{
+		it.second->movePositionBy(ani_x, ani_y);
+	}
+
+	for (auto& it : _text_texture_map)
 	{
 		it.second->movePositionBy(ani_x, ani_y);
 	}

@@ -54,6 +54,8 @@ public:
  * Low - layer functions
  */
 	std::shared_ptr<SDLTextureWrap>
-	createTextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor);
+	createTextTexture(std::string text,
+			SDL_Color textColor, SDL_Color bgColor,
+			std::shared_ptr<SDLFontWrap> font = nullptr);
 
 };

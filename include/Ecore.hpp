@@ -1,10 +1,13 @@
 #pragma once
+
+#include <string>
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <string>
 
 #include "util/PythonScript.hpp"
+#include "util/SDLWrap.hpp"
 
 class EScreenManager;
 class EResourceManager;
@@ -20,7 +23,7 @@ public:
 
 	/* SDL variables */
 	SDL_Renderer* getRenderer();
-	TTF_Font* getFont();
+	static std::shared_ptr<SDLFontWrap> loadFont(std::string family, int size);
 	SDL_Window* getWindow();
 
 	/* Starts up SDL and creates window */
@@ -50,9 +53,8 @@ public:
 	static int getScreenWidth();
 	static int getScreenHeight();
 
-private:
-	
 
+private:
 	static Ecore*	instance;
 
 	/* Frees media and shuts down SDL */
@@ -70,8 +72,6 @@ private:
 
 	//The window renderer
 	SDL_Renderer* gRenderer;
-
-	TTF_Font *gFont;
 
 	double d_fps;
 

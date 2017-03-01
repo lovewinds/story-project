@@ -19,6 +19,7 @@ enum ESceneType
 	SCENE_RPG = 0,
 	SCENE_VISUAL_NOVEL,
 	SCENE_DEBUG,
+	SCENE_TITLE
 };
 
 /*
