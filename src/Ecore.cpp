@@ -40,6 +40,8 @@ gRenderer(NULL)
 	for(int i = 0; i < CUSTOM_EVENT_MAX; i++) {
 		custom_event_id[i] = SDL_RegisterEvents(1);
 	}
+
+	srand(time(NULL));
 }
 
 Ecore::~Ecore()
@@ -276,8 +278,9 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	/* Clear screen */
-	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-	//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+	//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);
+	SDL_SetRenderDrawColor(gRenderer, 0x10, 0x30, 0x4F, 0xC0);
 	SDL_RenderClear(gRenderer);
 
 	/* Render Screen */

@@ -3,6 +3,7 @@
 #include "texture/GraphicObject.hpp"
 #include "texture/ESmoothStepAnimation.hpp"
 #include "texture/ESmoothRotateAnimation.hpp"
+#include "texture/ERotateAndMoveAnimation.hpp"
 
 #include "util/LogHelper.hpp"
 
@@ -182,6 +183,20 @@ void Object::animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
 {
 	/* Create animation */
 	ESmoothStepAnimation *ani = new ESmoothStepAnimation();
+	ani->setCaller(self);
+	ani->setStartPosition(0, 0);
+	ani->setEndPosition(dest_x - p_x, dest_y - p_y);
+	ani->setTransition(transition_msec);
+
+	this->setAnimation(std::shared_ptr<EAnimation>(ani));
+	this->startAnimation();
+}
+
+void Object::animatedMoveRotateTo(std::weak_ptr<story::Graphic::Object> self,
+		int dest_x, int dest_y, int transition_msec)
+{
+	/* Create animation */
+	ERotateAndMoveAnimation *ani = new ERotateAndMoveAnimation();
 	ani->setCaller(self);
 	ani->setStartPosition(0, 0);
 	ani->setEndPosition(dest_x - p_x, dest_y - p_y);

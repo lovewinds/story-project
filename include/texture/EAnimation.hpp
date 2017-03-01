@@ -28,6 +28,11 @@ enum AnimationState
 	ANI_RESUME,
 };
 
+enum RotateDirection {
+	ROTATE_CLOCKWISE,
+	ROTATE_ANTICLOCKWISE
+};
+
 class EAnimation
 {
 public:

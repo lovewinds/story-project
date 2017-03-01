@@ -120,6 +120,13 @@
 		F4A4448C1E64693B001B1A83 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */; };
 		F4A4448D1E64693B001B1A83 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */; };
 		F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */; };
+		F4C63A6C1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */; };
+		F4C63A6F1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */; };
+		F4C63A701E66EEC400A552C0 /* GObjectGroup.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */; };
+		F4C63AB91E66EF1A00A552C0 /* ic_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB51E66EF1A00A552C0 /* ic_circle.png */; };
+		F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB61E66EF1A00A552C0 /* ic_cross.png */; };
+		F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB71E66EF1A00A552C0 /* ic_rect.png */; };
+		F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB81E66EF1A00A552C0 /* ic_triangle.png */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -248,6 +255,13 @@
 		F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
 		F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
 		F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothRotateAnimation.hpp; sourceTree = "<group>"; };
+		F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERotateAndMoveAnimation.cpp; sourceTree = "<group>"; };
+		F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERotateAndMoveAnimation.hpp; sourceTree = "<group>"; };
+		F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GObjectGroup.hpp; sourceTree = "<group>"; };
+		F4C63AB51E66EF1A00A552C0 /* ic_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_circle.png; path = ../../res/ic_circle.png; sourceTree = "<group>"; };
+		F4C63AB61E66EF1A00A552C0 /* ic_cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_cross.png; path = ../../res/ic_cross.png; sourceTree = "<group>"; };
+		F4C63AB71E66EF1A00A552C0 /* ic_rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_rect.png; path = ../../res/ic_rect.png; sourceTree = "<group>"; };
+		F4C63AB81E66EF1A00A552C0 /* ic_triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_triangle.png; path = ../../res/ic_triangle.png; sourceTree = "<group>"; };
 		FA8B4B96196703B400F8EB7C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FAE0E9641BAF967F0098DFA4 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		FD779EDD0E26BA1200F39101 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -313,6 +327,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4C63AB51E66EF1A00A552C0 /* ic_circle.png */,
+				F4C63AB61E66EF1A00A552C0 /* ic_cross.png */,
+				F4C63AB71E66EF1A00A552C0 /* ic_rect.png */,
+				F4C63AB81E66EF1A00A552C0 /* ic_triangle.png */,
 				F48617611D96C691008641CB /* JapaneseVillage.png */,
 				F486175F1D96C44F008641CB /* gom-sprite.png */,
 				F4468A051D96392A003AB89B /* Images-2.xcassets */,
@@ -418,6 +436,8 @@
 		F45B1CBA1E62D8EB003C10E2 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */,
+				F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */,
 				F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */,
 				F45B1CBB1E62D8EB003C10E2 /* EAccelAnimation.hpp */,
 				F45B1CBC1E62D8EB003C10E2 /* EAnimation.hpp */,
@@ -504,6 +524,7 @@
 		F4A444581E64693B001B1A83 /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */,
 				F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */,
 				F4A4445A1E64693B001B1A83 /* EAnimation.cpp */,
 				F4A4445B1E64693B001B1A83 /* EDrawable.cpp */,
@@ -549,6 +570,7 @@
 				F45B1CE51E62D8EB003C10E2 /* ETextTexture.hpp in Headers */,
 				F45B1CD61E62D8EB003C10E2 /* EScene.hpp in Headers */,
 				F45B1CD11E62D8EB003C10E2 /* EImageResource.hpp in Headers */,
+				F4C63A701E66EEC400A552C0 /* GObjectGroup.hpp in Headers */,
 				F45B1CEA1E62D8EB003C10E2 /* PythonScript.hpp in Headers */,
 				F45B1CD81E62D8EB003C10E2 /* ESpriteType.hpp in Headers */,
 				F45B1CE31E62D8EB003C10E2 /* ESmoothStepAnimation.hpp in Headers */,
@@ -558,6 +580,7 @@
 				F45B1CE01E62D8EB003C10E2 /* EGridMapTexture.hpp in Headers */,
 				F45B1CDD1E62D8EB003C10E2 /* EAnimation.hpp in Headers */,
 				F45B1CDC1E62D8EB003C10E2 /* EAccelAnimation.hpp in Headers */,
+				F4C63A6F1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp in Headers */,
 				F45B1CD01E62D8EB003C10E2 /* EDbgOverlayScene.hpp in Headers */,
 				F45B1CE41E62D8EB003C10E2 /* ESprite.hpp in Headers */,
 				F45B1CDA1E62D8EB003C10E2 /* XMLResourceLoader.hpp in Headers */,
@@ -637,20 +660,24 @@
 			files = (
 				F4A37F4C1D8D929400186118 /* gom-002.png in Resources */,
 				F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */,
+				F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */,
 				F4A37F4E1D8D929400186118 /* gom-004.png in Resources */,
 				F444ED8B1E62738500C14B4E /* src in Resources */,
 				F42169B81D05593A00C50450 /* BerryGarden.png in Resources */,
 				F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */,
 				F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */,
+				F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */,
 				F42169B91D05593A00C50450 /* bg-black.png in Resources */,
 				F48617601D96C44F008641CB /* gom-sprite.png in Resources */,
 				F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */,
 				F4A37F541D8D929400186118 /* py_test.py in Resources */,
+				F4C63AB91E66EF1A00A552C0 /* ic_circle.png in Resources */,
 				F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */,
 				F42169C01D05593A00C50450 /* sample_scene.xml in Resources */,
 				F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */,
 				F4A37F4A1D8D929400186118 /* f069.png in Resources */,
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
+				F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
 				F48617621D96C691008641CB /* JapaneseVillage.png in Resources */,
@@ -707,6 +734,7 @@
 				F4A4447B1E64693B001B1A83 /* SpLogHelper.cpp in Sources */,
 				F4A4448B1E64693B001B1A83 /* PythonScript.cpp in Sources */,
 				F4A444811E64693B001B1A83 /* EGridMoveAnimation.cpp in Sources */,
+				F4C63A6C1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp in Sources */,
 				F4A444701E64693B001B1A83 /* EDbgOverlayScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

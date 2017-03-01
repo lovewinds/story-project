@@ -44,6 +44,8 @@ public:
 
 	virtual void animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
 			int x, int y, int transition_msec);
+	virtual void animatedMoveRotateTo(std::weak_ptr<story::Graphic::Object> self,
+			int dest_x, int dest_y, int transition_msec);
 
 	/* State */
 	void changeState(std::weak_ptr<story::Graphic::Object> self);

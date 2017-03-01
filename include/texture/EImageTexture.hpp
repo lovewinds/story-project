@@ -25,7 +25,6 @@ public:
 	int getHeight();
 	void setWidth(double width, bool ratio = false);
 	void setHeight(double height, bool ratio = false);
-	void setPos(int x, int y);
 	std::string getName();
 
 protected:

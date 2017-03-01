@@ -121,12 +121,6 @@ void EImageTexture::setHeight(double height, bool ratio)
 		mHeight = height;
 }
 
-void EImageTexture::setPos(int x, int y)
-{
-	p_x = x;
-	p_y = y;
-}
-
 std::string EImageTexture::getName()
 {
 	return name;

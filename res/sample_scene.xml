@@ -12,6 +12,15 @@
 					type="background" width="256" height="1312"/>
 			<ImageResource path="f071.png" name="Standing"
 					type="background" width="600" height="800"/>
+
+			<ImageResource path="ic_circle.png" name="icon_circle"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_cross.png" name="icon_cross"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_triangle.png" name="icon_triangle"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_rect.png" name="icon_rectangle"
+					type="background" width="128" height="128"/>
 		</ImageResourceGroup>
 		<SpriteTypeGroup>
 			<SpriteType source="Character" name="char_girl" width="32" height="48">

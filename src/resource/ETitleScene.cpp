@@ -7,6 +7,7 @@
 #include "texture/EFigure.hpp"
 #include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
+#include "resource/EResourceFactory.hpp"
 #include "texture/GraphicObject.hpp"
 
 #include "resource/ETitleScene.hpp"
@@ -58,7 +59,7 @@ void ETitleScene::initMenuItem()
 		addObject(object);
 	}
 
-	/* Title text */
+/* Title text */
 	std::shared_ptr<ETextTexture> txt(
 			new ETextTexture("Story Project", textColor, bgColor, 58));
 	std::shared_ptr<story::Graphic::Object> title_obj(new story::Graphic::Object());
@@ -67,6 +68,46 @@ void ETitleScene::initMenuItem()
 	title_obj->movePositionTo(Ecore::getScreenWidth()-400, 100);
 	title_obj->addText(txt);
 	addObject(title_obj);
+
+
+
+/* Create dynamic animations */
+/* Should be moved into ObjectFactory */
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+
+	for (int i = 0; i < 32; i++) {
+		std::shared_ptr<EImageTexture> imgTexture = nullptr;
+		std::shared_ptr<story::Graphic::Object> object
+					(new story::Graphic::Object());
+		int obj_x = rand() % Ecore::getScreenWidth();
+		int obj_y = rand() % (Ecore::getScreenHeight() / 3 * 2);
+
+		SDL_snprintf(str_text, 32, "icon_%d", i + 1);
+		if (i % 4 == 0)
+			imgTexture = resManager.createImageTexture(str_text, "icon_circle");
+		else if (i % 4 == 1)
+			imgTexture = resManager.createImageTexture(str_text, "icon_cross");
+		else if (i % 4 == 2)
+			imgTexture = resManager.createImageTexture(str_text, "icon_triangle");
+		else
+			imgTexture = resManager.createImageTexture(str_text, "icon_rectangle");
+
+		if (nullptr == imgTexture) {
+			LOG_ERR("Failed to create Image !");
+		} else {
+			imgTexture->setWidth(20, true);
+			imgTexture->setHeight(20, true);
+			imgTexture->setAlpha(80);
+			object->setName(str_text);
+			object->movePositionTo(obj_x, obj_y);
+			object->addImage(imgTexture);
+
+			object->animatedMoveRotateTo(object,
+					obj_x, obj_y + Ecore::getScreenHeight(), 45000);
+
+			addObject(object);
+		}
+	}
 }
 
 void ETitleScene::sampleMenuState(std::string id)
@@ -117,7 +158,7 @@ bool ETitleScene::checkMenuClicked(int x, int y)
 					sampleMenuState(object->getName());
 					return true;
 				}
-			} else {
+			} else if (object->getName() == "title_string") {
 				/* Title */
 
 				/* Make a request to change scene */
