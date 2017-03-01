@@ -67,6 +67,8 @@
 		F45B1D341E62DBEF003C10E2 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6D1E6272D100C14B4E /* libSDL2.a */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F45B1D361E62E1AA003C10E2 /* libzmq-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6E1E6272D100C14B4E /* libzmq-static.a */; };
+		F4612A521E66C830009E143E /* ETitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4612A511E66C830009E143E /* ETitleScene.cpp */; };
+		F4612A541E66C84F009E143E /* ETitleScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4612A531E66C84F009E143E /* ETitleScene.hpp */; };
 		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
 		F48617621D96C691008641CB /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F48617611D96C691008641CB /* JapaneseVillage.png */; };
 		F4A37F4A1D8D929400186118 /* f069.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3E1D8D929400186118 /* f069.png */; };
@@ -193,6 +195,8 @@
 		F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PythonScript.hpp; sourceTree = "<group>"; };
 		F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
 		F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
+		F4612A511E66C830009E143E /* ETitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETitleScene.cpp; sourceTree = "<group>"; };
+		F4612A531E66C84F009E143E /* ETitleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETitleScene.hpp; sourceTree = "<group>"; };
 		F486175F1D96C44F008641CB /* gom-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-sprite.png"; path = "../../res/gom-sprite.png"; sourceTree = "<group>"; };
 		F48617611D96C691008641CB /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
 		F4A37F3E1D8D929400186118 /* f069.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f069.png; path = ../../res/f069.png; sourceTree = "<group>"; };
@@ -387,6 +391,7 @@
 		F45B1CAC1E62D8EB003C10E2 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				F4612A531E66C84F009E143E /* ETitleScene.hpp */,
 				F45B1CAD1E62D8EB003C10E2 /* EDbgOverlayScene.hpp */,
 				F45B1CAE1E62D8EB003C10E2 /* EImageResource.hpp */,
 				F45B1CAF1E62D8EB003C10E2 /* EResourceFactory.hpp */,
@@ -472,6 +477,7 @@
 		F4A4444A1E64693B001B1A83 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				F4612A511E66C830009E143E /* ETitleScene.cpp */,
 				F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */,
 				F4A4444C1E64693B001B1A83 /* EImageResource.cpp */,
 				F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */,
@@ -538,6 +544,7 @@
 				F45B1CDE1E62D8EB003C10E2 /* EDrawable.hpp in Headers */,
 				F45B1CD91E62D8EB003C10E2 /* EVisualNovelScene.hpp in Headers */,
 				F45B1CD31E62D8EB003C10E2 /* EResourceLoaderInterface.hpp in Headers */,
+				F4612A541E66C84F009E143E /* ETitleScene.hpp in Headers */,
 				F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */,
 				F45B1CE51E62D8EB003C10E2 /* ETextTexture.hpp in Headers */,
 				F45B1CD61E62D8EB003C10E2 /* EScene.hpp in Headers */,
@@ -680,6 +687,7 @@
 				F4A4446F1E64693B001B1A83 /* main.cpp in Sources */,
 				F4A444751E64693B001B1A83 /* ERPGScene.cpp in Sources */,
 				F4A444731E64693B001B1A83 /* EResourceLoaderInterface.cpp in Sources */,
+				F4612A521E66C830009E143E /* ETitleScene.cpp in Sources */,
 				F4A4447D1E64693B001B1A83 /* EAnimation.cpp in Sources */,
 				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
 				F4A444821E64693B001B1A83 /* EImageTexture.cpp in Sources */,

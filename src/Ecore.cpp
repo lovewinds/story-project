@@ -73,17 +73,14 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 	bool proceed = true;
 
 	//User requests quit
-	if (e->type == SDL_QUIT)
-	{
+	if (e->type == SDL_QUIT) {
 		proceed = false;
 	}
-	else if (e->type == SDL_WINDOWEVENT)
-	{
+	else if (e->type == SDL_WINDOWEVENT) {
 		LOG_DBG("SDL_WINDOWEVENT : [%X]", e->window.event);
 		switch (e->window.event) {
 		case SDL_WINDOWEVENT_CLOSE:
 			proceed = false;
-			break;
 		}
 	}
 	else if (e->type == SDL_USEREVENT) {
@@ -98,6 +95,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 
 			/* Dynamic allocated string should be freed */
 			SDL_free(p_name);
+			e->user.data1 = nullptr;
 		}
 	}
 

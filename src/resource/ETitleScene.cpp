@@ -28,14 +28,14 @@ void ETitleScene::initMenuItem()
 {
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x00, 0x00, 0x00 };
-	SDL_Color listBGColor = { 0x30, 0x30, 0x30 };
+	SDL_Color listBGColor = { 0x30, 0x30, 0x30, 0xA0 };
 	char str_id[32] = { 0, };
 	char str_text[32];
 
 	/* Menu list items */
 	for (int i = 0; i < 3; i++) {
 		int item_x = 50;
-		int item_y = Ecore::getScreenHeight() - 300 + (50 * i);
+		int item_y = Ecore::getScreenHeight() - 180 + (50 * i);
 		listBGColor.r = listBGColor.g = listBGColor.b = 0x30 + (0xA * i);
 
 		SDL_snprintf(str_id, 32, "menu_%d", i + 1);
