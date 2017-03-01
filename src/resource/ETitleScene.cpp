@@ -1,6 +1,7 @@
 #pragma execution_character_set("utf-8")
 
 #include "Ecore.hpp"
+#include "EScreenManager.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
@@ -39,7 +40,7 @@ void ETitleScene::initMenuItem()
 
 		SDL_snprintf(str_id, 32, "menu_%d", i + 1);
 
-		std::shared_ptr<EFigure> dr(new EFigure(item_x, item_y, listBGColor));
+		std::shared_ptr<EFigure> dr(new EFigure(item_x, item_y, 100, 40, listBGColor));
 		auto result = _drawable_map.emplace(str_id, dr);
 		if (!result.second) {
 			LOG_ERR("Failed to insert Drawable !");
@@ -70,17 +71,15 @@ void ETitleScene::initMenuItem()
 
 void ETitleScene::sampleMenuState(std::string id)
 {
-	std::string prefix("menu_");
-
 	for (auto& it : _object_map)
 	{
 		auto& object = it.second;
 		int obj_x = object->getPositionX();
 		int obj_y = object->getPositionY();
 
-		auto res = std::mismatch(prefix.begin(), prefix.end(), object->getName().begin());
-		if (res.first == prefix.end())
+		if (object->getName().find("menu_") != std::string::npos)
 		{
+			LOG_DBG(" matched [%s]", object->getName().c_str());
 			/* Prefix matched */
 			if (object->getName() == id) {
 				// Do select
@@ -112,9 +111,20 @@ bool ETitleScene::checkMenuClicked(int x, int y)
 		if (obj_x <= x && x <= obj_x2 &&
 			obj_y <= y && y <= obj_y2)
 		{
-			if (object->getAnimationState() != ANI_START) {
-				sampleMenuState(object->getName());
-				return true;
+			/* Only propagate for list items */
+			if (object->getName().find("menu_") != std::string::npos) {
+				if (object->getAnimationState() != ANI_START) {
+					sampleMenuState(object->getName());
+					return true;
+				}
+			} else {
+				/* Title */
+
+				/* Make a request to change scene */
+				/* WARNING : DO NOT call playScene inside of another scene logic */
+				std::string s("sample_rpg");
+				LOG_DBG("Request to play scene [%s]", s.c_str());
+				Ecore::requestSceneChange(s);
 			}
 		}
 	}

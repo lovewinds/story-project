@@ -107,10 +107,10 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 		/* Create Scene descriptor */
 		//pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene[@name='main']");
 		pugi::xpath_node_set scene_sel = doc.select_nodes("/SceneRoot/Scene");
-		for (auto it = scene_sel.begin(); it != scene_sel.end(); ++it) {
+		for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it) {
 			std::shared_ptr<ESceneDesc> sceneDesc = nullptr;
 			ESceneType sceneType;
-			pugi::xpath_node node = *it;
+			pugi::xpath_node node = *scene_it;
 			std::string scene_name(node.node().attribute("name").value());
 			std::string scene_type(node.node().attribute("type").value());
 
@@ -141,7 +141,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 			pugi::xpath_node_set layer_sel = doc.select_nodes(layer_path.c_str());
 			for (auto layer_it = layer_sel.begin(); layer_it != layer_sel.end(); ++layer_it) {
 				/* Load all layer items */
-				pugi::xpath_node layer_node = *it;
+				pugi::xpath_node layer_node = *layer_it;
 				std::string layer_name(layer_node.node().attribute("name").value());
 
 				/* Create Layer descriptor */
@@ -152,7 +152,8 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 
 				s.str(std::string());
 				s.clear();
-				s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer/*";
+				s << "/SceneRoot/Scene[@name='" << scene_name <<
+						"']/Layer[@name='" << layer_name << "']/*";
 				std::string layer_item_path = s.str();
 				pugi::xpath_node_set layer_items = doc.select_nodes(layer_item_path.c_str());
 				LOG_INFO("Layer[%s] has [%lu] items:",

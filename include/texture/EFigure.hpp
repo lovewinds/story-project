@@ -7,7 +7,8 @@
 class EFigure : public EDrawable
 {
 public:
-	EFigure(int x = 0, int y = 0, SDL_Color color = {0xFF, 0xFF, 0xFF});
+	EFigure(int x = 0, int y = 0, int width = 0, int height = 0,
+			SDL_Color color = {0xFF, 0xFF, 0xFF});
 
 	virtual ~EFigure();
 

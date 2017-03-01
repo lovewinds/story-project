@@ -13,6 +13,11 @@ class EScreenManager;
 class EResourceManager;
 class EResourceFactory;
 
+enum CustomEvent {
+	CUSTOM_EVENT_SCENE_CHANGE = 0,
+	CUSTOM_EVENT_MAX
+};
+
 class Ecore
 {
 public:
@@ -53,9 +58,14 @@ public:
 	static int getScreenWidth();
 	static int getScreenHeight();
 
+	/* Request to create a event */
+	static int getEventID(CustomEvent event);
+	static void requestSceneChange(std::string scene_name);
+	void handleSceneChange(std::string scene_name);
 
 private:
 	static Ecore*	instance;
+	static int custom_event_id[CUSTOM_EVENT_MAX];
 
 	/* Frees media and shuts down SDL */
 	void deinit();

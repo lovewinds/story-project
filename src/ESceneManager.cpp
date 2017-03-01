@@ -32,7 +32,12 @@ bool ESceneManager::playScene(std::string scene_name)
 		currentScene = scene;
 	} else {
 		LOG_ERR("Scene [%s] is now playing", currentScene->getName().c_str());
-		return false;
+
+		stopCurrentScene();
+		scene = resFactory.createScene(scene_name);
+		LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
+
+		currentScene = scene;
 	}
 
 	return true;

@@ -17,6 +17,7 @@ const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 
 Ecore* Ecore::instance = NULL;
+int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
 
 Ecore::Ecore() :
 gWindow(NULL),
@@ -35,6 +36,10 @@ gRenderer(NULL)
 	PythonScript::initialize();
 
 	Ecore::instance = this;
+
+	for(int i = 0; i < CUSTOM_EVENT_MAX; i++) {
+		custom_event_id[i] = SDL_RegisterEvents(1);
+	}
 }
 
 Ecore::~Ecore()
@@ -65,34 +70,38 @@ void Ecore::releaseInstance()
 
 inline bool Ecore::handleEvent(SDL_Event *e)
 {
-	bool result = true;
-	//Handle events on queue
-	while (SDL_PollEvent(e) != 0)
+	bool proceed = true;
+
+	//User requests quit
+	if (e->type == SDL_QUIT)
 	{
-		//User requests quit
-		if (e->type == SDL_QUIT)
-		{
-			result = false;
-		}
-		else if (e->type == SDL_WINDOWEVENT)
-		{
-			LOG_DBG("SDL_WINDOWEVENT : [%X]", e->window.event);
-			switch (e->window.event) {
-			case SDL_WINDOWEVENT_CLOSE:
-				result = false;
-				break;
-			}
-		}
-		else if (e->type == SDL_KEYDOWN)
-		{
-			switch (e->key.keysym.sym)
-			{
-			case SDLK_a:
-				break;
-			}
+		proceed = false;
+	}
+	else if (e->type == SDL_WINDOWEVENT)
+	{
+		LOG_DBG("SDL_WINDOWEVENT : [%X]", e->window.event);
+		switch (e->window.event) {
+		case SDL_WINDOWEVENT_CLOSE:
+			proceed = false;
+			break;
 		}
 	}
-	return result;
+	else if (e->type == SDL_USEREVENT) {
+		LOG_DBG("Got USER_EVENT !!");
+		if (e->user.code == custom_event_id[CUSTOM_EVENT_SCENE_CHANGE]) {
+			/* Handle scene change event */
+			char *p_name = (char *)e->user.data1;
+			std::string scene_name(p_name);
+
+			LOG_DBG("Scene change event [%s]", p_name);
+			handleSceneChange(scene_name);
+
+			/* Dynamic allocated string should be freed */
+			SDL_free(p_name);
+		}
+	}
+
+	return proceed;
 }
 
 void Ecore::Start()
@@ -662,4 +671,47 @@ bool Ecore::checkPlatform(std::string platform)
 {
 	static std::string p(SDL_GetPlatform());
 	return (p == platform);
+}
+
+int Ecore::getEventID(CustomEvent event)
+{
+	return custom_event_id[event];
+}
+
+void Ecore::requestSceneChange(std::string scene_name)
+{
+	if (scene_name.empty()) {
+		LOG_ERR("Invalid scene name");
+		return;
+	}
+
+	if (custom_event_id[CUSTOM_EVENT_SCENE_CHANGE] != ((Uint32)-1)) {
+		SDL_Event event;
+		int ret = 0;
+
+		SDL_memset(&event, 0, sizeof(event)); /* or SDL_zero(event) */
+		event.type = SDL_USEREVENT;
+		event.user.code = custom_event_id[CUSTOM_EVENT_SCENE_CHANGE];
+		event.user.data1 = SDL_strdup(scene_name.c_str());
+		event.user.data2 = 0;
+
+		LOG_DBG("USER_EVENT created [CUSTOM_EVENT_SCENE_CHANGE(%d)] [%s]",
+			custom_event_id[CUSTOM_EVENT_SCENE_CHANGE],
+			(char *)event.user.data1);
+
+		ret = SDL_PushEvent(&event);
+		if (ret <= 0) {
+			LOG_ERR("Failed to push event ! [%d]", ret);
+		}
+	} else {
+		LOG_ERR("CRITICAL: event_id was not allocated properly !");
+	}
+}
+
+void Ecore::handleSceneChange(std::string scene_name)
+{
+	bool success = screenManager->playScene(scene_name);
+	if (!success) {
+		LOG_ERR("Failed to play scene [%s] !", scene_name.c_str());
+	}
 }

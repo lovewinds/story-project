@@ -17,9 +17,12 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	SDL_Color boxBGColor = { 0x70, 0xC6, 0xFF };
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
-	std::shared_ptr<EFigure> dr(new EFigure(100, 100));
+	std::shared_ptr<EFigure> dr(new EFigure(
+		0, Ecore::getScreenHeight() - 220,
+		Ecore::getScreenWidth(), 220, boxBGColor));
 	auto result = _drawable_map.emplace("Talkbox", dr);
 	if (!result.second) {
 		LOG_ERR("Failed to insert Drawable !");

@@ -5,7 +5,7 @@
 #include "util/LogHelper.hpp"
 #include "texture/EFigure.hpp"
 
-EFigure::EFigure(int x, int y, SDL_Color color)
+EFigure::EFigure(int x, int y, int width, int height, SDL_Color color)
 {
 	/* Initialize */
 	mTexture = nullptr;
@@ -17,6 +17,9 @@ EFigure::EFigure(int x, int y, SDL_Color color)
 	this->color = color;
 
 	alpha = 255;
+
+	mWidth = width;
+	mHeight = height;
 }
 
 EFigure::~EFigure()
@@ -70,7 +73,7 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 	int width = Ecore::getScreenWidth();
 	int height = Ecore::getScreenHeight();
 
-	boxRGBA(renderer, p_x, p_y, p_x + 100, p_y + 40,
+	boxRGBA(renderer, p_x, p_y, p_x + mWidth, p_y + mHeight,
 			color.r, color.g, color.b, 0xAA );
 
 #if 0
