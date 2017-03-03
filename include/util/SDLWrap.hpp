@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <SDL.h>
 #include <SDL_ttf.h>

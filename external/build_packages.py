@@ -82,8 +82,15 @@ def patch_sdl2_image(path):
 	list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
 	for child in list:
 		item = child.find(msvc_ns_prefix+"ClCompile")
-		item = item.find(msvc_ns_prefix+"AdditionalIncludeDirectories")
-		item.text = item.text.replace("..\\..\\SDL\\include", "..\\..\\..\\built\\include")
+		item_include = item.find(msvc_ns_prefix+"AdditionalIncludeDirectories")
+		item_include.text = "..\\..\\..\\built\\include;"+item_include.text
+
+		item = child.find(msvc_ns_prefix+"Link")
+		item_lib = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
+		if item_lib == None:
+			note = ElementTree.Element(msvc_ns_prefix+"AdditionalLibraryDirectories")
+			note.text = "..\\..\\..\\built\\$(Configuration);"
+			item.append(note)
 
 	list = root.findall(msvc_ns_prefix+"ItemGroup")
 	print list
@@ -133,6 +140,12 @@ def patch_sdl2_gfx(path):
 		item = child.find(msvc_ns_prefix+"Link")
 		item = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
 		item.text = "..\\..\\built\\$(Configuration);"+item.text
+
+	list = root.findall(msvc_ns_prefix+"PropertyGroup")
+	for child in list:
+		item = child.find(msvc_ns_prefix+"WindowsTargetPlatformVersion")
+		if item != None:
+			child.remove(item)
 
 	print "   [SDL2_gfx] Patched\n"
 
@@ -302,7 +315,7 @@ def build_sources_MSVC(build_type):
 	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
 	gtest_path = WORKING_PATH+'sources/gtest/build/'
 	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
-	zeromq_path = WORKING_PATH+'sources/zeromq/builds/msvc/vs2013/'
+	zeromq_path = WORKING_PATH+'sources/zeromq/builds/msvc/vs2015/'
 
 # Build SDL2
 	if os.path.exists(build_path_rel+'SDL2.lib'):
@@ -324,11 +337,12 @@ def build_sources_MSVC(build_type):
 	else:
 		os.chdir(sdl2_image_path)
 		# !REQUIRED! Patch additional library and include path
-		patch_sdl2_image("SDL_image_VS2012.vcxproj")
+		#patch_sdl2_image("SDL_image_VS2012.vcxproj")
+		patch_sdl2_image("SDL_image.vcxproj")
 		if STATIC_LINK == True:
-			patch_static_MSVC("SDL_image_VS2012.vcxproj")
-		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
-		os.system('msbuild SDL_image_VS2012.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
+			patch_static_MSVC("SDL_image.vcxproj")
+		os.system('msbuild SDL_image.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+		os.system('msbuild SDL_image.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
 		print "   [SDL2_image] Copying header files .."
 		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
