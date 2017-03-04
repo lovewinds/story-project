@@ -13,7 +13,7 @@ ESmoothStepAnimation::~ESmoothStepAnimation()
 
 void ESmoothStepAnimation::start()
 {
-	prevTime = SDL_GetTicks();
+	prevTime = Ecore::getAppTicks();
 
 	EAnimation::start();
 }
@@ -25,13 +25,13 @@ void ESmoothStepAnimation::stop()
 
 void ESmoothStepAnimation::pause()
 {
-	elapsedTime = SDL_GetTicks() - startTime;
+	elapsedTime = Ecore::getAppTicks() - startTime;
 	state = ANI_PAUSE;
 }
 
 void ESmoothStepAnimation::resume()
 {
-	startTime = SDL_GetTicks() - elapsedTime;
+	startTime = Ecore::getAppTicks() - elapsedTime;
 	state = ANI_START;
 }
 

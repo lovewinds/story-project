@@ -296,10 +296,10 @@ void ESceneManager::propagateEvent(SDL_Event e)
 	std::list<EFigure*>::iterator	iter = textureList.begin();
 	while (iter != textureList.end()) {
 		EFigure* texture = *iter;
-		//texture->animateStart(SDL_GetTicks());
+		//texture->animateStart(Ecore::getAppTicks());
 		iter++;
 	}
-	//textTexture->animateStart(SDL_GetTicks());
+	//textTexture->animateStart(Ecore::getAppTicks());
 #endif
 }
 

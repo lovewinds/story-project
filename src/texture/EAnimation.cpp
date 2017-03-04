@@ -34,7 +34,7 @@ double EAnimation::getAngle()
 
 void EAnimation::start()
 {
-    startTime = SDL_GetTicks();
+    startTime = Ecore::getAppTicks();
     state = ANI_START;
 }
 
@@ -58,13 +58,13 @@ void EAnimation::sync()
 
 void EAnimation::pause()
 {
-    elapsedTime = SDL_GetTicks() - startTime;
+    elapsedTime = Ecore::getAppTicks() - startTime;
     state = ANI_PAUSE;
 }
 
 void EAnimation::resume()
 {
-    startTime = SDL_GetTicks() - elapsedTime;
+    startTime = Ecore::getAppTicks() - elapsedTime;
     state = ANI_START;
 }
 

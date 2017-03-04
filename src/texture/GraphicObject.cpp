@@ -195,12 +195,18 @@ void Object::animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
 void Object::animatedMoveRotateTo(std::weak_ptr<story::Graphic::Object> self,
 		int dest_x, int dest_y, int transition_msec)
 {
+	int i = 0;
 	/* Create animation */
 	ERotateAndMoveAnimation *ani = new ERotateAndMoveAnimation();
 	ani->setCaller(self);
 	ani->setStartPosition(0, 0);
 	ani->setEndPosition(dest_x - p_x, dest_y - p_y);
 	ani->setTransition(transition_msec);
+	i = rand() % 2;
+	if (i == 0)
+		ani->setRotateDirection(ROTATE_CLOCKWISE);
+	else
+		ani->setRotateDirection(ROTATE_ANTICLOCKWISE);
 
 	this->setAnimation(std::shared_ptr<EAnimation>(ani));
 	this->startAnimation();

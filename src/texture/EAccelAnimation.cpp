@@ -14,7 +14,7 @@ EAccelAnimation::~EAccelAnimation()
 
 void EAccelAnimation::start()
 {
-	startTime = SDL_GetTicks();
+	startTime = Ecore::getAppTicks();
 	state = ANI_START;
 
 	velo = 10.0;
@@ -31,13 +31,13 @@ void EAccelAnimation::stop()
 
 void EAccelAnimation::pause()
 {
-	elapsedTime = SDL_GetTicks() - startTime;
+	elapsedTime = Ecore::getAppTicks() - startTime;
 	state = ANI_PAUSE;
 }
 
 void EAccelAnimation::resume()
 {
-	startTime = SDL_GetTicks() - elapsedTime;
+	startTime = Ecore::getAppTicks() - elapsedTime;
 	state = ANI_START;
 }
 

@@ -18,6 +18,8 @@ const int SCREEN_HEIGHT = 768;
 
 Ecore* Ecore::instance = NULL;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
+uint32_t Ecore::in_paused_ticks = 0;
+uint32_t Ecore::start_pause_tick = 0;
 
 Ecore::Ecore() :
 gWindow(NULL),
@@ -144,7 +146,7 @@ void Ecore::Start()
 		const Uint32 SKIP_RENDER_TICKS = 1000 / RENDER_TICKS_PER_SECOND;
 
 		Uint32 accumulator = 0;
-		Uint32 prevTime = SDL_GetTicks();
+		Uint32 prevTime = getAppTicks();
 		Uint32 currentTime = prevTime;
 		Uint32 nextUpdateTick = prevTime;
 		Uint32 nextRenderTick = prevTime;
@@ -168,7 +170,7 @@ void Ecore::Start()
 				screenManager->handleEvent(e);
 			}
 
-			currentTime = SDL_GetTicks();
+			currentTime = getAppTicks();
 			frameTime = currentTime - prevTime;	/* elapsed time from last frame rendering */
 			//accumulator += frameTime;
 
@@ -209,7 +211,7 @@ void Ecore::Start()
 					currentTime, nextUpdateTick, nextUpdateTick - currentTime, accumulator);
 #endif
 
-				currentTime = SDL_GetTicks();
+				currentTime = getAppTicks();
 			}
 			updated += loops;
 
@@ -221,7 +223,7 @@ void Ecore::Start()
 			//INFO("Render !! / Updated : [%d] times", loops);
 #if 1
 			/* Limit frames */
-			//currentTime = SDL_GetTicks();
+			//currentTime = getAppTicks();
 			//if (currentTime - prevTime <= 1000 / 60) {
 			if (currentTime - prevCalculated > 1000) {
 				//SDL_Delay(1000 / 60);
@@ -234,7 +236,7 @@ void Ecore::Start()
 #endif
 			prevTime = currentTime;
 
-			currentTime = SDL_GetTicks();
+			currentTime = getAppTicks();
 			if (currentTime <= nextRenderTick) {
 				//nextRenderTick += SKIP_RENDER_TICKS;
 				continue;
@@ -270,7 +272,7 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 	drawed_frames++;
 
 	/* Calculate FPS */
-	currentTime = SDL_GetTicks();
+	currentTime = getAppTicks();
 	if (currentTime - prevTime >= 1000) {
 		d_fps = (double)drawed_frames / (double)(currentTime - prevTime) * 1000.0;
 		prevTime = currentTime;
@@ -548,6 +550,22 @@ int Ecore::getScreenHeight()
 	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
 
 	return h;
+}
+
+uint32_t Ecore::getAppTicks()
+{
+	return SDL_GetTicks() - in_paused_ticks;
+}
+
+void Ecore::enterAppPauseState()
+{
+	start_pause_tick = SDL_GetTicks();
+}
+
+void Ecore::stopAppPauseState()
+{
+	uint32_t in_pause = SDL_GetTicks() - start_pause_tick;
+	in_paused_ticks += in_pause;
 }
 
 const char* Ecore::getBasePath()

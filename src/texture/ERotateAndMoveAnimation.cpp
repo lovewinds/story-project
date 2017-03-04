@@ -13,7 +13,7 @@ ERotateAndMoveAnimation::~ERotateAndMoveAnimation()
 
 void ERotateAndMoveAnimation::start()
 {
-	prevTime = SDL_GetTicks();
+	prevTime = Ecore::getAppTicks();
 
 	EAnimation::start();
 }
@@ -25,13 +25,13 @@ void ERotateAndMoveAnimation::stop()
 
 void ERotateAndMoveAnimation::pause()
 {
-	elapsedTime = SDL_GetTicks() - startTime;
+	elapsedTime = Ecore::getAppTicks() - startTime;
 	state = ANI_PAUSE;
 }
 
 void ERotateAndMoveAnimation::resume()
 {
-	startTime = SDL_GetTicks() - elapsedTime;
+	startTime = Ecore::getAppTicks() - elapsedTime;
 	state = ANI_START;
 }
 
@@ -87,14 +87,28 @@ void ERotateAndMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		a_angle = (0.0f * v) + (720.0f * (1 - v));
 	/* Position */
 	/* NON-smooth */
-	a_x = (end_x * dt) + (start_x * (1 - dt));
-    a_y = (end_y * dt) + (start_y * (1 - dt));
+	if (!reverse) {
+		a_x = (end_x * v) + (start_x * (1 - v));
+	    a_y = (end_y * v) + (start_y * (1 - v));
+	} else {
+		a_x = (start_x * v) + (end_x * (1 - v));
+	    a_y = (start_y * v) + (end_y * (1 - v));
+	}
 
 	if (checkFinished) {
-		LOG_DBG("Finished");
-		EAnimation::stop();
+		LOG_DBG("Reverse !");
+		//EAnimation::stop();
 		a_angle = 0.0f;
-		startTime = 0;
-		state = ANI_STOP;
+		startTime = Ecore::getAppTicks();
+		//state = ANI_STOP;
+		if (reverse)
+			reverse = false;
+		else
+			reverse = true;
+
+		if (direction == ROTATE_CLOCKWISE)
+			direction = ROTATE_ANTICLOCKWISE;
+		else
+			direction = ROTATE_CLOCKWISE;
 	}
 }

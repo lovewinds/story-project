@@ -21,7 +21,7 @@ EGridMoveAnimation::~EGridMoveAnimation()
 void EGridMoveAnimation::start()
 {
 	velo = TEST_VELO;
-	prevTime = SDL_GetTicks();
+	prevTime = Ecore::getAppTicks();
 
 	EAnimation::start();
 }
@@ -33,13 +33,13 @@ void EGridMoveAnimation::stop()
 
 void EGridMoveAnimation::pause()
 {
-	elapsedTime = SDL_GetTicks() - startTime;
+	elapsedTime = Ecore::getAppTicks() - startTime;
 	state = ANI_PAUSE;
 }
 
 void EGridMoveAnimation::resume()
 {
-	startTime = SDL_GetTicks() - elapsedTime;
+	startTime = Ecore::getAppTicks() - elapsedTime;
 	state = ANI_START;
 }
 

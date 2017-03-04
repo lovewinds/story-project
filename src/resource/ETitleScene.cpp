@@ -63,11 +63,11 @@ void ETitleScene::initMenuItem()
 
 /* Title text */
 	std::shared_ptr<ETextTexture> txt(
-			new ETextTexture("Story Project", textColor, bgColor, 58));
+			new ETextTexture("Story", textColor, bgColor, 58));
 	std::shared_ptr<story::Graphic::Object> title_obj(new story::Graphic::Object());
 
 	title_obj->setName("title_string");
-	title_obj->movePositionTo(Ecore::getScreenWidth()-400, 100);
+	title_obj->movePositionTo(Ecore::getScreenWidth()-200, 100);
 	title_obj->addText(txt);
 	addObject(title_obj);
 
@@ -76,13 +76,22 @@ void ETitleScene::initMenuItem()
 /* Create dynamic animations */
 /* Should be moved into ObjectFactory */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	int s_width = Ecore::getScreenWidth();
+	int s_height = Ecore::getScreenHeight();
 
-	for (int i = 0; i < 32; i++) {
+	for (int i = 0; i < 64; i++) {
 		std::shared_ptr<EImageTexture> imgTexture = nullptr;
 		std::shared_ptr<story::Graphic::Object> object
 					(new story::Graphic::Object());
-		int obj_x = rand() % Ecore::getScreenWidth();
-		int obj_y = rand() % (Ecore::getScreenHeight() / 3 * 2);
+		int obj_x = rand() % s_width;
+		int obj_y = rand() % s_height;
+		int dest_y = 0;
+		int transition = 0;
+
+		if (obj_y < (s_height / 2))
+			dest_y = obj_y + (s_height / 8);
+		else
+			dest_y = obj_y - (s_height / 8);
 
 		SDL_snprintf(str_text, 32, "icon_%d", i + 1);
 		if (i % 4 == 0)
@@ -99,13 +108,13 @@ void ETitleScene::initMenuItem()
 		} else {
 			imgTexture->setWidth(20, true);
 			imgTexture->setHeight(20, true);
-			imgTexture->setAlpha(80);
+			imgTexture->setAlpha(70);
 			object->setName(str_text);
 			object->movePositionTo(obj_x, obj_y);
 			object->addImage(imgTexture);
 
-			object->animatedMoveRotateTo(object,
-					obj_x, obj_y + Ecore::getScreenHeight(), 45000);
+			transition = ((rand() % 3) + 1) * 5000;
+			object->animatedMoveRotateTo(object, obj_x, dest_y, transition);
 
 			addObject(object);
 		}

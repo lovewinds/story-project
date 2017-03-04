@@ -23,13 +23,6 @@
 		F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
 		F444ED8B1E62738500C14B4E /* src in Resources */ = {isa = PBXBuildFile; fileRef = F444ED8A1E62738500C14B4E /* src */; };
-		F444ED961E6286B700C14B4E /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED661E6272D100C14B4E /* libg3logger.a */; };
-		F444ED971E6286B700C14B4E /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED671E6272D100C14B4E /* libgtest.a */; };
-		F444ED981E6286B700C14B4E /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED681E6272D100C14B4E /* libprotobuf.a */; };
-		F444ED991E6286B700C14B4E /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED691E6272D100C14B4E /* libpugixml.a */; };
-		F444ED9A1E6286B700C14B4E /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6A1E6272D100C14B4E /* libSDL2_gfx.a */; };
-		F444ED9B1E6286B700C14B4E /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6B1E6272D100C14B4E /* libSDL2_image.a */; };
-		F444ED9C1E6286B700C14B4E /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6C1E6272D100C14B4E /* libSDL2_ttf.a */; };
 		F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED9F1E6286C100C14B4E /* AVFoundation.framework */; };
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
 		F45B1CCD1E62D8EB003C10E2 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CA91E62D8EB003C10E2 /* Ecore.hpp */; };
@@ -64,9 +57,7 @@
 		F45B1CEA1E62D8EB003C10E2 /* PythonScript.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */; };
 		F45B1CEB1E62D8EB003C10E2 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */; };
 		F45B1CEC1E62D8EB003C10E2 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */; };
-		F45B1D341E62DBEF003C10E2 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6D1E6272D100C14B4E /* libSDL2.a */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
-		F45B1D361E62E1AA003C10E2 /* libzmq-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6E1E6272D100C14B4E /* libzmq-static.a */; };
 		F4612A521E66C830009E143E /* ETitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4612A511E66C830009E143E /* ETitleScene.cpp */; };
 		F4612A541E66C84F009E143E /* ETitleScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4612A531E66C84F009E143E /* ETitleScene.hpp */; };
 		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
@@ -127,6 +118,15 @@
 		F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB61E66EF1A00A552C0 /* ic_cross.png */; };
 		F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB71E66EF1A00A552C0 /* ic_rect.png */; };
 		F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB81E66EF1A00A552C0 /* ic_triangle.png */; };
+		F4D902E11E6A45920097C515 /* libg3logger.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED661E6272D100C14B4E /* libg3logger.a */; };
+		F4D902E21E6A45920097C515 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED671E6272D100C14B4E /* libgtest.a */; };
+		F4D902E31E6A45920097C515 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED681E6272D100C14B4E /* libprotobuf.a */; };
+		F4D902E41E6A45920097C515 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED691E6272D100C14B4E /* libpugixml.a */; };
+		F4D902E51E6A45920097C515 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6A1E6272D100C14B4E /* libSDL2_gfx.a */; };
+		F4D902E61E6A45920097C515 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6B1E6272D100C14B4E /* libSDL2_image.a */; };
+		F4D902E71E6A45920097C515 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6C1E6272D100C14B4E /* libSDL2_ttf.a */; };
+		F4D902E81E6A45920097C515 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6D1E6272D100C14B4E /* libSDL2.a */; };
+		F4D902E91E6A45920097C515 /* libzmq-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6E1E6272D100C14B4E /* libzmq-static.a */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -274,15 +274,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F45B1D361E62E1AA003C10E2 /* libzmq-static.a in Frameworks */,
-				F45B1D341E62DBEF003C10E2 /* libSDL2.a in Frameworks */,
-				F444ED961E6286B700C14B4E /* libg3logger.a in Frameworks */,
-				F444ED971E6286B700C14B4E /* libgtest.a in Frameworks */,
-				F444ED981E6286B700C14B4E /* libprotobuf.a in Frameworks */,
-				F444ED991E6286B700C14B4E /* libpugixml.a in Frameworks */,
-				F444ED9A1E6286B700C14B4E /* libSDL2_gfx.a in Frameworks */,
-				F444ED9B1E6286B700C14B4E /* libSDL2_image.a in Frameworks */,
-				F444ED9C1E6286B700C14B4E /* libSDL2_ttf.a in Frameworks */,
+				F4D902E11E6A45920097C515 /* libg3logger.a in Frameworks */,
+				F4D902E21E6A45920097C515 /* libgtest.a in Frameworks */,
+				F4D902E31E6A45920097C515 /* libprotobuf.a in Frameworks */,
+				F4D902E41E6A45920097C515 /* libpugixml.a in Frameworks */,
+				F4D902E51E6A45920097C515 /* libSDL2_gfx.a in Frameworks */,
+				F4D902E61E6A45920097C515 /* libSDL2_image.a in Frameworks */,
+				F4D902E71E6A45920097C515 /* libSDL2_ttf.a in Frameworks */,
+				F4D902E81E6A45920097C515 /* libSDL2.a in Frameworks */,
+				F4D902E91E6A45920097C515 /* libzmq-static.a in Frameworks */,
 				F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */,
 				FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */,
 				FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */,
@@ -767,7 +767,7 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../external/built/lib/ios",
@@ -804,7 +804,7 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../external/built/lib/ios",

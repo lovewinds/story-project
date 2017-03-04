@@ -29,5 +29,6 @@ protected:
 	int start_y = 0;
 	int end_x = 0;
 	int end_y = 0;
+	bool reverse = false;
 	RotateDirection direction;
 };

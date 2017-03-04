@@ -57,6 +57,9 @@ public:
 
 	static int getScreenWidth();
 	static int getScreenHeight();
+	static uint32_t getAppTicks();
+	static void enterAppPauseState();
+	static void stopAppPauseState();
 
 	/* Request to create a event */
 	static int getEventID(CustomEvent event);
@@ -84,6 +87,12 @@ private:
 	SDL_Renderer* gRenderer;
 
 	double d_fps;
+
+	/* Total amount of paused ticks. */
+	static uint32_t in_paused_ticks;
+
+	/* The tick of starting pause */
+	static uint32_t start_pause_tick;
 
 	/* Manager classes:
 	 * Handle these as a pointer type for obvious resource deallocation.
