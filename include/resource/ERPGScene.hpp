@@ -43,7 +43,7 @@ public:
 	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
 	void testAnimation(AnimationState state);
-	void handleMove(GridMoveDir dir);
+	void handleDirectonFactor(float axis_x, float axis_y);
 
 	bool testRotate(int x, int y);
 

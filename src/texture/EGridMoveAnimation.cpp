@@ -1,17 +1,15 @@
+#include <cmath>
+
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
 #include "texture/EGridMoveAnimation.hpp"
 
-#define TEST_VELO	16.0
+#define TEST_VELO	(16.0f)
+#define GRID_SIZE	(32.0f)
 
 EGridMoveAnimation::EGridMoveAnimation()
 {
-}
-
-EGridMoveAnimation::EGridMoveAnimation(GridMoveDir dir)
-{
-	direction = dir;
 }
 
 EGridMoveAnimation::~EGridMoveAnimation()
@@ -21,39 +19,83 @@ EGridMoveAnimation::~EGridMoveAnimation()
 void EGridMoveAnimation::start()
 {
 	velo = TEST_VELO;
-	prevTime = Ecore::getAppTicks();
-
 	EAnimation::start();
+
+	curr_dir_factor_x = next_dir_factor_x;
+	curr_dir_factor_y = next_dir_factor_y;
 }
 
-void EGridMoveAnimation::stop()
+void EGridMoveAnimation::setAxisFactor(float axis_x, float axis_y)
 {
-	EAnimation::stop();
+	if (std::isnan(axis_x) == false)
+		next_dir_factor_x = axis_x;
+	if (std::isnan(axis_y) == false)
+		next_dir_factor_y = axis_y;
 }
 
-void EGridMoveAnimation::pause()
+void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
-	elapsedTime = Ecore::getAppTicks() - startTime;
-	state = ANI_PAUSE;
-}
+	Uint32 compensatedTime = currentTime + accumulator;
+	/* Bug fix for iOS */
+	Uint32 atomicTime = (prevTime==0) ? 0 : (
+		(compensatedTime > prevTime) ? (compensatedTime - prevTime) : (prevTime - compensatedTime));
+	Uint32 delta = atomicTime - prevTime;
+	double dt = atomicTime * 0.01;
+	double accu = 0.0;
+	bool checkFinished = false;
 
-void EGridMoveAnimation::resume()
-{
-	startTime = Ecore::getAppTicks() - elapsedTime;
-	state = ANI_START;
-}
+	if (ANI_START != state)	return;
 
-void EGridMoveAnimation::setDirection(GridMoveDir dir)
-{
-	direction = dir;
-}
+	prevTime = compensatedTime;
 
-void EGridMoveAnimation::setNextDirection(GridMoveDir dir)
-{
-	//LOG_DBG("Update next : [%x] -> [%x]", dir, next_dir);
-	next_dir = dir;
-}
+	a_x += velo * dt * curr_dir_factor_x;
+	a_y += velo * dt * curr_dir_factor_y;
 
+	if (a_x <= -GRID_SIZE) {
+		a_x = -GRID_SIZE;
+		checkFinished = true;
+	}
+	if (a_x >= GRID_SIZE) {
+		a_x = GRID_SIZE;
+		checkFinished = true;
+	}
+	if (a_y <= -GRID_SIZE) {
+		a_y = -GRID_SIZE;
+		checkFinished = true;
+	}
+	if (a_y >= GRID_SIZE) {
+		a_y = GRID_SIZE;
+		checkFinished = true;
+	}
+
+	if (checkFinished) {
+		if (next_dir_factor_x > 0.0f || next_dir_factor_x < 0.0f
+			|| next_dir_factor_y > 0.0f || next_dir_factor_y < 0.0f)
+		{
+			LOG_DBG("Sync");
+			EAnimation::sync();
+			a_x = 0.0f;
+			a_y = 0.0f;
+			curr_dir_factor_x = next_dir_factor_x;
+			curr_dir_factor_y = next_dir_factor_y;
+
+			/* Reset state */
+			//prevTime = compensatedTime;
+			//EAnimation::start();
+		} else {
+			LOG_DBG("Stopped");
+			EAnimation::stop();
+			a_x = 0.0f;
+			a_y = 0.0f;
+			curr_dir_factor_x = next_dir_factor_x;
+			curr_dir_factor_y = next_dir_factor_y;
+			startTime = 0;
+			prevTime = 0;
+			state = ANI_STOP;
+		}
+	}
+}
+#if 0
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
@@ -140,3 +182,4 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		}
 	}
 }
+#endif

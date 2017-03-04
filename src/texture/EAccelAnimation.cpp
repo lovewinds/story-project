@@ -23,24 +23,6 @@ void EAccelAnimation::start()
 	decrease = false;
 }
 
-void EAccelAnimation::stop()
-{
-	startTime = 0;
-	state = ANI_STOP;
-}
-
-void EAccelAnimation::pause()
-{
-	elapsedTime = Ecore::getAppTicks() - startTime;
-	state = ANI_PAUSE;
-}
-
-void EAccelAnimation::resume()
-{
-	startTime = Ecore::getAppTicks() - elapsedTime;
-	state = ANI_START;
-}
-
 void EAccelAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;

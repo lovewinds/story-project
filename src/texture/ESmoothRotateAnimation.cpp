@@ -11,30 +11,6 @@ ESmoothRotateAnimation::~ESmoothRotateAnimation()
 {
 }
 
-void ESmoothRotateAnimation::start()
-{
-	prevTime = SDL_GetTicks();
-
-	EAnimation::start();
-}
-
-void ESmoothRotateAnimation::stop()
-{
-	EAnimation::stop();
-}
-
-void ESmoothRotateAnimation::pause()
-{
-	elapsedTime = SDL_GetTicks() - startTime;
-	state = ANI_PAUSE;
-}
-
-void ESmoothRotateAnimation::resume()
-{
-	startTime = SDL_GetTicks() - elapsedTime;
-	state = ANI_START;
-}
-
 void ESmoothRotateAnimation::setRotateDirection(RotateDirection dir)
 {
 	direction = dir;

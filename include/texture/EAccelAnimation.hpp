@@ -9,9 +9,6 @@ public:
 	virtual ~EAccelAnimation();
 
 	virtual void start();
-	virtual void stop();
-	virtual void pause();
-	virtual void resume();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 

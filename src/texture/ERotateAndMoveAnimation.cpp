@@ -11,30 +11,6 @@ ERotateAndMoveAnimation::~ERotateAndMoveAnimation()
 {
 }
 
-void ERotateAndMoveAnimation::start()
-{
-	prevTime = Ecore::getAppTicks();
-
-	EAnimation::start();
-}
-
-void ERotateAndMoveAnimation::stop()
-{
-	EAnimation::stop();
-}
-
-void ERotateAndMoveAnimation::pause()
-{
-	elapsedTime = Ecore::getAppTicks() - startTime;
-	state = ANI_PAUSE;
-}
-
-void ERotateAndMoveAnimation::resume()
-{
-	startTime = Ecore::getAppTicks() - elapsedTime;
-	state = ANI_START;
-}
-
 void ERotateAndMoveAnimation::setStartPosition(int x, int y)
 {
 	start_x = x;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
@@ -120,12 +121,11 @@ void ERPGScene::testAnimation(AnimationState state)
 	}
 }
 
-void ERPGScene::handleMove(GridMoveDir dir)
+void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 {
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
 
-	//for (auto& it : _sprite_map)
 	for (auto& it : _object_map)
 	{
 		if (it.second->isControllable()) {
@@ -133,27 +133,32 @@ void ERPGScene::handleMove(GridMoveDir dir)
 			switch (object->getAnimationState())
 			{
 			case ANI_NONE:
-				ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation(dir));
+				LOG_DBG("Start animation. [%f / %f]", axis_x, axis_y);
+				ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
 				ani->setCaller(object);
+				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+				grid->setAxisFactor(axis_x, axis_y);
+
 				object->setAnimation(ani);
 				object->startAnimation();
-				break;
-			case ANI_STOP:
-				LOG_DBG("Stopped. set new one and start again!");
+			break;
+			case ANI_START:
+				/* Already in progress, Just update axis factor */
 				ani = object->getAnimation();
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
 				if (grid) {
-					grid->setDirection(dir);
+					grid->setAxisFactor(axis_x, axis_y);
+				}
+			break;
+			default:
+				/* Already in progress */
+				ani = object->getAnimation();
+				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+				if (grid) {
+					grid->setAxisFactor(axis_x, axis_y);
 				}
 				object->startAnimation();
-				break;
-			default:
-				ani = object->getAnimation();
-				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-				if (grid) {
-					grid->setNextDirection(dir);
-				}
-				break;
+			break;
 			}
 		}
 	}
@@ -215,19 +220,23 @@ void ERPGScene::handleEvent(SDL_Event e)
 
 		case SDLK_UP:
 			//LOG_INFO("Move : UP");
-			handleMove(DIR_UP);
+			//handleMove(DIR_UP);
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), -1.0f);
 			break;
 		case SDLK_DOWN:
 			//LOG_INFO("Move : DOWN");
-			handleMove(DIR_DOWN);
+			//handleMove(DIR_DOWN);
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 1.0f);
 			break;
 		case SDLK_LEFT:
 			//LOG_INFO("Move : LEFT");
-			handleMove(DIR_LEFT);
+			//handleMove(DIR_LEFT);
+			handleDirectonFactor(-1.0f, std::numeric_limits<float>::quiet_NaN());
 			break;
 		case SDLK_RIGHT:
 			//LOG_INFO("Move : RIGHT");
-			handleMove(DIR_RIGHT);
+			//handleMove(DIR_RIGHT);
+			handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
 			break;
 		case SDLK_SPACE:
 			LOG_INFO("Animation test");
@@ -242,6 +251,27 @@ void ERPGScene::handleEvent(SDL_Event e)
 				LOG_ERR("Object was not found !");
 			}
 			break;
+		}
+	}
+	else if (e.type == SDL_KEYUP) {
+		switch (e.key.keysym.sym) {
+		case SDLK_UP:
+			LOG_INFO("Key released : [UP]");
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+		break;
+		case SDLK_DOWN:
+			LOG_INFO("Key released : [DOWN]");
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+		break;
+		case SDLK_LEFT:
+			LOG_INFO("Key released : [LEFT]");
+			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+		break;
+		case SDLK_RIGHT:
+			LOG_INFO("Key released : [RIGHT]");
+			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+		break;
+		default: break;
 		}
 	}
 	else if (e.type == SDL_FINGERDOWN) {

@@ -11,30 +11,6 @@ ESmoothStepAnimation::~ESmoothStepAnimation()
 {
 }
 
-void ESmoothStepAnimation::start()
-{
-	prevTime = Ecore::getAppTicks();
-
-	EAnimation::start();
-}
-
-void ESmoothStepAnimation::stop()
-{
-	EAnimation::stop();
-}
-
-void ESmoothStepAnimation::pause()
-{
-	elapsedTime = Ecore::getAppTicks() - startTime;
-	state = ANI_PAUSE;
-}
-
-void ESmoothStepAnimation::resume()
-{
-	startTime = Ecore::getAppTicks() - elapsedTime;
-	state = ANI_START;
-}
-
 void ESmoothStepAnimation::setStartPosition(int x, int y)
 {
 	start_x = x;

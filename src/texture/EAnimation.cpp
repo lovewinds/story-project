@@ -34,7 +34,7 @@ double EAnimation::getAngle()
 
 void EAnimation::start()
 {
-    startTime = Ecore::getAppTicks();
+    prevTime = startTime = Ecore::getAppTicks();
     state = ANI_START;
 }
 
@@ -86,7 +86,6 @@ void EAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	static double accel = 0.026;
 	static double velo = 1.0;
 
-	static Uint32 prevTime = 0;
 	Uint32 compensatedTime = currentTime;
 	Uint32 atomicTime = (compensatedTime - startTime);
 	Uint32 delta = atomicTime - prevTime;

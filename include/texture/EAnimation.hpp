@@ -55,8 +55,9 @@ public:
     virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
 protected:
-    Uint32 startTime;
-    Uint32 elapsedTime;
+    Uint32 startTime = 0;
+    Uint32 elapsedTime = 0;
+    Uint32 prevTime = 0;
     AnimationState state;
 
 	/* This model only supports one callback at one time. */
