@@ -58,8 +58,12 @@ public:
 	static int getScreenWidth();
 	static int getScreenHeight();
 	static uint32_t getAppTicks();
-	static void enterAppPauseState();
-	static void stopAppPauseState();
+
+	/* Related with Application life cycle.
+	 * These function should be executed on application code directly.
+	 * (Not through on SDL_Event !) */
+	static void startAppPauseState();
+	static void endAppPauseState();
 
 	/* Request to create a event */
 	static int getEventID(CustomEvent event);

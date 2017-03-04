@@ -76,18 +76,35 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 {
 	bool proceed = true;
 
-	//User requests quit
-	if (e->type == SDL_QUIT) {
+	switch(e->type) {
+	case SDL_QUIT:
+		//User requests quit
 		proceed = false;
-	}
-	else if (e->type == SDL_WINDOWEVENT) {
+	break;
+	case SDL_WINDOWEVENT:
 		LOG_DBG("SDL_WINDOWEVENT : [%X]", e->window.event);
 		switch (e->window.event) {
 		case SDL_WINDOWEVENT_CLOSE:
 			proceed = false;
+		break;
+		default: break;
 		}
-	}
-	else if (e->type == SDL_USEREVENT) {
+	break;
+	case SDL_APP_WILLENTERBACKGROUND:
+		LOG_DBG("SDL_APP_WILLENTERBACKGROUND");
+	break;
+	case SDL_APP_DIDENTERBACKGROUND:
+		LOG_DBG("SDL_APP_DIDENTERBACKGROUND");
+		startAppPauseState();
+	break;
+	case SDL_APP_WILLENTERFOREGROUND:
+		LOG_DBG("SDL_APP_WILLENTERFOREGROUND");
+		endAppPauseState();
+	break;
+	case SDL_APP_DIDENTERFOREGROUND:
+		LOG_DBG("SDL_APP_DIDENTERFOREGROUND");
+	break;
+	case SDL_USEREVENT:
 		LOG_DBG("Got USER_EVENT !!");
 		if (e->user.code == custom_event_id[CUSTOM_EVENT_SCENE_CHANGE]) {
 			/* Handle scene change event */
@@ -101,6 +118,8 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 			SDL_free(p_name);
 			e->user.data1 = nullptr;
 		}
+	break;
+	default: break;
 	}
 
 	return proceed;
@@ -557,12 +576,12 @@ uint32_t Ecore::getAppTicks()
 	return SDL_GetTicks() - in_paused_ticks;
 }
 
-void Ecore::enterAppPauseState()
+void Ecore::startAppPauseState()
 {
 	start_pause_tick = SDL_GetTicks();
 }
 
-void Ecore::stopAppPauseState()
+void Ecore::endAppPauseState()
 {
 	uint32_t in_pause = SDL_GetTicks() - start_pause_tick;
 	in_paused_ticks += in_pause;
