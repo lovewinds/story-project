@@ -80,6 +80,21 @@ protected:
 	double height_ratio;
 };
 
+class EGridDesc
+{
+public:
+	EGridDesc(int width, int height);
+	virtual ~EGridDesc();
+
+	void setGridValue(int x, int y, short value);
+	short getGridValue(int x, int y, short value);
+
+protected:
+	int width;
+	int height;
+	short **gridArray;
+};
+
 /**
  * ESceneLayerDesc
  * 		It stores descriptor divided for each layer

@@ -235,6 +235,7 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 						layerDesc->addImageDesc(imageDesc);
 					}
 					else if (itm_node.compare("RawMap") == 0) {
+						LOG_INFO("Width: [%d] / Height: [%d]", p_w, p_h);
 						/* Raw map data */
 						for (pugi::xml_node map_idx : node.node().children())
 						{

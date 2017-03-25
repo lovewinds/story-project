@@ -113,6 +113,52 @@ double EImageDesc::getHeightRatio()
 }
 
 /**
+ * EGridDesc class
+ */
+EGridDesc::EGridDesc(int width, int height)
+{
+	this->width = width;
+	this->height = height;
+#if 0
+	gridArray = new short *[width];
+	for(int col = 0; col < width; col++) {
+		gridArray[col] = new short *[height];
+	}
+#endif
+}
+
+EGridDesc::~EGridDesc()
+{
+	for(int col = 0; col < width; col++) {
+		delete[] gridArray[col];
+	}
+	delete[] gridArray;
+}
+
+void EGridDesc::setGridValue(int x, int y, short value)
+{
+	if (x <= width && x >= 0) {
+		if (y <= height && y >= 0) {
+			gridArray[x][y] = value;
+		}
+	}
+}
+
+short EGridDesc::getGridValue(int x, int y, short value)
+{
+	short res = -1;
+
+	if (x <= width && x >= 0) {
+		if (y <= height && y >= 0) {
+			res = gridArray[x][y];
+		}
+	}
+
+	return res;
+}
+
+
+/**
  * ESceneLayerDesc class
  */
 
