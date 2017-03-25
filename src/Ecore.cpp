@@ -1,6 +1,7 @@
 #include <stdarg.h>
 
 #include <SDL_syswm.h>
+#include <SDL_keyboard.h>
 
 #include "Ecore.hpp"
 #include "texture/EDrawable.hpp"
@@ -423,8 +424,22 @@ bool Ecore::init(void* hwnd)
 	}
 	else
 	{
-		/* Disable text input */
-		SDL_StopTextInput();
+#ifdef PLATFORM_IOS
+        /* iCade Support */
+        SDL_StartTextInput();
+        SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
+        if (SDL_FALSE == SDL_IsScreenKeyboardShown(Ecore::getInstance()->getWindow())) {
+            LOG_ERR("There is no screen keyboard !!!!!!!!!!");
+            /* Don't stop text input state for hardware keyboard */
+        } else {
+        	LOG_DBG("Screen keyboard is present !!!!!!!!!!!");
+        	/* But not used currently */
+        	SDL_StopTextInput();
+        }
+#else
+        /* Disable text input */
+        SDL_StopTextInput();
+#endif
 
 		/* Initialize renderer color */
 		//SDL_SetRenderDrawColor(gRenderer, 0x1B, 0x40, 0x5E, 0xFF);

@@ -217,7 +217,37 @@ void ERPGScene::handleEvent(SDL_Event e)
 			LOG_INFO("Resume Animation");
 			testAnimation(ANI_RESUME);
 			break;
-
+#ifdef PLATFORM_IOS
+        /* iCade Support */
+		case SDLK_w:
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), -1.0f);
+			break;
+		case SDLK_x:
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 1.0f);
+			break;
+		case SDLK_a:
+			handleDirectonFactor(-1.0f, std::numeric_limits<float>::quiet_NaN());
+			break;
+		case SDLK_d:
+			handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
+			break;
+		case SDLK_e:
+			LOG_INFO("Key released : [UP]");
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+		break;
+		case SDLK_z:
+			LOG_INFO("Key released : [DOWN]");
+			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+		break;
+		case SDLK_q:
+			LOG_INFO("Key released : [LEFT]");
+			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+		break;
+		case SDLK_c:
+			LOG_INFO("Key released : [RIGHT]");
+			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+		break;
+#endif
 		case SDLK_UP:
 			//LOG_INFO("Move : UP");
 			//handleMove(DIR_UP);
