@@ -42,6 +42,8 @@ public:
 
 	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
+	virtual void setMap(std::shared_ptr<EGridMapTexture> map);
+
 	void testAnimation(AnimationState state);
 	void handleDirectonFactor(float axis_x, float axis_y);
 

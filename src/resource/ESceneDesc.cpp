@@ -119,12 +119,11 @@ EGridDesc::EGridDesc(int width, int height)
 {
 	this->width = width;
 	this->height = height;
-#if 0
+
 	gridArray = new short *[width];
 	for(int col = 0; col < width; col++) {
-		gridArray[col] = new short *[height];
+		gridArray[col] = new short [height];
 	}
-#endif
 }
 
 EGridDesc::~EGridDesc()
@@ -144,7 +143,7 @@ void EGridDesc::setGridValue(int x, int y, short value)
 	}
 }
 
-short EGridDesc::getGridValue(int x, int y, short value)
+short EGridDesc::getGridValue(int x, int y)
 {
 	short res = -1;
 
@@ -157,6 +156,15 @@ short EGridDesc::getGridValue(int x, int y, short value)
 	return res;
 }
 
+int EGridDesc::getGridWidth()
+{
+	return width;
+}
+
+int EGridDesc::getGridHeight()
+{
+	return height;
+}
 
 /**
  * ESceneLayerDesc class
@@ -164,7 +172,8 @@ short EGridDesc::getGridValue(int x, int y, short value)
 
 ESceneLayerDesc::ESceneLayerDesc(std::string name) :
 	sprite_list(_sprite_list),
-	image_list(_image_list)
+	image_list(_image_list),
+	grid_list(_grid_list)
 {
 	this->name = name;
 }
@@ -179,6 +188,12 @@ void ESceneLayerDesc::addImageDesc(std::shared_ptr<EImageDesc> desc)
 {
 	if (nullptr != desc)
 		_image_list.push_back(desc);
+}
+
+void ESceneLayerDesc::addGridDesc(std::shared_ptr<EGridDesc> desc)
+{
+	if (nullptr != desc)
+		_grid_list.push_back(desc);
 }
 
 std::string ESceneLayerDesc::getName()

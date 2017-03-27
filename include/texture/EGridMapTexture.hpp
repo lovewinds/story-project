@@ -13,6 +13,8 @@ class EGridMapTexture : public EDrawable
 public:
 	/* Initializes variables */
 	EGridMapTexture(std::string name, std::string base_image);
+	EGridMapTexture(std::string name, std::string base_image,
+			std::shared_ptr<EGridDesc> desc);
 	~EGridMapTexture();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);

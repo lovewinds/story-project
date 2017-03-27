@@ -64,6 +64,34 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image) :
     _createTexture();
 }
 
+EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
+	std::shared_ptr<EGridDesc> desc)
+:EDrawable()
+{
+	this->name = name;
+	this->base_image = base_image;
+
+	wTileCount = desc->getGridWidth();
+	hTileCount = desc->getGridHeight();
+
+	/* TODO: Load map info dynamically */
+	std::vector<std::vector<short> > arr;
+	for (int h = 0; h < hTileCount; h++) {
+		std::vector<short> row;
+		for (int w = 0; w < wTileCount; w++) {
+			short v = desc->getGridValue(w, h);
+			if (v == '0')
+				row.push_back(T1);
+			else
+				row.push_back(T2);
+		}
+		arr.push_back(row);
+	}
+
+	tileMap = arr;
+	_createTexture();
+}
+
 EGridMapTexture::~EGridMapTexture()
 {
 	/* Deallocate */

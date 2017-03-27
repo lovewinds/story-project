@@ -27,13 +27,6 @@ ERPGScene::ERPGScene(std::string name)
 	/* Create base map textures */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
-	std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
-	gridMap = map;
-	auto result = _raw_texture_map.emplace("GridMap", map);
-	if (!result.second) {
-		LOG_ERR("Failed to insert texture!");
-	}
-
 	/* Create sprite by manually for test */
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 	std::shared_ptr<ESprite> sprite;
@@ -90,6 +83,17 @@ bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 		return false;
 	}
 	return true;
+}
+
+void ERPGScene::setMap(std::shared_ptr<EGridMapTexture> map)
+{
+	//std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
+	auto result = _raw_texture_map.emplace("GridMap", map);
+	if (!result.second) {
+		LOG_ERR("Failed to insert texture!");
+	}
+
+	gridMap = map;
 }
 
 void ERPGScene::testAnimation(AnimationState state)
@@ -372,7 +376,8 @@ void ERPGScene::handleEvent(SDL_Event e)
 
 void ERPGScene::render()
 {
-	gridMap->render(0, 0, 0);
+	if (gridMap)
+		gridMap->render(0, 0, 0);
 
 	for (auto &it : _img_texture_map)
 	{
@@ -425,5 +430,6 @@ void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
 		it.second->update(currentTime, accumulator);
 	}
 
-	gridMap->update(currentTime, accumulator);
+	if (gridMap)
+		gridMap->update(currentTime, accumulator);
 }

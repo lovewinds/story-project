@@ -95,6 +95,19 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 				//scene->addImage(image);
 			}
 		}
+
+		/* Create images from image descriptor */
+		for (auto& grid_it : layer->grid_list)
+		{
+			std::shared_ptr<EGridDesc> gridDesc = grid_it;
+
+			ERPGScene* rpg_scene = dynamic_cast<ERPGScene*>(scene.get());
+			std::shared_ptr<EGridMapTexture> map(
+					new EGridMapTexture("MyMap", "MapTile", gridDesc));
+			if (rpg_scene) {
+				rpg_scene->setMap(map);
+			}
+		}
 	}
 
 	return scene;

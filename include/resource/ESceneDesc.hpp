@@ -87,7 +87,9 @@ public:
 	virtual ~EGridDesc();
 
 	void setGridValue(int x, int y, short value);
-	short getGridValue(int x, int y, short value);
+	short getGridValue(int x, int y);
+	int getGridWidth();
+	int getGridHeight();
 
 protected:
 	int width;
@@ -107,18 +109,21 @@ public:
 	/* Should handle creation of resources with Resource manager */
 	void addSpriteDesc(std::shared_ptr<ESpriteDesc> sprite_desc);
 	void addImageDesc(std::shared_ptr<EImageDesc> image_desc);
+	void addGridDesc(std::shared_ptr<EGridDesc> grid_desc);
 
 	std::string getName();
 
 	/* Export read-only resources */
 	const std::vector<std::shared_ptr<ESpriteDesc>>& sprite_list;
 	const std::vector<std::shared_ptr<EImageDesc>>& image_list;
+	const std::vector<std::shared_ptr<EGridDesc>>& grid_list;
 
 protected:
 	std::string name;
 
 	std::vector<std::shared_ptr<ESpriteDesc>> _sprite_list;
 	std::vector<std::shared_ptr<EImageDesc>> _image_list;
+	std::vector<std::shared_ptr<EGridDesc>> _grid_list;
 };
 
 /**

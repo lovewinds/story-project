@@ -239,8 +239,26 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 						/* Raw map data */
 						for (pugi::xml_node map_idx : node.node().children())
 						{
+							std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h));
 							std::string pcdata(map_idx.text().get());
 							LOG_DBG("   raw : %s", pcdata.c_str());
+
+							/* TODO: Current logic sets each character into grid */
+							std::vector<std::string> row_elems;
+							std::stringstream ss(pcdata);
+							std::string item;
+							int s_idx = 0;
+							while (std::getline(ss, item, '\n')) {
+								if (item.length() == 0) continue;
+								row_elems.push_back(item);
+								LOG_DBG("[%02d] (%d) %s",
+										++s_idx, item.length(), item.c_str());
+
+								for (size_t i = 0; i < item.length(); i++) {
+									gridDesc->setGridValue(i, s_idx, item.at(i));
+								}
+							}
+							layerDesc->addGridDesc(gridDesc);
 						}
 					}
 				} /* Layer items loop */
