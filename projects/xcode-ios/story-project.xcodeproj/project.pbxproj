@@ -611,6 +611,7 @@
 				F43DB9AF1C78B01400BE5C9A /* Headers */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				F4DD91251E9E6F6900C0E58E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -692,6 +693,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F4DD91251E9E6F6900C0E58E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"TEST\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -745,7 +762,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -757,8 +774,8 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_IOS;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/built/include",
-					"$(PROJECT_DIR)/../../external/built/include/SDL2",
+					"$(PROJECT_DIR)/../../external/built/include_ios",
+					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
 					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
 					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
 					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
@@ -767,6 +784,7 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -776,7 +794,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
+				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include_ios $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -784,7 +802,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -794,8 +812,8 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_IOS;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/built/include",
-					"$(PROJECT_DIR)/../../external/built/include/SDL2",
+					"$(PROJECT_DIR)/../../external/built/include_ios",
+					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
 					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
 					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
 					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
@@ -804,6 +822,7 @@
 					"$(PROJECT_DIR)/../../external/sources/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -813,7 +832,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
+				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include_ios $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;

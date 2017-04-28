@@ -9,6 +9,7 @@ import platform
 from shutil import copytree, copy2
 from xml.etree import ElementTree
 import argparse
+import multiprocessing
 
 CURRENT_PLATFORM = 0
 WORKING_PATH = "./"
@@ -25,6 +26,7 @@ ZEROMQ = "zeromq-4.2.1"
 CPPZMQ = "cppzmq"
 MSVC_VER = "v120"
 STATIC_LINK = False
+NJOBS = multiprocessing.cpu_count()
 
 def enum(*sequential, **named):
 	enums = dict(zip(sequential, range(len(sequential))), **named)
@@ -294,6 +296,141 @@ def extract_sources():
 		tarfile.open(CPPZMQ+'.tar.gz').extractall(source_path)
 		print "   [cppzmq] extracted."
 
+def build_sources_iOS(build_type):
+	print "\n"
+	print "#########################################"
+	print "## Trying to build extracted sources ..."
+	print "#########################################"
+	
+	build_path = WORKING_PATH+'built/'
+	bin_path = WORKING_PATH+'built/bin/'
+	library_path = WORKING_PATH+'built/lib/iOS/'
+	include_path = WORKING_PATH+'built/include/SDL2/'
+
+	sdl2_path = WORKING_PATH+'sources/SDL2/Xcode-iOS/SDL/'
+	sdl2_include_path = WORKING_PATH+'sources/SDL2/include/'
+	sdl2_image_path = WORKING_PATH+'sources/SDL2_image/Xcode-iOS/'
+	sdl2_ttf_path = WORKING_PATH+'sources/SDL2_ttf/Xcode-iOS/'
+	sdl2_gfx_path = WORKING_PATH+'sources/SDL2_gfx/'
+	g3log_path = WORKING_PATH+'sources/g3log/'
+	jsoncpp_path = WORKING_PATH+'sources/jsoncpp/'
+	pugixml_path = WORKING_PATH+'sources/pugixml/scripts/'
+	gtest_path = WORKING_PATH+'sources/gtest/'
+	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/'
+	zeromq_path = WORKING_PATH+'sources/zeromq/'
+
+	mkdir_p(library_path)
+
+# Copy headers
+	if os.path.exists(include_path):
+		print "   [SDL2] Header files are exist."
+	else:
+		print "   [SDL2] Copying header files .."
+		copytree(sdl2_include_path, include_path)
+
+		print "   [SDL2_image] Copying header files .."
+		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
+
+		print "   [SDL2_ttf] Copying header files .."
+		copy2(sdl2_ttf_path+'../SDL_ttf.h', include_path+'SDL_ttf.h')
+
+		print "   [SDL2_gfx] Copying header files .."
+		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_imageFilter.h', include_path)
+		copy2(sdl2_gfx_path+'SDL2_rotozoom.h', include_path)
+
+	# Overwrite to use iOS header
+	copy2(sdl2_include_path+'SDL_config_iphoneos.h', include_path+'SDL_config.h')
+
+# Build SDL2
+	if os.path.exists(library_path+'libSDL2.a'):
+		print "   [SDL2] already built."
+	else:
+		os.chdir(sdl2_path)
+		os.system(WORKING_PATH+'ios-build.sh SDL2')
+
+# Build SDL2_image
+	if os.path.exists(library_path+'libSDL2_image.a'):
+		print "   [SDL2_image] already built."
+	else:
+		os.chdir(sdl2_image_path)
+		os.system(WORKING_PATH+'ios-build.sh SDL2_image')
+
+# Build SDL2_ttf
+	if os.path.exists(library_path+'libSDL2_ttf.a'):
+		print "   [SDL2_ttf] already built."
+	else:
+		os.chdir(sdl2_ttf_path)
+		os.system(WORKING_PATH+'ios-build.sh SDL2_ttf')
+
+# Build SDL2_gfx
+	if os.path.exists(library_path+'libSDL2_gfx.a'):
+		print "   [SDL2_gfx] already built."
+	else:
+		os.chdir(sdl2_gfx_path)
+		os.system(WORKING_PATH+'ios-build.sh SDL2_gfx')
+
+# Build g3log
+	if os.path.exists(library_path+'libg3logger.a'):
+		print "   [g3log] already built."
+	else:
+		print "   [g3log] Start building .."
+		os.chdir(g3log_path)
+		# Make fat binary
+		os.system(WORKING_PATH+'ios-build.sh g3log armv7')
+		os.system(WORKING_PATH+'ios-build.sh g3log arm64')
+
+# Generate amalgamated source and header for jsoncpp
+	if not os.path.exists(jsoncpp_path+'dist/'):
+		print "   [jsoncpp] Copying header files .."
+		os.chdir(jsoncpp_path)
+		os.system('python amalgamate.py')
+
+# Build pugixml
+	if os.path.exists(library_path+'libpugixml.a'):
+		print "   [pugixml] already built."
+	else:
+		print "Start building pugixml .."
+		os.chdir(pugixml_path)
+		# Make fat binary
+		os.system(WORKING_PATH+'ios-build.sh pugixml armv7')
+		os.system(WORKING_PATH+'ios-build.sh pugixml arm64')
+
+# Build gtest
+	if os.path.exists(library_path+'libgtest.a'):
+		print "   [gtest] already built."
+	else:
+		print "   [gtest] Start building .."
+		os.chdir(gtest_path)
+		# Make fat binary
+		os.system(WORKING_PATH+'ios-build.sh gtest armv7')
+		os.system(WORKING_PATH+'ios-build.sh gtest arm64')
+
+# Build protobuf
+	if os.path.exists(library_path+'libprotobuf.a'):
+		print "   [protobuf] already built."
+	else:
+		print "   [protobuf] Start building .."
+		os.chdir(protobuf_path)
+		# Make fat binary
+		os.system(WORKING_PATH+'ios-build.sh protobuf armv7')
+		os.system(WORKING_PATH+'ios-build.sh protobuf arm64')
+
+# Build ZeroMQ
+	if os.path.exists(library_path+'libzmq-static.a'):
+		print "   [ZeroMQ] already built."
+	else:
+		print "   [ZeroMQ] Start building .."
+		os.chdir(zeromq_path)
+		patch_libzmq_linux(zeromq_path)
+		# Make fat binary
+		os.system(WORKING_PATH+'ios-build.sh zeromq armv7')
+		os.system(WORKING_PATH+'ios-build.sh zeromq arm64')
+
+	print "\n\n"
+
 def build_sources_MSVC(build_type):
 	print "\n"
 	print "#########################################"
@@ -498,7 +635,11 @@ def build_sources(build_type):
 	else:
 		mkdir_p(sdl2_path)
 		os.chdir(sdl2_path)
-		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
+
+	## TODO: iOS build overwrites 'SDL_config.h'
+	## Header recover logic is required
+	## Make a backup file and overwrite it on macOS build time !
 
 # Build SDL2_image
 	if os.path.exists(library_path+'libSDL2_image.a'):
@@ -506,7 +647,7 @@ def build_sources(build_type):
 	else:
 		mkdir_p(sdl2_image_path)
 		os.chdir(sdl2_image_path)
-		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
 
 # Build FreeType2
 	if os.path.exists(bin_path+'freetype-config'):
@@ -514,7 +655,7 @@ def build_sources(build_type):
 	else:
 		mkdir_p(freetype2_path)
 		os.chdir(freetype2_path)
-		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
 
 # Build SDL2_ttf
 	if os.path.exists(library_path+'libSDL2_ttf.a'):
@@ -522,7 +663,7 @@ def build_sources(build_type):
 	else:
 		mkdir_p(sdl2_ttf_path)
 		os.chdir(sdl2_ttf_path)
-		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
 
 # Build SDL2_gfx
 	if os.path.exists(library_path+'libSDL2_gfx.a'):
@@ -533,7 +674,7 @@ def build_sources(build_type):
 
 		mkdir_p(sdl2_gfx_path)
 		os.chdir(sdl2_gfx_path)
-		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make;make install')
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
@@ -563,7 +704,7 @@ def build_sources(build_type):
 		print "Start building pugixml .."
 		mkdir_p(pugixml_path)
 		os.chdir(pugixml_path)
-		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
+		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make -j'+NJOBS+'; make install')
 
 # Build gtest
 	if os.path.exists(library_path+'libgtest.a'):
@@ -572,7 +713,7 @@ def build_sources(build_type):
 		print "   [gtest] Start building .."
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
-		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make; make install')
+		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make -j'+NJOBS+'; make install')
 		copy2(gtest_path+'libgtest_main.a', library_path)
 		copy2(gtest_path+'libgtest.a', library_path)
 
@@ -583,7 +724,7 @@ def build_sources(build_type):
 		print "   [protobuf] Start building .."
 		mkdir_p(protobuf_path)
 		os.chdir(protobuf_path)
-		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make libprotobuf')
+		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make libprotobuf -j'+NJOBS)
 		copy2(protobuf_path+'libprotobuf.a', library_path)
 
 # Build ZeroMQ
@@ -594,7 +735,7 @@ def build_sources(build_type):
 		mkdir_p(zeromq_path)
 		os.chdir(zeromq_path)
 		patch_libzmq_linux(zeromq_path)
-		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ; make libzmq-static')
+		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ; make libzmq-static -j'+NJOBS)
 		copy2(zeromq_path+'lib/libzmq-static.a', library_path)
 
 	print "\n\n"
@@ -607,16 +748,27 @@ if __name__ == "__main__":
 	parser.add_argument('--static', default='TRUE', choices=['TRUE', 'FALSE'], help='Select linking type (default: TRUE)')
 	parser.add_argument('--arch', default='x86', choices=['x86', 'x64', 'x86_64'], help='Select archtecture for desktop build (default: x86)')
 	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: v120)')
-	parser.add_argument('--platform', default='Windows', choices=['Windows', 'Linux', 'MacOSX'], help='Select platform to build. (default: Windows)')
+	parser.add_argument('--platform', default='Windows', choices=['Windows', 'Linux', 'macOS', 'iOS'], help='Select platform to build. (default: Windows)')
 	args = parser.parse_args()
 
-	Platform = enum('Windows', 'Linux', 'macOS', 'NotSupport')
+	Platform = enum('Windows', 'Linux', 'macOS', 'iOS', 'NotSupport')
 	if platform.system().startswith('Linux'):
 		CURRENT_PLATFORM = Platform.Linux
 	elif platform.system() == 'Windows':
 		CURRENT_PLATFORM = Platform.Windows
 	elif platform.system() == 'Darwin':
 		CURRENT_PLATFORM = Platform.macOS
+	else:
+		CURRENT_PLATFORM = Platform.NotSupport
+
+	if args.platform == 'Windows':
+		CURRENT_PLATFORM = Platform.Windows
+	elif args.platform == 'Linux':
+		CURRENT_PLATFORM = Platform.Linux
+	elif args.platform == 'macOS':
+		CURRENT_PLATFORM = Platform.macOS
+	elif args.platform == 'iOS':
+		CURRENT_PLATFORM = Platform.iOS
 	else:
 		CURRENT_PLATFORM = Platform.NotSupport
 
@@ -651,3 +803,6 @@ if __name__ == "__main__":
 		build_sources_MSVC(args.type)
 	elif CURRENT_PLATFORM == Platform.macOS:
 		build_sources(args.type)
+	elif CURRENT_PLATFORM == Platform.iOS:
+		print "Build external libs for iOS !"
+		build_sources_iOS(args.type)

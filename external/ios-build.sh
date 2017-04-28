@@ -27,6 +27,11 @@ export LIBTOOL=$(xcrun -sdk iphoneos -find libtool)
 #export AR=$(xcrun -sdk iphoneos -find ar)
 #export RANLIB=$(xcrun -sdk iphoneos -find ranlib)
 
+NCPU=`sysctl -n hw.ncpu`
+if test x$NJOB = x; then
+    NJOB=$NCPU
+fi
+
 #armv7 arm64
 if [ 2 -eq $# ] && [ "$2" = "arm64" ]
 then
@@ -86,11 +91,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx
-		make
+		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_arm64.a
 	else
 		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx
-		make
+		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_armv7.a
 	fi
 
@@ -107,11 +112,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make
+		make -j$NJOB
 		cp libpugixml.a ../libpugixml_arm64.a
 	else
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make
+		make -j$NJOB
 		cp libpugixml.a ../libpugixml_armv7.a
 	fi
 
@@ -133,11 +138,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
-		make g3logger
+		make g3logger -j$NJOB
 		cp libg3logger.a ../libg3logger_arm64.a
 	else
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
-		make g3logger
+		make g3logger -j$NJOB
 		cp libg3logger.a ../libg3logger_armv7.a
 	fi
 
@@ -155,11 +160,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make
+		make -j$NJOB
 		cp libgtest.a ../libgtest_arm64.a
 	else
 		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make
+		make -j$NJOB
 		cp libgtest.a ../libgtest_armv7.a
 	fi
 
@@ -177,11 +182,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libprotobuf
+		make libprotobuf -j$NJOB
 		cp libprotobuf.a ../libprotobuf_arm64.a
 	else
 		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libprotobuf
+		make libprotobuf -j$NJOB
 		cp libprotobuf.a ../libprotobuf_armv7.a
 	fi
 
@@ -199,11 +204,11 @@ case "$1" in
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libzmq-static
+		make libzmq-static -j$NJOB
 		cp lib/libzmq-static.a ../libzmq-static_arm64.a
 	else
 		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libzmq-static
+		make libzmq-static -j$NJOB
 		cp lib/libzmq-static.a ../libzmq-static_armv7.a
 	fi
 

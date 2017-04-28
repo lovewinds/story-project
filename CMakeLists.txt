@@ -12,7 +12,7 @@ SET(STATIC_LINKING "FALSE")
 # Detect Platform
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	# Mac OS X
-	SET(PLATFORM "MacOSX")
+	SET(PLATFORM "macOS")
 	SET(PLATFORM_DEF "-DPLATFORM_MACOS")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -36,9 +36,9 @@ ENDIF(${FEATURE_DISABLE_G3LOG})
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake")
 
 # Build external packages
-IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 	EXECUTE_PROCESS(COMMAND python
-		 "${CMAKE_SOURCE_DIR}/external/build_packages.py"
+		 "${CMAKE_SOURCE_DIR}/external/ext_lib_build.py"
 		 --path "${CMAKE_SOURCE_DIR}/external"
 		 --platform "${PLATFORM}"
 	)
@@ -67,7 +67,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 	ENDIF(${CMAKE_VERSION} VERSION_GREATER "2.8.10")
 
 	EXECUTE_PROCESS(COMMAND python
-		 "${CMAKE_SOURCE_DIR}/external/build_packages.py"
+		 "${CMAKE_SOURCE_DIR}/external/ext_lib_build.py"
 		 --path "${CMAKE_SOURCE_DIR}/external"
 		 --static "${STATIC_LINKING}"
 		 --platform "${PLATFORM}"
@@ -77,7 +77,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 	SET(SDL2_PATH
 		"${CMAKE_SOURCE_DIR}\\external\\built\\Release\\"
 		"${CMAKE_SOURCE_DIR}\\external\\built\\Debug\\")
-ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Search SDL2 libraries
 FIND_PACKAGE(SDL2 REQUIRED)
@@ -122,7 +122,7 @@ ENDIF(USE_G3LOG)
 #ADD_DEFINITIONS("-DZMQ_STATIC")
 ADD_DEFINITIONS("${PLATFORM_DEF}")
 
-IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 	LINK_DIRECTORIES(
 		${CMAKE_SOURCE_DIR}/external/built/lib/
 		${CMAKE_BINARY_DIR}
@@ -134,7 +134,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${CMAKE_BINARY_DIR}
 		${PYTHON_LIB_PATH}
 	)
-ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # TODO: Below additional flags are not working on MSVC. need check.
 IF(${PLATFORM} STREQUAL "Linux")
@@ -142,7 +142,7 @@ IF(${PLATFORM} STREQUAL "Linux")
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 ${PLATFORM_DEF}")
 	# Debug
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
-ELSEIF(${PLATFORM} STREQUAL "MacOSX")
+ELSEIF(${PLATFORM} STREQUAL "macOS")
 	SET(ADDITIONAL_CPPFLAGS "-fPIC")
 	# -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
@@ -238,7 +238,7 @@ endforeach()
 
 ##################### Library build with fPIC option
 
-IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 	IF(USE_G3LOG)
 		SET(LINK_G3LOG "-lg3logger")
 	ELSE(USE_G3LOG)
@@ -275,13 +275,13 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${LINK_G3LOG}
 		${PYTHON_LIBRARIES}
 		"dbghelp.lib")
-ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
 
 
 ##################### Binary build
 ADD_EXECUTABLE(${PROJECT_NAME} "src/main.cpp")
-IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 	TARGET_LINK_LIBRARIES(${PROJECT_NAME}
 		${pkgs_LDFLAGS}
 		"-ldl -lprotobuf -lzmq-static -lstory-project")
@@ -303,7 +303,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
 		${LINK_G3LOG}
 		"dbghelp.lib")
-ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "MacOSX"))
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Post build
 # Copy external dynamic libraries into specific directory to execute process.
