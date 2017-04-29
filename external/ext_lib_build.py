@@ -27,6 +27,8 @@ CPPZMQ = "cppzmq"
 MSVC_VER = "v120"
 STATIC_LINK = False
 NJOBS = multiprocessing.cpu_count()
+if not NJOBS:
+	NJOBS=1
 
 def enum(*sequential, **named):
 	enums = dict(zip(sequential, range(len(sequential))), **named)
