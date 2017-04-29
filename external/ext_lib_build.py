@@ -26,7 +26,7 @@ ZEROMQ = "zeromq-4.2.1"
 CPPZMQ = "cppzmq"
 MSVC_VER = "v120"
 STATIC_LINK = False
-NJOBS = multiprocessing.cpu_count()
+NJOBS = 1
 if not NJOBS:
 	NJOBS=1
 
@@ -780,6 +780,11 @@ if __name__ == "__main__":
 	else:
 		WORKING_PATH = args.path + '/'
 
+	# Sets thread count for build
+	NJOBS = multiprocessing.cpu_count()
+	if not NJOBS:
+		NJOBS=1
+
 	print "#########################################"
 	print "## Prepare external libraries ..."
 	print "##"
@@ -789,6 +794,7 @@ if __name__ == "__main__":
 	#print "## Build type  : [ "+args.type+" ]"
 	print "## Static link : [ "+args.static+" ]"
 	print "## Working path: [ "+WORKING_PATH+" ]"
+	print "## CPU Count   : [ "+NJOBS+" ]"
 	print "#########################################"
 
 	# Extract sources from archive files
