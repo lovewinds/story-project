@@ -26,9 +26,9 @@ ZEROMQ = "zeromq-4.2.1"
 CPPZMQ = "cppzmq"
 MSVC_VER = "v120"
 STATIC_LINK = False
-NJOBS = 1
+NJOBS = str(multiprocessing.cpu_count())
 if not NJOBS:
-	NJOBS=1
+	NJOBS="1"
 
 def enum(*sequential, **named):
 	enums = dict(zip(sequential, range(len(sequential))), **named)
@@ -779,11 +779,6 @@ if __name__ == "__main__":
 		WORKING_PATH = os.getcwd() + '/'
 	else:
 		WORKING_PATH = args.path + '/'
-
-	# Sets thread count for build
-	NJOBS = multiprocessing.cpu_count()
-	if not NJOBS:
-		NJOBS=1
 
 	print "#########################################"
 	print "## Prepare external libraries ..."
