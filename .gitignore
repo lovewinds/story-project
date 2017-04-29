@@ -35,6 +35,7 @@
 # Tag files
 .tags*
 *.vtg
+tags
 
 # OSX
 .DS_Store
