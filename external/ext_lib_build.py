@@ -18,7 +18,7 @@ SDL2_IMAGE = "SDL2_image-2.0.1"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.3"
 JSONCPP = "jsoncpp-1.6.5"
-G3LOG = "g3log-1.2"
+G3LOG = "g3log-1.3"
 PUGIXML = "pugixml-1.7"
 GTEST = "googletest-release-1.7.0"
 PROTOBUF = "protobuf-3.0.0"
@@ -307,7 +307,7 @@ def build_sources_iOS(build_type):
 	build_path = WORKING_PATH+'built/'
 	bin_path = WORKING_PATH+'built/bin/'
 	library_path = WORKING_PATH+'built/lib/iOS/'
-	include_path = WORKING_PATH+'built/include/SDL2/'
+	include_path = WORKING_PATH+'built/include_ios/SDL2/'
 
 	sdl2_path = WORKING_PATH+'sources/SDL2/Xcode-iOS/SDL/'
 	sdl2_include_path = WORKING_PATH+'sources/SDL2/include/'
@@ -372,7 +372,8 @@ def build_sources_iOS(build_type):
 		print "   [SDL2_gfx] already built."
 	else:
 		os.chdir(sdl2_gfx_path)
-		os.system(WORKING_PATH+'ios-build.sh SDL2_gfx')
+		os.system(WORKING_PATH+'ios-build.sh SDL2_gfx armv7')
+		os.system(WORKING_PATH+'ios-build.sh SDL2_gfx arm64')
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
