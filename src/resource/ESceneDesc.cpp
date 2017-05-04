@@ -120,36 +120,42 @@ EGridDesc::EGridDesc(int width, int height)
 	this->width = width;
 	this->height = height;
 
-	gridArray = new short *[width];
+	gridArray = new short **[width];
 	for(int col = 0; col < width; col++) {
-		gridArray[col] = new short [height];
+		gridArray[col] = new short *[height];
+		for(int row = 0; row < height; row++) {
+			gridArray[col][row] = new short [GRID_LAYER_END];
+		}
 	}
 }
 
 EGridDesc::~EGridDesc()
 {
 	for(int col = 0; col < width; col++) {
+		for(int row = 0; row < GRID_LAYER_END; row++) {
+			delete[] gridArray[col][row];
+		}
 		delete[] gridArray[col];
 	}
 	delete[] gridArray;
 }
 
-void EGridDesc::setGridValue(int x, int y, short value)
+void EGridDesc::setGridValue(EGridLayerID layerId, int x, int y, short value)
 {
-	if (x <= width && x >= 0) {
-		if (y <= height && y >= 0) {
-			gridArray[x][y] = value;
+	if (0 <= x && x < width) {
+		if (0 <= y && y < height) {
+			gridArray[x][y][layerId] = value;
 		}
 	}
 }
 
-short EGridDesc::getGridValue(int x, int y)
+short EGridDesc::getGridValue(EGridLayerID layerId, int x, int y)
 {
 	short res = -1;
 
-	if (x <= width && x >= 0) {
-		if (y <= height && y >= 0) {
-			res = gridArray[x][y];
+	if (0 <= x && x < width) {
+		if (0 <= y && y < height) {
+			res = gridArray[x][y][layerId];
 		}
 	}
 

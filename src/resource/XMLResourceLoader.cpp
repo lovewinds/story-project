@@ -237,29 +237,38 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					else if (itm_node.compare("RawMap") == 0) {
 						LOG_INFO("Width: [%d] / Height: [%d]", p_w, p_h);
 						/* Raw map data */
-						for (pugi::xml_node map_idx : node.node().children())
-						{
-							std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h));
-							std::string pcdata(map_idx.text().get());
-							LOG_DBG("   raw : %s", pcdata.c_str());
+						std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h));
+						for (auto map_layer : node.node().children()) {
+							/* Map layer */
+							std::string itm_layer(map_layer.attribute("type").value());
+							EGridLayerID layer_id = GRID_LAYER_BACKGROUND_TILE;
+							if (itm_layer.compare("move") == 0)
+								layer_id = GRID_LAYER_MOVABLE;
+							LOG_DBG("Grid Layer [%d]", layer_id);
+							for (auto raw_array : map_layer.children())
+							{
+								std::string pcdata(raw_array.text().get());
+								LOG_DBG("   raw : %s", pcdata.c_str());
 
-							/* TODO: Current logic sets each character into grid */
-							std::vector<std::string> row_elems;
-							std::stringstream ss(pcdata);
-							std::string item;
-							int s_idx = 0;
-							while (std::getline(ss, item, '\n')) {
-								if (item.length() == 0) continue;
-								row_elems.push_back(item);
-								LOG_DBG("[%02d] (%d) %s",
-										++s_idx, item.length(), item.c_str());
+								/* TODO: Current logic sets each character into grid */
+								std::vector<std::string> row_elems;
+								std::stringstream ss(pcdata);
+								std::string item;
+								int s_idx = 0;
+								while (std::getline(ss, item, '\n')) {
+									if (item.length() == 0) continue;
+									row_elems.push_back(item);
+									LOG_DBG("[%02d] (%lu) %s",
+											s_idx, item.length(), item.c_str());
 
-								for (size_t i = 0; i < item.length(); i++) {
-									gridDesc->setGridValue(i, s_idx, item.at(i));
+									for (size_t i = 0; i < item.length(); i++) {
+										gridDesc->setGridValue(layer_id, i, s_idx, item.at(i));
+									}
+									s_idx++;
 								}
 							}
-							layerDesc->addGridDesc(gridDesc);
 						}
+						layerDesc->addGridDesc(gridDesc);
 					}
 				} /* Layer items loop */
 

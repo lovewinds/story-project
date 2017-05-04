@@ -76,14 +76,16 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
 
 	/* TODO: Load map info dynamically */
 	std::vector<std::vector<short> > arr;
+	arr.reserve(hTileCount);
 	for (int h = 0; h < hTileCount; h++) {
 		std::vector<short> row;
+		row.reserve(wTileCount);
 		for (int w = 0; w < wTileCount; w++) {
-			short v = desc->getGridValue(w, h);
+			short v = desc->getGridValue(GRID_LAYER_BACKGROUND_TILE, w, h);
 			if (v == '0')
-				row.push_back(T1);
+				row.push_back(short(T1));
 			else
-				row.push_back(T2);
+				row.push_back(short(T2));
 		}
 		arr.push_back(row);
 	}

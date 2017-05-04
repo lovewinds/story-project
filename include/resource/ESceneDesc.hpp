@@ -80,21 +80,33 @@ protected:
 	double height_ratio;
 };
 
+/*
+ * Grid Descriptor class
+ * This class describes layered-grid map structure.
+ */
+
+enum EGridLayerID {
+	GRID_LAYER_BACKGROUND_TILE = 0,
+	GRID_LAYER_MOVABLE,
+	GRID_LAYER_EVENT,
+	GRID_LAYER_END /* The number of layers. Do not change this */
+};
+
 class EGridDesc
 {
 public:
 	EGridDesc(int width, int height);
 	virtual ~EGridDesc();
 
-	void setGridValue(int x, int y, short value);
-	short getGridValue(int x, int y);
+	void setGridValue(EGridLayerID layerId, int x, int y, short value);
+	short getGridValue(EGridLayerID layerId, int x, int y);
 	int getGridWidth();
 	int getGridHeight();
 
 protected:
 	int width;
 	int height;
-	short **gridArray;
+	short ***gridArray;
 };
 
 /**
