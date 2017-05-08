@@ -55,7 +55,7 @@
 			<Sprite name="g2" source="sleeping_gom" x="4" y="4" />
 			<Sprite name="g3" source="sleeping_gom" x="8" y="1" />
 			<Sprite name="g4" source="sleeping_gom" x="8" y="4" />
-			<Sprite name="g5" source="sleeping_gom" x="8" y="8" controllable="true"/>
+			<Sprite name="g5" source="sleeping_gom" x="8" y="8" />
 			<!--Sprite name="c2" source="char_girl" x="32" y="256" /-->
 		</Layer>
 		<Layer name="map" depth="0">

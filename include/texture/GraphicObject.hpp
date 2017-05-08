@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <map>
+#include <functional>
 
 #include "texture/EAnimation.hpp"
 #include "texture/EDrawable.hpp"
@@ -51,6 +52,10 @@ public:
 	void changeState(std::weak_ptr<story::Graphic::Object> self);
 	void changeRotateState(std::weak_ptr<story::Graphic::Object> self);
 
+	/* Event callback */
+	typedef std::function<void(double x, double y)> PositionCallback;
+	void setPositionCallback(PositionCallback cb);
+
 	/* Primitive */
 	std::string getName();
 	void setName(std::string name);
@@ -91,6 +96,9 @@ protected:
 
 	int state_value;
 	int rotate_state_value;
+
+	/* Callback */
+	PositionCallback callback;
 };
 
 } /* namespace Graphic */

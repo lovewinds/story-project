@@ -68,6 +68,8 @@ void EVisualNovelScene::testAnimation(AnimationState state)
 		case ANI_RESUME:
 			object->resumeAnimation();
 			break;
+		default:
+			break;
 		}
 	}
 #if 0

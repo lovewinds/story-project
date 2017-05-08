@@ -76,6 +76,13 @@ bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 	position_str = stringStream.str();
 	LOG_DBG("POS [%s]", position_str.c_str());
 
+	if (object->isControllable()) {
+		LOG_DBG("Callback is set into object [%s]", object->getName().c_str());
+		object->setPositionCallback(
+			std::bind(&ERPGScene::objectPositionCallback, this,
+				std::placeholders::_1, std::placeholders::_2));
+	}
+
 	/* Convert into actual position from grid position */
 	auto result = _object_map.emplace(position_str, object);
 	if (!result.second) {
@@ -94,6 +101,11 @@ void ERPGScene::setMap(std::shared_ptr<EGridMapTexture> map)
 	}
 
 	gridMap = map;
+}
+
+void ERPGScene::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+{
+	gridDesc = desc;
 }
 
 void ERPGScene::testAnimation(AnimationState state)
@@ -134,32 +146,78 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 	{
 		if (it.second->isControllable()) {
 			auto& object = it.second;
+			float obj_ax = axis_x;
+			float obj_ay = axis_y;
+			double x = object->getPositionX() / 32.0f;
+			double y = object->getPositionY() / 32.0f;
+
+			/* Check obstacle */
+			if (0.0f < obj_ax) {
+				/* Check right position */
+				if (false == checkGridMoveable(int(x+1), int(y))) {
+					LOG_ERR("Can't move [RIGHT] !!");
+					obj_ax = 0.0f;
+				}
+			}
+			if (obj_ax < 0.0f) {
+				/* Check left position */
+				if (false == checkGridMoveable(int(x-1), int(y))) {
+					LOG_ERR("Can't move [LEFT] !!");
+					obj_ax = 0.0f;
+				}
+			}
+			if (0.0f < obj_ay) {
+				/* Check down position */
+				if (false == checkGridMoveable(int(x), int(y+1))) {
+					LOG_ERR("Can't move [DOWN] !!");
+					obj_ay = 0.0f;
+				}
+			}
+			if (obj_ay < 0.0f) {
+				/* Check up position */
+				if (false == checkGridMoveable(int(x), int(y-1))) {
+					LOG_ERR("Can't move [UP] !!");
+					obj_ay = 0.0f;
+				}
+			}
+
+			LOG_DBG("Set factor[%lf / %lf] to [%s]",
+					obj_ax, obj_ay, object->getName().c_str());
 			switch (object->getAnimationState())
 			{
 			case ANI_NONE:
-				LOG_DBG("Start animation. [%f / %f]", axis_x, axis_y);
+				LOG_DBG("Start animation. [%f / %f]", obj_ax, obj_ay);
 				ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
 				ani->setCaller(object);
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-				grid->setAxisFactor(axis_x, axis_y);
+				grid->setAxisFactor(obj_ax, obj_ay);
 
 				object->setAnimation(ani);
 				object->startAnimation();
 			break;
 			case ANI_START:
 				/* Already in progress, Just update axis factor */
+				LOG_DBG("Update");
 				ani = object->getAnimation();
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
 				if (grid) {
-					grid->setAxisFactor(axis_x, axis_y);
+					grid->setAxisFactor(obj_ax, obj_ay);
 				}
 			break;
 			default:
 				/* Already in progress */
+				LOG_DBG("Progress");
+				if ((std::isnan(obj_ax) || obj_ax == 0.0f) &&
+					(std::isnan(obj_ay) || obj_ay == 0.0f))
+				{
+					/* Prevent character blocking state */
+					return;
+				}
+
 				ani = object->getAnimation();
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
 				if (grid) {
-					grid->setAxisFactor(axis_x, axis_y);
+					grid->setAxisFactor(obj_ax, obj_ay);
 				}
 				object->startAnimation();
 			break;
@@ -197,6 +255,76 @@ bool ERPGScene::testRotate(int x, int y)
 	}
 
 	return false;
+}
+
+bool ERPGScene::checkGridMoveable(int x, int y)
+{
+	bool res = false;
+
+	if (gridDesc)
+	{
+		short a = gridDesc->getGridValue(GRID_LAYER_MOVABLE, x, y);
+		LOG_DBG("   check moveable [%d, %d] : %d", x, y, a);
+		if (48 == a)
+			res = true;
+	}
+
+	return res;
+}
+
+void ERPGScene::objectPositionCallback(double x, double y)
+{
+	float ax = 0.0f, ay = 0.0f;
+	LOG_INFO("[SCENE] position [%lf, %lf]", x, y);
+
+	/* TODO: Check obstacles */
+	std::shared_ptr<EAnimation> ani;
+	EGridMoveAnimation* grid = nullptr;
+
+	for (auto& it : _object_map)
+	{
+		if (it.second->isControllable()) {
+			auto& object = it.second;
+
+			ani = object->getAnimation();
+			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+			if (grid) {
+				ax = grid->getAxisFactorX();
+				ay = grid->getAxisFactorY();
+			}
+
+			if (0.0f < ax) {
+				/* Check right position */
+				if (false == checkGridMoveable(int(x+1), int(y))) {
+					LOG_ERR("Can't move [RIGHT] !!");
+					handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+				}
+			}
+			if (ax < 0.0f) {
+				/* Check left position */
+				if (false == checkGridMoveable(int(x-1), int(y))) {
+					LOG_ERR("Can't move [LEFT] !!");
+					handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+				}
+			}
+			if (0.0f < ay) {
+				/* Check down position */
+				if (false == checkGridMoveable(int(x), int(y+1))) {
+					LOG_ERR("Can't move [DOWN] !!");
+					handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+				}
+			}
+			if (ay < 0.0f) {
+				/* Check up position */
+				if (false == checkGridMoveable(int(x), int(y-1))) {
+					LOG_ERR("Can't move [UP] !!");
+					handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+				}
+			}
+
+			//object->setAnimation(ani);
+		}
+	}
 }
 
 void ERPGScene::handleEvent(SDL_Event e)

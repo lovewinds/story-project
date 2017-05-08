@@ -316,7 +316,7 @@ void Object::resumeAnimation()
 
 void Object::finishedAnimationCallback(double ani_x, double ani_y)
 {
-	LOG_DBG("Animation Finished. update position [%lf, %lf]", ani_x, ani_y);
+	//LOG_DBG("Animation Finished. update position [%lf, %lf]", ani_x, ani_y);
 
 	for (auto &it : _img_texture_map)
 	{
@@ -335,12 +335,15 @@ void Object::finishedAnimationCallback(double ani_x, double ani_y)
 
 	p_x += ani_x;
 	p_y += ani_y;
+
+	//LOG_DBG("Current pos: [%lf, %lf]", p_x / 32.0f, p_y / 32.0f);
+
+	if (callback)
+		callback(p_x / 32.0f, p_y / 32.0f);
 }
 
 void Object::syncAnimationCallback(double ani_x, double ani_y)
 {
-	LOG_DBG("update position [%lf, %lf]", ani_x, ani_y);
-
 	for (auto &it : _img_texture_map)
 	{
 		it.second->movePositionBy(ani_x, ani_y);
@@ -358,6 +361,16 @@ void Object::syncAnimationCallback(double ani_x, double ani_y)
 
 	p_x += ani_x;
 	p_y += ani_y;
+
+	//LOG_DBG("Current pos: [%lf, %lf]", p_x / 32.0f, p_y / 32.0f);
+
+	if (callback)
+		callback(p_x / 32.0f, p_y / 32.0f);
+}
+
+void Object::setPositionCallback(PositionCallback cb)
+{
+	callback = std::move(cb);
 }
 
 void Object::update(Uint32 currentTime, Uint32 accumulator)

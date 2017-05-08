@@ -106,6 +106,7 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 					new EGridMapTexture("MyMap", "MapTile", gridDesc));
 			if (rpg_scene) {
 				rpg_scene->setMap(map);
+				rpg_scene->setGridDescriptor(gridDesc);
 			}
 		}
 	}

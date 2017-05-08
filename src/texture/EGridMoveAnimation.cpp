@@ -33,6 +33,16 @@ void EGridMoveAnimation::setAxisFactor(float axis_x, float axis_y)
 		next_dir_factor_y = axis_y;
 }
 
+float EGridMoveAnimation::getAxisFactorX()
+{
+	return next_dir_factor_x;
+}
+
+float EGridMoveAnimation::getAxisFactorY()
+{
+	return next_dir_factor_y;
+}
+
 void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
@@ -69,6 +79,7 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	if (checkFinished) {
+		LOG_DBG("Factor : [%lf / %lf]", next_dir_factor_x, next_dir_factor_y);
 		if (next_dir_factor_x > 0.0f || next_dir_factor_x < 0.0f
 			|| next_dir_factor_y > 0.0f || next_dir_factor_y < 0.0f)
 		{
@@ -78,6 +89,14 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			a_y = 0.0f;
 			curr_dir_factor_x = next_dir_factor_x;
 			curr_dir_factor_y = next_dir_factor_y;
+
+			if (curr_dir_factor_x == 0.0f && curr_dir_factor_y == 0.0f) {
+				LOG_ERR("BLOCKED !!!");
+				EAnimation::stop();
+				startTime = 0;
+				prevTime = 0;
+				state = ANI_STOP;
+			}
 
 			/* Reset state */
 			//prevTime = compensatedTime;

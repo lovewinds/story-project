@@ -43,12 +43,22 @@ public:
 	virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
 	virtual void setMap(std::shared_ptr<EGridMapTexture> map);
+	virtual void setGridDescriptor(std::shared_ptr<EGridDesc> desc);
 
 	void testAnimation(AnimationState state);
-	void handleDirectonFactor(float axis_x, float axis_y);
-
 	bool testRotate(int x, int y);
+
+	void handleDirectonFactor(float axis_x, float axis_y);
+	bool checkGridMoveable(int x, int y);
+
+	/* Callback when object is moved */
+	void objectPositionCallback(double x, double y);
 
 protected:
 	std::shared_ptr<EGridMapTexture>	gridMap;
+	std::shared_ptr<EGridDesc> gridDesc;
+
+	/* Grid-based object list for rendering */
+	//std::vector<std::list<std::shared_ptr<story::Graphic::Object>>> _vertical_obj_list;
+	//std::map<std::string, std::shared_ptr<story::Graphic::Object>> _object_map;
 };

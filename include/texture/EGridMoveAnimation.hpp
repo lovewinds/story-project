@@ -11,6 +11,8 @@ public:
 	virtual void start();
 
 	virtual void setAxisFactor(float axis_x, float axis_y);
+	virtual float getAxisFactorX();
+	virtual float getAxisFactorY();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
