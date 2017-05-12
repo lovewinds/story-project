@@ -181,6 +181,7 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 				}
 			}
 
+			/* Set factor */
 			LOG_DBG("Set factor[%lf / %lf] to [%s]",
 					obj_ax, obj_ay, object->getName().c_str());
 			switch (object->getAnimationState())
@@ -288,40 +289,88 @@ void ERPGScene::objectPositionCallback(double x, double y)
 
 			ani = object->getAnimation();
 			grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-			if (grid) {
-				ax = grid->getAxisFactorX();
-				ay = grid->getAxisFactorY();
-			}
+			if (nullptr == grid)
+				continue;
 
-			if (0.0f < ax) {
-				/* Check right position */
-				if (false == checkGridMoveable(int(x+1), int(y))) {
-					LOG_ERR("Can't move [RIGHT] !!");
-					handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
-				}
-			}
-			if (ax < 0.0f) {
-				/* Check left position */
-				if (false == checkGridMoveable(int(x-1), int(y))) {
-					LOG_ERR("Can't move [LEFT] !!");
-					handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
-				}
-			}
-			if (0.0f < ay) {
-				/* Check down position */
-				if (false == checkGridMoveable(int(x), int(y+1))) {
-					LOG_ERR("Can't move [DOWN] !!");
-					handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
-				}
-			}
-			if (ay < 0.0f) {
-				/* Check up position */
-				if (false == checkGridMoveable(int(x), int(y-1))) {
-					LOG_ERR("Can't move [UP] !!");
-					handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
-				}
-			}
+			ax = grid->getAxisFactorX();
+			ay = grid->getAxisFactorY();
 
+			/* TODO: Check diagonal obstacle here ****************************************/
+			if ((ax == 0.0f) != (ay == 0.0f))
+			{
+				/* Only X or Y axis is mutually exclusive. */
+				if (0.0f < ax) {
+					/* Check right position */
+					if (false == checkGridMoveable(int(x+1), int(y))) {
+						LOG_ERR("Can't move [RIGHT] !!");
+						handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+					}
+				}
+				if (ax < 0.0f) {
+					/* Check left position */
+					if (false == checkGridMoveable(int(x-1), int(y))) {
+						LOG_ERR("Can't move [LEFT] !!");
+						handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+					}
+				}
+				if (0.0f < ay) {
+					/* Check down position */
+					if (false == checkGridMoveable(int(x), int(y+1))) {
+						LOG_ERR("Can't move [DOWN] !!");
+						handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+					}
+				}
+				if (ay < 0.0f) {
+					/* Check up position */
+					if (false == checkGridMoveable(int(x), int(y-1))) {
+						LOG_ERR("Can't move [UP] !!");
+						handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+					}
+				}
+			}
+			else if ((ax != 0.0f) && (ay != 0.0f))
+			{
+				LOG_ERR("Factor is set both axis !! [%lf / %lf]", ax, ay);
+				if (0.0f < ax) {
+					/* Check right position */
+					if (0.0f < ay) {
+						/* Check right-down position */
+						if (false == checkGridMoveable(int(x+1), int(y+1))) {
+							LOG_ERR("Can't move [RIGHT-DOWN] !!");
+							ax = 0.0f;
+							ay = 0.0f;
+						}
+					}
+					if (ay < 0.0f) {
+						/* Check right-up position */
+						if (false == checkGridMoveable(int(x+1), int(y-1))) {
+							LOG_ERR("Can't move [RIGHT-UP] !!");
+							ax = 0.0f;
+							ay = 0.0f;
+						}
+					}
+				}
+				if (ax < 0.0f) {
+					/* Check left position */
+					if (0.0f < ay) {
+						/* Check left-down position */
+						if (false == checkGridMoveable(int(x-1), int(y+1))) {
+							LOG_ERR("Can't move [LEFT-DOWN] !!");
+							ax = 0.0f;
+							ay = 0.0f;
+						}
+					}
+					if (ay < 0.0f) {
+						/* Check left-up position */
+						if (false == checkGridMoveable(int(x-1), int(y-1))) {
+							LOG_ERR("Can't move [LEFT-UP] !!");
+							ax = 0.0f;
+							ay = 0.0f;
+						}
+					}
+				}
+				handleDirectonFactor(ax, ay);
+			}
 			//object->setAnimation(ani);
 		}
 	}

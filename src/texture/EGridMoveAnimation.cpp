@@ -90,7 +90,7 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			curr_dir_factor_x = next_dir_factor_x;
 			curr_dir_factor_y = next_dir_factor_y;
 
-			if (curr_dir_factor_x == 0.0f && curr_dir_factor_y == 0.0f) {
+			if (next_dir_factor_x == 0.0f && next_dir_factor_y == 0.0f) {
 				LOG_ERR("BLOCKED !!!");
 				EAnimation::stop();
 				startTime = 0;
