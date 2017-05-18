@@ -58,7 +58,7 @@ void EScreenManager::handleEvent(SDL_Event e)
 		|| e.type == SDL_KEYDOWN || e.type == SDL_TEXTINPUT	/* Key pressed */
 		|| e.type == SDL_KEYUP	/* Key released */
 		|| e.type == SDL_FINGERDOWN
-		|| e.type == SDL_FINGERMOTION)
+		|| e.type == SDL_FINGERUP)
 	{
 		//LOG_INFO("[TEST] Event : [%x]", e.type);
 		/* Propagate event into scene */

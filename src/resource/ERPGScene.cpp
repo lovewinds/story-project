@@ -487,32 +487,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 		break;
 		default: break;
 		}
-	}
-	else if (e.type == SDL_FINGERDOWN) {
-		SDL_TouchFingerEvent *te = &e.tfinger;
-		int x = 0, y = 0;
-		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
-
-		x = Ecore::getScreenWidth() * te->x;
-		y = Ecore::getScreenHeight() * te->y;
-		LOG_INFO("Touched [%d, %d]  | [%03d, %03d]", x, y,
-				Ecore::getScreenWidth(), Ecore::getScreenHeight());
-
-		/* TODO: event consumer should be handle more efficient way */
-		bool consumed = testRotate(x, y);
-		if (consumed)
-			return;
-
-		std::shared_ptr<story::Graphic::Object> found;
-		auto search = _object_map.find("movingChar");
-		if (search != _object_map.end()) {
-			found = search->second;
-			if (found->getAnimationState() != ANI_START)
-				found->animatedMoveTo(found, x, y, 1000);
-			LOG_DBG("Finished");
-		} else {
-			LOG_ERR("Object was not found !");
-		}
 	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 		LOG_INFO("Animation test [%03d, %03d]", e.button.x, e.button.y);
 
@@ -549,6 +523,79 @@ void ERPGScene::handleEvent(SDL_Event e)
 		else if (te->x >= 0.6) {
 			LOG_INFO("Move : RIGHT");
 			handleMove(DIR_RIGHT);
+		}
+#endif
+	} else if (e.type == SDL_FINGERDOWN) {
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		int x = 0, y = 0;
+		LOG_INFO("Handle event! type: SDL_FINGERDOWN / %u", te->timestamp);
+
+		x = Ecore::getScreenWidth() * te->x;
+		y = Ecore::getScreenHeight() * te->y;
+		LOG_INFO("Touched [%d, %d]  | [%03d, %03d]", x, y,
+				Ecore::getScreenWidth(), Ecore::getScreenHeight());
+
+		/* TODO: event consumer should be handle more efficient way */
+		bool consumed = testRotate(x, y);
+		if (consumed)
+			return;
+#if 0
+		std::shared_ptr<story::Graphic::Object> found;
+		auto search = _object_map.find("movingChar");
+		if (search != _object_map.end()) {
+			found = search->second;
+			if (found->getAnimationState() != ANI_START)
+				found->animatedMoveTo(found, x, y, 1000);
+			LOG_DBG("Finished");
+		} else {
+			LOG_ERR("Object was not found !");
+		}
+#endif
+		if (0.3 <= te->y && te->y <= 0.6) {
+			if (te->x <= 0.3) {
+				LOG_INFO("Move : LEFT");
+				handleDirectonFactor(-1.0f, std::numeric_limits<float>::quiet_NaN());
+			} else if (0.6 <= te->x) {
+				LOG_INFO("Move : RIGHT");
+				handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
+			}
+		} else if (te->y < 0.3) {
+			if (te->x <= 0.3 || 0.6 <= te->x) {
+				LOG_INFO("Move : UP");
+				handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), -1.0f);
+			}
+		} else if (0.6 < te->y) {
+			if (te->x <= 0.3 || 0.6 <= te->x) {
+				LOG_INFO("Move : DOWN");
+				handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 1.0f);
+			}
+		}
+	} else if (e.type == SDL_FINGERUP) {
+#if 0
+		SDL_TouchFingerEvent *te = &e.tfinger;
+		LOG_DBG("SDL_FINGERUP");
+		LOG_DBG("SDL_FINGERUP");
+		LOG_DBG("SDL_FINGERUP");
+		LOG_DBG("SDL_FINGERUP");
+		LOG_DBG("SDL_FINGERUP");
+		if (0.3 <= te->y && te->y <= 0.6) {
+			if (te->x <= 0.3) {
+				LOG_INFO("Move : LEFT");
+				handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+			} else if (0.6 <= te->x) {
+				LOG_INFO("Move : RIGHT");
+				handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+			}
+		} else if (te->y < 0.3) {
+			if (te->x <= 0.3 || 0.6 <= te->x) {
+				LOG_INFO("Move : UP");
+				handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+			}
+		} else if (0.6 < te->y) {
+			if (te->x <= 0.3 || 0.6 <= te->x) {
+				LOG_INFO("Move : DOWN");
+				handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+			}
 		}
 #endif
 	}
