@@ -86,7 +86,7 @@ protected:
  */
 
 enum EGridLayerID {
-	GRID_LAYER_BACKGROUND_TILE = 0,
+	GRID_LAYER_UNMOVABLE = 0,
 	GRID_LAYER_MOVABLE,
 	GRID_LAYER_EVENT,
 	GRID_LAYER_END /* The number of layers. Do not change this */
@@ -95,18 +95,20 @@ enum EGridLayerID {
 class EGridDesc
 {
 public:
-	EGridDesc(int width, int height);
+	EGridDesc(int width, int height, int levels);
 	virtual ~EGridDesc();
 
-	void setGridValue(EGridLayerID layerId, int x, int y, short value);
-	short getGridValue(EGridLayerID layerId, int x, int y);
+	void setGridValue(int level, int x, int y, ushort value);
+	ushort getGridValue(int level, int x, int y);
 	int getGridWidth();
 	int getGridHeight();
+	int getGridLevels();
 
 protected:
 	int width;
 	int height;
-	short ***gridArray;
+	int levels;
+	ushort ***gridArray;
 };
 
 /**

@@ -8,62 +8,6 @@
 #define T1	16
 #define T2	327
 
-EGridMapTexture::EGridMapTexture(std::string name, std::string base_image) :
-	EDrawable()
-{
-	this->name = name;
-	this->base_image = base_image;
-
-    /* TODO: Load map info dynamically */
-	std::vector<std::vector<short> > arr({
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T2, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T2, T2, T1, T1, T1, T1, T2, T2, T2, T2, T2, T2, T2, T2, T1, T1, T1, T1, T2, T2, T2, T2, T1, T1, T1, T1, T2, T2, T2, T2, T2, T2, T2, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T2, T2, T1, T1, T1, T1, T2, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T2, T1, T1, T1, T1, T2, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T1, T2, T1, T1, T1, T1, T1, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T2, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T2, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T2, T2, T2, T2, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 }),
-		std::vector<short>({ T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1, T1, T1, T2, T1, T1, T1, T1 })
-    });
-    tileMap = arr;
-    wTileCount = 40;
-    hTileCount = 40;
-
-    _createTexture();
-}
-
 EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
 	std::shared_ptr<EGridDesc> desc)
 :EDrawable()
@@ -73,19 +17,22 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
 
 	wTileCount = desc->getGridWidth();
 	hTileCount = desc->getGridHeight();
+	levels = desc->getGridLevels();
 
 	/* TODO: Load map info dynamically */
-	std::vector<std::vector<short> > arr;
+	std::vector< std::vector< std::vector<ushort> > > arr;
 	arr.reserve(hTileCount);
 	for (int h = 0; h < hTileCount; h++) {
-		std::vector<short> row;
+		std::vector< std::vector<ushort> > row;
 		row.reserve(wTileCount);
 		for (int w = 0; w < wTileCount; w++) {
-			short v = desc->getGridValue(GRID_LAYER_BACKGROUND_TILE, w, h);
-			if (v == '0')
-				row.push_back(short(T1));
-			else
-				row.push_back(short(T2));
+			std::vector<ushort> col;
+			col.reserve(levels);
+			for (int l = 0; l <= levels; l++) {
+				ushort v = desc->getGridValue(l, w, h);
+				col.push_back(v);
+			}
+			row.push_back(col);
 		}
 		arr.push_back(row);
 	}
@@ -144,7 +91,7 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
     const unsigned int cell_height = 32;
 	unsigned int row_count = (unsigned int)(base_width / cell_width);
 	unsigned int col_count = (unsigned int)(base_height / cell_height);
-    unsigned int index = 0;
+    unsigned int tile = 0;
 
     if (row_count == 0 || col_count == 0) {
     	LOG_ERR("Invalid map information");
@@ -154,16 +101,19 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 	if (mTexture) {
 		for (int y = 0; y < hTileCount; y++) {
 			for (int x = 0; x < wTileCount; x++) {
-				index = (unsigned int)tileMap[y][x];
-                unsigned int tx = (unsigned int)(index % row_count);
-                unsigned int ty = (unsigned int)(index / row_count);
+				for (int l = 1; l <= levels; l++) {
+					tile = (unsigned int)tileMap[y][x][l];
+					if (tile == 9999) continue;
+					unsigned int tx = (unsigned int)(tile % row_count);
+					unsigned int ty = (unsigned int)(tile / row_count);
 
-                rect.x = cell_width * tx;
-                rect.y = cell_height * ty;
-                rect.w = cell_width;
-                rect.h = cell_height;
+					rect.x = cell_width * tx;
+					rect.y = cell_height * ty;
+					rect.w = cell_width;
+					rect.h = cell_height;
 
-                texture_render((int)(x*cell_width), (int)(y*cell_height), &rect);
+					texture_render((int)(x*cell_width), (int)(y*cell_height), &rect);
+				}
             }
         }
 	}

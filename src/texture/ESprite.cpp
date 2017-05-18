@@ -5,6 +5,8 @@
 
 #include "texture/ESprite.hpp"
 
+/* Adjust the position on Y axis to remove mismatching with grid map */
+/* TODO: Should be handled more dynamic way */
 #define GRID_SIZE	(32.0f)
 
 ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :

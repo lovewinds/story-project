@@ -12,7 +12,6 @@ class EGridMapTexture : public EDrawable
 {
 public:
 	/* Initializes variables */
-	EGridMapTexture(std::string name, std::string base_image);
 	EGridMapTexture(std::string name, std::string base_image,
 			std::shared_ptr<EGridDesc> desc);
 	~EGridMapTexture();
@@ -30,13 +29,14 @@ protected:
 	void _createTexture();
 	void _removeTexture();
 
-	Uint32 wTileCount;
-    Uint32 hTileCount;
+	uint wTileCount;
+    uint hTileCount;
+	uint levels;
 
     std::string name;
 	std::string base_image;
 
-    std::vector<std::vector<short> > tileMap;
+    std::vector< std::vector< std::vector<ushort> > > tileMap;
 
 	std::shared_ptr<EImageResource>	tile_image;
 };

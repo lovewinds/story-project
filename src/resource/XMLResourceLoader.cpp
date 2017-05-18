@@ -169,8 +169,10 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					std::string itm_p_y(node.node().attribute("y").value());
 					std::string itm_p_w(node.node().attribute("width").value());
 					std::string itm_p_h(node.node().attribute("height").value());
+					std::string itm_levels(node.node().attribute("levels").value());
 					int p_x = 0, p_y = 0;
 					int p_w = 0, p_h = 0;
+					int p_levels = 0;
 					bool width_percent = false;
 					bool height_percent = false;
 					try {
@@ -189,6 +191,9 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 							p_h = std::stoi(itm_p_h);
 							if (itm_p_h.length() > 1 && itm_p_h.substr(itm_p_h.length() - 1, 1) == std::string("%"))
 								height_percent = true;
+						}
+						if (itm_levels.empty() == false) {
+							p_levels = std::stoi(itm_levels);
 						}
 					}
 					catch (std::exception &e) {
@@ -234,17 +239,22 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 
 						layerDesc->addImageDesc(imageDesc);
 					}
-					else if (itm_node.compare("RawMap") == 0) {
-						LOG_INFO("Width: [%d] / Height: [%d]", p_w, p_h);
-						/* Raw map data */
-						std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h));
+					else if (itm_node.compare("TileMap") == 0) {
+						LOG_INFO("Width: [%d] / Height: [%d] / Levels: [%d]", p_w, p_h, p_levels);
+						std::string delim = " ";
+						/* Tile map data */
+						std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h, p_levels));
 						for (auto map_layer : node.node().children()) {
 							/* Map layer */
-							std::string itm_layer(map_layer.attribute("type").value());
-							EGridLayerID layer_id = GRID_LAYER_BACKGROUND_TILE;
-							if (itm_layer.compare("move") == 0)
-								layer_id = GRID_LAYER_MOVABLE;
-							LOG_DBG("Grid Layer [%d]", layer_id);
+							std::string map_layer_name(map_layer.attribute("name").value());
+							std::string level_layer(map_layer.attribute("level").value());
+							int level = 0;
+
+							/* Tile layer level */
+							if (false == level_layer.empty())
+								level = std::stoi(level_layer);
+
+							LOG_DBG("Grid Layer [%s] (L %02d)", map_layer_name.c_str(), level);
 							for (auto raw_array : map_layer.children())
 							{
 								std::string pcdata(raw_array.text().get());
@@ -258,12 +268,31 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 								while (std::getline(ss, item, '\n')) {
 									if (item.length() == 0) continue;
 									row_elems.push_back(item);
+									/*
 									LOG_DBG("[%02d] (%lu) %s",
 											s_idx, item.length(), item.c_str());
+									*/
 
-									for (size_t i = 0; i < item.length(); i++) {
-										gridDesc->setGridValue(layer_id, i, s_idx, item.at(i));
+									/* TEMP: Parse each 2 bytes */
+									size_t start = 0U;
+									size_t end = item.find(delim);
+									int i = 0;
+									while (end != std::string::npos)
+									{
+										std::string val = item.substr(start, end - start);
+										start = end + delim.length();
+										end = item.find(delim, start);
+										int v = std::stoi(val);
+										gridDesc->setGridValue(level, i, s_idx, v);
+										i++;
 									}
+									if (item.length() - start >= 4) {
+										std::string val = item.substr(start, std::string::npos);
+										val = item.substr(start, item.length());
+										int v = std::stoi(val);
+										gridDesc->setGridValue(level, i, s_idx, v);
+									}
+									/* Line end */
 									s_idx++;
 								}
 							}

@@ -24,10 +24,12 @@ ERPGScene::ERPGScene(std::string name)
 		LOG_ERR("Failed to insert text set !");
 	}
 #endif
+
+#if 0
 	/* Create base map textures */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-
 	/* Create sprite by manually for test */
+
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 	std::shared_ptr<ESprite> sprite;
 
@@ -40,6 +42,7 @@ ERPGScene::ERPGScene(std::string name)
 	if (!ins.second) {
 		LOG_ERR("Failed to insert object map!");
 	}
+#endif
 }
 
 ERPGScene::~ERPGScene()
@@ -264,9 +267,9 @@ bool ERPGScene::checkGridMoveable(int x, int y)
 
 	if (gridDesc)
 	{
-		short a = gridDesc->getGridValue(GRID_LAYER_MOVABLE, x, y);
+		ushort a = gridDesc->getGridValue(0, x, y);
 		LOG_DBG("   check moveable [%d, %d] : %d", x, y, a);
-		if (48 == a)
+		if (0 == a)
 			res = true;
 	}
 
