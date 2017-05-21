@@ -50,6 +50,8 @@ EImageDesc::EImageDesc(std::string name, std::string sourceType, int x, int y)
 	this->type = sourceType;
 	this->pos_x = x;
 	this->pos_y = y;
+	this->h_align = IMAGE_ALIGN_LEFT;
+	this->v_align = IMAGE_ALIGN_TOP;
 }
 
 void EImageDesc::setWidth(double width)
@@ -70,6 +72,16 @@ void EImageDesc::setWidthRatio(double width)
 void EImageDesc::setHeightRatio(double height)
 {
 	this->height_ratio = height;
+}
+
+void EImageDesc::setHorizontalAlign(EImageHorizontalAlign h_align)
+{
+	this->h_align = h_align;
+}
+
+void EImageDesc::setVerticalAlign(EImageVerticalAlign v_align)
+{
+	this->v_align = v_align;
 }
 
 std::string EImageDesc::getName()
@@ -110,6 +122,16 @@ double EImageDesc::getWidthRatio()
 double EImageDesc::getHeightRatio()
 {
 	return height_ratio;
+}
+
+EImageHorizontalAlign EImageDesc::getHorizontalAlign()
+{
+	return h_align;
+}
+
+EImageVerticalAlign EImageDesc::getVerticalAlign()
+{
+	return v_align;
 }
 
 /**

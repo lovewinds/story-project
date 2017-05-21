@@ -80,15 +80,41 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 			if (nullptr == image) {
 				LOG_ERR("Failed to create Image !");
 			} else {
-				if (imageDesc->getWidthRatio() != 0.0)
+				auto h_align = imageDesc->getHorizontalAlign();
+				auto v_align = imageDesc->getVerticalAlign();
+				int px = imageDesc->getX();
+				int py = imageDesc->getY();
+				double width = 0.0f;
+				double height = 0.0f;
+
+				/* TODO: Inefficient logic */
+				if (imageDesc->getWidthRatio() != 0.0) {
 					image->setWidth(imageDesc->getWidthRatio(), true);
-				else
+					LOG_ERR("Width [%lf] / Ratio [%lf]", image->getWidth(), imageDesc->getWidthRatio());
+					width = (imageDesc->getWidthRatio() / 100.0) * image->getWidth();
+					LOG_ERR("Calculated Width [%lf]", width);
+				}
+				else {
 					image->setWidth(imageDesc->getWidth(), false);
-				if (imageDesc->getHeightRatio() != 0.0)
+					width = image->getWidth();
+				}
+				if (imageDesc->getHeightRatio() != 0.0) {
 					image->setHeight(imageDesc->getHeightRatio(), true);
-				else
+					height = (imageDesc->getHeightRatio() / 100.0) * image->getHeight();
+				}
+				else {
 					image->setHeight(imageDesc->getHeight(), false);
-				object->movePositionTo(imageDesc->getX(), imageDesc->getY());
+					height = image->getHeight();
+				}
+
+				if (imageDesc->getHorizontalAlign() == IMAGE_ALIGN_RIGHT) {
+					px = (Ecore::getScreenWidth() - (int)width) - px;
+				}
+				if (imageDesc->getVerticalAlign() == IMAGE_ALIGN_BOTTOM) {
+					py = (Ecore::getScreenHeight() - (int)height) - py;
+				}
+
+				object->movePositionTo(px, py);
 
 				object->addImage(image);
 				scene->addObject(object);

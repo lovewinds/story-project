@@ -50,6 +50,17 @@ protected:
 	bool controllable;
 };
 
+/* TODO: Should be expanded to all objects */
+enum EImageHorizontalAlign {
+	IMAGE_ALIGN_LEFT = 0,
+	IMAGE_ALIGN_RIGHT
+};
+
+enum EImageVerticalAlign {
+	IMAGE_ALIGN_TOP = 0,
+	IMAGE_ALIGN_BOTTOM
+};
+
 class EImageDesc
 {
 public:
@@ -59,6 +70,8 @@ public:
 	void setHeight(double height);
 	void setWidthRatio(double width);
 	void setHeightRatio(double height);
+	void setHorizontalAlign(EImageHorizontalAlign align);
+	void setVerticalAlign(EImageVerticalAlign align);
 
 	std::string getName();
 	std::string getType();
@@ -68,6 +81,8 @@ public:
 	double getHeight();
 	double getWidthRatio();
 	double getHeightRatio();
+	EImageHorizontalAlign getHorizontalAlign();
+	EImageVerticalAlign getVerticalAlign();
 
 protected:
 	std::string name;
@@ -78,6 +93,9 @@ protected:
 	double height;
 	double width_ratio;
 	double height_ratio;
+
+	EImageHorizontalAlign h_align;
+	EImageVerticalAlign v_align;
 };
 
 /*

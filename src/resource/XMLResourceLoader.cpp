@@ -165,6 +165,8 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					std::string itm_node(node.node().name());
 					std::string itm_source(node.node().attribute("source").value());
 					std::string itm_name(node.node().attribute("name").value());
+					std::string itm_h_align(node.node().attribute("halign").value());
+					std::string itm_v_align(node.node().attribute("valign").value());
 					std::string itm_p_x(node.node().attribute("x").value());
 					std::string itm_p_y(node.node().attribute("y").value());
 					std::string itm_p_w(node.node().attribute("width").value());
@@ -176,6 +178,11 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					bool width_percent = false;
 					bool height_percent = false;
 					try {
+						if (itm_h_align.empty())
+							itm_h_align = std::string("left");
+						if (itm_v_align.empty())
+							itm_v_align = std::string("top");
+
 						if (itm_p_x.empty() == false) {
 							p_x = std::stoi(itm_p_x);
 						}
@@ -236,6 +243,11 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 							imageDesc->setHeightRatio(p_h);
 						else
 							imageDesc->setHeight(p_h);
+
+						if (itm_h_align.compare("right") == 0)
+							imageDesc->setHorizontalAlign(IMAGE_ALIGN_RIGHT);
+						if (itm_v_align.compare("bottom") == 0)
+							imageDesc->setVerticalAlign(IMAGE_ALIGN_BOTTOM);
 
 						layerDesc->addImageDesc(imageDesc);
 					}

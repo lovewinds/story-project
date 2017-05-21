@@ -135,8 +135,8 @@
 	</Scene>
 	<Scene name="vnovel" type="VNovel">
 		<Layer name="talk" depth="1">
-			<Image name="char" source="Standing" x="420" y="0"
-				width="50%" height="50%"/>
+			<Image name="char" source="Standing" halign="right" valign="bottom"
+						x="0" y="0" width="50%" height="50%"/>
 		</Layer>
 	</Scene>
 	<Scene name="main" type="Title">
