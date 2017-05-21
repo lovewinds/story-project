@@ -1,8 +1,8 @@
 export SRC="/Users/ariens/source/story-project"
 export PREFIX="${SRC}/external/built"
 export BINPATH="${SRC}/external/built/bin"
-export LIBPATH="${SRC}/external/built/lib/ios"
-export INCLUDEPATH="${SRC}/external/built/include"
+export LIBPATH="${SRC}/external/built/lib/iOS"
+export INCLUDEPATH="${SRC}/external/built/include_ios"
 export IOS32_PREFIX="$PREFIX/tmp/ios32"
 export IOS64_PREFIX="$PREFIX/tmp/ios64"
 export SIMULATOR32_PREFIX="$PREFIX/tmp/simulator32"
@@ -19,13 +19,11 @@ export PATH="${BINPATH}:${BASEDIR}/usr/bin:$BASEDIR/usr/sbin:$PATH"
 #-fobjc-abi-version=2
 export SDK="${BASEDIR}/SDKs/iPhoneOS.sdk"
 export FRAMEWORKS="${SDK}/System/Library/Frameworks/"
-export CC="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"
-export CPP="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -E"
-export AR="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar"
-export RANLIB="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib"
+export CC="$(xcrun -sdk iphoneos -find clang)"
+export CPP="$(xcrun -sdk iphoneos -find clang) -E"
+export AR=$(xcrun -sdk iphoneos -find ar)
+export RANLIB=$(xcrun -sdk iphoneos -find ranlib)
 export LIBTOOL=$(xcrun -sdk iphoneos -find libtool)
-#export AR=$(xcrun -sdk iphoneos -find ar)
-#export RANLIB=$(xcrun -sdk iphoneos -find ranlib)
 
 NCPU=`sysctl -n hw.ncpu`
 if test x$NJOB = x; then
@@ -38,13 +36,13 @@ then
 	echo "Arch : arm64"
 	export CFLAGS="${CFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export CPPFLAGS="${CPPFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
+	#export CPPFLAGS="${CPPFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
 else
 	echo "Arch : armv7"
 	export CFLAGS="${CFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export CPPFLAGS="${CPPFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
+	#export CPPFLAGS="${CPPFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
 fi
 
@@ -82,19 +80,22 @@ case "$1" in
 	cp build/Release-iphoneos/libSDL2_ttf.a ${LIBPATH}
 	;;
 "SDL2_gfx")
-	./autogen.sh
+	./autogen.sh 
 
 	# Build directory
 	rm -rf build-ios
 	mkdir build-ios
 	cd build-ios
 
+	export CPPFLAGS="${CPPFLAGS} -I${INCLUDEPATH}/SDL2 -D_THREAD_SAFE"
+	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -lSDL2"
+
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx
+		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
 		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_arm64.a
 	else
-		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx
+		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
 		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_armv7.a
 	fi

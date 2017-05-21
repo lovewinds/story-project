@@ -18,7 +18,7 @@ SDL2_IMAGE = "SDL2_image-2.0.1"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.3"
 JSONCPP = "jsoncpp-1.6.5"
-G3LOG = "g3log-1.3"
+G3LOG = "g3log-1.2"
 PUGIXML = "pugixml-1.7"
 GTEST = "googletest-release-1.7.0"
 PROTOBUF = "protobuf-3.0.0"
@@ -181,6 +181,16 @@ def patch_libzmq_linux(path):
 	os.system('patch -p0 < ../../libzmq.patch')
 	os.chdir(path)
 	print "   [ZeroMQ] Patched\n"
+
+def patch_g3log_remove_warnings(path):
+	os.chdir(path)
+	os.chdir('..')
+	print "Current path: ["+os.getcwd()+"]"
+	# Use patch script
+	# https://github.com/techtonik/python-patch
+	os.system('../../patch.py ../../g3log-1.2-remove_warnings.patch')
+	os.chdir(path)
+	print "   [g3log] Patched\n"
 
 def patch_libzmq_win(path):
 	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -381,7 +391,9 @@ def build_sources_iOS(build_type):
 	else:
 		print "   [g3log] Start building .."
 		os.chdir(g3log_path)
+		patch_g3log_remove_warnings(g3log_path+'src/')
 		# Make fat binary
+		os.chdir(g3log_path)
 		os.system(WORKING_PATH+'ios-build.sh g3log armv7')
 		os.system(WORKING_PATH+'ios-build.sh g3log arm64')
 
@@ -544,6 +556,7 @@ def build_sources_MSVC(build_type):
 		print "   [g3log] Start building .."
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
+		patch_g3log_remove_warnings(g3log_path)
 		# TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
 		#os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DADD_BUILD_WIN_SHARED=ON ..')
@@ -686,6 +699,7 @@ def build_sources(build_type):
 		print "   [g3log] Start building .."
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
+		patch_g3log_remove_warnings(g3log_path)
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger; make g3logger_shared')
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
