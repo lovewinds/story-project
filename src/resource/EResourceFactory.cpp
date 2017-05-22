@@ -111,7 +111,7 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 					px = (Ecore::getScreenWidth() - (int)width) - px;
 				}
 				if (imageDesc->getVerticalAlign() == IMAGE_ALIGN_BOTTOM) {
-					py = (Ecore::getScreenHeight() - (int)height) - py;
+					py = (Ecore::getScreenHeight() - (int)height) + py;
 				}
 
 				object->movePositionTo(px, py);

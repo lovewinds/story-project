@@ -17,14 +17,18 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 {
 	LOG_INFO("EVisualNovelScene[%s] created", name.c_str());
 
-	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
-	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	SDL_Color boxBGColor = { 0x70, 0xC6, 0xFF };
+	//SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
+	//SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	//SDL_Color boxBGColor = { 0x70, 0xC6, 0xFF };
+	SDL_Color textColor = { 0x00, 0x00, 0x00 };
+	SDL_Color bgColor = { 0xFF, 0xFF, 0xFF };
+	SDL_Color boxBGColor = { 0xE3, 0xE3, 0xB4 };
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
 	std::shared_ptr<EFigure> dr(new EFigure(
-		0, Ecore::getScreenHeight() - 220,
-		Ecore::getScreenWidth(), 220, boxBGColor));
+		10, Ecore::getScreenHeight() / 3 * 2,
+		Ecore::getScreenWidth() - 20, (Ecore::getScreenHeight() / 3) - 10,
+		boxBGColor));
 	auto result = _drawable_map.emplace("Talkbox", dr);
 	if (!result.second) {
 		LOG_ERR("Failed to insert Drawable !");
@@ -34,7 +38,7 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 	std::shared_ptr<ETextTexture> txt(
 		new ETextTexture("안녕?", textColor, bgColor));
 	object->setName("Message");
-	object->movePositionTo(10, Ecore::getScreenHeight() - 200);
+	object->movePositionTo(20, (Ecore::getScreenHeight() / 3 * 2) + 10);
 	object->addText(txt);
 
 	addObject(object);
