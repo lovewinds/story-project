@@ -58,6 +58,7 @@ public:
 	static int getScreenWidth();
 	static int getScreenHeight();
 	static uint32_t getAppTicks();
+	static bool isHighDPI();
 
 	/* Related with Application life cycle.
 	 * These function should be executed on application code directly.
@@ -91,6 +92,8 @@ private:
 	SDL_Renderer* gRenderer;
 
 	double d_fps;
+
+	static bool is_high_dpi;
 
 	/* Total amount of paused ticks. */
 	static uint32_t in_paused_ticks;

@@ -51,6 +51,7 @@ protected:
 	virtual void texture_render(int x, int y,
 		SDL_Rect* clip = NULL,
 		double angle = 0.0,
+		bool auto_size_by_dpi = true,
 		SDL_Point* center = NULL,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 
@@ -59,6 +60,7 @@ protected:
 		double ratio_w = 1.0,
 		double ratio_h = 1.0,
 		double angle = 0.0,
+		bool auto_size_by_dpi = true,
 		SDL_Point* center = NULL,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 };

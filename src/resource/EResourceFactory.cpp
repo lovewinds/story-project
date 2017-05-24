@@ -90,7 +90,7 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 				/* TODO: Inefficient logic */
 				if (imageDesc->getWidthRatio() != 0.0) {
 					image->setWidth(imageDesc->getWidthRatio(), true);
-					LOG_ERR("Width [%lf] / Ratio [%lf]", image->getWidth(), imageDesc->getWidthRatio());
+					LOG_ERR("Width [%d] / Ratio [%lf]", image->getWidth(), imageDesc->getWidthRatio());
 					width = (imageDesc->getWidthRatio() / 100.0) * image->getWidth();
 					LOG_ERR("Calculated Width [%lf]", width);
 				}

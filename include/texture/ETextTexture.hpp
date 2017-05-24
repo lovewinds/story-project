@@ -31,5 +31,7 @@ protected:
 	SDL_Color bgColor;
 	int size;
 
+	/* Support dynamic DPI */
+	bool wasHighDPI = false;
 	std::shared_ptr<SDLFontWrap> font;
 };

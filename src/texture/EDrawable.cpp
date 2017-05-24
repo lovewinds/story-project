@@ -79,7 +79,8 @@ void EDrawable::dealloc()
 	}
 }
 
-void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
+	bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -93,11 +94,23 @@ void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle, SDL_P
 		renderQuad.h = clip->h;
 	}
 
+	if (Ecore::isHighDPI() == true)
+	{
+		renderQuad.x *= 2;
+		renderQuad.y *= 2;
+		if (auto_size_by_dpi) {
+			renderQuad.w *= 2;
+			renderQuad.h *= 2;
+		}
+	}
+
 	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }
 
-void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip, double ratio_w, double ratio_h, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
+	double ratio_w, double ratio_h, double angle,
+	bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {
 	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
 
@@ -112,6 +125,16 @@ void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip, double ratio
 	}
 	renderQuad.w = (int)(renderQuad.w * ratio_w);
 	renderQuad.h = (int)(renderQuad.h * ratio_h);
+
+	if (Ecore::isHighDPI() == true)
+	{
+		renderQuad.x *= 2;
+		renderQuad.y *= 2;
+		if (auto_size_by_dpi) {
+			renderQuad.w *= 2;
+			renderQuad.h *= 2;
+		}
+	}
 
 	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);

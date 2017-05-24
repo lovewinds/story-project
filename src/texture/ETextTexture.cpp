@@ -28,6 +28,11 @@ void ETextTexture::_createTexture(int size)
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
+	if (Ecore::isHighDPI() == true) {
+		size *= 2;
+		wasHighDPI = true;
+	}
+
 	font = resManager.getFont("NanumBarunpenR", size);
 	if (nullptr == font) {
 		LOG_ERR("Failed to get font[%s] size[%d]", "NanumBarunpenR", size);
@@ -59,6 +64,10 @@ void ETextTexture::_removeTexture()
 
 void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
+	if (Ecore::isHighDPI() != wasHighDPI) {
+		wasHighDPI = Ecore::isHighDPI();
+		_createTexture(size);
+	}
 }
 
 void ETextTexture::setText(const std::string& text)
@@ -82,6 +91,8 @@ void ETextTexture::render(int delta_x, int delta_y, double delta_angle)
 	//texture_render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
 	if (mTexture) {
 		//LOG_INFO("Text render [%s] (%d,%d)", message.c_str(), (int)p_x, (int)p_y);
-		texture_render(x, y, NULL, delta_angle);
+
+		/* Text texture doesn't requires auto-DPI calculation */
+		texture_render(x, y, NULL, delta_angle, false);
 	}
 }

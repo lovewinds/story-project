@@ -21,6 +21,7 @@ Ecore* Ecore::instance = NULL;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
 uint32_t Ecore::in_paused_ticks = 0;
 uint32_t Ecore::start_pause_tick = 0;
+bool Ecore::is_high_dpi = false;
 
 Ecore::Ecore() :
 gWindow(NULL),
@@ -88,6 +89,23 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 		case SDL_WINDOWEVENT_CLOSE:
 			proceed = false;
 		break;
+		case SDL_WINDOWEVENT_RESIZED: {
+			LOG_DBG("SDL_WINDOWEVENT_RESIZED");
+			int dr_width = 0;
+			int dr_height = 0;
+			int win_width = 0;
+			int win_height = 0;
+			SDL_GL_GetDrawableSize(gWindow, &dr_width, &dr_height);
+			SDL_GetWindowSize(gWindow, &win_width, &win_height);
+
+			LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
+			LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
+			if (dr_width != win_width && dr_height != win_height)
+				Ecore::is_high_dpi = true;
+			else
+				Ecore::is_high_dpi = false;
+		break;
+		}
 		default: break;
 		}
 	break;
@@ -405,9 +423,24 @@ bool Ecore::init(void* hwnd)
 #endif
 	}
 	else {
+		Uint32 flags = SDL_WINDOW_SHOWN;
+
+		flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 		gWindow = SDL_CreateWindow("Story",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+			SCREEN_WIDTH, SCREEN_HEIGHT, flags);
+
+		int dr_width = 0;
+		int dr_height = 0;
+		int win_width = 0;
+		int win_height = 0;
+		SDL_GL_GetDrawableSize(gWindow, &dr_width, &dr_height);
+		SDL_GetWindowSize(gWindow, &win_width, &win_height);
+
+		LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
+		LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
+		if (dr_width != win_width && dr_height != win_height)
+			Ecore::is_high_dpi = true;
 	}
 	if (gWindow == NULL) {
 		LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -584,6 +617,11 @@ int Ecore::getScreenHeight()
 	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
 
 	return h;
+}
+
+bool Ecore::isHighDPI()
+{
+	return is_high_dpi;
 }
 
 uint32_t Ecore::getAppTicks()

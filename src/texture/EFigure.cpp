@@ -73,8 +73,17 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 	int width = Ecore::getScreenWidth();
 	int height = Ecore::getScreenHeight();
 
-	boxRGBA(renderer, p_x, p_y, p_x + mWidth, p_y + mHeight,
+	if (Ecore::isHighDPI() == true) {
+		auto n_x = p_x * 2;
+		auto n_y = p_y * 2;
+		auto n_width = (p_x + mWidth) * 2;
+		auto n_height = (p_y + mHeight) * 2;
+		boxRGBA(renderer, n_x, n_y, n_width, n_height,
 			color.r, color.g, color.b, 0xAA );
+	} else {
+		boxRGBA(renderer, p_x, p_y, p_x + mWidth, p_y + mHeight,
+			color.r, color.g, color.b, 0xAA );
+	}
 
 #if 0
 	if (animating == false)
