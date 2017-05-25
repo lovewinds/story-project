@@ -29,14 +29,14 @@ protected:
 	void _createTexture();
 	void _removeTexture();
 
-	uint wTileCount;
-    uint hTileCount;
-	uint levels;
+	unsigned int wTileCount;
+	unsigned int hTileCount;
+	unsigned int levels;
 
     std::string name;
 	std::string base_image;
 
-    std::vector< std::vector< std::vector<ushort> > > tileMap;
+    std::vector< std::vector< std::vector<unsigned short> > > tileMap;
 
 	std::shared_ptr<EImageResource>	tile_image;
 };

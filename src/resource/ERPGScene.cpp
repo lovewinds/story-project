@@ -271,7 +271,7 @@ bool ERPGScene::checkGridMoveable(int x, int y)
 
 	if (gridDesc)
 	{
-		ushort a = gridDesc->getGridValue(0, x, y);
+		unsigned short a = gridDesc->getGridValue(0, x, y);
 		LOG_DBG("   check moveable [%d, %d] : %d", x, y, a);
 		if (0 == a)
 			res = true;

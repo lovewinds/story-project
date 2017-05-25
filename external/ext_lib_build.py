@@ -24,7 +24,7 @@ GTEST = "googletest-release-1.7.0"
 PROTOBUF = "protobuf-3.0.0"
 ZEROMQ = "zeromq-4.2.1"
 CPPZMQ = "cppzmq"
-MSVC_VER = "v120"
+MSVC_VER = "v140"
 STATIC_LINK = False
 NJOBS = str(multiprocessing.cpu_count())
 if not NJOBS:
@@ -764,7 +764,7 @@ if __name__ == "__main__":
 	parser.add_argument('--type', default='debug', choices=['debug', 'release'], help='Select compile type (default: debug)')
 	parser.add_argument('--static', default='TRUE', choices=['TRUE', 'FALSE'], help='Select linking type (default: TRUE)')
 	parser.add_argument('--arch', default='x86', choices=['x86', 'x64', 'x86_64'], help='Select archtecture for desktop build (default: x86)')
-	parser.add_argument('--msvc', default='v120', help='If you use MSVC, you can select MSVC version to build with. (default: v120)')
+	parser.add_argument('--msvc', default='v140', help='If you use MSVC, you can select MSVC version to build with. (default: v140)')
 	parser.add_argument('--platform', default='Windows', choices=['Windows', 'Linux', 'macOS', 'iOS'], help='Select platform to build. (default: Windows)')
 	args = parser.parse_args()
 

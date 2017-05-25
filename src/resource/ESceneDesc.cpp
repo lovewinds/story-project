@@ -143,11 +143,11 @@ EGridDesc::EGridDesc(int width, int height, int levels)
 	this->height = height;
 	this->levels = levels;
 
-	gridArray = new ushort **[width];
+	gridArray = new unsigned short **[width];
 	for(int col = 0; col < width; col++) {
-		gridArray[col] = new ushort *[height];
+		gridArray[col] = new unsigned short *[height];
 		for(int row = 0; row < height; row++) {
-			gridArray[col][row] = new ushort [levels];
+			gridArray[col][row] = new unsigned short[levels];
 			for (int ll = 0; ll < levels; ll++) {
 				gridArray[col][row][ll] = 9999;
 			}
@@ -166,7 +166,7 @@ EGridDesc::~EGridDesc()
 	delete[] gridArray;
 }
 
-void EGridDesc::setGridValue(int level, int x, int y, ushort value)
+void EGridDesc::setGridValue(int level, int x, int y, unsigned short value)
 {
 	if (0 <= x && x < width) {
 		if (0 <= y && y < height) {
@@ -175,9 +175,9 @@ void EGridDesc::setGridValue(int level, int x, int y, ushort value)
 	}
 }
 
-ushort EGridDesc::getGridValue(int level, int x, int y)
+unsigned short EGridDesc::getGridValue(int level, int x, int y)
 {
-	ushort res = 9999;
+	unsigned short res = 9999;
 
 	if (0 <= x && x < width) {
 		if (0 <= y && y < height) {

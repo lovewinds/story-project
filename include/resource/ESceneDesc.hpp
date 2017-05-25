@@ -116,8 +116,8 @@ public:
 	EGridDesc(int width, int height, int levels);
 	virtual ~EGridDesc();
 
-	void setGridValue(int level, int x, int y, ushort value);
-	ushort getGridValue(int level, int x, int y);
+	void setGridValue(int level, int x, int y, unsigned short value);
+	unsigned short getGridValue(int level, int x, int y);
 	int getGridWidth();
 	int getGridHeight();
 	int getGridLevels();
@@ -126,7 +126,7 @@ protected:
 	int width;
 	int height;
 	int levels;
-	ushort ***gridArray;
+	unsigned short ***gridArray;
 };
 
 /**
