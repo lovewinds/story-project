@@ -99,6 +99,15 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 		return;
     }
 
+	/* TODO: IMPORTANT !
+	 * This dumb logic should be improved.
+	 * Current it renders every single tile seperatedly, it may affect rendering speed.
+	 * AND also makes outline of tile issue also!
+	 * -> Patched temporary at Line #397 at Ecore.cpp
+	 *    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0")
+	 *                                                ^
+	 * It disables linear scaling :(
+	 */
 	if (mTexture) {
 		for (int y = 0; y < hTileCount; y++) {
 			for (int x = 0; x < wTileCount; x++) {
