@@ -513,41 +513,20 @@ void ERPGScene::handleEvent(SDL_Event e)
 		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
 		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
 
-		/* Diagonal */
-		if (abs(ax) >= 10 && abs(ay) >= 10) {
-			if (ax <= -10) {
-				if (ay <= -10) {
-					LOG_INFO("Move : LEFT-UP");
-					handleDirectonFactor(-1.0f, -1.0f);
-				} else if (10 <= ay) {
-					LOG_INFO("Move : LEFT-DOWN");
-					handleDirectonFactor(-1.0f, 1.0f);
-				}
-			} else if (10 <= ax) {
-				if (ay <= -10) {
-					LOG_INFO("Move : RIGHT-UP");
-					handleDirectonFactor(1.0f, -1.0f);
-				} else if (10 <= ay) {
-					LOG_INFO("Move : RIGHT-DOWN");
-					handleDirectonFactor(1.0f, 1.0f);
-				}
-			}
-		} else {
-			if (ax <= -10) {
-				LOG_INFO("Move : LEFT");
-				handleDirectonFactor(-1.0f, 0.0f);
-			} else if (10 <= ax) {
-				LOG_INFO("Move : RIGHT");
-				handleDirectonFactor(1.0f, 0.0f);
-			}
+		if (ax <= -10) {
+			LOG_INFO("Move : LEFT");
+			handleDirectonFactor(-1.0f, 0.0f);
+		} else if (10 <= ax) {
+			LOG_INFO("Move : RIGHT");
+			handleDirectonFactor(1.0f, 0.0f);
+		}
 
-			if (ay <= -10) {
-				LOG_INFO("Move : UP");
-				handleDirectonFactor(0.0f, -1.0f);
-			} else if (10 <= ay) {
-				LOG_INFO("Move : DOWN");
-				handleDirectonFactor(0.0f, 1.0f);
-			}
+		if (ay <= -10) {
+			LOG_INFO("Move : UP");
+			handleDirectonFactor(0.0f, -1.0f);
+		} else if (10 <= ay) {
+			LOG_INFO("Move : DOWN");
+			handleDirectonFactor(0.0f, 1.0f);
 		}
 	} else if (e.type == SDL_FINGERDOWN) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
