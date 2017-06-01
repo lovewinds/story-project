@@ -158,7 +158,7 @@ EGridDesc::EGridDesc(int width, int height, int levels)
 EGridDesc::~EGridDesc()
 {
 	for(int col = 0; col < width; col++) {
-		for(int row = 0; row < GRID_LAYER_END; row++) {
+		for(int row = 0; row < height; row++) {
 			delete[] gridArray[col][row];
 		}
 		delete[] gridArray[col];
@@ -170,7 +170,9 @@ void EGridDesc::setGridValue(int level, int x, int y, unsigned short value)
 {
 	if (0 <= x && x < width) {
 		if (0 <= y && y < height) {
-			gridArray[x][y][level] = value;
+			if (0 <= level && level < levels) {
+				gridArray[x][y][level] = value;
+			}
 		}
 	}
 }
@@ -181,7 +183,9 @@ unsigned short EGridDesc::getGridValue(int level, int x, int y)
 
 	if (0 <= x && x < width) {
 		if (0 <= y && y < height) {
-			res = gridArray[x][y][level];
+			if (0 <= level && level < levels) {
+				res = gridArray[x][y][level];
+			}
 		}
 	}
 

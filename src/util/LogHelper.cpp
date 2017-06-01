@@ -31,7 +31,7 @@ struct CustomSink {
 #if !defined(PLATFORM_IOS)
 			std::cout << "\033[" << color << "m";
 #endif
-			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S:%f3") << "]"
+			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << "]"
 				<< std::setw(4);
 			std::cout.width(7);
 			std::cout << "[Python] " << logEntry.get().message();
@@ -47,7 +47,7 @@ struct CustomSink {
 			else
 				std::cout << "\033[" << color << "m";
 #endif
-			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S:%f3") << "]"
+			std::cout << "[" << logEntry.get().timestamp("%m/%d %H:%M:%S") << "]"
 				<< std::setw(4);
 			std::cout.width(7);
 			std::cout << logEntry.get().level()

@@ -559,7 +559,8 @@ def build_sources_MSVC(build_type):
 		patch_g3log_remove_warnings(g3log_path)
 		# TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
 		#os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
-		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DADD_BUILD_WIN_SHARED=ON ..')
+		# Disable fatal signal handling on g3log 1.3
+		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DENABLE_FATAL_SIGNALHANDLING=OFF -DADD_BUILD_WIN_SHARED=ON ..')
 		if STATIC_LINK == True:
 			patch_static_MSVC("g3logger.vcxproj")
 		os.system('msbuild g3log.sln /t:g3logger;g3logger_shared /p:Configuration=Debug /p:OutDir='+build_path_dbg)
