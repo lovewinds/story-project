@@ -21,7 +21,9 @@ Ecore* Ecore::instance = NULL;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
 uint32_t Ecore::in_paused_ticks = 0;
 uint32_t Ecore::start_pause_tick = 0;
-bool Ecore::is_high_dpi = false;
+
+bool Ecore::is_retina_display = false;
+float Ecore::display_scale = 1.0f;
 
 Ecore::Ecore() :
 gWindow(NULL),
@@ -88,7 +90,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 		switch (e->window.event) {
 		case SDL_WINDOWEVENT_CLOSE:
 			proceed = false;
-		break;
+			break;
 		case SDL_WINDOWEVENT_RESIZED: {
 			LOG_DBG("SDL_WINDOWEVENT_RESIZED");
 			int dr_width = 0;
@@ -100,11 +102,43 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 
 			LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
 			LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
-			if (dr_width != win_width && dr_height != win_height)
-				Ecore::is_high_dpi = true;
-			else
-				Ecore::is_high_dpi = false;
-		break;
+			if (dr_width != win_width && dr_height != win_height) {
+				Ecore::is_retina_display = true;
+				Ecore::display_scale = 2.0f;
+			}
+			else {
+				if (Ecore::is_retina_display)
+					Ecore::display_scale = 1.0f;
+				Ecore::is_retina_display = false;
+			}
+			break;
+		}
+		case SDL_WINDOWEVENT_MOVED: {
+			/* Per-monitor DPI awareness */
+			int totalDisplayNum = SDL_GetNumVideoDisplays();
+			int currentDisplayIdx = SDL_GetWindowDisplayIndex(gWindow);
+			float currentDPI = 0.0f;
+			float scale = 1.0f;
+			bool isDPIChanged = false;
+
+			SDL_GetDisplayDPI(currentDisplayIdx, &currentDPI, NULL, NULL);
+			scale = (currentDPI / 96.0f);
+			if (scale != Ecore::display_scale) {
+				isDPIChanged = true;
+				Ecore::display_scale = scale;
+			}
+
+			LOG_DBG("Current display [%d / %d]", currentDisplayIdx + 1, totalDisplayNum);
+			LOG_DBG("   DPI  : %f", currentDPI);
+			LOG_DBG("   Scale: %f", Ecore::display_scale);
+
+			if (false == Ecore::is_retina_display && isDPIChanged) {
+				LOG_DBG("DPI changed. Resize window");
+				SDL_SetWindowSize(gWindow,
+					(int)(SCREEN_WIDTH * Ecore::display_scale),
+					(int)(SCREEN_HEIGHT * Ecore::display_scale));
+			}
+			break;
 		}
 		default: break;
 		}
@@ -380,6 +414,9 @@ bool Ecore::init(void* hwnd)
 {
 	//createJson();
 	//readJson();
+	int totalDisplayNum = 0;
+	int currentDisplayIdx = 0;
+	float currentDPI = 0.0f;
 
 	LOG_DBG("Base path: %s", getBasePath());
 	LOG_DBG("Pref path: %s", getStorePath());
@@ -439,12 +476,31 @@ bool Ecore::init(void* hwnd)
 
 		LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
 		LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
-		if (dr_width != win_width && dr_height != win_height)
-			Ecore::is_high_dpi = true;
+		if (dr_width != win_width && dr_height != win_height) {
+			Ecore::is_retina_display = true;
+			Ecore::display_scale = 2.0f;
+		}
 	}
 	if (gWindow == NULL) {
 		LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return false;
+	}
+	
+	/* Per-monitor DPI awareness (Windows) */
+	totalDisplayNum = SDL_GetNumVideoDisplays();
+	currentDisplayIdx = SDL_GetWindowDisplayIndex(gWindow);
+	SDL_GetDisplayDPI(currentDisplayIdx, &currentDPI, NULL, NULL);
+	if (false == Ecore::is_retina_display)
+		Ecore::display_scale = (currentDPI / 96.0f);
+
+	LOG_DBG("Current display [%d / %d]", currentDisplayIdx+1, totalDisplayNum);
+	LOG_DBG("   DPI  : %f", currentDPI);
+	LOG_DBG("   Scale: %f", Ecore::display_scale);
+	
+	if (false == Ecore::is_retina_display) {
+		SDL_SetWindowSize(gWindow,
+			(int)(SCREEN_WIDTH * Ecore::display_scale),
+			(int)(SCREEN_HEIGHT * Ecore::display_scale));
 	}
 
 	/* Create vsynced renderer for window */
@@ -621,7 +677,20 @@ int Ecore::getScreenHeight()
 
 bool Ecore::isHighDPI()
 {
-	return is_high_dpi;
+	bool result = false;
+
+	if (is_retina_display)
+		result = true;
+	else if (display_scale > 1.0f)
+		result = true;
+
+	return result;
+}
+
+float Ecore::getDisplayScale()
+{
+	//return display_scale;
+	return 1.0f;
 }
 
 uint32_t Ecore::getAppTicks()

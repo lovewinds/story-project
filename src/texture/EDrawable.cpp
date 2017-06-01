@@ -96,11 +96,11 @@ void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
 
 	if (Ecore::isHighDPI() == true)
 	{
-		renderQuad.x *= 2;
-		renderQuad.y *= 2;
+		renderQuad.x *= Ecore::getDisplayScale();
+		renderQuad.y *= Ecore::getDisplayScale();
 		if (auto_size_by_dpi) {
-			renderQuad.w *= 2;
-			renderQuad.h *= 2;
+			renderQuad.w *= Ecore::getDisplayScale();
+			renderQuad.h *= Ecore::getDisplayScale();
 		}
 	}
 
@@ -128,11 +128,11 @@ void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
 
 	if (Ecore::isHighDPI() == true)
 	{
-		renderQuad.x *= 2;
-		renderQuad.y *= 2;
+		renderQuad.x *= Ecore::getDisplayScale();
+		renderQuad.y *= Ecore::getDisplayScale();
 		if (auto_size_by_dpi) {
-			renderQuad.w *= 2;
-			renderQuad.h *= 2;
+			renderQuad.w *= Ecore::getDisplayScale();
+			renderQuad.h *= Ecore::getDisplayScale();
 		}
 	}
 

@@ -29,7 +29,7 @@ void ETextTexture::_createTexture(int size)
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
 	if (Ecore::isHighDPI() == true) {
-		size *= 2;
+		size *= Ecore::getDisplayScale();
 		wasHighDPI = true;
 	}
 
@@ -66,6 +66,10 @@ void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (Ecore::isHighDPI() != wasHighDPI) {
 		wasHighDPI = Ecore::isHighDPI();
+		_createTexture(size);
+	}
+	else if (Ecore::getDisplayScale() != prevScale) {
+		prevScale = Ecore::getDisplayScale();
 		_createTexture(size);
 	}
 }

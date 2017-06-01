@@ -33,5 +33,6 @@ protected:
 
 	/* Support dynamic DPI */
 	bool wasHighDPI = false;
+	float prevScale= 1.0f;
 	std::shared_ptr<SDLFontWrap> font;
 };

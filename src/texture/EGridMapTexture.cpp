@@ -92,7 +92,6 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 	unsigned int row_count = (unsigned int)(base_width / cell_width);
 	unsigned int col_count = (unsigned int)(base_height / cell_height);
     unsigned int tile = 0;
-	bool dpi = Ecore::isHighDPI();
 
     if (row_count == 0 || col_count == 0) {
     	LOG_ERR("Invalid map information");

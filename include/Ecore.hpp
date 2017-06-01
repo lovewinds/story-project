@@ -59,6 +59,7 @@ public:
 	static int getScreenHeight();
 	static uint32_t getAppTicks();
 	static bool isHighDPI();
+	static float getDisplayScale();
 
 	/* Related with Application life cycle.
 	 * These function should be executed on application code directly.
@@ -93,7 +94,9 @@ private:
 
 	double d_fps;
 
-	static bool is_high_dpi;
+	/* DPI-aware */
+	static bool is_retina_display;
+	static float display_scale;
 
 	/* Total amount of paused ticks. */
 	static uint32_t in_paused_ticks;
