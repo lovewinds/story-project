@@ -172,6 +172,23 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 			e->user.data1 = nullptr;
 		}
 	break;
+	case SDL_MOUSEMOTION: {
+		if (Ecore::isHighDPI()) {
+			e->motion.x = e->motion.x / Ecore::display_scale;
+			e->motion.y = e->motion.y / Ecore::display_scale;
+			e->motion.xrel = e->motion.xrel / Ecore::display_scale;
+			e->motion.yrel = e->motion.yrel / Ecore::display_scale;
+		}
+		break;
+	}
+	case SDL_MOUSEBUTTONUP:
+	case SDL_MOUSEBUTTONDOWN: {
+		if (Ecore::isHighDPI()) {
+			e->button.x = e->button.x / Ecore::display_scale;
+			e->button.y = e->button.y / Ecore::display_scale;
+		}
+		break;
+	}
 	default: break;
 	}
 
@@ -663,6 +680,9 @@ int Ecore::getScreenWidth()
 	int h;
 	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
 
+	if (!is_retina_display)
+		w = (int)(w / display_scale);
+
 	return w;
 }
 
@@ -671,6 +691,9 @@ int Ecore::getScreenHeight()
 	int w;
 	int h;
 	SDL_GetWindowSize(Ecore::getInstance()->getWindow(), &w, &h);
+
+	if (!is_retina_display)
+		h = (int)(h / display_scale);
 
 	return h;
 }
@@ -689,8 +712,7 @@ bool Ecore::isHighDPI()
 
 float Ecore::getDisplayScale()
 {
-	//return display_scale;
-	return 1.0f;
+	return display_scale;
 }
 
 uint32_t Ecore::getAppTicks()

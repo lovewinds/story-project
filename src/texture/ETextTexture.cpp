@@ -31,6 +31,7 @@ void ETextTexture::_createTexture(int size)
 	if (Ecore::isHighDPI() == true) {
 		size *= Ecore::getDisplayScale();
 		wasHighDPI = true;
+		prevScale = Ecore::getDisplayScale();
 	}
 
 	font = resManager.getFont("NanumBarunpenR", size);
