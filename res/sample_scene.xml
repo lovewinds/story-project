@@ -59,7 +59,7 @@
 			<Sprite name="c1" source="char_girl" x="0" y="10" controllable="true"/>
 		</Layer>
 		<Layer name="map" depth="0">
-			<TileMap width="40" height="40" levels="2">
+			<TileMap width="40" height="40" levels="3">
 				<Layer name="background" level="1">
 <![CDATA[
 0002 0002 0002 0002 0002 0002 0002 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016

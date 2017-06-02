@@ -28,7 +28,7 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
 		for (int w = 0; w < wTileCount; w++) {
 			std::vector<unsigned short> col;
 			col.reserve(levels);
-			for (int l = 0; l <= levels; l++) {
+			for (int l = 0; l < levels; l++) {
 				unsigned short v = desc->getGridValue(l, w, h);
 				col.push_back(v);
 			}
@@ -110,7 +110,7 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 	if (mTexture) {
 		for (int y = 0; y < hTileCount; y++) {
 			for (int x = 0; x < wTileCount; x++) {
-				for (int l = 1; l <= levels; l++) {
+				for (int l = 1; l < levels; l++) {
 					tile = (unsigned int)tileMap[y][x][l];
 					if (tile == 9999) continue;
 					unsigned int tx = (unsigned int)(tile % row_count);
