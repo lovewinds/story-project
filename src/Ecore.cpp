@@ -104,7 +104,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 			LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
 			if (dr_width != win_width && dr_height != win_height) {
 				Ecore::is_retina_display = true;
-				Ecore::display_scale = 2.0f;
+				Ecore::display_scale = 1.0f;
 			}
 			else {
 				if (Ecore::is_retina_display)
@@ -173,7 +173,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 		}
 	break;
 	case SDL_MOUSEMOTION: {
-		if (Ecore::isHighDPI()) {
+		if (Ecore::isHighDPI() && (false == Ecore::is_retina_display)) {
 			e->motion.x = e->motion.x / Ecore::display_scale;
 			e->motion.y = e->motion.y / Ecore::display_scale;
 			e->motion.xrel = e->motion.xrel / Ecore::display_scale;
@@ -183,7 +183,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 	}
 	case SDL_MOUSEBUTTONUP:
 	case SDL_MOUSEBUTTONDOWN: {
-		if (Ecore::isHighDPI()) {
+		if (Ecore::isHighDPI() && (false == Ecore::is_retina_display)) {
 			e->button.x = e->button.x / Ecore::display_scale;
 			e->button.y = e->button.y / Ecore::display_scale;
 		}
