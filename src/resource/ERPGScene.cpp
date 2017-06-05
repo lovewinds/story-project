@@ -80,7 +80,6 @@ bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 	LOG_DBG("POS [%s]", position_str.c_str());
 
 	if (object->isControllable()) {
-		LOG_DBG("Callback is set into object [%s]", object->getName().c_str());
 		object->setPositionCallback(
 			std::bind(&ERPGScene::objectPositionCallback, this,
 				std::placeholders::_1, std::placeholders::_2));
@@ -158,35 +157,29 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 			if (0.0f < obj_ax) {
 				/* Check right position */
 				if (false == checkGridMoveable(int(x+1), int(y))) {
-					LOG_ERR("Can't move [RIGHT] !!");
 					obj_ax = 0.0f;
 				}
 			}
 			if (obj_ax < 0.0f) {
 				/* Check left position */
 				if (false == checkGridMoveable(int(x-1), int(y))) {
-					LOG_ERR("Can't move [LEFT] !!");
 					obj_ax = 0.0f;
 				}
 			}
 			if (0.0f < obj_ay) {
 				/* Check down position */
 				if (false == checkGridMoveable(int(x), int(y+1))) {
-					LOG_ERR("Can't move [DOWN] !!");
 					obj_ay = 0.0f;
 				}
 			}
 			if (obj_ay < 0.0f) {
 				/* Check up position */
 				if (false == checkGridMoveable(int(x), int(y-1))) {
-					LOG_ERR("Can't move [UP] !!");
 					obj_ay = 0.0f;
 				}
 			}
 
 			/* Set factor */
-			LOG_DBG("Set factor[%lf / %lf] to [%s]",
-					obj_ax, obj_ay, object->getName().c_str());
 			switch (object->getAnimationState())
 			{
 			case ANI_NONE:
@@ -194,7 +187,7 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 					/* Ignore unexpected input on scene startup */
 					break;
 				}
-				LOG_DBG("Start animation. [%f / %f]", obj_ax, obj_ay);
+				//LOG_DBG("Start animation. [%f / %f]", obj_ax, obj_ay);
 				ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
 				ani->setCaller(object);
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
@@ -205,7 +198,6 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 			break;
 			case ANI_START:
 				/* Already in progress, Just update axis factor */
-				LOG_DBG("Update");
 				ani = object->getAnimation();
 				grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
 				if (grid) {
@@ -214,7 +206,6 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 			break;
 			default:
 				/* Already in progress */
-				LOG_DBG("Progress");
 				if ((std::isnan(obj_ax) || obj_ax == 0.0f) &&
 					(std::isnan(obj_ay) || obj_ay == 0.0f))
 				{
@@ -272,7 +263,6 @@ bool ERPGScene::checkGridMoveable(int x, int y)
 	if (gridDesc)
 	{
 		unsigned short a = gridDesc->getGridValue(0, x, y);
-		LOG_DBG("   check moveable [%d, %d] : %d", x, y, a);
 		if (0 == a)
 			res = true;
 	}
@@ -283,7 +273,6 @@ bool ERPGScene::checkGridMoveable(int x, int y)
 void ERPGScene::objectPositionCallback(double x, double y)
 {
 	float ax = 0.0f, ay = 0.0f;
-	LOG_INFO("[SCENE] position [%lf, %lf]", x, y);
 
 	/* TODO: Check obstacles */
 	std::shared_ptr<EAnimation> ani;
@@ -309,41 +298,35 @@ void ERPGScene::objectPositionCallback(double x, double y)
 				if (0.0f < ax) {
 					/* Check right position */
 					if (false == checkGridMoveable(int(x+1), int(y))) {
-						LOG_ERR("Can't move [RIGHT] !!");
 						handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
 					}
 				}
 				if (ax < 0.0f) {
 					/* Check left position */
 					if (false == checkGridMoveable(int(x-1), int(y))) {
-						LOG_ERR("Can't move [LEFT] !!");
 						handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
 					}
 				}
 				if (0.0f < ay) {
 					/* Check down position */
 					if (false == checkGridMoveable(int(x), int(y+1))) {
-						LOG_ERR("Can't move [DOWN] !!");
 						handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
 					}
 				}
 				if (ay < 0.0f) {
 					/* Check up position */
 					if (false == checkGridMoveable(int(x), int(y-1))) {
-						LOG_ERR("Can't move [UP] !!");
 						handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
 					}
 				}
 			}
 			else if ((ax != 0.0f) && (ay != 0.0f))
 			{
-				LOG_ERR("Factor is set both axis !! [%lf / %lf]", ax, ay);
 				if (0.0f < ax) {
 					/* Check right position */
 					if (0.0f < ay) {
 						/* Check right-down position */
 						if (false == checkGridMoveable(int(x+1), int(y+1))) {
-							LOG_ERR("Can't move [RIGHT-DOWN] !!");
 							ax = 0.0f;
 							ay = 0.0f;
 						}
@@ -351,7 +334,6 @@ void ERPGScene::objectPositionCallback(double x, double y)
 					if (ay < 0.0f) {
 						/* Check right-up position */
 						if (false == checkGridMoveable(int(x+1), int(y-1))) {
-							LOG_ERR("Can't move [RIGHT-UP] !!");
 							ax = 0.0f;
 							ay = 0.0f;
 						}
@@ -362,7 +344,6 @@ void ERPGScene::objectPositionCallback(double x, double y)
 					if (0.0f < ay) {
 						/* Check left-down position */
 						if (false == checkGridMoveable(int(x-1), int(y+1))) {
-							LOG_ERR("Can't move [LEFT-DOWN] !!");
 							ax = 0.0f;
 							ay = 0.0f;
 						}
@@ -370,7 +351,6 @@ void ERPGScene::objectPositionCallback(double x, double y)
 					if (ay < 0.0f) {
 						/* Check left-up position */
 						if (false == checkGridMoveable(int(x-1), int(y-1))) {
-							LOG_ERR("Can't move [LEFT-UP] !!");
 							ax = 0.0f;
 							ay = 0.0f;
 						}
@@ -389,19 +369,15 @@ void ERPGScene::handleEvent(SDL_Event e)
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 		case SDLK_9:
-			LOG_INFO("Play Animation");
 			testAnimation(ANI_START);
 			break;
 		case SDLK_0:
-			LOG_INFO("Stop Animation");
 			testAnimation(ANI_STOP);
 			break;
 		case SDLK_MINUS:
-			LOG_INFO("Pause Animation");
 			testAnimation(ANI_PAUSE);
 			break;
 		case SDLK_EQUALS:
-			LOG_INFO("Resume Animation");
 			testAnimation(ANI_RESUME);
 			break;
 #ifdef PLATFORM_IOS
@@ -419,19 +395,15 @@ void ERPGScene::handleEvent(SDL_Event e)
 			handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
 			break;
 		case SDLK_e:
-			LOG_INFO("Key released : [UP]");
 			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
 		break;
 		case SDLK_z:
-			LOG_INFO("Key released : [DOWN]");
 			handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
 		break;
 		case SDLK_q:
-			LOG_INFO("Key released : [LEFT]");
 			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
 		break;
 		case SDLK_c:
-			LOG_INFO("Key released : [RIGHT]");
 			handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
 		break;
 #endif
@@ -487,8 +459,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 		default: break;
 		}
 	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
-		LOG_INFO("Animation test [%03d, %03d]", e.button.x, e.button.y);
-
 		/* TODO: event consumer should be handle more efficient way */
 		bool consumed = testRotate(e.button.x, e.button.y);
 		if (consumed)
@@ -501,7 +471,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 			found = search->second;
 			if (found->getAnimationState() != ANI_START)
 				found->animatedMoveTo(found, e.button.x, e.button.y, 1000);
-			LOG_DBG("Finished");
 		} else {
 			LOG_ERR("Object was not found !");
 		}
@@ -510,33 +479,23 @@ void ERPGScene::handleEvent(SDL_Event e)
 		int ax = te->dx * 1000;
 		int ay = te->dy * 1000;
 
-		LOG_INFO("Handle event! type: SDL_FINGERMOTION");
-		LOG_INFO("ax / ay : [%d / %d]", ax, ay);
-
 		if (ax <= -10) {
-			LOG_INFO("Move : LEFT");
 			handleDirectonFactor(-1.0f, 0.0f);
 		} else if (10 <= ax) {
-			LOG_INFO("Move : RIGHT");
 			handleDirectonFactor(1.0f, 0.0f);
 		}
 
 		if (ay <= -10) {
-			LOG_INFO("Move : UP");
 			handleDirectonFactor(0.0f, -1.0f);
 		} else if (10 <= ay) {
-			LOG_INFO("Move : DOWN");
 			handleDirectonFactor(0.0f, 1.0f);
 		}
 	} else if (e.type == SDL_FINGERDOWN) {
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		int x = 0, y = 0;
-		LOG_INFO("Handle event! type: SDL_FINGERDOWN");
 
 		x = Ecore::getScreenWidth() * te->x;
 		y = Ecore::getScreenHeight() * te->y;
-		LOG_INFO("Touched [%d, %d]  | [%03d, %03d]", x, y,
-				Ecore::getScreenWidth(), Ecore::getScreenHeight());
 
 		/* TODO: event consumer should be handle more efficient way */
 		bool consumed = testRotate(x, y);
@@ -544,7 +503,6 @@ void ERPGScene::handleEvent(SDL_Event e)
 			return;
 	} else if (e.type == SDL_FINGERUP) {
         SDL_TouchFingerEvent *te = &e.tfinger;
-        LOG_INFO("Handle event! type: SDL_FINGERUP");
 
 		/* Clear move direction */
         handleDirectonFactor(0.0f, 0.0f);

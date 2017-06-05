@@ -316,7 +316,7 @@ void Ecore::Start()
 			//if (currentTime - prevTime <= 1000 / 60) {
 			if (currentTime - prevCalculated > 1000) {
 				//SDL_Delay(1000 / 60);
-				LOG_INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
+				//LOG_INFO("[%d] : Updated: [%d] / Rendered [%d]", currentTime, updated, rendered);
 				updated = 0;
 				rendered = 0;
 				//continue;

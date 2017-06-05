@@ -79,11 +79,9 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 	if (checkFinished) {
-		LOG_DBG("Factor : [%lf / %lf]", next_dir_factor_x, next_dir_factor_y);
 		if (next_dir_factor_x > 0.0f || next_dir_factor_x < 0.0f
 			|| next_dir_factor_y > 0.0f || next_dir_factor_y < 0.0f)
 		{
-			LOG_DBG("Sync");
 			EAnimation::sync();
 			a_x = 0.0f;
 			a_y = 0.0f;
@@ -91,7 +89,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			curr_dir_factor_y = next_dir_factor_y;
 
 			if (next_dir_factor_x == 0.0f && next_dir_factor_y == 0.0f) {
-				LOG_ERR("BLOCKED !!!");
 				EAnimation::stop();
 				startTime = 0;
 				prevTime = 0;
@@ -102,7 +99,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			//prevTime = compensatedTime;
 			//EAnimation::start();
 		} else {
-			LOG_DBG("Stopped");
 			EAnimation::stop();
 			a_x = 0.0f;
 			a_y = 0.0f;
