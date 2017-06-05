@@ -113,6 +113,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 			}
 			break;
 		}
+#ifdef PLATFORM_WINDOWS
 		case SDL_WINDOWEVENT_MOVED: {
 			/* Per-monitor DPI awareness */
 			int totalDisplayNum = SDL_GetNumVideoDisplays();
@@ -140,6 +141,7 @@ inline bool Ecore::handleEvent(SDL_Event *e)
 			}
 			break;
 		}
+#endif
 		default: break;
 		}
 	break;
