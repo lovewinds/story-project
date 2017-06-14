@@ -30,12 +30,17 @@ Command line build on macOS has dependency CMake and autotools,
 you need to install [Brew](https://brew.sh/ "Brew") to manage above required packages easily.
 
 ######Brew install######
-1. Visit official [Brew](https://brew.sh "Brew") and get installation information like below.
+1. Install Xcode command line tools
+```
+xcode-select --install
+```
+
+2. Visit official [Brew](https://brew.sh "Brew") and get installation information like below.
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-2. Once brew is installed, setup automake, autotools via brew.
+3. Once brew is installed, setup automake, autotools via brew.
 ```
 brew install automake
 brew install autotools
