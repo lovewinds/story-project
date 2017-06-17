@@ -25,41 +25,7 @@
 		F444ED8B1E62738500C14B4E /* src in Resources */ = {isa = PBXBuildFile; fileRef = F444ED8A1E62738500C14B4E /* src */; };
 		F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED9F1E6286C100C14B4E /* AVFoundation.framework */; };
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
-		F45B1CCD1E62D8EB003C10E2 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CA91E62D8EB003C10E2 /* Ecore.hpp */; };
-		F45B1CCE1E62D8EB003C10E2 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CAA1E62D8EB003C10E2 /* ESceneManager.hpp */; };
-		F45B1CCF1E62D8EB003C10E2 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CAB1E62D8EB003C10E2 /* EScreenManager.hpp */; };
-		F45B1CD01E62D8EB003C10E2 /* EDbgOverlayScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CAD1E62D8EB003C10E2 /* EDbgOverlayScene.hpp */; };
-		F45B1CD11E62D8EB003C10E2 /* EImageResource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CAE1E62D8EB003C10E2 /* EImageResource.hpp */; };
-		F45B1CD21E62D8EB003C10E2 /* EResourceFactory.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CAF1E62D8EB003C10E2 /* EResourceFactory.hpp */; };
-		F45B1CD31E62D8EB003C10E2 /* EResourceLoaderInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB01E62D8EB003C10E2 /* EResourceLoaderInterface.hpp */; };
-		F45B1CD41E62D8EB003C10E2 /* EResourceManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB11E62D8EB003C10E2 /* EResourceManager.hpp */; };
-		F45B1CD51E62D8EB003C10E2 /* ERPGScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB21E62D8EB003C10E2 /* ERPGScene.hpp */; };
-		F45B1CD61E62D8EB003C10E2 /* EScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB31E62D8EB003C10E2 /* EScene.hpp */; };
-		F45B1CD71E62D8EB003C10E2 /* ESceneDesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB41E62D8EB003C10E2 /* ESceneDesc.hpp */; };
-		F45B1CD81E62D8EB003C10E2 /* ESpriteType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB51E62D8EB003C10E2 /* ESpriteType.hpp */; };
-		F45B1CD91E62D8EB003C10E2 /* EVisualNovelScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB61E62D8EB003C10E2 /* EVisualNovelScene.hpp */; };
-		F45B1CDA1E62D8EB003C10E2 /* XMLResourceLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB71E62D8EB003C10E2 /* XMLResourceLoader.hpp */; };
-		F45B1CDB1E62D8EB003C10E2 /* SpLogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CB91E62D8EB003C10E2 /* SpLogHelper.hpp */; };
-		F45B1CDC1E62D8EB003C10E2 /* EAccelAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CBB1E62D8EB003C10E2 /* EAccelAnimation.hpp */; };
-		F45B1CDD1E62D8EB003C10E2 /* EAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CBC1E62D8EB003C10E2 /* EAnimation.hpp */; };
-		F45B1CDE1E62D8EB003C10E2 /* EDrawable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CBD1E62D8EB003C10E2 /* EDrawable.hpp */; };
-		F45B1CDF1E62D8EB003C10E2 /* EFigure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CBE1E62D8EB003C10E2 /* EFigure.hpp */; };
-		F45B1CE01E62D8EB003C10E2 /* EGridMapTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CBF1E62D8EB003C10E2 /* EGridMapTexture.hpp */; };
-		F45B1CE11E62D8EB003C10E2 /* EGridMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC01E62D8EB003C10E2 /* EGridMoveAnimation.hpp */; };
-		F45B1CE21E62D8EB003C10E2 /* EImageTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC11E62D8EB003C10E2 /* EImageTexture.hpp */; };
-		F45B1CE31E62D8EB003C10E2 /* ESmoothStepAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC21E62D8EB003C10E2 /* ESmoothStepAnimation.hpp */; };
-		F45B1CE41E62D8EB003C10E2 /* ESprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC31E62D8EB003C10E2 /* ESprite.hpp */; };
-		F45B1CE51E62D8EB003C10E2 /* ETextTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC41E62D8EB003C10E2 /* ETextTexture.hpp */; };
-		F45B1CE61E62D8EB003C10E2 /* GraphicObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC51E62D8EB003C10E2 /* GraphicObject.hpp */; };
-		F45B1CE71E62D8EB003C10E2 /* IPCHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC71E62D8EB003C10E2 /* IPCHelper.hpp */; };
-		F45B1CE81E62D8EB003C10E2 /* JsonHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC81E62D8EB003C10E2 /* JsonHelper.hpp */; };
-		F45B1CE91E62D8EB003C10E2 /* LogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CC91E62D8EB003C10E2 /* LogHelper.hpp */; };
-		F45B1CEA1E62D8EB003C10E2 /* PythonScript.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */; };
-		F45B1CEB1E62D8EB003C10E2 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */; };
-		F45B1CEC1E62D8EB003C10E2 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
-		F4612A521E66C830009E143E /* ETitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4612A511E66C830009E143E /* ETitleScene.cpp */; };
-		F4612A541E66C84F009E143E /* ETitleScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4612A531E66C84F009E143E /* ETitleScene.hpp */; };
 		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
 		F48617621D96C691008641CB /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F48617611D96C691008641CB /* JapaneseVillage.png */; };
 		F4A37F4A1D8D929400186118 /* f069.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3E1D8D929400186118 /* f069.png */; };
@@ -76,44 +42,78 @@
 		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
 		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
-		F4A4446C1E64693B001B1A83 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444461E64693B001B1A83 /* Ecore.cpp */; };
-		F4A4446D1E64693B001B1A83 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444471E64693B001B1A83 /* ESceneManager.cpp */; };
-		F4A4446E1E64693B001B1A83 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444481E64693B001B1A83 /* EScreenManager.cpp */; };
-		F4A4446F1E64693B001B1A83 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444491E64693B001B1A83 /* main.cpp */; };
-		F4A444701E64693B001B1A83 /* EDbgOverlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */; };
-		F4A444711E64693B001B1A83 /* EImageResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444C1E64693B001B1A83 /* EImageResource.cpp */; };
-		F4A444721E64693B001B1A83 /* EResourceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */; };
-		F4A444731E64693B001B1A83 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */; };
-		F4A444741E64693B001B1A83 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */; };
-		F4A444751E64693B001B1A83 /* ERPGScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444501E64693B001B1A83 /* ERPGScene.cpp */; };
-		F4A444761E64693B001B1A83 /* EScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444511E64693B001B1A83 /* EScene.cpp */; };
-		F4A444771E64693B001B1A83 /* ESceneDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444521E64693B001B1A83 /* ESceneDesc.cpp */; };
-		F4A444781E64693B001B1A83 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444531E64693B001B1A83 /* ESpriteType.cpp */; };
-		F4A444791E64693B001B1A83 /* EVisualNovelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */; };
-		F4A4447A1E64693B001B1A83 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */; };
-		F4A4447B1E64693B001B1A83 /* SpLogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444571E64693B001B1A83 /* SpLogHelper.cpp */; };
-		F4A4447C1E64693B001B1A83 /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */; };
-		F4A4447D1E64693B001B1A83 /* EAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445A1E64693B001B1A83 /* EAnimation.cpp */; };
-		F4A4447E1E64693B001B1A83 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445B1E64693B001B1A83 /* EDrawable.cpp */; };
-		F4A4447F1E64693B001B1A83 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445C1E64693B001B1A83 /* EFigure.cpp */; };
-		F4A444801E64693B001B1A83 /* EGridMapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */; };
-		F4A444811E64693B001B1A83 /* EGridMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */; };
-		F4A444821E64693B001B1A83 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */; };
-		F4A444831E64693B001B1A83 /* ESmoothRotateAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */; };
-		F4A444841E64693B001B1A83 /* ESmoothStepAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */; };
-		F4A444851E64693B001B1A83 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444621E64693B001B1A83 /* ESprite.cpp */; };
-		F4A444861E64693B001B1A83 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444631E64693B001B1A83 /* ETextTexture.cpp */; };
-		F4A444871E64693B001B1A83 /* GraphicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444641E64693B001B1A83 /* GraphicObject.cpp */; };
-		F4A444881E64693B001B1A83 /* IPCHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444661E64693B001B1A83 /* IPCHelper.cpp */; };
-		F4A444891E64693B001B1A83 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444671E64693B001B1A83 /* JsonHelper.cpp */; };
-		F4A4448A1E64693B001B1A83 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444681E64693B001B1A83 /* LogHelper.cpp */; };
-		F4A4448B1E64693B001B1A83 /* PythonScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A444691E64693B001B1A83 /* PythonScript.cpp */; };
-		F4A4448C1E64693B001B1A83 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */; };
-		F4A4448D1E64693B001B1A83 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */; };
-		F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */; };
-		F4C63A6C1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */; };
-		F4C63A6F1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */; };
-		F4C63A701E66EEC400A552C0 /* GObjectGroup.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */; };
+		F4B4F9F11EF5031800B28C48 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C61EF5031800B28C48 /* Ecore.cpp */; };
+		F4B4F9F21EF5031800B28C48 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C71EF5031800B28C48 /* ESceneManager.cpp */; };
+		F4B4F9F31EF5031800B28C48 /* EScreenManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C81EF5031800B28C48 /* EScreenManager.cpp */; };
+		F4B4F9F41EF5031800B28C48 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C91EF5031800B28C48 /* main.cpp */; };
+		F4B4F9F51EF5031800B28C48 /* EAccelAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9CC1EF5031800B28C48 /* EAccelAnimation.cpp */; };
+		F4B4F9F61EF5031800B28C48 /* EAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9CD1EF5031800B28C48 /* EAnimation.cpp */; };
+		F4B4F9F71EF5031800B28C48 /* EGridMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9CE1EF5031800B28C48 /* EGridMoveAnimation.cpp */; };
+		F4B4F9F81EF5031800B28C48 /* ERotateAndMoveAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9CF1EF5031800B28C48 /* ERotateAndMoveAnimation.cpp */; };
+		F4B4F9F91EF5031800B28C48 /* ESmoothRotateAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D01EF5031800B28C48 /* ESmoothRotateAnimation.cpp */; };
+		F4B4F9FA1EF5031800B28C48 /* ESmoothStepAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D11EF5031800B28C48 /* ESmoothStepAnimation.cpp */; };
+		F4B4F9FB1EF5031800B28C48 /* GraphicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D21EF5031800B28C48 /* GraphicObject.cpp */; };
+		F4B4F9FC1EF5031800B28C48 /* EImageResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D41EF5031800B28C48 /* EImageResource.cpp */; };
+		F4B4F9FD1EF5031800B28C48 /* EResourceFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D51EF5031800B28C48 /* EResourceFactory.cpp */; };
+		F4B4F9FE1EF5031800B28C48 /* EResourceLoaderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D61EF5031800B28C48 /* EResourceLoaderInterface.cpp */; };
+		F4B4F9FF1EF5031800B28C48 /* EResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D71EF5031800B28C48 /* EResourceManager.cpp */; };
+		F4B4FA001EF5031800B28C48 /* ESpriteType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D81EF5031800B28C48 /* ESpriteType.cpp */; };
+		F4B4FA011EF5031800B28C48 /* XMLResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9D91EF5031800B28C48 /* XMLResourceLoader.cpp */; };
+		F4B4FA021EF5031800B28C48 /* EDbgOverlayScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9DB1EF5031800B28C48 /* EDbgOverlayScene.cpp */; };
+		F4B4FA031EF5031800B28C48 /* ERPGScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9DC1EF5031800B28C48 /* ERPGScene.cpp */; };
+		F4B4FA041EF5031800B28C48 /* EScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9DD1EF5031800B28C48 /* EScene.cpp */; };
+		F4B4FA051EF5031800B28C48 /* ESceneDesc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9DE1EF5031800B28C48 /* ESceneDesc.cpp */; };
+		F4B4FA061EF5031800B28C48 /* ETitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9DF1EF5031800B28C48 /* ETitleScene.cpp */; };
+		F4B4FA071EF5031800B28C48 /* EVisualNovelScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E01EF5031800B28C48 /* EVisualNovelScene.cpp */; };
+		F4B4FA081EF5031800B28C48 /* SpLogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E21EF5031800B28C48 /* SpLogHelper.cpp */; };
+		F4B4FA091EF5031800B28C48 /* EDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E41EF5031800B28C48 /* EDrawable.cpp */; };
+		F4B4FA0A1EF5031800B28C48 /* EFigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E51EF5031800B28C48 /* EFigure.cpp */; };
+		F4B4FA0B1EF5031800B28C48 /* EGridMapTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E61EF5031800B28C48 /* EGridMapTexture.cpp */; };
+		F4B4FA0C1EF5031800B28C48 /* EImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E71EF5031800B28C48 /* EImageTexture.cpp */; };
+		F4B4FA0D1EF5031800B28C48 /* ESprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E81EF5031800B28C48 /* ESprite.cpp */; };
+		F4B4FA0E1EF5031800B28C48 /* ETextTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9E91EF5031800B28C48 /* ETextTexture.cpp */; };
+		F4B4FA0F1EF5031800B28C48 /* IPCHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9EB1EF5031800B28C48 /* IPCHelper.cpp */; };
+		F4B4FA101EF5031800B28C48 /* JsonHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9EC1EF5031800B28C48 /* JsonHelper.cpp */; };
+		F4B4FA111EF5031800B28C48 /* LogHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9ED1EF5031800B28C48 /* LogHelper.cpp */; };
+		F4B4FA121EF5031800B28C48 /* PythonScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9EE1EF5031800B28C48 /* PythonScript.cpp */; };
+		F4B4FA131EF5031800B28C48 /* SDLWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9EF1EF5031800B28C48 /* SDLWrap.cpp */; };
+		F4B4FA141EF5031800B28C48 /* XmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9F01EF5031800B28C48 /* XmlHelper.cpp */; };
+		F4B4FA411EF5032700B28C48 /* Ecore.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA161EF5032700B28C48 /* Ecore.hpp */; };
+		F4B4FA421EF5032700B28C48 /* ESceneManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA171EF5032700B28C48 /* ESceneManager.hpp */; };
+		F4B4FA431EF5032700B28C48 /* EScreenManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA181EF5032700B28C48 /* EScreenManager.hpp */; };
+		F4B4FA441EF5032700B28C48 /* EAccelAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA1B1EF5032700B28C48 /* EAccelAnimation.hpp */; };
+		F4B4FA451EF5032700B28C48 /* EAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA1C1EF5032700B28C48 /* EAnimation.hpp */; };
+		F4B4FA461EF5032700B28C48 /* EGridMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA1D1EF5032700B28C48 /* EGridMoveAnimation.hpp */; };
+		F4B4FA471EF5032700B28C48 /* ERotateAndMoveAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA1E1EF5032700B28C48 /* ERotateAndMoveAnimation.hpp */; };
+		F4B4FA481EF5032700B28C48 /* ESmoothRotateAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA1F1EF5032700B28C48 /* ESmoothRotateAnimation.hpp */; };
+		F4B4FA491EF5032700B28C48 /* ESmoothStepAnimation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA201EF5032700B28C48 /* ESmoothStepAnimation.hpp */; };
+		F4B4FA4A1EF5032700B28C48 /* GObjectGroup.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA211EF5032700B28C48 /* GObjectGroup.hpp */; };
+		F4B4FA4B1EF5032700B28C48 /* GraphicObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA221EF5032700B28C48 /* GraphicObject.hpp */; };
+		F4B4FA4C1EF5032700B28C48 /* EImageResource.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA241EF5032700B28C48 /* EImageResource.hpp */; };
+		F4B4FA4D1EF5032700B28C48 /* EResourceFactory.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA251EF5032700B28C48 /* EResourceFactory.hpp */; };
+		F4B4FA4E1EF5032700B28C48 /* EResourceLoaderInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA261EF5032700B28C48 /* EResourceLoaderInterface.hpp */; };
+		F4B4FA4F1EF5032700B28C48 /* EResourceManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA271EF5032700B28C48 /* EResourceManager.hpp */; };
+		F4B4FA501EF5032700B28C48 /* ESpriteType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA281EF5032700B28C48 /* ESpriteType.hpp */; };
+		F4B4FA511EF5032700B28C48 /* XMLResourceLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA291EF5032700B28C48 /* XMLResourceLoader.hpp */; };
+		F4B4FA521EF5032700B28C48 /* EDbgOverlayScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA2B1EF5032700B28C48 /* EDbgOverlayScene.hpp */; };
+		F4B4FA531EF5032700B28C48 /* ERPGScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA2C1EF5032700B28C48 /* ERPGScene.hpp */; };
+		F4B4FA541EF5032700B28C48 /* EScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA2D1EF5032700B28C48 /* EScene.hpp */; };
+		F4B4FA551EF5032700B28C48 /* ESceneDesc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA2E1EF5032700B28C48 /* ESceneDesc.hpp */; };
+		F4B4FA561EF5032700B28C48 /* ETitleScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA2F1EF5032700B28C48 /* ETitleScene.hpp */; };
+		F4B4FA571EF5032700B28C48 /* EVisualNovelScene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA301EF5032700B28C48 /* EVisualNovelScene.hpp */; };
+		F4B4FA581EF5032700B28C48 /* SpLogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA321EF5032700B28C48 /* SpLogHelper.hpp */; };
+		F4B4FA591EF5032700B28C48 /* EDrawable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA341EF5032700B28C48 /* EDrawable.hpp */; };
+		F4B4FA5A1EF5032700B28C48 /* EFigure.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA351EF5032700B28C48 /* EFigure.hpp */; };
+		F4B4FA5B1EF5032700B28C48 /* EGridMapTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA361EF5032700B28C48 /* EGridMapTexture.hpp */; };
+		F4B4FA5C1EF5032700B28C48 /* EImageTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA371EF5032700B28C48 /* EImageTexture.hpp */; };
+		F4B4FA5D1EF5032700B28C48 /* ESprite.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA381EF5032700B28C48 /* ESprite.hpp */; };
+		F4B4FA5E1EF5032700B28C48 /* ETextTexture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA391EF5032700B28C48 /* ETextTexture.hpp */; };
+		F4B4FA5F1EF5032700B28C48 /* IPCHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA3B1EF5032700B28C48 /* IPCHelper.hpp */; };
+		F4B4FA601EF5032700B28C48 /* JsonHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA3C1EF5032700B28C48 /* JsonHelper.hpp */; };
+		F4B4FA611EF5032700B28C48 /* LogHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA3D1EF5032700B28C48 /* LogHelper.hpp */; };
+		F4B4FA621EF5032700B28C48 /* PythonScript.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA3E1EF5032700B28C48 /* PythonScript.hpp */; };
+		F4B4FA631EF5032700B28C48 /* SDLWrap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA3F1EF5032700B28C48 /* SDLWrap.hpp */; };
+		F4B4FA641EF5032700B28C48 /* XmlHelper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F4B4FA401EF5032700B28C48 /* XmlHelper.hpp */; };
 		F4C63AB91E66EF1A00A552C0 /* ic_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB51E66EF1A00A552C0 /* ic_circle.png */; };
 		F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB61E66EF1A00A552C0 /* ic_cross.png */; };
 		F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB71E66EF1A00A552C0 /* ic_rect.png */; };
@@ -170,40 +170,6 @@
 		F444ED941E627A7000C14B4E /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		F444ED9F1E6286C100C14B4E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
-		F45B1CA91E62D8EB003C10E2 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
-		F45B1CAA1E62D8EB003C10E2 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
-		F45B1CAB1E62D8EB003C10E2 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
-		F45B1CAD1E62D8EB003C10E2 /* EDbgOverlayScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDbgOverlayScene.hpp; sourceTree = "<group>"; };
-		F45B1CAE1E62D8EB003C10E2 /* EImageResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResource.hpp; sourceTree = "<group>"; };
-		F45B1CAF1E62D8EB003C10E2 /* EResourceFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceFactory.hpp; sourceTree = "<group>"; };
-		F45B1CB01E62D8EB003C10E2 /* EResourceLoaderInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceLoaderInterface.hpp; sourceTree = "<group>"; };
-		F45B1CB11E62D8EB003C10E2 /* EResourceManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceManager.hpp; sourceTree = "<group>"; };
-		F45B1CB21E62D8EB003C10E2 /* ERPGScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERPGScene.hpp; sourceTree = "<group>"; };
-		F45B1CB31E62D8EB003C10E2 /* EScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScene.hpp; sourceTree = "<group>"; };
-		F45B1CB41E62D8EB003C10E2 /* ESceneDesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneDesc.hpp; sourceTree = "<group>"; };
-		F45B1CB51E62D8EB003C10E2 /* ESpriteType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESpriteType.hpp; sourceTree = "<group>"; };
-		F45B1CB61E62D8EB003C10E2 /* EVisualNovelScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EVisualNovelScene.hpp; sourceTree = "<group>"; };
-		F45B1CB71E62D8EB003C10E2 /* XMLResourceLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMLResourceLoader.hpp; sourceTree = "<group>"; };
-		F45B1CB91E62D8EB003C10E2 /* SpLogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpLogHelper.hpp; sourceTree = "<group>"; };
-		F45B1CBB1E62D8EB003C10E2 /* EAccelAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAccelAnimation.hpp; sourceTree = "<group>"; };
-		F45B1CBC1E62D8EB003C10E2 /* EAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAnimation.hpp; sourceTree = "<group>"; };
-		F45B1CBD1E62D8EB003C10E2 /* EDrawable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDrawable.hpp; sourceTree = "<group>"; };
-		F45B1CBE1E62D8EB003C10E2 /* EFigure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EFigure.hpp; sourceTree = "<group>"; };
-		F45B1CBF1E62D8EB003C10E2 /* EGridMapTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMapTexture.hpp; sourceTree = "<group>"; };
-		F45B1CC01E62D8EB003C10E2 /* EGridMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMoveAnimation.hpp; sourceTree = "<group>"; };
-		F45B1CC11E62D8EB003C10E2 /* EImageTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageTexture.hpp; sourceTree = "<group>"; };
-		F45B1CC21E62D8EB003C10E2 /* ESmoothStepAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothStepAnimation.hpp; sourceTree = "<group>"; };
-		F45B1CC31E62D8EB003C10E2 /* ESprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESprite.hpp; sourceTree = "<group>"; };
-		F45B1CC41E62D8EB003C10E2 /* ETextTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETextTexture.hpp; sourceTree = "<group>"; };
-		F45B1CC51E62D8EB003C10E2 /* GraphicObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphicObject.hpp; sourceTree = "<group>"; };
-		F45B1CC71E62D8EB003C10E2 /* IPCHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IPCHelper.hpp; sourceTree = "<group>"; };
-		F45B1CC81E62D8EB003C10E2 /* JsonHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonHelper.hpp; sourceTree = "<group>"; };
-		F45B1CC91E62D8EB003C10E2 /* LogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogHelper.hpp; sourceTree = "<group>"; };
-		F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PythonScript.hpp; sourceTree = "<group>"; };
-		F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
-		F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
-		F4612A511E66C830009E143E /* ETitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETitleScene.cpp; sourceTree = "<group>"; };
-		F4612A531E66C84F009E143E /* ETitleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETitleScene.hpp; sourceTree = "<group>"; };
 		F486175F1D96C44F008641CB /* gom-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-sprite.png"; path = "../../res/gom-sprite.png"; sourceTree = "<group>"; };
 		F48617611D96C691008641CB /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
 		F4A37F3E1D8D929400186118 /* f069.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f069.png; path = ../../res/f069.png; sourceTree = "<group>"; };
@@ -220,44 +186,78 @@
 		F4A37F551D8D94D800186118 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/sources/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
 		F4A37F571D8D94EB00186118 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/sources/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
 		F4A37F591D8D94F900186118 /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ipc.pb.cc; path = ../../scripting/ipc.pb.cc; sourceTree = "<group>"; };
-		F4A444461E64693B001B1A83 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ecore.cpp; sourceTree = "<group>"; };
-		F4A444471E64693B001B1A83 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneManager.cpp; sourceTree = "<group>"; };
-		F4A444481E64693B001B1A83 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScreenManager.cpp; sourceTree = "<group>"; };
-		F4A444491E64693B001B1A83 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDbgOverlayScene.cpp; sourceTree = "<group>"; };
-		F4A4444C1E64693B001B1A83 /* EImageResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResource.cpp; sourceTree = "<group>"; };
-		F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceFactory.cpp; sourceTree = "<group>"; };
-		F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
-		F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
-		F4A444501E64693B001B1A83 /* ERPGScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERPGScene.cpp; sourceTree = "<group>"; };
-		F4A444511E64693B001B1A83 /* EScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScene.cpp; sourceTree = "<group>"; };
-		F4A444521E64693B001B1A83 /* ESceneDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneDesc.cpp; sourceTree = "<group>"; };
-		F4A444531E64693B001B1A83 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
-		F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EVisualNovelScene.cpp; sourceTree = "<group>"; };
-		F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
-		F4A444571E64693B001B1A83 /* SpLogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpLogHelper.cpp; sourceTree = "<group>"; };
-		F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
-		F4A4445A1E64693B001B1A83 /* EAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAnimation.cpp; sourceTree = "<group>"; };
-		F4A4445B1E64693B001B1A83 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
-		F4A4445C1E64693B001B1A83 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
-		F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMapTexture.cpp; sourceTree = "<group>"; };
-		F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMoveAnimation.cpp; sourceTree = "<group>"; };
-		F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
-		F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothRotateAnimation.cpp; sourceTree = "<group>"; };
-		F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothStepAnimation.cpp; sourceTree = "<group>"; };
-		F4A444621E64693B001B1A83 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
-		F4A444631E64693B001B1A83 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
-		F4A444641E64693B001B1A83 /* GraphicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicObject.cpp; sourceTree = "<group>"; };
-		F4A444661E64693B001B1A83 /* IPCHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPCHelper.cpp; sourceTree = "<group>"; };
-		F4A444671E64693B001B1A83 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
-		F4A444681E64693B001B1A83 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
-		F4A444691E64693B001B1A83 /* PythonScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonScript.cpp; sourceTree = "<group>"; };
-		F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
-		F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
-		F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothRotateAnimation.hpp; sourceTree = "<group>"; };
-		F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERotateAndMoveAnimation.cpp; sourceTree = "<group>"; };
-		F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERotateAndMoveAnimation.hpp; sourceTree = "<group>"; };
-		F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GObjectGroup.hpp; sourceTree = "<group>"; };
+		F4B4F9C61EF5031800B28C48 /* Ecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ecore.cpp; sourceTree = "<group>"; };
+		F4B4F9C71EF5031800B28C48 /* ESceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneManager.cpp; sourceTree = "<group>"; };
+		F4B4F9C81EF5031800B28C48 /* EScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScreenManager.cpp; sourceTree = "<group>"; };
+		F4B4F9C91EF5031800B28C48 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F4B4F9CC1EF5031800B28C48 /* EAccelAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAccelAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9CD1EF5031800B28C48 /* EAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9CE1EF5031800B28C48 /* EGridMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMoveAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9CF1EF5031800B28C48 /* ERotateAndMoveAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERotateAndMoveAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9D01EF5031800B28C48 /* ESmoothRotateAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothRotateAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9D11EF5031800B28C48 /* ESmoothStepAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESmoothStepAnimation.cpp; sourceTree = "<group>"; };
+		F4B4F9D21EF5031800B28C48 /* GraphicObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicObject.cpp; sourceTree = "<group>"; };
+		F4B4F9D41EF5031800B28C48 /* EImageResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageResource.cpp; sourceTree = "<group>"; };
+		F4B4F9D51EF5031800B28C48 /* EResourceFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceFactory.cpp; sourceTree = "<group>"; };
+		F4B4F9D61EF5031800B28C48 /* EResourceLoaderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceLoaderInterface.cpp; sourceTree = "<group>"; };
+		F4B4F9D71EF5031800B28C48 /* EResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EResourceManager.cpp; sourceTree = "<group>"; };
+		F4B4F9D81EF5031800B28C48 /* ESpriteType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESpriteType.cpp; sourceTree = "<group>"; };
+		F4B4F9D91EF5031800B28C48 /* XMLResourceLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLResourceLoader.cpp; sourceTree = "<group>"; };
+		F4B4F9DB1EF5031800B28C48 /* EDbgOverlayScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDbgOverlayScene.cpp; sourceTree = "<group>"; };
+		F4B4F9DC1EF5031800B28C48 /* ERPGScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ERPGScene.cpp; sourceTree = "<group>"; };
+		F4B4F9DD1EF5031800B28C48 /* EScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EScene.cpp; sourceTree = "<group>"; };
+		F4B4F9DE1EF5031800B28C48 /* ESceneDesc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESceneDesc.cpp; sourceTree = "<group>"; };
+		F4B4F9DF1EF5031800B28C48 /* ETitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETitleScene.cpp; sourceTree = "<group>"; };
+		F4B4F9E01EF5031800B28C48 /* EVisualNovelScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EVisualNovelScene.cpp; sourceTree = "<group>"; };
+		F4B4F9E21EF5031800B28C48 /* SpLogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpLogHelper.cpp; sourceTree = "<group>"; };
+		F4B4F9E41EF5031800B28C48 /* EDrawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EDrawable.cpp; sourceTree = "<group>"; };
+		F4B4F9E51EF5031800B28C48 /* EFigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EFigure.cpp; sourceTree = "<group>"; };
+		F4B4F9E61EF5031800B28C48 /* EGridMapTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EGridMapTexture.cpp; sourceTree = "<group>"; };
+		F4B4F9E71EF5031800B28C48 /* EImageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EImageTexture.cpp; sourceTree = "<group>"; };
+		F4B4F9E81EF5031800B28C48 /* ESprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ESprite.cpp; sourceTree = "<group>"; };
+		F4B4F9E91EF5031800B28C48 /* ETextTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETextTexture.cpp; sourceTree = "<group>"; };
+		F4B4F9EB1EF5031800B28C48 /* IPCHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPCHelper.cpp; sourceTree = "<group>"; };
+		F4B4F9EC1EF5031800B28C48 /* JsonHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHelper.cpp; sourceTree = "<group>"; };
+		F4B4F9ED1EF5031800B28C48 /* LogHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogHelper.cpp; sourceTree = "<group>"; };
+		F4B4F9EE1EF5031800B28C48 /* PythonScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PythonScript.cpp; sourceTree = "<group>"; };
+		F4B4F9EF1EF5031800B28C48 /* SDLWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWrap.cpp; sourceTree = "<group>"; };
+		F4B4F9F01EF5031800B28C48 /* XmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XmlHelper.cpp; sourceTree = "<group>"; };
+		F4B4FA161EF5032700B28C48 /* Ecore.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ecore.hpp; sourceTree = "<group>"; };
+		F4B4FA171EF5032700B28C48 /* ESceneManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneManager.hpp; sourceTree = "<group>"; };
+		F4B4FA181EF5032700B28C48 /* EScreenManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScreenManager.hpp; sourceTree = "<group>"; };
+		F4B4FA1B1EF5032700B28C48 /* EAccelAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAccelAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA1C1EF5032700B28C48 /* EAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA1D1EF5032700B28C48 /* EGridMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMoveAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA1E1EF5032700B28C48 /* ERotateAndMoveAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERotateAndMoveAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA1F1EF5032700B28C48 /* ESmoothRotateAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothRotateAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA201EF5032700B28C48 /* ESmoothStepAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESmoothStepAnimation.hpp; sourceTree = "<group>"; };
+		F4B4FA211EF5032700B28C48 /* GObjectGroup.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GObjectGroup.hpp; sourceTree = "<group>"; };
+		F4B4FA221EF5032700B28C48 /* GraphicObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphicObject.hpp; sourceTree = "<group>"; };
+		F4B4FA241EF5032700B28C48 /* EImageResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageResource.hpp; sourceTree = "<group>"; };
+		F4B4FA251EF5032700B28C48 /* EResourceFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceFactory.hpp; sourceTree = "<group>"; };
+		F4B4FA261EF5032700B28C48 /* EResourceLoaderInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceLoaderInterface.hpp; sourceTree = "<group>"; };
+		F4B4FA271EF5032700B28C48 /* EResourceManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EResourceManager.hpp; sourceTree = "<group>"; };
+		F4B4FA281EF5032700B28C48 /* ESpriteType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESpriteType.hpp; sourceTree = "<group>"; };
+		F4B4FA291EF5032700B28C48 /* XMLResourceLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XMLResourceLoader.hpp; sourceTree = "<group>"; };
+		F4B4FA2B1EF5032700B28C48 /* EDbgOverlayScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDbgOverlayScene.hpp; sourceTree = "<group>"; };
+		F4B4FA2C1EF5032700B28C48 /* ERPGScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ERPGScene.hpp; sourceTree = "<group>"; };
+		F4B4FA2D1EF5032700B28C48 /* EScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EScene.hpp; sourceTree = "<group>"; };
+		F4B4FA2E1EF5032700B28C48 /* ESceneDesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESceneDesc.hpp; sourceTree = "<group>"; };
+		F4B4FA2F1EF5032700B28C48 /* ETitleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETitleScene.hpp; sourceTree = "<group>"; };
+		F4B4FA301EF5032700B28C48 /* EVisualNovelScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EVisualNovelScene.hpp; sourceTree = "<group>"; };
+		F4B4FA321EF5032700B28C48 /* SpLogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpLogHelper.hpp; sourceTree = "<group>"; };
+		F4B4FA341EF5032700B28C48 /* EDrawable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EDrawable.hpp; sourceTree = "<group>"; };
+		F4B4FA351EF5032700B28C48 /* EFigure.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EFigure.hpp; sourceTree = "<group>"; };
+		F4B4FA361EF5032700B28C48 /* EGridMapTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EGridMapTexture.hpp; sourceTree = "<group>"; };
+		F4B4FA371EF5032700B28C48 /* EImageTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EImageTexture.hpp; sourceTree = "<group>"; };
+		F4B4FA381EF5032700B28C48 /* ESprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ESprite.hpp; sourceTree = "<group>"; };
+		F4B4FA391EF5032700B28C48 /* ETextTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ETextTexture.hpp; sourceTree = "<group>"; };
+		F4B4FA3B1EF5032700B28C48 /* IPCHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IPCHelper.hpp; sourceTree = "<group>"; };
+		F4B4FA3C1EF5032700B28C48 /* JsonHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonHelper.hpp; sourceTree = "<group>"; };
+		F4B4FA3D1EF5032700B28C48 /* LogHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogHelper.hpp; sourceTree = "<group>"; };
+		F4B4FA3E1EF5032700B28C48 /* PythonScript.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PythonScript.hpp; sourceTree = "<group>"; };
+		F4B4FA3F1EF5032700B28C48 /* SDLWrap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SDLWrap.hpp; sourceTree = "<group>"; };
+		F4B4FA401EF5032700B28C48 /* XmlHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XmlHelper.hpp; sourceTree = "<group>"; };
 		F4C63AB51E66EF1A00A552C0 /* ic_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_circle.png; path = ../../res/ic_circle.png; sourceTree = "<group>"; };
 		F4C63AB61E66EF1A00A552C0 /* ic_cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_cross.png; path = ../../res/ic_cross.png; sourceTree = "<group>"; };
 		F4C63AB71E66EF1A00A552C0 /* ic_rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_rect.png; path = ../../res/ic_rect.png; sourceTree = "<group>"; };
@@ -312,8 +312,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				F45B1CED1E62D8F8003C10E2 /* src */,
-				F45B1CA81E62D8EB003C10E2 /* include */,
+				F4B4FA151EF5032700B28C48 /* include */,
+				F4B4F9C51EF5031800B28C48 /* src */,
 				F4A37F591D8D94F900186118 /* ipc.pb.cc */,
 				F4A37F571D8D94EB00186118 /* pugixml.cpp */,
 				F4A37F551D8D94D800186118 /* jsoncpp.cpp */,
@@ -391,98 +391,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F45B1CA81E62D8EB003C10E2 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1CA91E62D8EB003C10E2 /* Ecore.hpp */,
-				F45B1CAA1E62D8EB003C10E2 /* ESceneManager.hpp */,
-				F45B1CAB1E62D8EB003C10E2 /* EScreenManager.hpp */,
-				F45B1CAC1E62D8EB003C10E2 /* resource */,
-				F45B1CB81E62D8EB003C10E2 /* scripting */,
-				F45B1CBA1E62D8EB003C10E2 /* texture */,
-				F45B1CC61E62D8EB003C10E2 /* util */,
-			);
-			name = include;
-			path = ../../include;
-			sourceTree = "<group>";
-		};
-		F45B1CAC1E62D8EB003C10E2 /* resource */ = {
-			isa = PBXGroup;
-			children = (
-				F4612A531E66C84F009E143E /* ETitleScene.hpp */,
-				F45B1CAD1E62D8EB003C10E2 /* EDbgOverlayScene.hpp */,
-				F45B1CAE1E62D8EB003C10E2 /* EImageResource.hpp */,
-				F45B1CAF1E62D8EB003C10E2 /* EResourceFactory.hpp */,
-				F45B1CB01E62D8EB003C10E2 /* EResourceLoaderInterface.hpp */,
-				F45B1CB11E62D8EB003C10E2 /* EResourceManager.hpp */,
-				F45B1CB21E62D8EB003C10E2 /* ERPGScene.hpp */,
-				F45B1CB31E62D8EB003C10E2 /* EScene.hpp */,
-				F45B1CB41E62D8EB003C10E2 /* ESceneDesc.hpp */,
-				F45B1CB51E62D8EB003C10E2 /* ESpriteType.hpp */,
-				F45B1CB61E62D8EB003C10E2 /* EVisualNovelScene.hpp */,
-				F45B1CB71E62D8EB003C10E2 /* XMLResourceLoader.hpp */,
-			);
-			path = resource;
-			sourceTree = "<group>";
-		};
-		F45B1CB81E62D8EB003C10E2 /* scripting */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1CB91E62D8EB003C10E2 /* SpLogHelper.hpp */,
-			);
-			path = scripting;
-			sourceTree = "<group>";
-		};
-		F45B1CBA1E62D8EB003C10E2 /* texture */ = {
-			isa = PBXGroup;
-			children = (
-				F4C63A6D1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp */,
-				F4C63A6E1E66EEC400A552C0 /* GObjectGroup.hpp */,
-				F4A4448E1E646949001B1A83 /* ESmoothRotateAnimation.hpp */,
-				F45B1CBB1E62D8EB003C10E2 /* EAccelAnimation.hpp */,
-				F45B1CBC1E62D8EB003C10E2 /* EAnimation.hpp */,
-				F45B1CBD1E62D8EB003C10E2 /* EDrawable.hpp */,
-				F45B1CBE1E62D8EB003C10E2 /* EFigure.hpp */,
-				F45B1CBF1E62D8EB003C10E2 /* EGridMapTexture.hpp */,
-				F45B1CC01E62D8EB003C10E2 /* EGridMoveAnimation.hpp */,
-				F45B1CC11E62D8EB003C10E2 /* EImageTexture.hpp */,
-				F45B1CC21E62D8EB003C10E2 /* ESmoothStepAnimation.hpp */,
-				F45B1CC31E62D8EB003C10E2 /* ESprite.hpp */,
-				F45B1CC41E62D8EB003C10E2 /* ETextTexture.hpp */,
-				F45B1CC51E62D8EB003C10E2 /* GraphicObject.hpp */,
-			);
-			path = texture;
-			sourceTree = "<group>";
-		};
-		F45B1CC61E62D8EB003C10E2 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				F45B1CC71E62D8EB003C10E2 /* IPCHelper.hpp */,
-				F45B1CC81E62D8EB003C10E2 /* JsonHelper.hpp */,
-				F45B1CC91E62D8EB003C10E2 /* LogHelper.hpp */,
-				F45B1CCA1E62D8EB003C10E2 /* PythonScript.hpp */,
-				F45B1CCB1E62D8EB003C10E2 /* SDLWrap.hpp */,
-				F45B1CCC1E62D8EB003C10E2 /* XmlHelper.hpp */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
-		F45B1CED1E62D8F8003C10E2 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				F4A444461E64693B001B1A83 /* Ecore.cpp */,
-				F4A444471E64693B001B1A83 /* ESceneManager.cpp */,
-				F4A444481E64693B001B1A83 /* EScreenManager.cpp */,
-				F4A444491E64693B001B1A83 /* main.cpp */,
-				F4A4444A1E64693B001B1A83 /* resource */,
-				F4A444561E64693B001B1A83 /* scripting */,
-				F4A444581E64693B001B1A83 /* texture */,
-				F4A444651E64693B001B1A83 /* util */,
-			);
-			name = src;
-			path = ../../src;
-			sourceTree = "<group>";
-		};
 		F4A37F461D8D929400186118 /* scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,62 +402,202 @@
 			path = ../../res/scripts;
 			sourceTree = "<group>";
 		};
-		F4A4444A1E64693B001B1A83 /* resource */ = {
+		F4B4F9C51EF5031800B28C48 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F4612A511E66C830009E143E /* ETitleScene.cpp */,
-				F4A4444B1E64693B001B1A83 /* EDbgOverlayScene.cpp */,
-				F4A4444C1E64693B001B1A83 /* EImageResource.cpp */,
-				F4A4444D1E64693B001B1A83 /* EResourceFactory.cpp */,
-				F4A4444E1E64693B001B1A83 /* EResourceLoaderInterface.cpp */,
-				F4A4444F1E64693B001B1A83 /* EResourceManager.cpp */,
-				F4A444501E64693B001B1A83 /* ERPGScene.cpp */,
-				F4A444511E64693B001B1A83 /* EScene.cpp */,
-				F4A444521E64693B001B1A83 /* ESceneDesc.cpp */,
-				F4A444531E64693B001B1A83 /* ESpriteType.cpp */,
-				F4A444541E64693B001B1A83 /* EVisualNovelScene.cpp */,
-				F4A444551E64693B001B1A83 /* XMLResourceLoader.cpp */,
+				F4B4F9C61EF5031800B28C48 /* Ecore.cpp */,
+				F4B4F9C71EF5031800B28C48 /* ESceneManager.cpp */,
+				F4B4F9C81EF5031800B28C48 /* EScreenManager.cpp */,
+				F4B4F9C91EF5031800B28C48 /* main.cpp */,
+				F4B4F9CA1EF5031800B28C48 /* object */,
+				F4B4F9D31EF5031800B28C48 /* resource */,
+				F4B4F9DA1EF5031800B28C48 /* scene */,
+				F4B4F9E11EF5031800B28C48 /* scripting */,
+				F4B4F9E31EF5031800B28C48 /* texture */,
+				F4B4F9EA1EF5031800B28C48 /* util */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+		F4B4F9CA1EF5031800B28C48 /* object */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4F9CB1EF5031800B28C48 /* animation */,
+				F4B4F9D21EF5031800B28C48 /* GraphicObject.cpp */,
+			);
+			path = object;
+			sourceTree = "<group>";
+		};
+		F4B4F9CB1EF5031800B28C48 /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4F9CC1EF5031800B28C48 /* EAccelAnimation.cpp */,
+				F4B4F9CD1EF5031800B28C48 /* EAnimation.cpp */,
+				F4B4F9CE1EF5031800B28C48 /* EGridMoveAnimation.cpp */,
+				F4B4F9CF1EF5031800B28C48 /* ERotateAndMoveAnimation.cpp */,
+				F4B4F9D01EF5031800B28C48 /* ESmoothRotateAnimation.cpp */,
+				F4B4F9D11EF5031800B28C48 /* ESmoothStepAnimation.cpp */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
+		F4B4F9D31EF5031800B28C48 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4F9D41EF5031800B28C48 /* EImageResource.cpp */,
+				F4B4F9D51EF5031800B28C48 /* EResourceFactory.cpp */,
+				F4B4F9D61EF5031800B28C48 /* EResourceLoaderInterface.cpp */,
+				F4B4F9D71EF5031800B28C48 /* EResourceManager.cpp */,
+				F4B4F9D81EF5031800B28C48 /* ESpriteType.cpp */,
+				F4B4F9D91EF5031800B28C48 /* XMLResourceLoader.cpp */,
 			);
 			path = resource;
 			sourceTree = "<group>";
 		};
-		F4A444561E64693B001B1A83 /* scripting */ = {
+		F4B4F9DA1EF5031800B28C48 /* scene */ = {
 			isa = PBXGroup;
 			children = (
-				F4A444571E64693B001B1A83 /* SpLogHelper.cpp */,
+				F4B4F9DB1EF5031800B28C48 /* EDbgOverlayScene.cpp */,
+				F4B4F9DC1EF5031800B28C48 /* ERPGScene.cpp */,
+				F4B4F9DD1EF5031800B28C48 /* EScene.cpp */,
+				F4B4F9DE1EF5031800B28C48 /* ESceneDesc.cpp */,
+				F4B4F9DF1EF5031800B28C48 /* ETitleScene.cpp */,
+				F4B4F9E01EF5031800B28C48 /* EVisualNovelScene.cpp */,
+			);
+			path = scene;
+			sourceTree = "<group>";
+		};
+		F4B4F9E11EF5031800B28C48 /* scripting */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4F9E21EF5031800B28C48 /* SpLogHelper.cpp */,
 			);
 			path = scripting;
 			sourceTree = "<group>";
 		};
-		F4A444581E64693B001B1A83 /* texture */ = {
+		F4B4F9E31EF5031800B28C48 /* texture */ = {
 			isa = PBXGroup;
 			children = (
-				F4C63A6B1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp */,
-				F4A444591E64693B001B1A83 /* EAccelAnimation.cpp */,
-				F4A4445A1E64693B001B1A83 /* EAnimation.cpp */,
-				F4A4445B1E64693B001B1A83 /* EDrawable.cpp */,
-				F4A4445C1E64693B001B1A83 /* EFigure.cpp */,
-				F4A4445D1E64693B001B1A83 /* EGridMapTexture.cpp */,
-				F4A4445E1E64693B001B1A83 /* EGridMoveAnimation.cpp */,
-				F4A4445F1E64693B001B1A83 /* EImageTexture.cpp */,
-				F4A444601E64693B001B1A83 /* ESmoothRotateAnimation.cpp */,
-				F4A444611E64693B001B1A83 /* ESmoothStepAnimation.cpp */,
-				F4A444621E64693B001B1A83 /* ESprite.cpp */,
-				F4A444631E64693B001B1A83 /* ETextTexture.cpp */,
-				F4A444641E64693B001B1A83 /* GraphicObject.cpp */,
+				F4B4F9E41EF5031800B28C48 /* EDrawable.cpp */,
+				F4B4F9E51EF5031800B28C48 /* EFigure.cpp */,
+				F4B4F9E61EF5031800B28C48 /* EGridMapTexture.cpp */,
+				F4B4F9E71EF5031800B28C48 /* EImageTexture.cpp */,
+				F4B4F9E81EF5031800B28C48 /* ESprite.cpp */,
+				F4B4F9E91EF5031800B28C48 /* ETextTexture.cpp */,
 			);
 			path = texture;
 			sourceTree = "<group>";
 		};
-		F4A444651E64693B001B1A83 /* util */ = {
+		F4B4F9EA1EF5031800B28C48 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				F4A444661E64693B001B1A83 /* IPCHelper.cpp */,
-				F4A444671E64693B001B1A83 /* JsonHelper.cpp */,
-				F4A444681E64693B001B1A83 /* LogHelper.cpp */,
-				F4A444691E64693B001B1A83 /* PythonScript.cpp */,
-				F4A4446A1E64693B001B1A83 /* SDLWrap.cpp */,
-				F4A4446B1E64693B001B1A83 /* XmlHelper.cpp */,
+				F4B4F9EB1EF5031800B28C48 /* IPCHelper.cpp */,
+				F4B4F9EC1EF5031800B28C48 /* JsonHelper.cpp */,
+				F4B4F9ED1EF5031800B28C48 /* LogHelper.cpp */,
+				F4B4F9EE1EF5031800B28C48 /* PythonScript.cpp */,
+				F4B4F9EF1EF5031800B28C48 /* SDLWrap.cpp */,
+				F4B4F9F01EF5031800B28C48 /* XmlHelper.cpp */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		F4B4FA151EF5032700B28C48 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA161EF5032700B28C48 /* Ecore.hpp */,
+				F4B4FA171EF5032700B28C48 /* ESceneManager.hpp */,
+				F4B4FA181EF5032700B28C48 /* EScreenManager.hpp */,
+				F4B4FA191EF5032700B28C48 /* object */,
+				F4B4FA231EF5032700B28C48 /* resource */,
+				F4B4FA2A1EF5032700B28C48 /* scene */,
+				F4B4FA311EF5032700B28C48 /* scripting */,
+				F4B4FA331EF5032700B28C48 /* texture */,
+				F4B4FA3A1EF5032700B28C48 /* util */,
+			);
+			name = include;
+			path = ../../include;
+			sourceTree = "<group>";
+		};
+		F4B4FA191EF5032700B28C48 /* object */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA1A1EF5032700B28C48 /* animation */,
+				F4B4FA211EF5032700B28C48 /* GObjectGroup.hpp */,
+				F4B4FA221EF5032700B28C48 /* GraphicObject.hpp */,
+			);
+			path = object;
+			sourceTree = "<group>";
+		};
+		F4B4FA1A1EF5032700B28C48 /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA1B1EF5032700B28C48 /* EAccelAnimation.hpp */,
+				F4B4FA1C1EF5032700B28C48 /* EAnimation.hpp */,
+				F4B4FA1D1EF5032700B28C48 /* EGridMoveAnimation.hpp */,
+				F4B4FA1E1EF5032700B28C48 /* ERotateAndMoveAnimation.hpp */,
+				F4B4FA1F1EF5032700B28C48 /* ESmoothRotateAnimation.hpp */,
+				F4B4FA201EF5032700B28C48 /* ESmoothStepAnimation.hpp */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
+		F4B4FA231EF5032700B28C48 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA241EF5032700B28C48 /* EImageResource.hpp */,
+				F4B4FA251EF5032700B28C48 /* EResourceFactory.hpp */,
+				F4B4FA261EF5032700B28C48 /* EResourceLoaderInterface.hpp */,
+				F4B4FA271EF5032700B28C48 /* EResourceManager.hpp */,
+				F4B4FA281EF5032700B28C48 /* ESpriteType.hpp */,
+				F4B4FA291EF5032700B28C48 /* XMLResourceLoader.hpp */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		F4B4FA2A1EF5032700B28C48 /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA2B1EF5032700B28C48 /* EDbgOverlayScene.hpp */,
+				F4B4FA2C1EF5032700B28C48 /* ERPGScene.hpp */,
+				F4B4FA2D1EF5032700B28C48 /* EScene.hpp */,
+				F4B4FA2E1EF5032700B28C48 /* ESceneDesc.hpp */,
+				F4B4FA2F1EF5032700B28C48 /* ETitleScene.hpp */,
+				F4B4FA301EF5032700B28C48 /* EVisualNovelScene.hpp */,
+			);
+			path = scene;
+			sourceTree = "<group>";
+		};
+		F4B4FA311EF5032700B28C48 /* scripting */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA321EF5032700B28C48 /* SpLogHelper.hpp */,
+			);
+			path = scripting;
+			sourceTree = "<group>";
+		};
+		F4B4FA331EF5032700B28C48 /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA341EF5032700B28C48 /* EDrawable.hpp */,
+				F4B4FA351EF5032700B28C48 /* EFigure.hpp */,
+				F4B4FA361EF5032700B28C48 /* EGridMapTexture.hpp */,
+				F4B4FA371EF5032700B28C48 /* EImageTexture.hpp */,
+				F4B4FA381EF5032700B28C48 /* ESprite.hpp */,
+				F4B4FA391EF5032700B28C48 /* ETextTexture.hpp */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
+		F4B4FA3A1EF5032700B28C48 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				F4B4FA3B1EF5032700B28C48 /* IPCHelper.hpp */,
+				F4B4FA3C1EF5032700B28C48 /* JsonHelper.hpp */,
+				F4B4FA3D1EF5032700B28C48 /* LogHelper.hpp */,
+				F4B4FA3E1EF5032700B28C48 /* PythonScript.hpp */,
+				F4B4FA3F1EF5032700B28C48 /* SDLWrap.hpp */,
+				F4B4FA401EF5032700B28C48 /* XmlHelper.hpp */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -561,42 +609,42 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F45B1CE21E62D8EB003C10E2 /* EImageTexture.hpp in Headers */,
-				F45B1CDE1E62D8EB003C10E2 /* EDrawable.hpp in Headers */,
-				F45B1CD91E62D8EB003C10E2 /* EVisualNovelScene.hpp in Headers */,
-				F45B1CD31E62D8EB003C10E2 /* EResourceLoaderInterface.hpp in Headers */,
-				F4612A541E66C84F009E143E /* ETitleScene.hpp in Headers */,
-				F4A4448F1E646949001B1A83 /* ESmoothRotateAnimation.hpp in Headers */,
-				F45B1CE51E62D8EB003C10E2 /* ETextTexture.hpp in Headers */,
-				F45B1CD61E62D8EB003C10E2 /* EScene.hpp in Headers */,
-				F45B1CD11E62D8EB003C10E2 /* EImageResource.hpp in Headers */,
-				F4C63A701E66EEC400A552C0 /* GObjectGroup.hpp in Headers */,
-				F45B1CEA1E62D8EB003C10E2 /* PythonScript.hpp in Headers */,
-				F45B1CD81E62D8EB003C10E2 /* ESpriteType.hpp in Headers */,
-				F45B1CE31E62D8EB003C10E2 /* ESmoothStepAnimation.hpp in Headers */,
-				F45B1CD41E62D8EB003C10E2 /* EResourceManager.hpp in Headers */,
-				F45B1CE81E62D8EB003C10E2 /* JsonHelper.hpp in Headers */,
-				F45B1CE61E62D8EB003C10E2 /* GraphicObject.hpp in Headers */,
-				F45B1CE01E62D8EB003C10E2 /* EGridMapTexture.hpp in Headers */,
-				F45B1CDD1E62D8EB003C10E2 /* EAnimation.hpp in Headers */,
-				F45B1CDC1E62D8EB003C10E2 /* EAccelAnimation.hpp in Headers */,
-				F4C63A6F1E66EEC400A552C0 /* ERotateAndMoveAnimation.hpp in Headers */,
-				F45B1CD01E62D8EB003C10E2 /* EDbgOverlayScene.hpp in Headers */,
-				F45B1CE41E62D8EB003C10E2 /* ESprite.hpp in Headers */,
-				F45B1CDA1E62D8EB003C10E2 /* XMLResourceLoader.hpp in Headers */,
-				F45B1CCD1E62D8EB003C10E2 /* Ecore.hpp in Headers */,
-				F45B1CEC1E62D8EB003C10E2 /* XmlHelper.hpp in Headers */,
-				F45B1CDF1E62D8EB003C10E2 /* EFigure.hpp in Headers */,
-				F45B1CD51E62D8EB003C10E2 /* ERPGScene.hpp in Headers */,
-				F45B1CD71E62D8EB003C10E2 /* ESceneDesc.hpp in Headers */,
-				F45B1CE71E62D8EB003C10E2 /* IPCHelper.hpp in Headers */,
-				F45B1CD21E62D8EB003C10E2 /* EResourceFactory.hpp in Headers */,
-				F45B1CCE1E62D8EB003C10E2 /* ESceneManager.hpp in Headers */,
-				F45B1CEB1E62D8EB003C10E2 /* SDLWrap.hpp in Headers */,
-				F45B1CDB1E62D8EB003C10E2 /* SpLogHelper.hpp in Headers */,
-				F45B1CCF1E62D8EB003C10E2 /* EScreenManager.hpp in Headers */,
-				F45B1CE91E62D8EB003C10E2 /* LogHelper.hpp in Headers */,
-				F45B1CE11E62D8EB003C10E2 /* EGridMoveAnimation.hpp in Headers */,
+				F4B4FA4C1EF5032700B28C48 /* EImageResource.hpp in Headers */,
+				F4B4FA5F1EF5032700B28C48 /* IPCHelper.hpp in Headers */,
+				F4B4FA611EF5032700B28C48 /* LogHelper.hpp in Headers */,
+				F4B4FA491EF5032700B28C48 /* ESmoothStepAnimation.hpp in Headers */,
+				F4B4FA4A1EF5032700B28C48 /* GObjectGroup.hpp in Headers */,
+				F4B4FA501EF5032700B28C48 /* ESpriteType.hpp in Headers */,
+				F4B4FA451EF5032700B28C48 /* EAnimation.hpp in Headers */,
+				F4B4FA411EF5032700B28C48 /* Ecore.hpp in Headers */,
+				F4B4FA521EF5032700B28C48 /* EDbgOverlayScene.hpp in Headers */,
+				F4B4FA621EF5032700B28C48 /* PythonScript.hpp in Headers */,
+				F4B4FA461EF5032700B28C48 /* EGridMoveAnimation.hpp in Headers */,
+				F4B4FA5B1EF5032700B28C48 /* EGridMapTexture.hpp in Headers */,
+				F4B4FA421EF5032700B28C48 /* ESceneManager.hpp in Headers */,
+				F4B4FA4F1EF5032700B28C48 /* EResourceManager.hpp in Headers */,
+				F4B4FA5A1EF5032700B28C48 /* EFigure.hpp in Headers */,
+				F4B4FA5C1EF5032700B28C48 /* EImageTexture.hpp in Headers */,
+				F4B4FA581EF5032700B28C48 /* SpLogHelper.hpp in Headers */,
+				F4B4FA511EF5032700B28C48 /* XMLResourceLoader.hpp in Headers */,
+				F4B4FA541EF5032700B28C48 /* EScene.hpp in Headers */,
+				F4B4FA5D1EF5032700B28C48 /* ESprite.hpp in Headers */,
+				F4B4FA4E1EF5032700B28C48 /* EResourceLoaderInterface.hpp in Headers */,
+				F4B4FA471EF5032700B28C48 /* ERotateAndMoveAnimation.hpp in Headers */,
+				F4B4FA4D1EF5032700B28C48 /* EResourceFactory.hpp in Headers */,
+				F4B4FA4B1EF5032700B28C48 /* GraphicObject.hpp in Headers */,
+				F4B4FA641EF5032700B28C48 /* XmlHelper.hpp in Headers */,
+				F4B4FA551EF5032700B28C48 /* ESceneDesc.hpp in Headers */,
+				F4B4FA441EF5032700B28C48 /* EAccelAnimation.hpp in Headers */,
+				F4B4FA481EF5032700B28C48 /* ESmoothRotateAnimation.hpp in Headers */,
+				F4B4FA431EF5032700B28C48 /* EScreenManager.hpp in Headers */,
+				F4B4FA571EF5032700B28C48 /* EVisualNovelScene.hpp in Headers */,
+				F4B4FA561EF5032700B28C48 /* ETitleScene.hpp in Headers */,
+				F4B4FA591EF5032700B28C48 /* EDrawable.hpp in Headers */,
+				F4B4FA531EF5032700B28C48 /* ERPGScene.hpp in Headers */,
+				F4B4FA631EF5032700B28C48 /* SDLWrap.hpp in Headers */,
+				F4B4FA601EF5032700B28C48 /* JsonHelper.hpp in Headers */,
+				F4B4FA5E1EF5032700B28C48 /* ETextTexture.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,45 +762,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A444771E64693B001B1A83 /* ESceneDesc.cpp in Sources */,
-				F4A4446C1E64693B001B1A83 /* Ecore.cpp in Sources */,
-				F4A4446E1E64693B001B1A83 /* EScreenManager.cpp in Sources */,
-				F4A444711E64693B001B1A83 /* EImageResource.cpp in Sources */,
-				F4A444861E64693B001B1A83 /* ETextTexture.cpp in Sources */,
-				F4A444871E64693B001B1A83 /* GraphicObject.cpp in Sources */,
-				F4A444851E64693B001B1A83 /* ESprite.cpp in Sources */,
-				F4A4447A1E64693B001B1A83 /* XMLResourceLoader.cpp in Sources */,
-				F4A4447C1E64693B001B1A83 /* EAccelAnimation.cpp in Sources */,
-				F4A444831E64693B001B1A83 /* ESmoothRotateAnimation.cpp in Sources */,
+				F4B4FA041EF5031800B28C48 /* EScene.cpp in Sources */,
+				F4B4FA0C1EF5031800B28C48 /* EImageTexture.cpp in Sources */,
+				F4B4F9F11EF5031800B28C48 /* Ecore.cpp in Sources */,
+				F4B4FA0B1EF5031800B28C48 /* EGridMapTexture.cpp in Sources */,
+				F4B4F9F51EF5031800B28C48 /* EAccelAnimation.cpp in Sources */,
+				F4B4FA071EF5031800B28C48 /* EVisualNovelScene.cpp in Sources */,
+				F4B4FA061EF5031800B28C48 /* ETitleScene.cpp in Sources */,
+				F4B4FA131EF5031800B28C48 /* SDLWrap.cpp in Sources */,
+				F4B4F9FA1EF5031800B28C48 /* ESmoothStepAnimation.cpp in Sources */,
+				F4B4F9F81EF5031800B28C48 /* ERotateAndMoveAnimation.cpp in Sources */,
+				F4B4FA031EF5031800B28C48 /* ERPGScene.cpp in Sources */,
+				F4B4F9FE1EF5031800B28C48 /* EResourceLoaderInterface.cpp in Sources */,
+				F4B4F9F31EF5031800B28C48 /* EScreenManager.cpp in Sources */,
+				F4B4F9FC1EF5031800B28C48 /* EImageResource.cpp in Sources */,
+				F4B4FA051EF5031800B28C48 /* ESceneDesc.cpp in Sources */,
+				F4B4FA0F1EF5031800B28C48 /* IPCHelper.cpp in Sources */,
+				F4B4FA101EF5031800B28C48 /* JsonHelper.cpp in Sources */,
+				F4B4F9F71EF5031800B28C48 /* EGridMoveAnimation.cpp in Sources */,
 				F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */,
-				F4A444891E64693B001B1A83 /* JsonHelper.cpp in Sources */,
-				F4A4448D1E64693B001B1A83 /* XmlHelper.cpp in Sources */,
+				F4B4F9FF1EF5031800B28C48 /* EResourceManager.cpp in Sources */,
 				F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */,
-				F4A4446F1E64693B001B1A83 /* main.cpp in Sources */,
-				F4A444751E64693B001B1A83 /* ERPGScene.cpp in Sources */,
-				F4A444731E64693B001B1A83 /* EResourceLoaderInterface.cpp in Sources */,
-				F4612A521E66C830009E143E /* ETitleScene.cpp in Sources */,
-				F4A4447D1E64693B001B1A83 /* EAnimation.cpp in Sources */,
+				F4B4FA141EF5031800B28C48 /* XmlHelper.cpp in Sources */,
+				F4B4FA081EF5031800B28C48 /* SpLogHelper.cpp in Sources */,
+				F4B4F9F61EF5031800B28C48 /* EAnimation.cpp in Sources */,
+				F4B4F9FD1EF5031800B28C48 /* EResourceFactory.cpp in Sources */,
+				F4B4F9FB1EF5031800B28C48 /* GraphicObject.cpp in Sources */,
+				F4B4FA011EF5031800B28C48 /* XMLResourceLoader.cpp in Sources */,
+				F4B4F9F41EF5031800B28C48 /* main.cpp in Sources */,
+				F4B4FA121EF5031800B28C48 /* PythonScript.cpp in Sources */,
+				F4B4FA0D1EF5031800B28C48 /* ESprite.cpp in Sources */,
+				F4B4F9F91EF5031800B28C48 /* ESmoothRotateAnimation.cpp in Sources */,
 				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
-				F4A444821E64693B001B1A83 /* EImageTexture.cpp in Sources */,
-				F4A4447E1E64693B001B1A83 /* EDrawable.cpp in Sources */,
-				F4A444801E64693B001B1A83 /* EGridMapTexture.cpp in Sources */,
-				F4A4446D1E64693B001B1A83 /* ESceneManager.cpp in Sources */,
-				F4A4447F1E64693B001B1A83 /* EFigure.cpp in Sources */,
-				F4A444761E64693B001B1A83 /* EScene.cpp in Sources */,
-				F4A444841E64693B001B1A83 /* ESmoothStepAnimation.cpp in Sources */,
-				F4A4448C1E64693B001B1A83 /* SDLWrap.cpp in Sources */,
-				F4A444741E64693B001B1A83 /* EResourceManager.cpp in Sources */,
-				F4A444721E64693B001B1A83 /* EResourceFactory.cpp in Sources */,
-				F4A444881E64693B001B1A83 /* IPCHelper.cpp in Sources */,
-				F4A4448A1E64693B001B1A83 /* LogHelper.cpp in Sources */,
-				F4A444791E64693B001B1A83 /* EVisualNovelScene.cpp in Sources */,
-				F4A444781E64693B001B1A83 /* ESpriteType.cpp in Sources */,
-				F4A4447B1E64693B001B1A83 /* SpLogHelper.cpp in Sources */,
-				F4A4448B1E64693B001B1A83 /* PythonScript.cpp in Sources */,
-				F4A444811E64693B001B1A83 /* EGridMoveAnimation.cpp in Sources */,
-				F4C63A6C1E66EEAE00A552C0 /* ERotateAndMoveAnimation.cpp in Sources */,
-				F4A444701E64693B001B1A83 /* EDbgOverlayScene.cpp in Sources */,
+				F4B4FA001EF5031800B28C48 /* ESpriteType.cpp in Sources */,
+				F4B4FA0A1EF5031800B28C48 /* EFigure.cpp in Sources */,
+				F4B4FA091EF5031800B28C48 /* EDrawable.cpp in Sources */,
+				F4B4FA111EF5031800B28C48 /* LogHelper.cpp in Sources */,
+				F4B4F9F21EF5031800B28C48 /* ESceneManager.cpp in Sources */,
+				F4B4FA0E1EF5031800B28C48 /* ETextTexture.cpp in Sources */,
+				F4B4FA021EF5031800B28C48 /* EDbgOverlayScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
