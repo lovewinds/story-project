@@ -1,8 +1,8 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/GraphicObject.hpp"
 
-#include "texture/EAnimation.hpp"
+#include "object/GraphicObject.hpp"
+#include "object/animation/EAnimation.hpp"
 
 EAnimation::EAnimation() :
 a_x(0), a_y(0), a_angle(0)

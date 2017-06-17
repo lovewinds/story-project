@@ -5,13 +5,13 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "resource/EScene.hpp"
+#include "scene/EScene.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EGridMapTexture.hpp"
-#include "texture/EAnimation.hpp"
-#include "texture/EGridMoveAnimation.hpp"
+#include "object/animation/EAnimation.hpp"
+#include "object/animation/EGridMoveAnimation.hpp"
 
 /* TODO: Inherit serializable class */
 /*

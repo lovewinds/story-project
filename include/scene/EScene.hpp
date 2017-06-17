@@ -5,12 +5,12 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "texture/GraphicObject.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
-#include "texture/EAnimation.hpp"
 #include "texture/EFigure.hpp"
+#include "object/GraphicObject.hpp"
+#include "object/animation/EAnimation.hpp"
 
 /**
  * Scene

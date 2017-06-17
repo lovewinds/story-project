@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 
-#include "texture/EAnimation.hpp"
+#include "object/animation/EAnimation.hpp"
 #include "texture/EDrawable.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"

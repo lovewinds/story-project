@@ -9,8 +9,8 @@
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
-#include "texture/EAnimation.hpp"
 #include "texture/EFigure.hpp"
+#include "object/animation/EAnimation.hpp"
 
 /* TODO: Inherit serializable class */
 

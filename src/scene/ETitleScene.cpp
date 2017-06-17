@@ -7,12 +7,12 @@
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
-#include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
-#include "texture/GraphicObject.hpp"
+#include "object/GraphicObject.hpp"
+#include "object/animation/EAccelAnimation.hpp"
 
-#include "resource/ETitleScene.hpp"
+#include "scene/ETitleScene.hpp"
 
 ETitleScene::ETitleScene(std::string name)
  : EScene(name)

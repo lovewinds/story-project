@@ -3,11 +3,11 @@
 #include <string>
 #include <SDL.h>
 
-#include "resource/EScene.hpp"
+#include "scene/EScene.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
-#include "texture/EAnimation.hpp"
+#include "object/animation/EAnimation.hpp"
 
 /* Scene
  *

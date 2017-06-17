@@ -3,7 +3,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "texture/EGridMoveAnimation.hpp"
+#include "object/animation/EGridMoveAnimation.hpp"
 
 #define TEST_VELO	(16.0f)
 #define GRID_SIZE	(32.0f)

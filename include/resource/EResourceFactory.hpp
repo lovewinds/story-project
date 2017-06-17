@@ -7,8 +7,8 @@
 
 #include <SDL.h>
 
-#include "resource/EScene.hpp"
-#include "resource/ESceneDesc.hpp"
+#include "scene/EScene.hpp"
+#include "scene/ESceneDesc.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"

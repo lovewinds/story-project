@@ -1,6 +1,6 @@
 #pragma once
 
-#include "texture/EAnimation.hpp"
+#include "object/animation/EAnimation.hpp"
 
 class EGridMoveAnimation : public EAnimation
 {

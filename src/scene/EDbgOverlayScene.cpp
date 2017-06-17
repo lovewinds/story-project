@@ -5,9 +5,9 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "texture/GraphicObject.hpp"
+#include "object/GraphicObject.hpp"
 
-#include "resource/EDbgOverlayScene.hpp"
+#include "scene/EDbgOverlayScene.hpp"
 
 EDbgOverlayScene::EDbgOverlayScene(std::string name)
  : EScene(name)

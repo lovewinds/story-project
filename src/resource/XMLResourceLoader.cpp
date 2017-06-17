@@ -3,7 +3,7 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/ESceneDesc.hpp"
+#include "scene/ESceneDesc.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 

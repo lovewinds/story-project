@@ -4,8 +4,8 @@
 #include <SDL_keyboard.h>
 
 #include "Ecore.hpp"
-#include "texture/EDrawable.hpp"
 #include "EScreenManager.hpp"
+#include "texture/EDrawable.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
 

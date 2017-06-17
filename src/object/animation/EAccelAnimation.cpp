@@ -1,7 +1,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "texture/EAccelAnimation.hpp"
+#include "object/animation/EAccelAnimation.hpp"
 
 EAccelAnimation::EAccelAnimation()
 {

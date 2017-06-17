@@ -1,9 +1,9 @@
 #include "Ecore.hpp"
 
-#include "texture/GraphicObject.hpp"
-#include "texture/ESmoothStepAnimation.hpp"
-#include "texture/ESmoothRotateAnimation.hpp"
-#include "texture/ERotateAndMoveAnimation.hpp"
+#include "object/GraphicObject.hpp"
+#include "object/animation/ESmoothStepAnimation.hpp"
+#include "object/animation/ESmoothRotateAnimation.hpp"
+#include "object/animation/ERotateAndMoveAnimation.hpp"
 
 #include "util/LogHelper.hpp"
 

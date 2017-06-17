@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "util/SDLWrap.hpp"
-#include "texture/EAnimation.hpp"
 
 class EDrawable
 {

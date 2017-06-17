@@ -6,11 +6,11 @@
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
-#include "texture/EAccelAnimation.hpp"
 #include "resource/EResourceManager.hpp"
-#include "texture/GraphicObject.hpp"
+#include "object/GraphicObject.hpp"
+#include "object/animation/EAccelAnimation.hpp"
 
-#include "resource/EVisualNovelScene.hpp"
+#include "scene/EVisualNovelScene.hpp"
 
 EVisualNovelScene::EVisualNovelScene(std::string name)
  : EScene(name)

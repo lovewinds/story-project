@@ -8,10 +8,10 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
-#include "resource/ERPGScene.hpp"
-#include "resource/EVisualNovelScene.hpp"
-#include "resource/EDbgOverlayScene.hpp"
-#include "resource/ETitleScene.hpp"
+#include "scene/ERPGScene.hpp"
+#include "scene/EVisualNovelScene.hpp"
+#include "scene/EDbgOverlayScene.hpp"
+#include "scene/ETitleScene.hpp"
 
 EResourceManager::EResourceManager()
 {

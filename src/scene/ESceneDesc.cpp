@@ -3,7 +3,7 @@
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
 
-#include "resource/ESceneDesc.hpp"
+#include "scene/ESceneDesc.hpp"
 
 ESpriteDesc::ESpriteDesc(std::string name, std::string sourceType, int x, int y)
 {

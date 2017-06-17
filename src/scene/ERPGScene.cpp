@@ -5,9 +5,9 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
-#include "texture/EGridMoveAnimation.hpp"
+#include "object/animation/EGridMoveAnimation.hpp"
 
-#include "resource/ERPGScene.hpp"
+#include "scene/ERPGScene.hpp"
 
 ERPGScene::ERPGScene(std::string name)
  : EScene(name)

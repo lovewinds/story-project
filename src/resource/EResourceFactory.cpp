@@ -6,11 +6,11 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
-#include "texture/GraphicObject.hpp"
+#include "object/GraphicObject.hpp"
 
-#include "resource/ERPGScene.hpp"
-#include "resource/EVisualNovelScene.hpp"
-#include "resource/EDbgOverlayScene.hpp"
+#include "scene/ERPGScene.hpp"
+#include "scene/EVisualNovelScene.hpp"
+#include "scene/EDbgOverlayScene.hpp"
 
 EResourceFactory::EResourceFactory()
 {

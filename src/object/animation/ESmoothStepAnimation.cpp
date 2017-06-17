@@ -1,7 +1,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "texture/ESmoothStepAnimation.hpp"
+#include "object/animation/ESmoothStepAnimation.hpp"
 
 ESmoothStepAnimation::ESmoothStepAnimation()
 {

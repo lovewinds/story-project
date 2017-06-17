@@ -1,7 +1,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "texture/ESmoothRotateAnimation.hpp"
+#include "object/animation/ESmoothRotateAnimation.hpp"
 
 ESmoothRotateAnimation::ESmoothRotateAnimation()
 {
