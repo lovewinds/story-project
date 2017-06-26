@@ -86,9 +86,9 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
 
 # Search built Python 3
-SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/built)
+SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/built/lib)
 SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/built/include/python3.6m)
-SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/built/lib")
+#SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/built/lib")
 FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
 
 FOREACH(flag ${pkgs_CFLAGS})
@@ -344,7 +344,7 @@ ELSE(${PLATFORM} STREQUAL "Windows")
 # Build python binding modules
 ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
 	POST_BUILD
-	COMMAND python
+	COMMAND ${CMAKE_SOURCE_DIR}/external/built/bin/python3
 	"setup.py"
 	"build"
 	--debug
