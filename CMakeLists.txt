@@ -84,7 +84,12 @@ FIND_PACKAGE(SDL2 REQUIRED)
 FIND_PACKAGE(SDL2_image REQUIRED)
 FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
-FIND_PACKAGE(PythonLibs 2.7 REQUIRED)
+
+# Search built Python 3
+SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/built)
+SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/built/include/python3.6m)
+SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/built/lib")
+FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
 
 FOREACH(flag ${pkgs_CFLAGS})
 	SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -142,12 +147,22 @@ IF(${PLATFORM} STREQUAL "Linux")
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 ${PLATFORM_DEF}")
 	# Debug
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
+
+	# Python /external/built/lib/python3.6/config-3.6m-x86_64-linux-gnu
+	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -Wstrict-prototypes")
+	SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT}
+		"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
 	SET(ADDITIONAL_CPPFLAGS "-fPIC")
 	# -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
 	# Debug
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
+
+	# Python /external/built/lib/python3.6/config-3.6m-darwin
+	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -Wstrict-prototypes")
+	SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT}
+		"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-darwin -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")

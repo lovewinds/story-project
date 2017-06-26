@@ -17,6 +17,7 @@ SDL2 = "SDL2-2.0.5"
 SDL2_IMAGE = "SDL2_image-2.0.1"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.3"
+PYTHON3 = "Python-3.6.1"
 JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.2"
 PUGIXML = "pugixml-1.7"
@@ -307,6 +308,15 @@ def extract_sources():
 	else:
 		tarfile.open(CPPZMQ+'.tar.gz').extractall(source_path)
 		print "   [cppzmq] extracted."
+
+	# extract Python 3
+	if os.path.exists(source_path+'python3/'):
+		print "   [Python3] already extracted."
+	else:
+		tarfile.open(PYTHON3+'.tgz').extractall(source_path)
+		os.rename(source_path+PYTHON3, source_path+'python3')
+		print "   [Python3] extracted."
+
 
 def build_sources_iOS(build_type):
 	print "\n"
@@ -636,6 +646,7 @@ def build_sources(build_type):
 	gtest_path = WORKING_PATH+'sources/gtest/build/'
 	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
 	zeromq_path = WORKING_PATH+'sources/zeromq/build/'
+	python3_path = WORKING_PATH+'sources/python3/build/'
 
 	# TODO: Check its working
 	if build_type == 'debug':
@@ -755,6 +766,16 @@ def build_sources(build_type):
 		patch_libzmq_linux(zeromq_path)
 		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ; make libzmq-static -j'+NJOBS)
 		copy2(zeromq_path+'lib/libzmq-static.a', library_path)
+
+# Build Python 3
+	if os.path.exists(library_path+'libpython3.6m.a'):
+		print "   [Python3] already built."
+	else:
+		print "   [Python3] Start building .."
+		mkdir_p(python3_path)
+		os.chdir(python3_path)
+		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
+
 
 	print "\n\n"
 
