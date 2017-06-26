@@ -22,14 +22,21 @@ Build environment
 Build dependencies
 ---
 
+#### Setup build environment
+Linux (Ubuntu)
+```
+sudo apt-get install build-essentials
+sudo apt-get install mesa-common-dev
+sudo apt-get install libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
+```
 
-##### For external libraries
+#### For external libraries
 
 
 Command line build on macOS has dependency CMake and autotools,
 you need to install [Brew](https://brew.sh/ "Brew") to manage above required packages easily.
 
-######Brew install######
+##### Brew install #####
 1. Install Xcode command line tools
 ```
 xcode-select --install

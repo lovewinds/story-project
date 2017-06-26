@@ -74,3 +74,5 @@ ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/built/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
 	COMMENT "Copy required dynamic libraries")
 ENDIF(${PLATFORM} STREQUAL "Windows")
+
+ADD_DEPENDENCIES(${PROJECT_NAME} ${LIBNAME})
