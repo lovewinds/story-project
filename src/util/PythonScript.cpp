@@ -3,22 +3,30 @@
 #include "util/IPCHelper.hpp"
 #include "Ecore.hpp"
 
-
-std::vector<std::string> PythonScript::path_list;
+std::vector<std::wstring> PythonScript::path_list;
 PythonScript* PythonScript::instance = nullptr;
 void* PythonScript::handle = nullptr;
 
+#define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE
 #include <stdio.h>
 #include <stdlib.h>
 /* To remove python debug lib - not found error */
 #ifdef _DEBUG
-  #include <crtdefs.h>
+  //#include <crtdefs.h>
   #undef _DEBUG
-  #include <Python.h>
+  #if defined(PLATFORM_IOS)
+  	#include <Python/Python.h>
+  #else
+  	#include <Python.h>
+  #endif
   #define _DEBUG
 #else
-  #include <Python.h>
+  #if defined(PLATFORM_IOS)
+  	#include <Python/Python.h>
+  #else
+  	#include <Python.h>
+  #endif
 #endif
 
 void PrintMyFunc() {
@@ -58,7 +66,7 @@ int Multiply(int dx, int dy) {
 		if (multiply && PyCallable_Check(multiply)) {
 			PyObject *r = PyObject_CallFunction(multiply, (char*)"ii", dx, dy);
 			if (r) {
-				result = (int)PyInt_AS_LONG(r);
+				result = (int)PyLong_AsLong(r);
 				Py_XDECREF(r);
 			}
 			Py_XDECREF(multiply);
@@ -76,7 +84,9 @@ int Multiply(int dx, int dy) {
 void PythonScript::addPath(std::string script_path)
 {
 	if (!script_path.empty()) {
-		path_list.push_back(script_path);
+		std::wstring ws;
+		ws.assign(script_path.begin(), script_path.end());
+		path_list.push_back(ws);
 	}
 }
 
@@ -87,11 +97,11 @@ void PythonScript::initialize()
 	if (nullptr == instance) {
 		instance = new PythonScript();
 
-		char *path;
-		std::string new_path;
-		Py_SetProgramName((char*)"story");
+		wchar_t *path;
+		std::wstring new_path;
+		Py_SetProgramName(L"story");
 		Py_Initialize();
-		LOG_DBG("GetProgramName: %s", Py_GetProgramName());
+		//LOG_DBG("GetProgramName: %s", Py_GetProgramName());
 
 		if (Py_IsInitialized()) {
 			//PySys_SetArgv(argc, argv);
@@ -100,15 +110,15 @@ void PythonScript::initialize()
 			for (auto script_path : path_list) {
 				//appendPath(script_path);
 				if (Ecore::checkPlatform(std::string("Windows")))
-					new_path.append(";");
+					new_path.append(L";");
 				else
-					new_path.append(":");
+					new_path.append(L":");
 				new_path.append(script_path);
 				LOG_DBG("   AppendPath: [%s]", script_path.c_str());
 			}
-			PySys_SetPath((char*)new_path.c_str());
+			PySys_SetPath((wchar_t*)new_path.c_str());
 			path = Py_GetPath();
-			LOG_DBG("GetPath: [%s]", path);
+			//LOG_DBG("GetPath: [%ws]", path);
 
 			PrintMyFunc();
 			LOG_DBG("10 * 15 = %d", Multiply(10, 15));

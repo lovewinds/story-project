@@ -161,8 +161,7 @@ ELSEIF(${PLATFORM} STREQUAL "macOS")
 
 	# Python /external/built/lib/python3.6/config-3.6m-darwin
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -Wstrict-prototypes")
-	SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT}
-		"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-darwin -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
+	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-L${PYTHON_LIBRARY}/python3.6/config-3.6m-darwin -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")

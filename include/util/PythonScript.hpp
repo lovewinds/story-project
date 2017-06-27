@@ -15,7 +15,7 @@ public:
 	static void finalize();
 
 private:
-	static std::vector<std::string> path_list;
+	static std::vector<std::wstring> path_list;
 	static PythonScript *instance;
 	static void *handle;
 };
