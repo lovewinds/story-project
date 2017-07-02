@@ -204,6 +204,7 @@ FILE(GLOB_RECURSE TMP_FILES
 	"src/*.c"
 	"src/*.cpp"
 	"scripting/*.cc"
+	"scripting/*.cxx"
 	"scripting/*.h"
 	"include/*.h"
 	"include/*.hpp"

@@ -36,9 +36,15 @@ gRenderer(NULL)
 	/* Teporary relative path
 	 * TODO: Directory policy should be decided */
 	/* build/lib/python */
+#ifdef PLATFORM_WINDOWS
 	PythonScript::addPath(makeBasePath(".."));
 	PythonScript::addPath(makeBasePath("..\\lib"));
 	PythonScript::addPath(makeBasePath("..\\lib\\python"));
+#else
+	PythonScript::addPath(makeBasePath("."));
+	PythonScript::addPath(makeBasePath("lib"));
+	PythonScript::addPath(makeBasePath("lib/python"));
+#endif
 	PythonScript::initialize();
 
 	Ecore::instance = this;
@@ -840,7 +846,8 @@ std::string Ecore::makeBasePath(std::string child_dir)
 {
 	std::string path(SDL_GetBasePath());
 
-	path.append(child_dir);
+	if (child_dir.compare(".") != 0)
+		path.append(child_dir);
 
 	return path;
 }

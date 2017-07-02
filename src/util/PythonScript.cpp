@@ -90,6 +90,41 @@ void PythonScript::addPath(std::string script_path)
 	}
 }
 
+/**********************************************************************
+ * Module Start
+ **********************************************************************/
+static int numargs=0;
+
+/* Return the number of arguments of the application command line */
+static PyObject*
+emb_numargs(PyObject *self, PyObject *args)
+{
+	if(!PyArg_ParseTuple(args, ":numargs"))
+		return NULL;
+	return PyLong_FromLong(numargs);
+}
+
+static PyMethodDef EmbMethods[] = {
+	{"numargs", emb_numargs, METH_VARARGS,
+		"Return the number of arguments received by the process."},
+	{NULL, NULL, 0, NULL}
+};
+
+static PyModuleDef EmbModule = {
+    PyModuleDef_HEAD_INIT, "emb", NULL, -1, EmbMethods,
+    NULL, NULL, NULL, NULL
+};
+
+static PyObject*
+PyInit_emb(void)
+{
+    return PyModule_Create(&EmbModule);
+}
+
+/**********************************************************************
+ * Module End
+ **********************************************************************/
+
 void PythonScript::initialize()
 {
 	unsigned long err_code;
@@ -99,9 +134,14 @@ void PythonScript::initialize()
 
 		wchar_t *path;
 		std::wstring new_path;
+
 		Py_SetProgramName(L"story");
+
+		numargs = 8;
+		PyImport_AppendInittab("emb", &PyInit_emb);
+
 		Py_Initialize();
-		//LOG_DBG("GetProgramName: %s", Py_GetProgramName());
+		LOG_DBG("GetProgramName: %ls", Py_GetProgramName());
 
 		if (Py_IsInitialized()) {
 			//PySys_SetArgv(argc, argv);
@@ -114,14 +154,26 @@ void PythonScript::initialize()
 				else
 					new_path.append(L":");
 				new_path.append(script_path);
-				LOG_DBG("   AppendPath: [%s]", script_path.c_str());
+				LOG_DBG("   AppendPath: [%ls]", script_path.c_str());
 			}
 			PySys_SetPath((wchar_t*)new_path.c_str());
 			path = Py_GetPath();
-			//LOG_DBG("GetPath: [%ws]", path);
+			LOG_DBG("GetPath: [%ls]", path);
+
+			PyRun_SimpleString(
+				/*"from time import time, ctime\n"
+				"print('Today is', ctime(time()))\n"*/
+				"import sys\n"
+				"import emb\n"
+				"import story\n"
+				"print(sys.path)\n"
+				"story.SpLog()\n"
+				"print('Number of arguments', emb.numargs())\n"
+			);
 
 			PrintMyFunc();
 			LOG_DBG("10 * 15 = %d", Multiply(10, 15));
+
 			Py_Finalize();
 		}
 #if 0
