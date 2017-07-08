@@ -54,6 +54,7 @@ public:
 	static std::string getResourcePath(std::string file_name);
 	static std::string getPlatform();
 	static bool checkPlatform(std::string);
+	static void checkPathContents();
 
 	static int getScreenWidth();
 	static int getScreenHeight();

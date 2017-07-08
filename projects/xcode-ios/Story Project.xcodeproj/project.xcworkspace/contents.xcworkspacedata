@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:___PROJECTNAME___.xcodeproj">
+      location = "self:/Users/ariens/source/story-project/projects/xcode-ios/Story Project.xcodeproj">
    </FileRef>
 </Workspace>

@@ -18,6 +18,7 @@ SDL2_IMAGE = "SDL2_image-2.0.1"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.3"
 PYTHON3 = "Python-3.6.1"
+BOOST = "boost_1_64_0"
 JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.2"
 PUGIXML = "pugixml-1.7"
@@ -316,6 +317,14 @@ def extract_sources():
 		tarfile.open(PYTHON3+'.tgz').extractall(source_path)
 		os.rename(source_path+PYTHON3, source_path+'python3')
 		print "   [Python3] extracted."
+
+	# extract Boost python
+	if os.path.exists(source_path+'boost/'):
+		print "   [Boost] already extracted."
+	else:
+		tarfile.open(BOOST+'.tar.gz').extractall(source_path)
+		os.rename(source_path+BOOST, source_path+'boost')
+		print "   [Boost] extracted."
 
 
 def build_sources_iOS(build_type):
@@ -647,6 +656,7 @@ def build_sources(build_type):
 	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
 	zeromq_path = WORKING_PATH+'sources/zeromq/build/'
 	python3_path = WORKING_PATH+'sources/python3/build/'
+	boost_path = WORKING_PATH+'sources/boost/build/'
 
 	# TODO: Check its working
 	if build_type == 'debug':

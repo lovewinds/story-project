@@ -43,3 +43,6 @@ tags
 # Built result files
 build/
 WinDebug
+
+# Python caches
+__pycache__

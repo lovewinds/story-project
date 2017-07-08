@@ -3,6 +3,10 @@
 #include "util/IPCHelper.hpp"
 #include "Ecore.hpp"
 
+#include <boost/python/class.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
+
 std::vector<std::wstring> PythonScript::path_list;
 PythonScript* PythonScript::instance = nullptr;
 void* PythonScript::handle = nullptr;
@@ -28,6 +32,38 @@ void* PythonScript::handle = nullptr;
   	#include <Python.h>
   #endif
 #endif
+
+// A friendly class.
+class hello
+{
+public:
+	hello(const std::string& country) { this->country = country; }
+	std::string greet() const {
+		LOGF(PY_LOG, "Hello from %s", country.c_str());
+		return "Hello from " + country;
+	}
+private:
+	std::string country;
+};
+
+// A function taking a hello object as an argument.
+std::string invite(const hello& w) {
+	return w.greet() + "! Please come soon!";
+}
+
+BOOST_PYTHON_MODULE(helloModule)
+{
+    using namespace boost::python;
+    class_<hello>("hello", init<std::string>())
+        // Add a regular member function.
+        .def("greet", &hello::greet)
+        // Add invite() as a member of hello!
+        .def("invite", invite)
+        ;
+    
+    // Also add invite() as a regular function to the module.
+    def("invite", invite);
+}
 
 void PrintMyFunc() {
 	//PyObject *module = PyImport_ImportModule("scripts.story");
@@ -127,36 +163,42 @@ PyInit_emb(void)
 
 void PythonScript::initialize()
 {
-	unsigned long err_code;
+	//unsigned long err_code;
 
 	if (nullptr == instance) {
 		instance = new PythonScript();
 
 		wchar_t *path;
-		std::wstring new_path;
+        std::wstring wpath;
 
 		Py_SetProgramName(L"story");
 
+		/* Initialize module path */
+        //path = Py_GetPath();
+		//wpath = path;
+		for (auto script_path : path_list) {
+			//appendPath(script_path);
+			if (Ecore::checkPlatform(std::string("Windows")))
+				wpath.append(L";");
+			else
+				wpath.append(L":");
+			wpath.append(script_path);
+			LOG_DBG("   AppendPath: [%ls]", script_path.c_str());
+		}
+        Ecore::checkPathContents();
+        Py_SetPath(wpath.c_str());
+
+		/* Export internal modules */
 		numargs = 8;
 		PyImport_AppendInittab("emb", &PyInit_emb);
+		PyImport_AppendInittab("helloModule", PyInit_helloModule);
 
 		Py_Initialize();
 		LOG_DBG("GetProgramName: %ls", Py_GetProgramName());
 
 		if (Py_IsInitialized()) {
 			//PySys_SetArgv(argc, argv);
-			path = Py_GetPath();
-			new_path = path;
-			for (auto script_path : path_list) {
-				//appendPath(script_path);
-				if (Ecore::checkPlatform(std::string("Windows")))
-					new_path.append(L";");
-				else
-					new_path.append(L":");
-				new_path.append(script_path);
-				LOG_DBG("   AppendPath: [%ls]", script_path.c_str());
-			}
-			PySys_SetPath((wchar_t*)new_path.c_str());
+			
 			path = Py_GetPath();
 			LOG_DBG("GetPath: [%ls]", path);
 
@@ -165,10 +207,13 @@ void PythonScript::initialize()
 				"print('Today is', ctime(time()))\n"*/
 				"import sys\n"
 				"import emb\n"
-				"import story\n"
+				/*"import story\n"
 				"print(sys.path)\n"
-				"story.SpLog()\n"
+				"story.SpLog()\n"*/
 				"print('Number of arguments', emb.numargs())\n"
+				"import helloModule\n"
+				"a = helloModule.hello('Korea')\n"
+				"a.invite()\n"
 			);
 
 			PrintMyFunc();

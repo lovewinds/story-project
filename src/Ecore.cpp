@@ -1,4 +1,5 @@
 #include <stdarg.h>
+#include <dirent.h>
 
 #include <SDL_syswm.h>
 #include <SDL_keyboard.h>
@@ -36,14 +37,19 @@ gRenderer(NULL)
 	/* Teporary relative path
 	 * TODO: Directory policy should be decided */
 	/* build/lib/python */
-#ifdef PLATFORM_WINDOWS
+#if defined(PLATFORM_WINDOWS)
 	PythonScript::addPath(makeBasePath(".."));
 	PythonScript::addPath(makeBasePath("..\\lib"));
 	PythonScript::addPath(makeBasePath("..\\lib\\python"));
+#elif defined(PLATFORM_IOS)
+	PythonScript::addPath(makeBasePath("python36.zip"));
+    PythonScript::addPath(makeBasePath("python"));
 #else
+	PythonScript::addPath("/Users/ariens/source/story-project/external/built/lib/python3.6");
 	PythonScript::addPath(makeBasePath("."));
+	PythonScript::addPath(makeBasePath("python36.zip"));
 	PythonScript::addPath(makeBasePath("lib"));
-	PythonScript::addPath(makeBasePath("lib/python"));
+	PythonScript::addPath(makeBasePath("lib/python3.6"));
 #endif
 	PythonScript::initialize();
 
@@ -850,6 +856,37 @@ std::string Ecore::makeBasePath(std::string child_dir)
 		path.append(child_dir);
 
 	return path;
+}
+
+void Ecore::checkPathContents()
+{
+	DIR            *dir_info;
+	struct dirent  *dir_entry;
+
+	dir_info = opendir(getBasePath());
+	if (NULL != dir_info)
+	{
+        LOG_INFO("%s", getBasePath());
+		while((dir_entry = readdir(dir_info)))
+		{
+			LOG_INFO( "  %s", dir_entry->d_name);
+		}
+		closedir(dir_info);
+	}
+    
+    LOG_INFO(" ");
+    LOG_INFO(" ");
+    std::string ppath = makeBasePath("python");
+    dir_info = opendir(ppath.c_str());
+    if (NULL != dir_info)
+    {
+        LOG_INFO("%s", getBasePath());
+        while((dir_entry = readdir(dir_info)))
+        {
+            LOG_INFO( "  %s", dir_entry->d_name);
+        }
+        closedir(dir_info);
+    }   
 }
 
 std::string Ecore::getPlatform()

@@ -269,7 +269,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 		${SDL2_GFX_LIBRARIES}
 		${LINK_G3LOG}
 		${PYTHON_LIBRARIES}
-		"-ldl -lpugixml -lprotobuf -lzmq-static")
+		"-ldl -lpugixml -lprotobuf -lzmq-static -lboost_python3")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
 	IF(USE_G3LOG)
@@ -353,6 +353,14 @@ ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	COMMENT "Build python binding modules..."
 )
+
+# Copy python default modules
+#ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
+#	POST_BUILD
+#	COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python36.zip ./*"
+#	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/built/lib/python3.6
+#	COMMENT "Copy default python modules"
+#)
 ENDIF(${PLATFORM} STREQUAL "Windows")
 
 IF(NOT IOS)

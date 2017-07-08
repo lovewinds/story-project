@@ -22,12 +22,24 @@
 		F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B71D05593A00C50450 /* sample_scene2.xml */; };
 		F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
-		F444ED8B1E62738500C14B4E /* src in Resources */ = {isa = PBXBuildFile; fileRef = F444ED8A1E62738500C14B4E /* src */; };
 		F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED9F1E6286C100C14B4E /* AVFoundation.framework */; };
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
+		F46D5D261F0FB6AB00E5373E /* BZip2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D221F0FB6AB00E5373E /* BZip2.framework */; };
+		F46D5D271F0FB6AB00E5373E /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */; };
+		F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D241F0FB6AB00E5373E /* Python.framework */; };
+		F46D5D291F0FB6AB00E5373E /* XZ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D251F0FB6AB00E5373E /* XZ.framework */; };
+		F46D5D2B1F0FB97B00E5373E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */; };
+		F46D5D2D1F0FB9C400E5373E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2C1F0FB9C400E5373E /* libz.tbd */; };
+		F46D67351F0FD4AF00E5373E /* story.cpython-36.pyc in Resources */ = {isa = PBXBuildFile; fileRef = F46D672B1F0FD4AF00E5373E /* story.cpython-36.pyc */; };
+		F46D67371F0FD4AF00E5373E /* ipc.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = F46D672D1F0FD4AF00E5373E /* ipc.pb.h */; };
+		F46D67381F0FD4AF00E5373E /* ipc.proto in Resources */ = {isa = PBXBuildFile; fileRef = F46D672E1F0FD4AF00E5373E /* ipc.proto */; };
+		F46D673C1F0FD4AF00E5373E /* SpLogHelper_wrap.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F46D67321F0FD4AF00E5373E /* SpLogHelper_wrap.cxx */; };
+		F46D673D1F0FD4AF00E5373E /* SpLogHelper_wrap.h in Headers */ = {isa = PBXBuildFile; fileRef = F46D67331F0FD4AF00E5373E /* SpLogHelper_wrap.h */; };
 		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
 		F48617621D96C691008641CB /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F48617611D96C691008641CB /* JapaneseVillage.png */; };
+		F49371E01F10758B003DC4CD /* python36.zip in Resources */ = {isa = PBXBuildFile; fileRef = F49371DF1F107428003DC4CD /* python36.zip */; };
+		F49371EE1F1076EF003DC4CD /* python in Resources */ = {isa = PBXBuildFile; fileRef = F49371ED1F1076EF003DC4CD /* python */; };
 		F4A37F4A1D8D929400186118 /* f069.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3E1D8D929400186118 /* f069.png */; };
 		F4A37F4B1D8D929400186118 /* f071.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3F1D8D929400186118 /* f071.png */; };
 		F4A37F4C1D8D929400186118 /* gom-002.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F401D8D929400186118 /* gom-002.png */; };
@@ -36,9 +48,6 @@
 		F4A37F4F1D8D929400186118 /* JewelSaviorFREE-readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F431D8D929400186118 /* JewelSaviorFREE-readme.txt */; };
 		F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F441D8D929400186118 /* NanumBarunpenR.ttf */; };
 		F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F451D8D929400186118 /* NanumGothic.ttf */; };
-		F4A37F521D8D929400186118 /* __init__.py in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F471D8D929400186118 /* __init__.py */; };
-		F4A37F531D8D929400186118 /* __init__.pyc in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F481D8D929400186118 /* __init__.pyc */; };
-		F4A37F541D8D929400186118 /* py_test.py in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F491D8D929400186118 /* py_test.py */; };
 		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
 		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
@@ -164,14 +173,31 @@
 		F444ED6C1E6272D100C14B4E /* libSDL2_ttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2_ttf.a; path = ../../external/built/lib/ios/libSDL2_ttf.a; sourceTree = "<group>"; };
 		F444ED6D1E6272D100C14B4E /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../external/built/lib/ios/libSDL2.a; sourceTree = "<group>"; };
 		F444ED6E1E6272D100C14B4E /* libzmq-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libzmq-static.a"; path = "../../external/built/lib/ios/libzmq-static.a"; sourceTree = "<group>"; };
-		F444ED8A1E62738500C14B4E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "/Users/ariens/source/story-project/src"; sourceTree = "<absolute>"; };
 		F444ED901E627A3200C14B4E /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		F444ED921E627A6600C14B4E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		F444ED941E627A7000C14B4E /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		F444ED9F1E6286C100C14B4E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
+		F46D5D221F0FB6AB00E5373E /* BZip2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BZip2.framework; path = ../../external/built/frameworks/BZip2.framework; sourceTree = "<group>"; };
+		F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = ../../external/built/frameworks/OpenSSL.framework; sourceTree = "<group>"; };
+		F46D5D241F0FB6AB00E5373E /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../external/built/frameworks/Python.framework; sourceTree = "<group>"; };
+		F46D5D251F0FB6AB00E5373E /* XZ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XZ.framework; path = ../../external/built/frameworks/XZ.framework; sourceTree = "<group>"; };
+		F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F46D5D2C1F0FB9C400E5373E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		F46D672B1F0FD4AF00E5373E /* story.cpython-36.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "story.cpython-36.pyc"; sourceTree = "<group>"; };
+		F46D672C1F0FD4AF00E5373E /* ipc.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ipc.pb.cc; sourceTree = "<group>"; };
+		F46D672D1F0FD4AF00E5373E /* ipc.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ipc.pb.h; sourceTree = "<group>"; };
+		F46D672E1F0FD4AF00E5373E /* ipc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ipc.proto; sourceTree = "<group>"; };
+		F46D672F1F0FD4AF00E5373E /* ipc_pb2.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = ipc_pb2.py; sourceTree = "<group>"; };
+		F46D67301F0FD4AF00E5373E /* readme_swig.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme_swig.txt; sourceTree = "<group>"; };
+		F46D67311F0FD4AF00E5373E /* SpLogHelper.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = SpLogHelper.i; sourceTree = "<group>"; };
+		F46D67321F0FD4AF00E5373E /* SpLogHelper_wrap.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpLogHelper_wrap.cxx; sourceTree = "<group>"; };
+		F46D67331F0FD4AF00E5373E /* SpLogHelper_wrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpLogHelper_wrap.h; sourceTree = "<group>"; };
+		F46D67341F0FD4AF00E5373E /* story.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = story.py; sourceTree = "<group>"; };
 		F486175F1D96C44F008641CB /* gom-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-sprite.png"; path = "../../res/gom-sprite.png"; sourceTree = "<group>"; };
 		F48617611D96C691008641CB /* JapaneseVillage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JapaneseVillage.png; path = ../../res/JapaneseVillage.png; sourceTree = "<group>"; };
+		F49371DF1F107428003DC4CD /* python36.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = python36.zip; path = ../../res/python36.zip; sourceTree = "<group>"; };
+		F49371ED1F1076EF003DC4CD /* python */ = {isa = PBXFileReference; lastKnownFileType = folder; name = python; path = ../../res/python; sourceTree = "<group>"; };
 		F4A37F3E1D8D929400186118 /* f069.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f069.png; path = ../../res/f069.png; sourceTree = "<group>"; };
 		F4A37F3F1D8D929400186118 /* f071.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f071.png; path = ../../res/f071.png; sourceTree = "<group>"; };
 		F4A37F401D8D929400186118 /* gom-002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gom-002.png"; path = "../../res/gom-002.png"; sourceTree = "<group>"; };
@@ -274,6 +300,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F46D5D2D1F0FB9C400E5373E /* libz.tbd in Frameworks */,
+				F46D5D2B1F0FB97B00E5373E /* libsqlite3.tbd in Frameworks */,
+				F46D5D261F0FB6AB00E5373E /* BZip2.framework in Frameworks */,
+				F46D5D291F0FB6AB00E5373E /* XZ.framework in Frameworks */,
+				F46D5D271F0FB6AB00E5373E /* OpenSSL.framework in Frameworks */,
+				F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */,
 				F4D902E11E6A45920097C515 /* libg3logger.a in Frameworks */,
 				F4D902E21E6A45920097C515 /* libgtest.a in Frameworks */,
 				F4D902E31E6A45920097C515 /* libprotobuf.a in Frameworks */,
@@ -312,11 +344,14 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F49371ED1F1076EF003DC4CD /* python */,
+				F49371DF1F107428003DC4CD /* python36.zip */,
 				F4B4FA151EF5032700B28C48 /* include */,
 				F4B4F9C51EF5031800B28C48 /* src */,
 				F4A37F591D8D94F900186118 /* ipc.pb.cc */,
 				F4A37F571D8D94EB00186118 /* pugixml.cpp */,
 				F4A37F551D8D94D800186118 /* jsoncpp.cpp */,
+				F46D67291F0FD4AF00E5373E /* scripting */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -361,6 +396,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F46D5D2C1F0FB9C400E5373E /* libz.tbd */,
+				F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */,
+				F46D5D221F0FB6AB00E5373E /* BZip2.framework */,
+				F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */,
+				F46D5D241F0FB6AB00E5373E /* Python.framework */,
+				F46D5D251F0FB6AB00E5373E /* XZ.framework */,
 				F444ED9F1E6286C100C14B4E /* AVFoundation.framework */,
 				F444ED941E627A7000C14B4E /* MetalKit.framework */,
 				F444ED921E627A6600C14B4E /* Metal.framework */,
@@ -389,6 +430,32 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F46D67291F0FD4AF00E5373E /* scripting */ = {
+			isa = PBXGroup;
+			children = (
+				F46D672A1F0FD4AF00E5373E /* __pycache__ */,
+				F46D672C1F0FD4AF00E5373E /* ipc.pb.cc */,
+				F46D672D1F0FD4AF00E5373E /* ipc.pb.h */,
+				F46D672E1F0FD4AF00E5373E /* ipc.proto */,
+				F46D672F1F0FD4AF00E5373E /* ipc_pb2.py */,
+				F46D67301F0FD4AF00E5373E /* readme_swig.txt */,
+				F46D67311F0FD4AF00E5373E /* SpLogHelper.i */,
+				F46D67321F0FD4AF00E5373E /* SpLogHelper_wrap.cxx */,
+				F46D67331F0FD4AF00E5373E /* SpLogHelper_wrap.h */,
+				F46D67341F0FD4AF00E5373E /* story.py */,
+			);
+			name = scripting;
+			path = ../../scripting;
+			sourceTree = "<group>";
+		};
+		F46D672A1F0FD4AF00E5373E /* __pycache__ */ = {
+			isa = PBXGroup;
+			children = (
+				F46D672B1F0FD4AF00E5373E /* story.cpython-36.pyc */,
+			);
+			path = __pycache__;
 			sourceTree = "<group>";
 		};
 		F4A37F461D8D929400186118 /* scripts */ = {
@@ -630,12 +697,14 @@
 				F4B4FA541EF5032700B28C48 /* EScene.hpp in Headers */,
 				F4B4FA5D1EF5032700B28C48 /* ESprite.hpp in Headers */,
 				F4B4FA4E1EF5032700B28C48 /* EResourceLoaderInterface.hpp in Headers */,
+				F46D67371F0FD4AF00E5373E /* ipc.pb.h in Headers */,
 				F4B4FA471EF5032700B28C48 /* ERotateAndMoveAnimation.hpp in Headers */,
 				F4B4FA4D1EF5032700B28C48 /* EResourceFactory.hpp in Headers */,
 				F4B4FA4B1EF5032700B28C48 /* GraphicObject.hpp in Headers */,
 				F4B4FA641EF5032700B28C48 /* XmlHelper.hpp in Headers */,
 				F4B4FA551EF5032700B28C48 /* ESceneDesc.hpp in Headers */,
 				F4B4FA441EF5032700B28C48 /* EAccelAnimation.hpp in Headers */,
+				F46D673D1F0FD4AF00E5373E /* SpLogHelper_wrap.h in Headers */,
 				F4B4FA481EF5032700B28C48 /* ESmoothRotateAnimation.hpp in Headers */,
 				F4B4FA431EF5032700B28C48 /* EScreenManager.hpp in Headers */,
 				F4B4FA571EF5032700B28C48 /* EVisualNovelScene.hpp in Headers */,
@@ -683,7 +752,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "story-project" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Story Project" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -707,19 +776,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F49371EE1F1076EF003DC4CD /* python in Resources */,
+				F49371E01F10758B003DC4CD /* python36.zip in Resources */,
 				F4A37F4C1D8D929400186118 /* gom-002.png in Resources */,
 				F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */,
 				F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */,
 				F4A37F4E1D8D929400186118 /* gom-004.png in Resources */,
-				F444ED8B1E62738500C14B4E /* src in Resources */,
 				F42169B81D05593A00C50450 /* BerryGarden.png in Resources */,
+				F46D67381F0FD4AF00E5373E /* ipc.proto in Resources */,
 				F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */,
 				F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */,
 				F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */,
 				F42169B91D05593A00C50450 /* bg-black.png in Resources */,
 				F48617601D96C44F008641CB /* gom-sprite.png in Resources */,
 				F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */,
-				F4A37F541D8D929400186118 /* py_test.py in Resources */,
 				F4C63AB91E66EF1A00A552C0 /* ic_circle.png in Resources */,
 				F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */,
 				F42169C01D05593A00C50450 /* sample_scene.xml in Resources */,
@@ -728,13 +798,12 @@
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
 				F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
+				F46D67351F0FD4AF00E5373E /* story.cpython-36.pyc in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
 				F48617621D96C691008641CB /* JapaneseVillage.png in Resources */,
 				F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */,
 				F4A37F4D1D8D929400186118 /* gom-003.png in Resources */,
 				F42169BB1D05593A00C50450 /* grid-base.png in Resources */,
-				F4A37F531D8D929400186118 /* __init__.pyc in Resources */,
-				F4A37F521D8D929400186118 /* __init__.py in Resources */,
 				F4A37F4F1D8D929400186118 /* JewelSaviorFREE-readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,7 +822,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"TEST\"";
+			shellScript = "CURRENT=`pwd`\necho \"PWD : $CURRENT\"\n#unzip -u $CURRENT/../../external/built/frameworks/Python.framework/Resources/lib/python36.zip -d $CURRENT/../../res/python\ncp -f $CURRENT/../../external/built/frameworks/Python.framework/Resources/lib/python36.zip $CURRENT/../../res/python36.zip\n\nmkdir -p $CURRENT/../../res/python\ncp -f $CURRENT/../../scripting/*.py $CURRENT/../../res/python";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -795,6 +864,7 @@
 				F4B4F9F91EF5031800B28C48 /* ESmoothRotateAnimation.cpp in Sources */,
 				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
 				F4B4FA001EF5031800B28C48 /* ESpriteType.cpp in Sources */,
+				F46D673C1F0FD4AF00E5373E /* SpLogHelper_wrap.cxx in Sources */,
 				F4B4FA0A1EF5031800B28C48 /* EFigure.cpp in Sources */,
 				F4B4FA091EF5031800B28C48 /* EDrawable.cpp in Sources */,
 				F4B4FA111EF5031800B28C48 /* LogHelper.cpp in Sources */,
@@ -816,6 +886,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = WE4KGJQLAQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../external/built/frameworks",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -824,6 +899,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../external/built/include_ios",
 					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
+					"$(PROJECT_DIR)/../../external/built/frameworks/Python.framework/Headers",
 					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
 					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
 					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
@@ -839,6 +915,7 @@
 					"$(PROJECT_DIR)/../../external/built/lib/ios",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -856,12 +933,18 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = WE4KGJQLAQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../external/built/frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_IOS;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../external/built/include_ios",
 					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
+					"$(PROJECT_DIR)/../../external/built/frameworks/Python.framework/Headers",
 					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
 					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
 					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
@@ -877,6 +960,7 @@
 					"$(PROJECT_DIR)/../../external/built/lib/ios",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -930,7 +1014,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "story-project" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Story Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
