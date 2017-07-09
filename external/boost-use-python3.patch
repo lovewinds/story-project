@@ -1,0 +1,80 @@
+diff --git boost.sh boost.sh
+index 5b10888..077205e 100755
+--- boost.sh
++++ boost.sh
+@@ -72,6 +72,7 @@ THREADS="-j8"
+ 
+ CURRENT_DIR=`pwd`
+ SRCDIR="$CURRENT_DIR/src"
++PYTHON_ROOT=""
+ 
+ IOS_ARM_DEV_CMD="xcrun --sdk iphoneos"
+ IOS_SIM_DEV_CMD="xcrun --sdk iphonesimulator"
+@@ -171,6 +172,9 @@ OPTIONS:
+         there's a way to get this working by tweaking user-config, but I haven't
+         the time to figure it out now.
+ 
++    --python-root [path]
++        Specify the path for python.
++
+     --ios-sdk [num]
+         Specify the iOS SDK version to build with. Defaults to $IOS_SDK_VERSION.
+ 
+@@ -276,6 +280,15 @@ parseArgs()
+                 fi
+                 ;;
+ 
++            --python-root)
++                if [ -n "$2" ]; then
++                    PYTHON_ROOT=$2
++                    shift
++                else
++                    missingParameter $1
++                fi
++                ;;
++
+             --ios-sdk)
+                 if [ -n $2 ]; then
+                     IOS_SDK_VERSION=$2
+@@ -529,7 +542,10 @@ bootstrapBoost()
+         echo "Bootstrap libs ${BOOTSTRAP_LIBS}"
+         BOOST_LIBS_COMMA=$(echo $BOOTSTRAP_LIBS | sed -e 's/[[:space:]]/,/g')
+         echo "Bootstrapping for $1 (with libs $BOOST_LIBS_COMMA)"
+-        ./bootstrap.sh --with-libraries=$BOOST_LIBS_COMMA
++        echo "=====[$PYTHON_ROOT]========"
++        #export PYTHON=python
++        #export PATH=$PYTHON_ROOT/bin:$PATH
++        PYTHON=python3 PATH=$PYTHON_ROOT/bin:$PATH ./bootstrap.sh --with-libraries=$BOOST_LIBS_COMMA --with-python-root=$PYTHON_ROOT
+     fi
+ 
+     doneSection
+@@ -678,6 +694,9 @@ scrunchAllLibsTogetherInOneLibPerPlatform()
+         if [ "$NAME" == "test" ]; then
+             NAME="unit_test_framework"
+         fi
++        if [ "$NAME" == "python" ]; then
++            NAME="python3"
++        fi
+ 
+         ALL_LIBS="$ALL_LIBS libboost_$NAME.a"
+ 
+@@ -720,6 +739,9 @@ scrunchAllLibsTogetherInOneLibPerPlatform()
+         if [ "$NAME" == "test" ]; then
+             NAME="unit_test_framework"
+         fi
++        if [ "$NAME" == "python" ]; then
++            NAME="python3"
++        fi
+ 
+         echo "Decomposing libboost_${NAME}.a"
+         if [[ -n $BUILD_IOS ]]; then
+@@ -760,6 +782,9 @@ scrunchAllLibsTogetherInOneLibPerPlatform()
+         if [ "$NAME" == "test" ]; then
+             NAME="unit_test_framework"
+         fi
++        if [ "$NAME" == "python" ]; then
++            NAME="python3"
++        fi
+ 
+         echo "Archiving $NAME"
+ 

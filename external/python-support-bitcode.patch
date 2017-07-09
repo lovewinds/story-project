@@ -1,0 +1,33 @@
+diff --git Makefile Makefile
+index aea54c2..0405f11 100644
+--- Makefile
++++ Makefile
+@@ -47,16 +47,16 @@ TARGETS-macOS=macosx.x86_64
+ 
+ # iOS targets
+ TARGETS-iOS=iphonesimulator.x86_64 iphonesimulator.i386 iphoneos.armv7 iphoneos.armv7s iphoneos.arm64
+-CFLAGS-iOS=-miphoneos-version-min=7.0
++CFLAGS-iOS=-miphoneos-version-min=7.0 -fembed-bitcode
+ 
+ # tvOS targets
+ TARGETS-tvOS=appletvsimulator.x86_64 appletvos.arm64
+-CFLAGS-tvOS=-mtvos-version-min=9.0
++CFLAGS-tvOS=-mtvos-version-min=9.0 -fembed-bitcode
+ PYTHON_CONFIGURE-tvOS=ac_cv_func_sigaltstack=no
+ 
+ # watchOS targets
+ TARGETS-watchOS=watchsimulator.i386 watchos.armv7k
+-CFLAGS-watchOS=-mwatchos-version-min=2.0
++CFLAGS-watchOS=-mwatchos-version-min=2.0 -fembed-bitcode
+ PYTHON_CONFIGURE-watchOS=ac_cv_func_sigaltstack=no
+ 
+ # override machine types for arm64
+@@ -198,7 +198,7 @@ else
+ 		CC="$$(CC-$1)" \
+ 		CROSS_TOP="$$(dir $$(SDK_ROOT-$1)).." \
+ 		CROSS_SDK="$$(notdir $$(SDK_ROOT-$1))" \
+-		./Configure iphoneos-cross no-asm --openssldir=$(PROJECT_DIR)/$$(OPENSSL_DIR-$1)
++		./Configure iphoneos-cross no-dynamic-engine --openssldir=$(PROJECT_DIR)/$$(OPENSSL_DIR-$1)
+ endif
+ 
+ # Build OpenSSL

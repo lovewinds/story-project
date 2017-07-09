@@ -25,6 +25,7 @@
 		F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED9F1E6286C100C14B4E /* AVFoundation.framework */; };
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
+		F467A72A1F12623F00A70827 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F467A7291F12623F00A70827 /* boost.framework */; };
 		F46D5D261F0FB6AB00E5373E /* BZip2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D221F0FB6AB00E5373E /* BZip2.framework */; };
 		F46D5D271F0FB6AB00E5373E /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */; };
 		F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D241F0FB6AB00E5373E /* Python.framework */; };
@@ -178,6 +179,7 @@
 		F444ED941E627A7000C14B4E /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		F444ED9F1E6286C100C14B4E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
+		F467A7291F12623F00A70827 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../external/built/frameworks/boost.framework; sourceTree = "<group>"; };
 		F46D5D221F0FB6AB00E5373E /* BZip2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BZip2.framework; path = ../../external/built/frameworks/BZip2.framework; sourceTree = "<group>"; };
 		F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = ../../external/built/frameworks/OpenSSL.framework; sourceTree = "<group>"; };
 		F46D5D241F0FB6AB00E5373E /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../external/built/frameworks/Python.framework; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
 				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
 				F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */,
+				F467A72A1F12623F00A70827 /* boost.framework in Frameworks */,
 				F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,6 +399,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F467A7291F12623F00A70827 /* boost.framework */,
 				F46D5D2C1F0FB9C400E5373E /* libz.tbd */,
 				F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */,
 				F46D5D221F0FB6AB00E5373E /* BZip2.framework */,

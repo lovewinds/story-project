@@ -5,11 +5,13 @@ import os
 import commands
 import errno
 import tarfile
+import zipfile
 import platform
 from shutil import copytree, copy2
 from xml.etree import ElementTree
 import argparse
 import multiprocessing
+import urllib2
 
 CURRENT_PLATFORM = 0
 WORKING_PATH = "./"
@@ -18,7 +20,9 @@ SDL2_IMAGE = "SDL2_image-2.0.1"
 SDL2_TTF = "SDL2_ttf-2.0.14"
 SDL2_GFX = "SDL2_gfx-1.0.3"
 PYTHON3 = "Python-3.6.1"
+PYTHON_APPLE = 'Python-Apple-support-3.6.1'
 BOOST = "boost_1_64_0"
+BOOST_APPLE = "Apple-Boost-BuildScript-master"
 JSONCPP = "jsoncpp-1.6.5"
 G3LOG = "g3log-1.2"
 PUGIXML = "pugixml-1.7"
@@ -212,6 +216,21 @@ def patch_libzmq_win(path):
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
+def patch_python_apple(path):
+	os.chdir(path)
+	print "Current path: ["+os.getcwd()+"]"
+	os.system('patch -p0 < ../../python-support-bitcode.patch')
+	os.chdir(path)
+	print "   [Python] Patched\n"
+
+def patch_boost_apple(path):
+	os.chdir(path)
+	print "Current path: ["+os.getcwd()+"]"
+	os.system('patch -p0 < ../../boost-use-python3.patch')
+	os.chdir(path)
+	print "   [Boost] Patched\n"
+
+
 def extract_sources():
 	print "\n"
 	print "#########################################"
@@ -311,20 +330,52 @@ def extract_sources():
 		print "   [cppzmq] extracted."
 
 	# extract Python 3
-	if os.path.exists(source_path+'python3/'):
-		print "   [Python3] already extracted."
+	if CURRENT_PLATFORM != Platform.iOS:
+		if os.path.exists(source_path+'python3/'):
+			print "   [Python3] already extracted."
+		else:
+			tarfile.open(PYTHON3+'.tgz').extractall(source_path)
+			os.rename(source_path+PYTHON3, source_path+'python3')
+			print "   [Python3] extracted."
 	else:
-		tarfile.open(PYTHON3+'.tgz').extractall(source_path)
-		os.rename(source_path+PYTHON3, source_path+'python3')
-		print "   [Python3] extracted."
+		# Get python support
+		if os.path.exists(source_path+'python_apple/'):
+			print "   [Python3] already extracted."
+		else:
+			def unzip(source_file, dest_path):
+				with zipfile.ZipFile(source_file, 'r') as zf:
+					zf.extractall(path=dest_path)
+					zf.close()
+			unzip(PYTHON_APPLE+'.zip', source_path+'python_apple')
+			print "   [Python3] extracted."
+
 
 	# extract Boost python
-	if os.path.exists(source_path+'boost/'):
-		print "   [Boost] already extracted."
+	if CURRENT_PLATFORM != Platform.iOS:
+		if os.path.exists(source_path+'boost/'):
+			print "   [Boost] already extracted."
+		else:
+			# Check file exists
+			if not os.path.exists(BOOST+'.tar.gz'):
+				f = open(BOOST+'.tar.gz', 'wb')
+				response = urllib2.urlopen("https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz")
+				f.write(response.read())
+				f.close()
+
+			tarfile.open(BOOST+'.tar.gz').extractall(source_path)
+			os.rename(source_path+BOOST, source_path+'boost')
+			print "   [Boost] extracted."
 	else:
-		tarfile.open(BOOST+'.tar.gz').extractall(source_path)
-		os.rename(source_path+BOOST, source_path+'boost')
-		print "   [Boost] extracted."
+		# Get python support
+		if os.path.exists(source_path+'boost_apple/'):
+			print "   [Boost] already extracted."
+		else:
+			def unzip(source_file, dest_path):
+				with zipfile.ZipFile(source_file, 'r') as zf:
+					zf.extractall(path=dest_path)
+					zf.close()
+			unzip(BOOST_APPLE+'.zip', source_path+'boost_apple')
+			print "   [Boost] extracted."
 
 
 def build_sources_iOS(build_type):
@@ -336,6 +387,7 @@ def build_sources_iOS(build_type):
 	build_path = WORKING_PATH+'built/'
 	bin_path = WORKING_PATH+'built/bin/'
 	library_path = WORKING_PATH+'built/lib/iOS/'
+	framework_path = WORKING_PATH+'built/frameworks/'
 	include_path = WORKING_PATH+'built/include_ios/SDL2/'
 
 	sdl2_path = WORKING_PATH+'sources/SDL2/Xcode-iOS/SDL/'
@@ -349,6 +401,8 @@ def build_sources_iOS(build_type):
 	gtest_path = WORKING_PATH+'sources/gtest/'
 	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/'
 	zeromq_path = WORKING_PATH+'sources/zeromq/'
+	python_path = WORKING_PATH+'sources/python_apple/'
+	boost_path = WORKING_PATH+'sources/boost_apple/'
 
 	mkdir_p(library_path)
 
@@ -462,6 +516,31 @@ def build_sources_iOS(build_type):
 		# Make fat binary
 		os.system(WORKING_PATH+'ios-build.sh zeromq armv7')
 		os.system(WORKING_PATH+'ios-build.sh zeromq arm64')
+
+# Build Python 3
+	if os.path.exists(framework_path+'Python.framework'):
+		print "   [Python] already built."
+	else:
+		print "   [Python] Start building .."
+		os.chdir(python_path)
+		patch_python_apple(python_path)
+		os.system('make iOS')
+
+		# Extract built framework to use them.
+		mkdir_p(framework_path)
+		tarfile.open('dist/Python-3.6-iOS-support.b1.tar.gz').extractall(framework_path)
+
+# Build Boost python
+	if os.path.exists(framework_path+'boost.framework'):
+		print "   [Boost] already built."
+	else:
+		print "   [Boost] Start building .."
+		os.chdir(boost_path)
+		patch_boost_apple(boost_path)
+		os.system('chmod +x boost.sh')
+		os.system('./boost.sh -ios --boost-version 1.64.0 --boost-libs python --python-root /Users/ariens/source/story-project/external/built --min-ios-version 7.0')
+		# Copy built framework
+		copytree(boost_path+'build/boost/1.64.0/ios/framework/boost.framework', framework_path+'boost.framework')
 
 	print "\n\n"
 
@@ -656,7 +735,7 @@ def build_sources(build_type):
 	protobuf_path = WORKING_PATH+'sources/protobuf/cmake/build/'
 	zeromq_path = WORKING_PATH+'sources/zeromq/build/'
 	python3_path = WORKING_PATH+'sources/python3/build/'
-	boost_path = WORKING_PATH+'sources/boost/build/'
+	boost_path = WORKING_PATH+'sources/boost/'
 
 	# TODO: Check its working
 	if build_type == 'debug':
@@ -777,7 +856,7 @@ def build_sources(build_type):
 		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ; make libzmq-static -j'+NJOBS)
 		copy2(zeromq_path+'lib/libzmq-static.a', library_path)
 
-# Build Python 3
+# Build Python3
 	if os.path.exists(library_path+'libpython3.6m.a'):
 		print "   [Python3] already built."
 	else:
@@ -785,7 +864,25 @@ def build_sources(build_type):
 		mkdir_p(python3_path)
 		os.chdir(python3_path)
 		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
+		# Create symlink
+		os.system('ln -s '+include_path+'python3.6m '+include_path+'python3.6')
+		os.system('ln -s '+bin_path+'python3 '+bin_path+'python')
 
+# Build Boost python
+	if os.path.exists(library_path+'libboost_python3.a'):
+		print "   [Boost] already built."
+	else:
+		print "   [Boost] Start building .."
+		mkdir_p(boost_path+'build')
+		os.chdir(boost_path)
+		#os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
+		# ln -s /Users/ariens/source/story-project/external/built/include/python3.6m /Users/ariens/source/story-project/external/built/include/python3.6
+		# PYTHON=python3; PATH=/Users/ariens/source/story-project/external/built/bin:$PATH; ./bootstrap.sh --with-python-root=/Users/ariens/source/story-project/external/built --with-libraries=python --prefix=/Users/ariens/source/story-project/external/built
+		# ./b2 --build-dir=build --prefix=/Users/ariens/source/story-project/external/built --with-python link=static
+		
+		os.system('PYTHON=python3; PATH=%s:$PATH; ./bootstrap.sh --with-python-root=%s --with-libraries=python --prefix=%s'%\
+				(bin_path, build_path, build_path))
+		os.system('./b2 --build-dir=build --prefix='+build_path+' --with-python link=static install')
 
 	print "\n\n"
 
