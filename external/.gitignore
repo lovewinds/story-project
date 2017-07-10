@@ -2,5 +2,8 @@
 built
 sources
 
+# Do not push big archives
+boost*.tar.gz
+
 # OSX
 .DS_Store

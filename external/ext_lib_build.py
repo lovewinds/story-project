@@ -882,7 +882,7 @@ def build_sources(build_type):
 		
 		os.system('PYTHON=python3; PATH=%s:$PATH; ./bootstrap.sh --with-python-root=%s --with-libraries=python --prefix=%s'%\
 				(bin_path, build_path, build_path))
-		os.system('./b2 --build-dir=build --prefix='+build_path+' --with-python link=static install')
+		os.system('./b2 --build-dir=build --cxxflags=\'-fPIC\' --prefix='+build_path+' --with-python link=static install')
 
 	print "\n\n"
 
