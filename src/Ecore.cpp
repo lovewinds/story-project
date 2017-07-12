@@ -33,23 +33,23 @@ gRenderer(NULL)
 #ifndef USE_SDL_LOG
 	Log::init();
 #endif
-	PythonScript::addPath(getResourcePath());
+	PythonScript::preparePath(getResourcePath());
 	/* Teporary relative path
 	 * TODO: Directory policy should be decided */
 	/* build/lib/python */
 #if defined(PLATFORM_WINDOWS)
-	PythonScript::addPath(makeBasePath(".."));
-	PythonScript::addPath(makeBasePath("..\\lib"));
-	PythonScript::addPath(makeBasePath("..\\lib\\python"));
+	PythonScript::preparePath(makeBasePath(".."));
+	PythonScript::preparePath(makeBasePath("..\\lib"));
+	PythonScript::preparePath(makeBasePath("..\\lib\\python"));
 #elif defined(PLATFORM_IOS)
-	PythonScript::addPath(makeBasePath("python36.zip"));
-    PythonScript::addPath(makeBasePath("python"));
+	PythonScript::preparePath(makeBasePath("python36.zip"));
+    PythonScript::preparePath(makeBasePath("python"));
 #else
-	PythonScript::addPath("/Users/ariens/source/story-project/external/built/lib/python3.6");
-	PythonScript::addPath(makeBasePath("."));
-	PythonScript::addPath(makeBasePath("python36.zip"));
-	PythonScript::addPath(makeBasePath("lib"));
-	PythonScript::addPath(makeBasePath("lib/python3.6"));
+	PythonScript::preparePath("/Users/ariens/source/story-project/external/built/lib/python3.6");
+	PythonScript::preparePath(makeBasePath("."));
+	PythonScript::preparePath(makeBasePath("python36.zip"));
+	PythonScript::preparePath(makeBasePath("lib"));
+	PythonScript::preparePath(makeBasePath("lib/python3.6"));
 #endif
 	PythonScript::initialize();
 

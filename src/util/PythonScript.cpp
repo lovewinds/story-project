@@ -117,7 +117,7 @@ int Multiply(int dx, int dy) {
 	return result;
 }
 
-void PythonScript::addPath(std::string script_path)
+void PythonScript::preparePath(std::string script_path)
 {
 	if (!script_path.empty()) {
 		std::wstring ws;
@@ -198,9 +198,24 @@ void PythonScript::initialize()
 
 		if (Py_IsInitialized()) {
 			//PySys_SetArgv(argc, argv);
+			PyObject *pModule = PyImport_AddModule("__main__");
 			
 			path = Py_GetPath();
 			LOG_DBG("GetPath: [%ls]", path);
+
+			std::string stdOutErr =
+"import sys\n\
+class CatchOutErr:\n\
+    def __init__(self):\n\
+        self.value = ''\n\
+    def write(self, txt):\n\
+        self.value += txt\n\
+catchOutErr = CatchOutErr()\n\
+sys.stdout = catchOutErr\n\
+sys.stderr = catchOutErr\n\
+"; //this is python code to redirect stdouts/stderr
+
+			PyRun_SimpleString(stdOutErr.c_str());
 
 			PyRun_SimpleString(
 				/*"from time import time, ctime\n"
@@ -214,12 +229,28 @@ void PythonScript::initialize()
 				"import helloModule\n"
 				"a = helloModule.hello('Korea')\n"
 				"a.invite()\n"
+				"a.invite2()\n"
 			);
 
 			PrintMyFunc();
 			LOG_DBG("10 * 15 = %d", Multiply(10, 15));
+			PyObject *catcher = PyObject_GetAttrString(pModule, "catchOutErr");
 
-			Py_Finalize();
+			PyErr_Print();
+			PyObject *output = PyObject_GetAttrString(catcher, "value");
+
+			LOG_DBG("==============");
+			LOG_DBG("%s", PyUnicode_AsUTF8(PyObject_Repr(output)));
+			if (true) {
+				//LOGF(PY_LOG, "%s", PyUnicode_AsASCIIString(output));
+				LOG_DBG("===============");
+			} else {
+				LOG_ERR("Not an string !");
+			}
+			Py_DecRef(output);
+			Py_DecRef(catcher);
+
+			//Py_Finalize();
 		}
 #if 0
 		handle = IPCServer::CreateIPC();
@@ -248,6 +279,21 @@ void PythonScript::finalize()
 		instance = nullptr;
 	}
 }
+
+std::string PythonScript::runString(std::string cmd)
+{
+	std::string result;
+	if (nullptr != instance) {
+		LOG_DBG("Command :");
+		LOG_DBG("%s", cmd.c_str());
+		PyRun_SimpleString(cmd.c_str());
+	} else {
+		result = std::string("Not initialized yet !");
+	}
+
+	return result;
+}
+
 #else
 
 void PythonScript::initialize()
@@ -260,11 +306,17 @@ void PythonScript::finalize()
 	LOG_DBG("Cannot use Python");
 }
 
-void PythonScript::addPath(std::string script_path)
+void PythonScript::preparePath(std::string script_path)
 {
 	if (!script_path.empty()) {
 		path_list.push_back(script_path);
 	}
+}
+
+std::string PythonScript::runString(std::string cmd)
+{
+	LOG_DBG("Not supported");
+	return std::string("Not supported");
 }
 
 #endif
