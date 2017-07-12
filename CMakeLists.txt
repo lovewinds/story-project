@@ -143,24 +143,23 @@ ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # TODO: Below additional flags are not working on MSVC. need check.
 IF(${PLATFORM} STREQUAL "Linux")
-	SET(ADDITIONAL_CPPFLAGS "-fPIC -Wno-unused-but-set-parameter -Wno-unused-but-set-variable")
+	SET(ADDITIONAL_CPPFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable")
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 ${PLATFORM_DEF}")
 	# Debug
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
 
 	# Python /external/built/lib/python3.6/config-3.6m-x86_64-linux-gnu
-	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -Wstrict-prototypes")
+	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
 	SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT}
 		"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
-	SET(ADDITIONAL_CPPFLAGS "-fPIC")
 	# -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
 	# Debug
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
 
 	# Python /external/built/lib/python3.6/config-3.6m-darwin
-	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -Wstrict-prototypes")
+	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
 	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-L${PYTHON_LIBRARY}/python3.6/config-3.6m-darwin -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
