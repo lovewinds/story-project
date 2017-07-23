@@ -8,19 +8,22 @@
 #include "util/LogHelper.hpp"
 #include "util/IPCHelper.hpp"
 
-#if !defined(PLATFORM_IOS)
-zmq::context_t IPCServer::context(1);
-zmq::context_t IPCClient::context(1);
-zmq::socket_t IPCServer::socket_server(context, ZMQ_REP);
-zmq::socket_t IPCClient::socket_client(context, ZMQ_REQ);
-#endif
+/* Temporary feature */
+#define FEATURE_IPC_ENABLED
 
 /**************************************************************
  * IPC Server functions
  **************************************************************/
+IPCServer::IPCServer() :
+	context(1),
+	socket_server(context, ZMQ_REP)
+{
+	
+}
+
 void * IPCServer::CreateIPC()
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	try {
 		LOG_DBG("Waiting for IPC client...");
 		/* INPROC only supports inter-thread communication (same process) */
@@ -46,10 +49,13 @@ void IPCServer::DestroyIPC()
 
 unsigned long IPCServer::SendIPC(void * hPipe, const void* pData, size_t tDataSize)
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	zmq::message_t request;
 
 	try {
+		/*
+		 * REQ / REP pair server should send response when data receives
+		 */
 		memcpy(request.data(), "Hello", 5);
 
 		LOG_DBG("Sending Hello ...");
@@ -66,12 +72,18 @@ unsigned long IPCServer::SendIPC(void * hPipe, const void* pData, size_t tDataSi
 
 unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	zmq::message_t request;
 
 	try {
-		socket_server.recv(&request);
+		auto len = socket_server.recv(&request, ZMQ_NOBLOCK);
 		LOG_DBG("Received Hello !");
+
+		if (len > 0) {
+			LOG_DBG("Sending Hello ...");
+			memcpy(request.data(), "Hello", 5);
+			socket_server.send(request);
+		}
 	} catch(zmq::error_t e) {
 		LOG_ERR("[ZMQ] %s", e.what());
 	}
@@ -87,9 +99,16 @@ unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 /**************************************************************
  * IPC Client functions
  **************************************************************/
+IPCClient::IPCClient() :
+	context(1),
+	socket_client(context, ZMQ_REQ)
+{
+	
+}
+
 void * IPCClient::OpenIPC()
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	try {
 		LOG_DBG("Connecting to IPC server...");
 		//socket_client.connect("inproc://story.ipc");
@@ -113,7 +132,7 @@ void IPCClient::CloseIPC()
 
 unsigned long IPCClient::SendIPC(void * hPipe, const void* pData, size_t tDataSize)
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	zmq::message_t request;
 
 	try {
@@ -134,7 +153,7 @@ unsigned long IPCClient::SendIPC(void * hPipe, const void* pData, size_t tDataSi
 //////////////////////////////////////////////////////////////////////////
 unsigned long IPCClient::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 {
-#if !defined(PLATFORM_IOS)
+#if defined(FEATURE_IPC_ENABLED)
 	zmq::message_t request;
 
 	try {

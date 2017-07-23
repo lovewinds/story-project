@@ -6,20 +6,21 @@
 
 #include <zmq.hpp>
 
+/* TODO: Change into single instance */
 class IPCServer
 {
 public:
 	IPCServer();
 
-	static void *CreateIPC();
-	static void DestroyIPC();
+	void *CreateIPC();
+	void DestroyIPC();
 
-	static unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
-	static unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+	unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+	unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
 
 private:
-	static zmq::context_t context;
-	static zmq::socket_t socket_server;
+	zmq::context_t context;
+	zmq::socket_t socket_server;
 };
 
 class IPCClient
@@ -27,13 +28,13 @@ class IPCClient
 public:
 	IPCClient();
 
-	static void *OpenIPC();
-	static void CloseIPC();
+	void *OpenIPC();
+	void CloseIPC();
 
-	static unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
-	static unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+	unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+	unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
 
 private:
-	static zmq::context_t context;
-	static zmq::socket_t socket_client;
+	zmq::context_t context;
+	zmq::socket_t socket_client;
 };

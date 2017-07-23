@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <thread>
+
+#include "IPCHelper.hpp"
 
 class PythonScript
 {
@@ -19,5 +22,9 @@ public:
 private:
 	static std::vector<std::wstring> path_list;
 	static PythonScript *instance;
-	static void *handle;
+
+	static bool state_ipc;
+
+	static std::thread thread_python;
+	static std::thread thread_ipc;
 };

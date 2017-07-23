@@ -3,13 +3,18 @@
 #include "util/IPCHelper.hpp"
 #include "Ecore.hpp"
 
+#include <chrono>
+
 #include <boost/python/class.hpp>
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 
 std::vector<std::wstring> PythonScript::path_list;
 PythonScript* PythonScript::instance = nullptr;
-void* PythonScript::handle = nullptr;
+
+bool PythonScript::state_ipc = true;
+std::thread PythonScript::thread_python;
+std::thread PythonScript::thread_ipc;
 
 #define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE
@@ -156,10 +161,45 @@ PyInit_emb(void)
 {
     return PyModule_Create(&EmbModule);
 }
-
 /**********************************************************************
  * Module End
  **********************************************************************/
+
+
+/**********************************************************************
+ * Threading 
+ **********************************************************************/
+
+static void thread_loop_ipc(bool& running_state)
+{
+	IPCServer ipc_server;
+	void *handle = ipc_server.CreateIPC();
+	if (nullptr == handle) {
+		LOG_ERR("Failed to initialize IPC");
+		return;
+	}
+	
+	char pData[1024] = {0,};
+	size_t tDataSize = 1023;
+	unsigned long ret;
+
+	// with blocking manner
+	while(running_state) {
+		LOG_DBG("Waiting for data receiving");
+		ret = ipc_server.RecvIPC(handle, pData, tDataSize);
+		LOG_DBG("Received data [%lu]", ret);
+
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+
+	// On terminate
+	ipc_server.DestroyIPC();
+}
+
+/**********************************************************************
+ * Threading end
+ **********************************************************************/
+
 
 void PythonScript::initialize()
 {
@@ -252,26 +292,22 @@ sys.stderr = catchOutErr\n\
 
 			//Py_Finalize();
 		}
-#if 0
-		handle = IPCServer::CreateIPC();
-		if (handle) {
-			char pData[1024] = {0,};
-			size_t tDataSize = 1023;
-			unsigned long ret;
 
-			LOG_DBG("Waiting for data receiving");
-			ret = IPCServer::RecvIPC(handle, pData, tDataSize);
-			LOG_DBG("Received data [%lu]", ret);
-		} else {
-			LOG_ERR("Failed to initialize IPC");
-		}
+#if 1
+		thread_ipc = std::thread(thread_loop_ipc, std::ref(state_ipc));
 #endif
 	}
 }
 
 void PythonScript::finalize()
 {
-//	IPCServer::DestroyIPC();
+#if 1
+	LOG_INFO("Wait for IPC thread termination..");
+	state_ipc = false;
+	if (thread_ipc.joinable())
+		thread_ipc.join();
+	LOG_INFO("  Done");
+#endif
 
 	if (nullptr != instance) {
 		if (Py_IsInitialized())

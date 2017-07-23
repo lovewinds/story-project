@@ -25,10 +25,10 @@ void SpLog::connect()
 {
 	long unsigned int t = 0;
 	std::string test("test");
-    IPCClient::OpenIPC();
+    //IPCClient::OpenIPC();
 }
 
 void SpLog::send()
 {
-    IPCClient::SendIPC(NULL, NULL, 0);
+    //IPCClient::SendIPC(NULL, NULL, 0);
 }
