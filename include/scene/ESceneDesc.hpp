@@ -121,11 +121,14 @@ public:
 	int getGridWidth();
 	int getGridHeight();
 	int getGridLevels();
+	void setBaseImage(std::string base);
+	std::string getBaseImage();
 
 protected:
 	int width;
 	int height;
 	int levels;
+	std::string base_image;
 	unsigned short ***gridArray;
 };
 

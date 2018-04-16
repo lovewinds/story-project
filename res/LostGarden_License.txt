@@ -1,0 +1,53 @@
+Lost Garden License
+Many of the emails I receive ask questions about licensing my designs and artwork. In order to clear up any issues (and save me some emailing!) I've created this licensing page. When you see reference to the Lost Garden License, it refers to the items listed below.
+
+Basic License
+All licensed items use the Creative Commons Attribution 3.0 License. In short, you can use and modify any images and design covered by this license provided that you attribute the original source materials to me. I chose this license because
+I want as many people as possible to use the materials I've provided.
+I want to spare developer the accusations of theft that sometimes occur when people recognize my materials. Many of the graphics and designs are widely known at this point. The best solution is educating your users on the source of the original inspiration. That way they can move past yelling 'Thief" and start appreciating the variations on the theme that you have created.
+We have entered a brave new world of open source game designs. This is a rather exciting experiment since in the past, users have been trained that the publisher acts as the singular inspired creator who makes all games associated with a particular IP. If a player liked the first Guitar Hero, they trust that the next Guitar Hero will be driven by the same creative vision. Of course all this is a lie. Sequels and expansion packs are only occasionally made by the original creators. They are usually copies and clones created by contracted teams that have only a minor connection to the original artists.
+
+Open source game designs remove the false facade of the sole inspired creator that has been pushed and marketed by publishers and IP managers. Open source designs publicly declare that game designs are systems that can be implemented in dozens of subtle ways by dozens of different teams. If we believe that sequels are valid experiences, then the products created from open source designs are also valid.
+
+The difference is that with an open source design, you know who contributed what. My designs are readily available. You can see what I added to each project. Everything else was done by the team that made the game. There is no slight of hand promoting a fake brand while nameless creative folks are shuffled about like interchangable cogs behind the scenes. Honesty is the better policy.
+
+You can read more on this particular license at:
+http://creativecommons.org/licenses/by/3.0/us/
+Game design attributions
+If you use a game design from Lost Garden, please include following attribution in your game credits.
+"Game Design Title" design by Daniel Cook (Lostgarden.com)
+When possible link to the original game design. For example, the Fishing Girl design would be: "Fishing Girl" design by Daniel Cook (Lostgarden.com)
+
+Art attributions 
+If you use art from one of my free game art collections, please include the following attribution in a visible location along with any other credits.
+"Art Collection Title" art by Daniel Cook (Lostgarden.com) 
+When possible link to blog post that discusses the original art collection. For example, the Space Cute collection would be "Space Cute" art by Daniel Cook (Lostgarden.com)
+
+Frequently asked question
+
+What game designs and art assets are currently covered under the Lost Garden License?
+
+You can find a complete list here:
+Graphics: http://lostgarden.com/labels/free%20game%20graphics.html
+Game designs: http://lostgarden.com/labels/prototyping%20challenge.html
+Can I use the assets or designs covered by the Lost Garden License in a commercial project?
+Absolutely. I encourage it! The best way to learn about game development is to finish a project and try to sell it. 
+
+Why are you doing this?
+I hope, in some small way, to help cultivate the next generation of great game developers and designers. By removing small road blocks like graphics and design, perhaps a few more people will be encouraged to stop just dreaming and starting making games. Everyone in this industry is here because we stand on the shoulders of past developers. We use their tools, their techniques and their ideas. Giving back to the community is a natural way to repay that great and much appreciated debt. 
+
+Is all art on the website covered by the Lost Garden License? For example, are your drawings and paintings free as well?
+Only those assets that are specifically called out on the associated blog post as being licensed under the Lost Garden License are free to use. There will be a clear link to this page. All other drawings and artwork are protected under standard copyright laws. 
+
+Can I archive assets and designs on other sites?
+Sure. If you archive assets elsewhere, be sure to display a prominent link back to the source page so that other game developers have an opportunity to discover this site.
+
+Can I donate to Lost Garden?
+Even when graphics and designs are released as free, some kind souls want to give back (especially if they've just received a check in the mail).
+
+How much is appropriate to donate? A common fee for both an initial design + graphics might be 10%-20% of final revenues. However, the decision is yours. Any money I receive via the PayPal link below will be set aside for A) improving Lostgarden.com and B) promoting the advancement of game design.
+
+Make payments with PayPal - it's fast, free and secure!
+
+take care
+Danc.

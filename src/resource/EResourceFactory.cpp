@@ -126,10 +126,12 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 		for (auto& grid_it : layer->grid_list)
 		{
 			std::shared_ptr<EGridDesc> gridDesc = grid_it;
+			std::string base_tile_image = "MapTile";
+			base_tile_image = gridDesc->getBaseImage();
 
 			ERPGScene* rpg_scene = dynamic_cast<ERPGScene*>(scene.get());
 			std::shared_ptr<EGridMapTexture> map(
-					new EGridMapTexture("MyMap", "MapTile", gridDesc));
+					new EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc));
 			if (rpg_scene) {
 				rpg_scene->setMap(map);
 				rpg_scene->setGridDescriptor(gridDesc);

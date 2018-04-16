@@ -85,10 +85,10 @@ void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 {
 	SDL_Window* window = Ecore::getInstance()->getWindow();
 	SDL_Rect rect = { 0, };
-    const unsigned int base_width = 256;
-    const unsigned int base_height = 1312;
-    const unsigned int cell_width = 32;
-    const unsigned int cell_height = 32;
+    const unsigned int base_width = 240;
+    const unsigned int base_height = 280;
+    const unsigned int cell_width = 40;
+    const unsigned int cell_height = 40;
 	unsigned int row_count = (unsigned int)(base_width / cell_width);
 	unsigned int col_count = (unsigned int)(base_height / cell_height);
     unsigned int tile = 0;

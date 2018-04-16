@@ -207,6 +207,16 @@ int EGridDesc::getGridLevels()
 	return levels;
 }
 
+void EGridDesc::setBaseImage(std::string base)
+{
+	base_image = base;
+}
+
+std::string EGridDesc::getBaseImage()
+{
+	return base_image;
+}
+
 /**
  * ESceneLayerDesc class
  */

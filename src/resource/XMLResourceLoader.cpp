@@ -254,8 +254,11 @@ bool XMLResourceLoader::loadResources(std::string& res_path)
 					else if (itm_node.compare("TileMap") == 0) {
 						LOG_INFO("Width: [%d] / Height: [%d] / Levels: [%d]", p_w, p_h, p_levels);
 						std::string delim = " ";
+						std::string base_tile(node.node().attribute("source").value());
+
 						/* Tile map data */
 						std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h, p_levels));
+						gridDesc->setBaseImage(base_tile);
 						for (auto map_layer : node.node().children()) {
 							/* Map layer */
 							std::string map_layer_name(map_layer.attribute("name").value());

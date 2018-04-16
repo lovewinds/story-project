@@ -26,6 +26,8 @@
 		F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4468A051D96392A003AB89B /* Images-2.xcassets */; };
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F467A72A1F12623F00A70827 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F467A7291F12623F00A70827 /* boost.framework */; };
+		F46CE4701FC5C97000ABAB5C /* LostGarden_Grid_BasicTile.png in Resources */ = {isa = PBXBuildFile; fileRef = F46CE46F1FC5C96F00ABAB5C /* LostGarden_Grid_BasicTile.png */; };
+		F46CE4721FC5C97F00ABAB5C /* LostGarden_License.txt in Resources */ = {isa = PBXBuildFile; fileRef = F46CE4711FC5C97F00ABAB5C /* LostGarden_License.txt */; };
 		F46D5D261F0FB6AB00E5373E /* BZip2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D221F0FB6AB00E5373E /* BZip2.framework */; };
 		F46D5D271F0FB6AB00E5373E /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */; };
 		F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D241F0FB6AB00E5373E /* Python.framework */; };
@@ -180,6 +182,8 @@
 		F444ED9F1E6286C100C14B4E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4468A051D96392A003AB89B /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "___PROJECTNAME___/Images-2.xcassets"; sourceTree = "<group>"; };
 		F467A7291F12623F00A70827 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../external/built/frameworks/boost.framework; sourceTree = "<group>"; };
+		F46CE46F1FC5C96F00ABAB5C /* LostGarden_Grid_BasicTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LostGarden_Grid_BasicTile.png; path = ../../res/LostGarden_Grid_BasicTile.png; sourceTree = "<group>"; };
+		F46CE4711FC5C97F00ABAB5C /* LostGarden_License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LostGarden_License.txt; path = ../../res/LostGarden_License.txt; sourceTree = "<group>"; };
 		F46D5D221F0FB6AB00E5373E /* BZip2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BZip2.framework; path = ../../external/built/frameworks/BZip2.framework; sourceTree = "<group>"; };
 		F46D5D231F0FB6AB00E5373E /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = ../../external/built/frameworks/OpenSSL.framework; sourceTree = "<group>"; };
 		F46D5D241F0FB6AB00E5373E /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = ../../external/built/frameworks/Python.framework; sourceTree = "<group>"; };
@@ -365,6 +369,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F46CE4711FC5C97F00ABAB5C /* LostGarden_License.txt */,
+				F46CE46F1FC5C96F00ABAB5C /* LostGarden_Grid_BasicTile.png */,
 				F4C63AB51E66EF1A00A552C0 /* ic_circle.png */,
 				F4C63AB61E66EF1A00A552C0 /* ic_cross.png */,
 				F4C63AB71E66EF1A00A552C0 /* ic_rect.png */,
@@ -787,11 +793,13 @@
 				F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */,
 				F4A37F4E1D8D929400186118 /* gom-004.png in Resources */,
 				F42169B81D05593A00C50450 /* BerryGarden.png in Resources */,
+				F46CE4701FC5C97000ABAB5C /* LostGarden_Grid_BasicTile.png in Resources */,
 				F46D67381F0FD4AF00E5373E /* ipc.proto in Resources */,
 				F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */,
 				F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */,
 				F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */,
 				F42169B91D05593A00C50450 /* bg-black.png in Resources */,
+				F46CE4721FC5C97F00ABAB5C /* LostGarden_License.txt in Resources */,
 				F48617601D96C44F008641CB /* gom-sprite.png in Resources */,
 				F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */,
 				F4C63AB91E66EF1A00A552C0 /* ic_circle.png in Resources */,
