@@ -46,3 +46,4 @@ WinDebug
 
 # Python caches
 __pycache__
+*.pyc

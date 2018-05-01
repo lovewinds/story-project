@@ -1,16 +1,17 @@
 #!/usr/bin/python
 import os
+from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
 
-class Builder_SDL2:
+class Builder_gtest:
 	def __init__(self):
 		self.working_path = '.'
 		self.platform = Platform.Windows
 		self.env = None
 
-		self.package_url = 'https://www.libsdl.org/release/SDL2-2.0.5.tar.gz'
-		self.package_name = 'SDL2'
-		self.archive_file = 'SDL2-2.0.5.tar.gz'
+		self.package_url = 'https://github.com/google/googletest/archive/release-1.8.0.tar.gz'
+		self.package_name = 'gtest'
+		self.archive_file = 'googletest-release-1.8.0.tar.gz'
 
 	def build(self, env_param):
 		print("Building {} ...".format(self.package_name))
@@ -32,33 +33,38 @@ class Builder_SDL2:
 		# Patch
 
 	def _post_build(self):
-		if(self.env.platform == Platform.iOS):
-			pkg_path = '{}/{}'.format(
-				self.env.output_packaging_path,
-				self.package_name
-			)
-			BuildEnv.mkdir_p(pkg_path)
+		build_path = '{}/{}/build'.format(
+			self.env.source_path,
+			self.package_name
+		)
 
-			os.chdir(self.env.output_path)
-			os.system('cp -f -r ')
-
+		# There is no install rule, just copy library file into built directory.
+		# copy2('{}/libgtest_main.a'.format(build_path), self.env.output_lib_path)
+		# copy2('{}/libgtest.so'.format(build_path), self.env.output_lib_path)
 
 	def _do_build(self):
+		build_parent_path = '{}/{}'.format(
+			self.env.source_path,
+			self.package_name
+		)
 		build_path = '{}/{}/build'.format(
 			self.env.source_path,
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
 			self.env.platform == Platform.iOS):
-			if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
+			if os.path.exists(self.env.output_lib_path+'/libgtest.a'):
 				print("    [{}] already built.".format(self.package_name))
 			else:
 				print("    [{}] Start building ...".format(self.package_name))
 				BuildEnv.mkdir_p(build_path)
+				os.chdir(build_parent_path)
+
 				os.chdir(build_path)
-				os.system('{} ../configure --prefix={}; make -j {}; make install'.format(
+				# make install
+				os.system('{} cmake -DCMAKE_INSTALL_LIBDIR={} -DCMAKE_INSTALL_INCLUDEDIR={} ..; make -j {}'.format(
 					self.env.BUILD_FLAG,
-					self.env.output_path,
+					self.env.output_lib_path,
+					self.env.output_include_path,
 					self.env.NJOBS
 				))
-				# os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+output_path+';make -j'+NJOBS+';make install')

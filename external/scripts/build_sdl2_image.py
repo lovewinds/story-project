@@ -2,15 +2,15 @@
 import os
 from scripts.build_env import BuildEnv, Platform
 
-class Builder_SDL2:
+class Builder_SDL2_Image:
 	def __init__(self):
 		self.working_path = '.'
 		self.platform = Platform.Windows
 		self.env = None
 
-		self.package_url = 'https://www.libsdl.org/release/SDL2-2.0.5.tar.gz'
-		self.package_name = 'SDL2'
-		self.archive_file = 'SDL2-2.0.5.tar.gz'
+		self.package_url = 'https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.tar.gz'
+		self.package_name = 'SDL2_image'
+		self.archive_file = 'SDL2_image-2.0.1.tar.gz'
 
 	def build(self, env_param):
 		print("Building {} ...".format(self.package_name))
@@ -32,16 +32,7 @@ class Builder_SDL2:
 		# Patch
 
 	def _post_build(self):
-		if(self.env.platform == Platform.iOS):
-			pkg_path = '{}/{}'.format(
-				self.env.output_packaging_path,
-				self.package_name
-			)
-			BuildEnv.mkdir_p(pkg_path)
-
-			os.chdir(self.env.output_path)
-			os.system('cp -f -r ')
-
+		pass
 
 	def _do_build(self):
 		build_path = '{}/{}/build'.format(
@@ -50,15 +41,15 @@ class Builder_SDL2:
 		)
 		if(self.env.platform == Platform.Linux or
 			self.env.platform == Platform.iOS):
-			if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
+			if os.path.exists(self.env.output_lib_path+'/libSDL2_image.a'):
 				print("    [{}] already built.".format(self.package_name))
 			else:
 				print("    [{}] Start building ...".format(self.package_name))
 				BuildEnv.mkdir_p(build_path)
 				os.chdir(build_path)
-				os.system('{} ../configure --prefix={}; make -j {}; make install'.format(
+				os.system('{} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
 					self.env.BUILD_FLAG,
+					self.env.output_bin_path,
 					self.env.output_path,
 					self.env.NJOBS
 				))
-				# os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+output_path+';make -j'+NJOBS+';make install')
