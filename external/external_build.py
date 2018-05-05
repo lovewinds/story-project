@@ -18,6 +18,7 @@ from scripts.build_pugixml import Builder_pugixml
 from scripts.build_gtest import Builder_gtest
 from scripts.build_protobuf import Builder_protobuf
 from scripts.build_zeromq import Builder_zeromq
+from scripts.build_python3 import Builder_python
 
 NJOBS = str(multiprocessing.cpu_count() / 2)
 if not NJOBS:
@@ -34,7 +35,8 @@ modules = [
 	Builder_pugixml(),
 	Builder_gtest(),
 	Builder_protobuf(),
-	Builder_zeromq()
+	Builder_zeromq(),
+	Builder_python()
 ]
 
 def start_build(env_param):

@@ -54,17 +54,19 @@ class BuildEnv:
 				pass
 			else: raise
 
-	def download_file(self, url, file_name):
+	def download_file(self, url, file_name, headers=None):
 		# Proxy : http://bsnippet.tistory.com/45
 		self.mkdir_p(self.temp_path)
 		if not os.path.isfile("{}/{}".format(self.temp_path, file_name)):
 			# urllib.request.urlretrieve(url,
 			# 	"{}/{}".format(self.temp_path, file_name))
-			req = requests.get(url, stream=True)
+			req = requests.get(url, stream=True, headers=headers)
 			if req.status_code == 200:
 				with open("{}/{}".format(self.temp_path, file_name), 'wb') as f:
 					req.raw.decode_content = True
 					shutil.copyfileobj(req.raw, f)
+			else:
+				print("  status : {}".format(req.status_code))
 
 			if not os.path.isfile("{}/{}".format(self.temp_path, file_name)):
 				print("  Downloaded file not found! Please check internet connection, etc")
@@ -76,7 +78,7 @@ class BuildEnv:
 		else:
 			tarfile.open('{}/{}'.format(self.temp_path, archive_file)).extractall(self.source_path)
 			# Remove '.tar.gz'
-			archive_name = archive_file[:-7]
+			archive_name = archive_file.replace('.tar.gz', '').replace('.tgz', '')
 			os.rename('{}/{}'.format(self.source_path, archive_name),
 					  '{}/{}'.format(self.source_path, package_name))
 			print("    [{}] extracted.".format(package_name))
