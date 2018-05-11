@@ -9,14 +9,14 @@ setup(name="story",
 			["scripting/SpLogHelper_wrap.cxx"],
 			include_dirs=[
 				'include/',
-				'external/built/include/SDL2/',
-				'external/sources/g3log/src/',
-				'external/sources/cppzmq/',
-				'external/sources/zeromq/include/',
+				'external/lib_build/macOS/include/SDL2/',
+				'external/lib_source/macOS/g3log/src/',
+				'external/lib_source/macOS/cppzmq/',
+				'external/lib_source/macOS/zeromq/include/',
 				'scripting/'
 			],
 			library_dirs=[
-				'external/built/lib',
+				'external/lib_build/macOS/lib',
 				'build'
 			],
 			libraries=['g3logger', 'zmq-static', 'story-project'],

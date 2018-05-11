@@ -40,6 +40,7 @@ class Builder_SDL2_Image:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			if os.path.exists(self.env.output_lib_path+'/libSDL2_image.a'):
 				print("    [{}] already built.".format(self.package_name))

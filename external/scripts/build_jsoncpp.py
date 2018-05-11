@@ -39,6 +39,7 @@ class Builder_jsoncpp:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			# Generate amalgamated source and header for jsoncpp
 			if os.path.exists(build_path+'/dist'):

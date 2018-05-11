@@ -1,16 +1,17 @@
 #!/usr/bin/python
 import os
+from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
 
-class Builder_pugixml:
+class Builder_boost:
 	def __init__(self):
 		self.working_path = '.'
 		self.platform = Platform.Windows
 		self.env = None
 
-		self.package_url = 'http://github.com/zeux/pugixml/releases/download/v1.7/pugixml-1.7.tar.gz'
-		self.package_name = 'pugixml'
-		self.archive_file = 'pugixml-1.7.tar.gz'
+		self.package_url = 'https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz'
+		self.package_name = 'boost'
+		self.archive_file = 'boost_1_64_0.tar.gz'
 
 	def build(self, env_param):
 		print("Building {} ...".format(self.package_name))
@@ -18,7 +19,6 @@ class Builder_pugixml:
 		self._pre_build()
 		self._do_build()
 		self._post_build()
-		
 
 	def _pre_build(self):
 		print("  [#0] Checking build output exists")
@@ -29,28 +29,33 @@ class Builder_pugixml:
 		print("  [#2] Extracting package")
 		self.env.extract_tarball(self.archive_file, self.package_name)
 
-		# Patch
-
 	def _post_build(self):
 		pass
 
 	def _do_build(self):
-		build_path = '{}/{}/scripts/build'.format(
+		pkg_path = '{}/{}'.format(
+			self.env.source_path,
+			self.package_name
+		)
+		build_path = '{}/{}/build'.format(
 			self.env.source_path,
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
 			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
-			if os.path.exists(self.env.output_lib_path+'/libpugixml.a'):
+			if os.path.exists(self.env.output_lib_path+'/libboost_python3.a'):
 				print("    [{}] already built.".format(self.package_name))
 			else:
 				print("    [{}] Start building ...".format(self.package_name))
 				BuildEnv.mkdir_p(build_path)
-				os.chdir(build_path)
-				os.system('{} cmake -DCMAKE_INSTALL_LIBDIR={} -DCMAKE_INSTALL_INCLUDEDIR={} ..; make -j {}; make install'.format(
-					self.env.BUILD_FLAG,
-					self.env.output_lib_path,
-					self.env.output_include_path,
-					self.env.NJOBS
+				os.chdir(pkg_path)
+				# self.env.BUILD_FLAG,
+				os.system('PYTHON=python3; PATH={}:$PATH; ./bootstrap.sh --with-python-root={} --with-libraries=python --prefix={}'.format(
+					self.env.output_bin_path,
+					self.env.output_path,
+					self.env.output_path
+				))
+				os.system("./b2 --build-dir=build --cxxflags='-fPIC' --prefix={} --with-python link=static install".format(
+					self.env.output_path,
 				))

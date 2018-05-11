@@ -9,15 +9,15 @@ setup(name="story",
 			["scripting/SpLogHelper_wrap.cxx"],
 			include_dirs=[
 				'include/',
-				'external/built/include/SDL2/',
-				'external/sources/g3log/src/',
-				'external/sources/cppzmq/',
-				'external/sources/zeromq/include/',
+				'external/lib_build/Windows/include/SDL2/',
+				'external/lib_source/Windows/g3log/src/',
+				'external/lib_source/Windows/cppzmq/',
+				'external/lib_source/Windows/zeromq/include/',
 				'scripting/'
 			],
 			library_dirs=[
-				'external/built/lib',
-				'external/built/Debug',
+				'external/lib_build/Windows/lib',
+				'external/lib_build/Windows/Debug',
 				'build/Debug'
 			],
 			libraries=['dbghelp', 'g3logger', 'libzmq', 'libstory-project'],

@@ -45,7 +45,9 @@ gRenderer(NULL)
 	PythonScript::preparePath(makeBasePath("python36.zip"));
     PythonScript::preparePath(makeBasePath("python"));
 #else
-	PythonScript::preparePath("/Users/ariens/source/story-project/external/built/lib/python3.6");
+	/* macOS */
+	/* TODO: Handle install path for all resources */
+	PythonScript::preparePath(makeBasePath("../external/lib_build/macOS/lib/python3.6"));
 	PythonScript::preparePath(makeBasePath("."));
 	PythonScript::preparePath(makeBasePath("python36.zip"));
 	PythonScript::preparePath(makeBasePath("lib"));

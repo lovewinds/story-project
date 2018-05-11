@@ -33,14 +33,20 @@ class Builder_gtest:
 		# Patch
 
 	def _post_build(self):
-		build_path = '{}/{}/build'.format(
+		build_path = '{}/{}/build/googlemock/gtest'.format(
 			self.env.source_path,
 			self.package_name
 		)
 
 		# There is no install rule, just copy library file into built directory.
-		# copy2('{}/libgtest_main.a'.format(build_path), self.env.output_lib_path)
-		# copy2('{}/libgtest.so'.format(build_path), self.env.output_lib_path)
+		if os.path.exists('{}/libgtest_main.a'.format(build_path)):
+			copy2('{}/libgtest_main.a'.format(build_path), self.env.output_lib_path)
+		if os.path.exists('{}/libgtest_main.so'.format(build_path)):
+			copy2('{}/libgtest_main.so'.format(build_path), self.env.output_lib_path)
+		if os.path.exists('{}/libgtest.a'.format(build_path)):
+			copy2('{}/libgtest.a'.format(build_path), self.env.output_lib_path)
+		if os.path.exists('{}/libgtest.so'.format(build_path)):
+			copy2('{}/libgtest.so'.format(build_path), self.env.output_lib_path)
 
 	def _do_build(self):
 		build_parent_path = '{}/{}'.format(
@@ -52,6 +58,7 @@ class Builder_gtest:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			if os.path.exists(self.env.output_lib_path+'/libgtest.a'):
 				print("    [{}] already built.".format(self.package_name))
@@ -62,7 +69,7 @@ class Builder_gtest:
 
 				os.chdir(build_path)
 				# make install
-				os.system('{} cmake -DCMAKE_INSTALL_LIBDIR={} -DCMAKE_INSTALL_INCLUDEDIR={} ..; make -j {}'.format(
+				os.system('{} cmake -DCMAKE_INSTALL_LIBDIR={} -DCMAKE_INSTALL_INCLUDEDIR={} ..; make -j {}; make install'.format(
 					self.env.BUILD_FLAG,
 					self.env.output_lib_path,
 					self.env.output_include_path,

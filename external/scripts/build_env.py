@@ -25,9 +25,9 @@ class BuildEnv:
 		self.platform = platform
 		self.patch_path = '{}/patches'.format(self.working_path)
 		self.temp_path = '{}/temp'.format(self.working_path)
-		self.source_path = '{}/test_source/{}'.format(self.working_path,
+		self.source_path = '{}/lib_source/{}'.format(self.working_path,
 			Platform.reverse_mapping[self.platform])
-		self.output_path = '{}/test_build/{}'.format(self.working_path,
+		self.output_path = '{}/lib_build/{}'.format(self.working_path,
 			Platform.reverse_mapping[self.platform])
 
 		self.output_bin_path = '{}/bin'.format(self.output_path)

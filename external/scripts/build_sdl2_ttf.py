@@ -43,6 +43,7 @@ class Builder_SDL2_TTF:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			if os.path.exists(self.env.output_lib_path+'/libSDL2_ttf.a'):
 				print("    [{}] already built.".format(self.package_name))
@@ -62,6 +63,7 @@ class Builder_SDL2_TTF:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			if os.path.exists(self.env.output_bin_path+'/freetype-config'):
 				print("    [FreeType2] already built.")

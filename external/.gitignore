@@ -1,8 +1,8 @@
 # Built result files
 built
 sources
-test_build
-test_source
+lib_build
+lib_source
 temp
 
 # Do not push big archives

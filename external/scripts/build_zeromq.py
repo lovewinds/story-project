@@ -13,6 +13,10 @@ class Builder_zeromq:
 		self.package_name = 'zeromq'
 		self.archive_file = 'zeromq-4.2.1.tar.gz'
 
+		self.subpkg_url = 'https://github.com/zeromq/cppzmq/archive/v4.2.2.tar.gz'
+		self.subpkg_name = 'cppzmq'
+		self.subpkg_archive = 'cppzmq-4.2.2.tar.gz'
+
 	def build(self, env_param):
 		print("Building {} ...".format(self.package_name))
 		self.env = env_param
@@ -25,9 +29,11 @@ class Builder_zeromq:
 
 		print("  [#1] Downloading package")
 		self.env.download_file(self.package_url, self.archive_file)
+		self.env.download_file(self.subpkg_url, self.subpkg_archive)
 
 		print("  [#2] Extracting package")
 		self.env.extract_tarball(self.archive_file, self.package_name)
+		self.env.extract_tarball(self.subpkg_archive, self.subpkg_name)
 
 		# Patch
 		self._patch_libzmq_linux()
@@ -51,6 +57,7 @@ class Builder_zeromq:
 			self.package_name
 		)
 		if(self.env.platform == Platform.Linux or
+			self.env.platform == Platform.macOS or
 			self.env.platform == Platform.iOS):
 			if os.path.exists(self.env.output_lib_path+'/libzmq-static.a'):
 				print("    [{}] already built.".format(self.package_name))
