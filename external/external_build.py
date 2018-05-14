@@ -1,14 +1,16 @@
 #!/usr/bin/python
 
 import os
+import sys
 import argparse
+import traceback
 import multiprocessing
 import scripts.build_env as benv
 
 from scripts.build_env import BuildEnv, Platform
 
 # TODO : Add build modules below
-from scripts.build_sdl2 import Builder_SDL2
+from scripts.build_sdl2 import Builder_SDL2_new
 from scripts.build_sdl2_image import Builder_SDL2_Image
 from scripts.build_sdl2_ttf import Builder_SDL2_TTF
 from scripts.build_sdl2_gfx import Builder_SDL2_gfx
@@ -27,23 +29,32 @@ if not NJOBS:
 
 # Start building
 modules = [
-	Builder_SDL2(),
-	Builder_SDL2_Image(),
-	Builder_SDL2_TTF(),
-	Builder_SDL2_gfx(),
-	Builder_g3log(),
-	Builder_jsoncpp(),
-	Builder_pugixml(),
-	Builder_gtest(),
-	Builder_protobuf(),
-	Builder_zeromq(),
-	Builder_python(),
-	Builder_boost()
+	Builder_SDL2_new(),
+	# Builder_SDL2_Image(),
+	# Builder_SDL2_TTF(),
+	# Builder_SDL2_gfx(),
+	# Builder_g3log(),
+	# Builder_jsoncpp(),
+	# Builder_pugixml(),
+	# Builder_gtest(),
+	# Builder_protobuf(),
+	# Builder_zeromq(),
+	# Builder_python(),
+	# Builder_boost()
 ]
 
 def start_build(env_param):
 	for m in modules:
-		m.build(env_param)
+		result = False
+		try:
+			result = m.build(env_param)
+		except Exception as e:
+			print("Failed to build [{}] !".format(m.setup.get('name')))
+			traceback.print_exc(file=sys.stdout)
+		
+		if result == False:
+			# TODO: Append into failed list and print detail log
+			pass
 
 if __name__ == "__main__":
 	# Handle arguments
