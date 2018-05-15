@@ -4,6 +4,7 @@ sources
 lib_build
 lib_source
 temp
+logs
 
 # Do not push big archives
 boost*.tar.gz

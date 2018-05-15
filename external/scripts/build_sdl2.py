@@ -41,11 +41,12 @@ class Builder_SDL2_new(Builder):
 		print("    [{}] Start building ...".format(self.setup['name']))
 		BuildEnv.mkdir_p(build_path)
 		os.chdir(build_path)
-		os.system('{} ../configure --prefix={}; make -j {}; make install'.format(
+		cmd = '{} ../configure --prefix={}; make -j {}; make install'.format(
 			self.env.BUILD_FLAG,
 			self.env.output_path,
 			self.env.NJOBS
-		))
+		)
+		self.env.run_command(cmd, self.setup['name'])
 	
 	def _build_iOS(self):
 		pass
@@ -67,7 +68,6 @@ class Builder_SDL2:
 		self._pre_build()
 		self._do_build()
 		self._post_build()
-		
 
 	def _pre_build(self):
 		print("  [#0] Checking build output exists")
@@ -96,18 +96,16 @@ class Builder_SDL2:
 			self.env.source_path,
 			self.package_name
 		)
-		if(self.env.platform == Platform.Linux or
-			self.env.platform == Platform.macOS or
-			self.env.platform == Platform.iOS):
-			if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
-				print("    [{}] already built.".format(self.package_name))
-			else:
-				print("    [{}] Start building ...".format(self.package_name))
-				BuildEnv.mkdir_p(build_path)
-				os.chdir(build_path)
-				os.system('{} ../configure --prefix={}; make -j {}; make install'.format(
-					self.env.BUILD_FLAG,
-					self.env.output_path,
-					self.env.NJOBS
-				))
-				# os.system(DEBUG_BUILD_FLAG+'../configure --prefix='+output_path+';make -j'+NJOBS+';make install')
+
+		if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
+			print("    [{}] has been built already.".format(self.package_name))
+		else:
+			print("    [{}] Start building ...".format(self.package_name))
+			BuildEnv.mkdir_p(build_path)
+			os.chdir(build_path)
+			cmd = '{} ../configure --prefix={}; make -j {}; make install'.format(
+				self.env.BUILD_FLAG,
+				self.env.output_path,
+				self.env.NJOBS
+			)
+			self.env.run_command(cmd, self.package_name)

@@ -1,5 +1,8 @@
 #!/usr/bin/python
 import os
+import sys
+import time
+import subprocess
 import tarfile
 import requests
 import shutil
@@ -20,7 +23,8 @@ def enum(*sequential, **named):
 Platform = enum('Windows', 'Linux', 'macOS', 'iOS', 'NotSupport')
 
 class BuildEnv:
-	def __init__(self, platform, build_type, working_path):
+	def __init__(self, platform, build_type, working_path, verbose=False):
+		self.verbose = verbose
 		self.working_path = working_path
 		self.platform = platform
 		self.patch_path = '{}/patches'.format(self.working_path)
@@ -82,3 +86,49 @@ class BuildEnv:
 			os.rename('{}/{}'.format(self.source_path, archive_name),
 					  '{}/{}'.format(self.source_path, package_name))
 			print("    [{}] extracted.".format(package_name))
+
+	def run_command(self, cmd, module_name):
+		str_out = ''
+		if self.verbose:
+			proc = subprocess.Popen(cmd, shell=True)
+			while proc.poll() is None:
+				time.sleep(1)
+			(str_out, str_err) = proc.communicate()
+		else:
+			proc = subprocess.Popen(cmd, shell=True,
+									stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+			idx = 0
+			while proc.poll() is None:
+				idx += 1
+				time.sleep(1)
+				s = "." * (idx % 10)
+				sys.stdout.write("\r    [{}]                         ".format(module_name))
+				sys.stdout.write("\r    [{}] {}".format(module_name, s))
+				sys.stdout.flush()
+
+			sys.stdout.write("\r    [{}]                         ".format(module_name))
+			sys.stdout.write("\r    [{}] Finished !\n".format(module_name))
+			(str_out, str_err) = proc.communicate()
+
+		# Store as a log file
+		now = time.localtime()
+		ct = '%04d%02d%02d_%02d%02d%02d' % (
+				now.tm_year, now.tm_mon, now.tm_mday,
+				now.tm_hour, now.tm_min, now.tm_sec)
+		log_dir = '{}/logs/{}'.format(self.working_path, module_name)
+		self.mkdir_p(log_dir)
+		log_file = '{}/{}.{}.log'.format(log_dir, module_name, ct)
+		with open(log_file, 'w') as f:
+			f.write(str_out)
+
+		if proc.returncode != 0:
+			# [TEST] Error handling
+			print("")
+			print("="*80)
+			print("[TEST] An error has been occured !")
+			print("       Check following log file:")
+			print("         {}".format(log_file))
+			print("="*80)
+			print(str_out)
+
+		return log_file

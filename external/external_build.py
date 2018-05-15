@@ -97,6 +97,8 @@ if __name__ == "__main__":
 		WORKING_PATH = args.path
 
 	env = BuildEnv(CURRENT_PLATFORM, args.type, WORKING_PATH)
+	if 'TRUE' == args.verbose:
+		env.verbose = True
 
 	print("###########################################")
 	print("## Prepare to build external libraries ...")
