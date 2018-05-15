@@ -18,10 +18,9 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - kalakris-cmake
     packages:
-      - gcc-4.9
-      - g++-4.9
+      - gcc-5
+      - g++-5
       - clang
       - python-dev
       - cmake
@@ -40,7 +39,8 @@ addons:
 script: 
   - mkdir -p build
   - cd build
+  - cmake --version
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake .. && make ; fi
 
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+- if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
