@@ -148,6 +148,8 @@ class BuildEnv:
 				print("         {}".format(log_file))
 				print("Return code: {}".format(proc.returncode))
 				print("="*80)
-				print(str(str_out))
+				with open(log_file, 'r') as f:
+					for line in f.readlines():
+						print(line)
 
 		return log_file

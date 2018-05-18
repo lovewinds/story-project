@@ -64,7 +64,8 @@ class Builder_g3log(Builder):
 
 	def _post_build_Linux(self):
 		# There is no install rule, just copy library file into built directory.
-		copy2('{}/libg3logger.a'.format(self.build_path), self.env.output_lib_path)
+		if os.path.exists('{}/libg3logger.a'.format(self.build_path)):
+			copy2('{}/libg3logger.a'.format(self.build_path), self.env.output_lib_path)
 		if os.path.exists('{}/libg3logger.so'.format(self.build_path)):
 			copy2('{}/libg3logger.so'.format(self.build_path), self.env.output_lib_path)
 		if os.path.exists('{}/libg3logger_shared.dylib'.format(self.build_path)):
