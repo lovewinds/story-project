@@ -2,6 +2,7 @@
 
 import os
 import sys
+import math
 import argparse
 import traceback
 import multiprocessing
@@ -10,7 +11,7 @@ import scripts.build_env as benv
 from scripts.build_env import BuildEnv, Platform
 
 # TODO : Add build modules below
-from scripts.build_sdl2 import Builder_SDL2_new
+from scripts.build_sdl2 import Builder_SDL2
 from scripts.build_sdl2_image import Builder_SDL2_Image
 from scripts.build_sdl2_ttf import Builder_SDL2_TTF
 from scripts.build_sdl2_gfx import Builder_SDL2_gfx
@@ -23,24 +24,26 @@ from scripts.build_zeromq import Builder_zeromq
 from scripts.build_python3 import Builder_python
 from scripts.build_boost import Builder_boost
 
-NJOBS = str(multiprocessing.cpu_count() / 2)
-if not NJOBS:
+cpus = multiprocessing.cpu_count()
+if cpus == 2:
 	NJOBS="1"
+else:
+	NJOBS = str(int(math.ceil(cpus * 0.7)))
 
 # Start building
 modules = [
-	Builder_SDL2_new(),
-	# Builder_SDL2_Image(),
-	# Builder_SDL2_TTF(),
-	# Builder_SDL2_gfx(),
-	# Builder_g3log(),
-	# Builder_jsoncpp(),
-	# Builder_pugixml(),
-	# Builder_gtest(),
-	# Builder_protobuf(),
-	# Builder_zeromq(),
-	# Builder_python(),
-	# Builder_boost()
+	Builder_SDL2(),
+	Builder_SDL2_Image(),
+	Builder_SDL2_TTF(),
+	Builder_SDL2_gfx(),
+	Builder_g3log(),
+	Builder_jsoncpp(),
+	Builder_pugixml(),
+	Builder_gtest(),
+	Builder_protobuf(),
+	Builder_zeromq(),
+	Builder_python(),
+	Builder_boost()
 ]
 
 def start_build(env_param):
@@ -60,9 +63,9 @@ if __name__ == "__main__":
 	# Handle arguments
 	parser = argparse.ArgumentParser(description='Build script for external packages !!! NOT supported yet!!!')
 	parser.add_argument('--path', help='Set running path of script')
-	parser.add_argument('--type', default='debug',
+	parser.add_argument('--type', default='release',
 					choices=['debug', 'release'],
-					help='Select compile type (default: debug)')
+					help='Select compile type (default: release)')
 	parser.add_argument('--static', default='TRUE',
 					choices=['TRUE', 'FALSE'],
 					help='Select linking type (default: TRUE)')
@@ -74,9 +77,8 @@ if __name__ == "__main__":
 	parser.add_argument('--platform', default='Linux',
 					choices=['Windows', 'Linux', 'macOS', 'iOS'],
 					help='Select platform to build. (default: Windows)')
-	parser.add_argument('--verbose', default='FALSE',
-					choices=['TRUE', 'FALSE'],
-					help='Display compile messages (default: FALSE)')
+	parser.add_argument('-v', '--verbose', action='store_true',
+					help='Display compile messages (default: False)')
 	args = parser.parse_args()
 
 	if args.platform == 'Windows':
@@ -97,8 +99,7 @@ if __name__ == "__main__":
 		WORKING_PATH = args.path
 
 	env = BuildEnv(CURRENT_PLATFORM, args.type, WORKING_PATH)
-	if 'TRUE' == args.verbose:
-		env.verbose = True
+	env.verbose = args.verbose
 
 	print("###########################################")
 	print("## Prepare to build external libraries ...")
@@ -111,6 +112,7 @@ if __name__ == "__main__":
 	print("## Static link : [ {} ]".format(args.static))
 	print("## Working path: [ {} ]".format(WORKING_PATH))
 	print("## NJOBS       : [ {} ]".format(NJOBS))
+	print("##      (CPUs) : [ {} ]".format(cpus))
 	print("###########################################")
 
 	start_build(env)

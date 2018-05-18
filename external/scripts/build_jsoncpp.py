@@ -1,50 +1,47 @@
 #!/usr/bin/python
 import os
 from scripts.build_env import BuildEnv, Platform
+from scripts.build_package import Builder
 
-class Builder_jsoncpp:
+class Builder_jsoncpp(Builder):
 	def __init__(self):
-		self.working_path = '.'
-		self.platform = Platform.Windows
-		self.env = None
+		super(Builder_jsoncpp, self)
+		self.setup = {
+			'name': 'jsoncpp',
+			'common': {
+				'url': 'https://github.com/open-source-parsers/jsoncpp/archive/1.6.5.tar.gz',
+				'filename': 'jsoncpp-1.6.5.tar.gz'
+			},
+			'Linux': {
+				'pre': None,
+				'build': self._build_Linux,
+				'post': None,
+			},
+			'macOS': {
+				'pre': None,
+				'build': self._build_Linux,
+				'post': None,
+			},
+			'iOS': {
+				'pre': None,
+				'build': None,
+				'post': None,
+			}
+		}
 
-		self.package_url = 'https://github.com/open-source-parsers/jsoncpp/archive/1.6.5.tar.gz'
-		self.package_name = 'jsoncpp'
-		self.archive_file = 'jsoncpp-1.6.5.tar.gz'
-
-	def build(self, env_param):
-		print("Building {} ...".format(self.package_name))
-		self.env = env_param
-		self._pre_build()
-		self._do_build()
-		self._post_build()
-
-	def _pre_build(self):
-		print("  [#0] Checking build output exists")
-
-		print("  [#1] Downloading package")
-		self.env.download_file(self.package_url, self.archive_file)
-
-		print("  [#2] Extracting package")
-		self.env.extract_tarball(self.archive_file, self.package_name)
-
-		# Patch
-
-	def _post_build(self):
-		pass
-
-	def _do_build(self):
-		build_path = '{}/{}'.format(
+	def _build_Linux(self):
+		src_path = '{}/{}'.format(
 			self.env.source_path,
-			self.package_name
+			self.setup['name']
 		)
-		if(self.env.platform == Platform.Linux or
-			self.env.platform == Platform.macOS or
-			self.env.platform == Platform.iOS):
-			# Generate amalgamated source and header for jsoncpp
-			if os.path.exists(build_path+'/dist'):
-				print("    [{}] already built.".format(self.package_name))
-			else:
-				print('    [{}] Copying header files ...'.format(self.package_name))
-				os.chdir(build_path)
-				os.system('python amalgamate.py')
+
+		print("       [{}] Start building ...".format(self.setup['name']))
+		if os.path.exists(src_path+'/dist'):
+			print("       [{}] already built.".format(self.setup['name']))
+			return
+
+		# Generate amalgamated source and header for jsoncpp
+		print('       [{}] Copying header files ...'.format(self.setup['name']))
+		os.chdir(src_path)
+		cmd = 'python amalgamate.py'
+		self.env.run_command(cmd, module_name=self.setup['name'])

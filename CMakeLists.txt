@@ -86,7 +86,7 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
 
 # Search built Python 3
-SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib)
+SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/libpython3.6m.a)
 SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/include/python3.6m)
 #SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib")
 FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
@@ -149,9 +149,13 @@ IF(${PLATFORM} STREQUAL "Linux")
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
 
 	# Python /external/lib_build/${PLATFORM}/lib/python3.6/config-3.6m-x86_64-linux-gnu
+	# 	"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
-	SET(CMAKE_MODULE_LINKER_FLAGS ${CMAKE_MODULE_LINKER_FLAGS_INIT}
-		"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
+	# SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS_INIT}
+	# 	" -lpthread -ldl -lutil -lm -Xlinker -export-dynamic")
+	#  -lpython3.6m
+	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS}
+		"-lpthread -ldl -lutil -lm")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
 	# -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
@@ -160,7 +164,7 @@ ELSEIF(${PLATFORM} STREQUAL "macOS")
 
 	# Python /external/lib_build/${PLATFORM}/lib/python3.6/config-3.6m-darwin
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
-	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-L${PYTHON_LIBRARY}/python3.6/config-3.6m-darwin -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker")
+	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lpython3.6m -Xlinker")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")
@@ -186,9 +190,9 @@ MESSAGE("C_FLAGS      : " ${CMAKE_C_FLAGS})
 MESSAGE("CXX_FLAGS    : " ${CMAKE_CXX_FLAGS})
 MESSAGE("CPP_FLAGS    : " ${CMAKE_CPP_FLAGS})
 MESSAGE("pkgs_LDFLAGS : " ${pkgs_LDFLAGS})
-MESSAGE("Python Libs  : " ${PYTHON_LIBRARIES})
-MESSAGE("Python Lib path  : " ${PYTHON_LIB_PATH})
-MESSAGE("Python include   : " ${PYTHON_INCLUDE_DIRS})
+MESSAGE("Python Libs     : " ${PYTHON_LIBRARIES})
+MESSAGE("Python Lib path : " ${PYTHON_LIB_PATH})
+MESSAGE("Python include  : " ${PYTHON_INCLUDE_DIRS})
 MESSAGE("")
 MESSAGE("  Features")
 IF(USE_G3LOG)
@@ -261,13 +265,14 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 	ADD_LIBRARY(${LIBNAME} SHARED ${SOURCES})
 	SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
 	TARGET_LINK_LIBRARIES(${LIBNAME}
-		${pkgs_LDFLAGS}
 		${SDL2_LIBRARIES}
 		${SDL2_IMAGE_LIBRARIES}
 		${SDL2_TTF_LIBRARIES}
 		${SDL2_GFX_LIBRARIES}
 		${LINK_G3LOG}
 		${PYTHON_LIBRARIES}
+		# -lpython3.6m -lutil
+		"${pkgs_LDFLAGS}"
 		"-ldl -lpugixml -lprotobuf -lzmq-static -lboost_python3")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
@@ -279,7 +284,6 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 	ADD_LIBRARY(${LIBNAME} STATIC ${SOURCES})
 	SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
 	TARGET_LINK_LIBRARIES(${LIBNAME}
-		${pkgs_LDFLAGS}
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2.lib
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2main.lib
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_image.lib
@@ -288,6 +292,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/libzmq.lib
 		${LINK_G3LOG}
 		${PYTHON_LIBRARIES}
+		"${pkgs_LDFLAGS}"
 		"dbghelp.lib")
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
@@ -343,7 +348,7 @@ ELSE(${PLATFORM} STREQUAL "Windows")
 # Build python binding modules
 ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
 	POST_BUILD
-	COMMAND ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/bin/python3
+	COMMAND _PLATFORM=${PLATFORM} ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/bin/python3
 	"setup.py"
 	"build"
 	--debug

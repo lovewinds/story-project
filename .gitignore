@@ -41,7 +41,7 @@ tags
 .DS_Store
 
 # Built result files
-build/
+build
 WinDebug
 
 # Python caches

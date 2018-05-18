@@ -50,7 +50,7 @@ xcode-select --install
 3. Once brew is installed, setup automake, autotools via brew.
 ```
 brew install automake
-brew install autotools
+brew install libtool
 ```
 
 

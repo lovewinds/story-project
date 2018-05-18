@@ -10,12 +10,17 @@ class Builder(object):
 	def build(self, env_param):
 		print("Building {} ...".format(self.setup['name']))
 		self.env = env_param
-		self._pre_build()
-		self._do_build()
-		self._post_build()
+		self.build_path = '{}/{}/build'.format(
+			self.env.source_path,
+			self.setup['name']
+		)
 
-	def _pre_build(self):
-		print("  [#0] Check if build output exists")
+		self.__pre_build()
+		self.__do_build()
+		self.__post_build()
+
+	def __pre_build(self):
+		# print("  [#0] Check if build output exists")
 
 		print("  [#1] Downloading package")
 		package_url = None
@@ -33,7 +38,7 @@ class Builder(object):
 		except:
 			pass
 
-		if package_url == None:
+		if package_url is None:
 			package_url = self.setup['common']['url']
 			package_file = self.setup['common']['filename']
 		print("       URL: [{}]".format(package_url))
@@ -42,14 +47,23 @@ class Builder(object):
 		print("  [#2] Extracting package")
 		self.env.extract_tarball(package_file, self.setup['name'])
 
-	def _post_build(self):
+		# Execute pre build process
+		platform_name = Platform.reverse_mapping[self.env.platform]
+		platform = self.setup[platform_name]
+		if platform is not None and platform['pre'] is not None:
+			platform['pre']()
+
+	def __post_build(self):
 		# Implement for common post build processes here
 		platform_name = Platform.reverse_mapping[self.env.platform]
 		platform = self.setup[platform_name]
-		if platform is not None:
-			platform['build']()
+		if platform is not None and platform['post'] is not None:
+			platform['post']()
 		
 
-	def _do_build(self):
+	def __do_build(self):
 		# Implement for common build processes here
-		pass
+		platform_name = Platform.reverse_mapping[self.env.platform]
+		platform = self.setup[platform_name]
+		if platform is not None and platform['build'] is not None:
+			platform['build']()

@@ -34,6 +34,7 @@ class BuildEnv:
 		self.output_path = '{}/lib_build/{}'.format(self.working_path,
 			Platform.reverse_mapping[self.platform])
 
+		self.framework_path = '{}/frameworks'.format(self.output_path)
 		self.output_bin_path = '{}/bin'.format(self.output_path)
 		self.output_lib_path = '{}/lib'.format(self.output_path)
 		self.output_include_path = '{}/include'.format(self.output_path)
@@ -43,11 +44,25 @@ class BuildEnv:
 		if not self.NJOBS:
 			self.NJOBS="1"
 
-		self.BUILD_FLAG = ''
+		# Currently, build process for external libs doesn't override main build flag.
+		# It uses its separated build flags in order to build libs as release version.
+		self.BUILD_FLAG = 'CFLAGS="-O2 -fPIC" CXXFLAGS="-O2 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}"'.format(
+			self.output_include_path,
+			self.output_lib_path
+		)
 		self.BUILD_CONF = 'Release'
 		if build_type == 'debug':
-			self.BUILD_FLAG = 'CFLAGS="-ggdb3 -O0" CXXFLAGS="-ggdb3 -O0" '
+			self.BUILD_FLAG = 'CFLAGS="-g3 -O0 -fPIC" CXXFLAGS="-g3 -O0 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}"'.format(
+				self.output_include_path,
+				self.output_lib_path
+			)
 			self.BUILD_CONF = 'Debug'
+
+		# Use identical start time for all sub packages.
+		now = time.localtime()
+		self.log_time = '%04d%02d%02d_%02d%02d%02d' % (
+				now.tm_year, now.tm_mon, now.tm_mday,
+				now.tm_hour, now.tm_min, now.tm_sec)
 
 	@staticmethod
 	def mkdir_p(path):
@@ -78,57 +93,61 @@ class BuildEnv:
 
 	def extract_tarball(self, archive_file, package_name):
 		if os.path.exists('{}/{}'.format(self.source_path, package_name)):
-			print("    [{}] already extracted.".format(package_name))
+			print("       [{}] already extracted.".format(package_name))
 		else:
 			tarfile.open('{}/{}'.format(self.temp_path, archive_file)).extractall(self.source_path)
 			# Remove '.tar.gz'
 			archive_name = archive_file.replace('.tar.gz', '').replace('.tgz', '')
 			os.rename('{}/{}'.format(self.source_path, archive_name),
 					  '{}/{}'.format(self.source_path, package_name))
-			print("    [{}] extracted.".format(package_name))
+			print("       [{}] extracted.".format(package_name))
 
 	def run_command(self, cmd, module_name):
 		str_out = ''
+		log_file = ''
 		if self.verbose:
-			proc = subprocess.Popen(cmd, shell=True)
+			proc = subprocess.Popen(cmd, bufsize=-1, shell=True)
 			while proc.poll() is None:
 				time.sleep(1)
 			(str_out, str_err) = proc.communicate()
 		else:
-			proc = subprocess.Popen(cmd, shell=True,
-									stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-			idx = 0
-			while proc.poll() is None:
-				idx += 1
-				time.sleep(1)
-				s = "." * (idx % 10)
-				sys.stdout.write("\r    [{}]                         ".format(module_name))
-				sys.stdout.write("\r    [{}] {}".format(module_name, s))
-				sys.stdout.flush()
+			# Store as a log file
+			log_dir = '{}/logs/{}'.format(self.working_path, module_name)
+			self.mkdir_p(log_dir)
+			log_file = '{}/{}.{}.log'.format(log_dir, module_name, self.log_time)
+			with open(log_file, 'a') as f:
+				f.write("="*80 + "\n")
+				# f.write("\n")
+				f.write("CMD : [{}]\n".format(cmd))
+				f.write("="*80 + "\n")
+				# f.write("\n")
+				f.flush()
+	
+				proc = subprocess.Popen(cmd, bufsize=-1, shell=True,
+									stdout=f, stderr=f)
+				idx = 0
+				while proc.poll() is None:
+					idx += 1
+					time.sleep(1)
+					s = "." * (idx % 10)
+					sys.stdout.write("\r       [{}]                         ".format(module_name))
+					sys.stdout.write("\r       [{}] {}".format(module_name, s))
+					sys.stdout.flush()
 
-			sys.stdout.write("\r    [{}]                         ".format(module_name))
-			sys.stdout.write("\r    [{}] Finished !\n".format(module_name))
-			(str_out, str_err) = proc.communicate()
+				sys.stdout.write("\r       [{}]                         ".format(module_name))
+				sys.stdout.write("\r       [{}] Finished !\n".format(module_name))
+				(str_out, str_err) = proc.communicate()
 
-		# Store as a log file
-		now = time.localtime()
-		ct = '%04d%02d%02d_%02d%02d%02d' % (
-				now.tm_year, now.tm_mon, now.tm_mday,
-				now.tm_hour, now.tm_min, now.tm_sec)
-		log_dir = '{}/logs/{}'.format(self.working_path, module_name)
-		self.mkdir_p(log_dir)
-		log_file = '{}/{}.{}.log'.format(log_dir, module_name, ct)
-		with open(log_file, 'w') as f:
-			f.write(str_out)
-
-		if proc.returncode != 0:
-			# [TEST] Error handling
-			print("")
-			print("="*80)
-			print("[TEST] An error has been occured !")
-			print("       Check following log file:")
-			print("         {}".format(log_file))
-			print("="*80)
-			print(str_out)
+			allow_codes = [0, 255]
+			if proc.returncode not in allow_codes:
+				# [TEST] Error handling
+				print("")
+				print("="*80)
+				print("[ERROR] An error has been occured !")
+				print("        Check following log file:")
+				print("         {}".format(log_file))
+				print("Return code: {}".format(proc.returncode))
+				print("="*80)
+				print(str(str_out))
 
 		return log_file
