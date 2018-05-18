@@ -24,6 +24,8 @@ addons:
       - clang
       - python-dev
       - cmake
+      - cmake-data
+      - build-essential
 
   coverity_scan:
     project:

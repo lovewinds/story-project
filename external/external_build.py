@@ -25,10 +25,7 @@ from scripts.build_python3 import Builder_python
 from scripts.build_boost import Builder_boost
 
 cpus = multiprocessing.cpu_count()
-if cpus == 2:
-	NJOBS="1"
-else:
-	NJOBS = str(int(math.ceil(cpus * 0.7)))
+NJOBS = str(int(math.ceil(cpus * 0.7)))
 
 # Start building
 modules = [

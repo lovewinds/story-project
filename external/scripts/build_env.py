@@ -150,6 +150,6 @@ class BuildEnv:
 				print("="*80)
 				with open(log_file, 'r') as f:
 					for line in f.readlines():
-						print(line)
+						print(line.rstrip('\n'))
 
 		return log_file
