@@ -21,10 +21,7 @@ addons:
     packages:
       - gcc-5
       - g++-5
-      - clang
       - python-dev
-      - cmake
-      - cmake-data
       - build-essential
 
   coverity_scan:
