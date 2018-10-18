@@ -4,6 +4,7 @@ import sys
 import time
 import subprocess
 import tarfile
+import zipfile
 import requests
 import shutil
 import multiprocessing
@@ -34,12 +35,34 @@ class BuildEnv:
 		self.output_path = '{}/lib_build/{}'.format(self.working_path,
 			Platform.reverse_mapping[self.platform])
 
-		self.framework_path = '{}/frameworks'.format(self.output_path)
 		self.output_bin_path = '{}/bin'.format(self.output_path)
 		self.output_lib_path = '{}/lib'.format(self.output_path)
 		self.output_include_path = '{}/include'.format(self.output_path)
 		self.output_packaging_path = '{}/packaging'.format(self.output_path)
 
+		# For Apple framework plist creation
+		self.framework_path = '{}/frameworks'.format(self.output_path)
+		self.apple_framework_plist = '''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>CFBundleExecutable</key>
+<string>${FRAMEWORK_NAME}</string>
+<key>CFBundleIdentifier</key>
+<string>org.boost</string>
+<key>CFBundleInfoDictionaryVersion</key>
+<string>6.0</string>
+<key>CFBundlePackageType</key>
+<string>FMWK</string>
+<key>CFBundleSignature</key>
+<string>????</string>
+<key>CFBundleVersion</key>
+<string>${FRAMEWORK_CURRENT_VERSION}</string>
+</dict>
+</plist>
+'''
+
+		# Environments
 		self.NJOBS = str(multiprocessing.cpu_count() / 2)
 		if not self.NJOBS:
 			self.NJOBS="1"
@@ -90,6 +113,18 @@ class BuildEnv:
 			if not os.path.isfile("{}/{}".format(self.temp_path, file_name)):
 				print("  Downloaded file not found! Please check internet connection, etc")
 				raise FileNotFoundError
+
+	def extract_zip(self, archive_file, package_name):
+		if os.path.exists('{}/{}'.format(self.source_path, package_name)):
+			print("       [{}] already extracted.".format(package_name))
+		else:
+			with zipfile.ZipFile('{}/{}'.format(self.temp_path, archive_file), 'r') as zf:
+				zf.extractall(path='{}'.format(self.source_path))
+			# Remove '.zip' from archive file name
+			archive_name = archive_file.replace('.zip', '')
+			os.rename('{}/{}'.format(self.source_path, archive_name),
+					  '{}/{}'.format(self.source_path, package_name))
+			print("       [{}] extracted.".format(package_name))
 
 	def extract_tarball(self, archive_file, package_name):
 		if os.path.exists('{}/{}'.format(self.source_path, package_name)):

@@ -1,8 +1,8 @@
-export SRC="/Users/ariens/source/story-project"
-export PREFIX="${SRC}/external/built"
-export BINPATH="${SRC}/external/built/bin"
-export LIBPATH="${SRC}/external/built/lib/iOS"
-export INCLUDEPATH="${SRC}/external/built/include_ios"
+#!/bin/bash
+# export PREFIX="story-project/external/lib_build/iOS"
+export BINPATH="${PREFIX}/bin"
+export LIBPATH="${PREFIX}/lib"
+export INCLUDEPATH="${PREFIX}/include"
 export IOS32_PREFIX="$PREFIX/tmp/ios32"
 export IOS64_PREFIX="$PREFIX/tmp/ios64"
 export SIMULATOR32_PREFIX="$PREFIX/tmp/simulator32"
@@ -18,7 +18,8 @@ export PATH="${BINPATH}:${BASEDIR}/usr/bin:$BASEDIR/usr/sbin:$PATH"
 ## 64-bit iOS
 #-fobjc-abi-version=2
 export SDK="${BASEDIR}/SDKs/iPhoneOS.sdk"
-export FRAMEWORKS="${SDK}/System/Library/Frameworks/"
+export PATH_FRAMEWORK_DEFAULT="${SDK}/System/Library/Frameworks/"
+export PATH_FRAMEWORK_USER="${PREFIX}/frameworks/"
 export CC="$(xcrun -sdk iphoneos -find clang)"
 export CPP="$(xcrun -sdk iphoneos -find clang) -E"
 export AR=$(xcrun -sdk iphoneos -find ar)
@@ -30,20 +31,35 @@ if test x$NJOB = x; then
     NJOB=$NCPU
 fi
 
+FRAMEWORK_LIST="-framework Foundation \
+-framework UIKit \
+-framework OpenGLES \
+-framework QuartzCore \
+-framework CoreMotion \
+-framework GameController \
+-framework CoreAudio \
+-framework AVFoundation \
+-framework CoreGraphics \
+-framework AudioToolBox \
+-framework ImageIO \
+-framework SDL2 \
+"
+
 #armv7 arm64
 if [ 2 -eq $# ] && [ "$2" = "arm64" ]
 then
 	echo "Arch : arm64"
 	export CFLAGS="${CFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	#export CPPFLAGS="${CPPFLAGS} -arch arm64 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
+	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} \
+		-F${PATH_FRAMEWORK_DEFAULT} -F${PATH_FRAMEWORK_USER} ${FRAMEWORK_LIST}"
+	#LDFLAGS += -fembed-bitcode
 else
 	echo "Arch : armv7"
 	export CFLAGS="${CFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
 	export CXXFLAGS="${CXXFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	#export CPPFLAGS="${CPPFLAGS} -arch armv7 -isysroot ${SDK} -mios-version-min=${IOS_VERSION_MIN} -fembed-bitcode"
-	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} -F${FRAMEWORKS} -framework Foundation -framework UIKit -framework OpenGLES -framework QuartzCore -framework CoreMotion -framework GameController -framework CoreAudio -framework AVFoundation -framework CoreGraphics -framework AudioToolBox -framework ImageIO -fembed-bitcode"
+	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -isysroot ${SDK} \
+		-F${PATH_FRAMEWORK_DEFAULT} -F${PATH_FRAMEWORK_USER} ${FRAMEWORK_LIST}"
 fi
 
 echo "CFLAGS : ${CFLAGS}"
@@ -66,17 +82,23 @@ fi
 case "$1" in
 "SDL2")
 	# path : external/sources-ios/SDL2/Xcode-iOS/SDL
-	xcodebuild -arch arm64 -arch armv7 HEADER_SEARCH_PATHS=${INCLUDEPATH}/SDL2
+	xcodebuild -arch arm64 -arch armv7 \
+		HEADER_SEARCH_PATHS=${INCLUDEPATH} \
+		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
 	cp build/Release-iphoneos/libSDL2.a ${LIBPATH}
 	;;
 "SDL2_image")
 	# path : external/sources-ios/SDL2_image/Xcode-iOS
-	xcodebuild -arch arm64 -arch armv7 USER_HEADER_SEARCH_PATHS=${INCLUDEPATH}/SDL2
+	xcodebuild -arch arm64 -arch armv7 \
+		USER_HEADER_SEARCH_PATHS=${INCLUDEPATH} \
+		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
 	cp build/Release-iphoneos/libSDL2_image.a ${LIBPATH}
 	;;
 "SDL2_ttf")
 	# path : external/sources-ios/SDL2_ttf/Xcode-iOS
-	xcodebuild -arch arm64 -arch armv7 HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1=${INCLUDEPATH}/SDL2/
+	xcodebuild -arch arm64 -arch armv7 \
+		HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1=${INCLUDEPATH} \
+		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
 	cp build/Release-iphoneos/libSDL2_ttf.a ${LIBPATH}
 	;;
 "SDL2_gfx")

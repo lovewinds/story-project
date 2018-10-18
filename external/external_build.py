@@ -29,18 +29,18 @@ NJOBS = str(int(math.ceil(cpus * 0.7)))
 
 # Start building
 modules = [
-	Builder_SDL2(),
-	Builder_SDL2_Image(),
-	Builder_SDL2_TTF(),
+	# Builder_SDL2(),
+	# Builder_SDL2_Image(),
+	# Builder_SDL2_TTF(),
 	Builder_SDL2_gfx(),
-	Builder_g3log(),
-	Builder_jsoncpp(),
-	Builder_pugixml(),
-	Builder_gtest(),
-	Builder_protobuf(),
-	Builder_zeromq(),
-	Builder_python(),
-	Builder_boost()
+	# Builder_g3log(),
+	# Builder_jsoncpp(),
+	# Builder_pugixml(),
+	# Builder_gtest(),
+	# Builder_protobuf(),
+	# Builder_zeromq(),
+	# Builder_python(),
+	# Builder_boost(),
 ]
 
 def start_build(env_param):

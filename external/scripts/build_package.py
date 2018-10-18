@@ -45,7 +45,10 @@ class Builder(object):
 		self.env.download_file(package_url, package_file)
 
 		print("  [#2] Extracting package")
-		self.env.extract_tarball(package_file, self.setup['name'])
+		if package_file.endswith('.zip'):
+			self.env.extract_zip(package_file, self.setup['name'])
+		else:
+			self.env.extract_tarball(package_file, self.setup['name'])
 
 		# Execute pre build process
 		platform_name = Platform.reverse_mapping[self.env.platform]
@@ -59,7 +62,6 @@ class Builder(object):
 		platform = self.setup[platform_name]
 		if platform is not None and platform['post'] is not None:
 			platform['post']()
-		
 
 	def __do_build(self):
 		# Implement for common build processes here

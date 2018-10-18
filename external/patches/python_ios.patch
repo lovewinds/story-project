@@ -1,0 +1,20 @@
+--- Makefile	2018-02-21 16:19:43.000000000 +0900
++++ Makefile.patched	2018-10-13 18:05:05.000000000 +0900
+@@ -123,7 +123,7 @@
+ # Download original BZip2 source code archive.
+ downloads/bzip2-$(BZIP2_VERSION).tgz:
+ 	mkdir -p downloads
+-	if [ ! -e downloads/bzip2-$(BZIP2_VERSION).tgz ]; then curl --fail -L http://www.bzip.org/$(BZIP2_VERSION)/bzip2-$(BZIP2_VERSION).tar.gz -o downloads/bzip2-$(BZIP2_VERSION).tgz; fi
++	if [ ! -e downloads/bzip2-$(BZIP2_VERSION).tgz ]; then curl --fail -L https://fossies.org/linux/misc/bzip2-$(BZIP2_VERSION).tar.gz -o downloads/bzip2-$(BZIP2_VERSION).tgz; fi
+ 
+ ###########################################################################
+ # XZ (LZMA)
+@@ -282,7 +282,7 @@
+ 		--without-doc-strings --enable-ipv6 --without-ensurepip \
+ 		$$(PYTHON_CONFIGURE-$2)
+ else
+-	cd $$(PYTHON_DIR-$1) && PATH=$(PROJECT_DIR)/build/macOS/python/bin:$(PATH) ./configure \
++	cd $$(PYTHON_DIR-$1) && PATH=$(PROJECT_DIR)/build/macOS/python/bin:$(PROJECT_DIR)/$(PYTHON_DIR-macOS)/dist/bin:$(PATH) ./configure \
+ 		CC="$$(CC-$1)" LD="$$(CC-$1)" \
+ 		--host=$$(MACHINE_DETAILED-$1)-apple-$(shell echo $2 | tr '[:upper:]' '[:lower:]') \
+ 		--build=x86_64-apple-darwin$(shell uname -r) \

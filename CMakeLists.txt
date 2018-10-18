@@ -150,8 +150,7 @@ IF(${PLATFORM} STREQUAL "Linux")
 	# SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS_INIT}
 	# 	" -lpthread -ldl -lutil -lm -Xlinker -export-dynamic")
 	#  -lpython3.6m
-	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS}
-		"-lpthread -ldl -lutil -lm")
+	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
 	# -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
 	SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
@@ -160,7 +159,7 @@ ELSEIF(${PLATFORM} STREQUAL "macOS")
 
 	# Python /external/lib_build/${PLATFORM}/lib/python3.6/config-3.6m-darwin
 	SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
-	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lpython3.6m -Xlinker")
+	SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")
