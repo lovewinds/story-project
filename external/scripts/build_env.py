@@ -9,31 +9,48 @@ import requests
 import shutil
 import multiprocessing
 import errno
+from enum import Enum
 
-def enum(*sequential, **named):
-	try:
-		enums = dict(zip(sequential, range(len(sequential))), **named)
-		reverse = dict((value, key) for key, value in enums.iteritems())
-		enums['reverse_mapping'] = reverse
-	except AttributeError:
-		enums = dict(zip(sequential, range(len(sequential))), **named)
-		reverse = dict((value, key) for key, value in enums.items())
-		enums['reverse_mapping'] = reverse
-	return type('Enum', (), enums)
+# python 2.X
+# def enum(*sequential, **named):
+# 	try:
+# 		enums = dict(zip(sequential, range(len(sequential))), **named)
+# 		reverse = dict((value, key) for key, value in enums.iteritems())
+# 		enums['reverse_mapping'] = reverse
+# 	except AttributeError:
+# 		enums = dict(zip(sequential, range(len(sequential))), **named)
+# 		reverse = dict((value, key) for key, value in enums.items())
+# 		enums['reverse_mapping'] = reverse
+# 	return type('Enum', (), enums)
 
-Platform = enum('Windows', 'Linux', 'macOS', 'iOS', 'NotSupport')
+# Platform = enum('Windows', 'Linux', 'macOS', 'iOS', 'NotSupport')
+# Platform = Enum('Windows', 'Linux', 'macOS', 'iOS', 'NotSupport')
+class Platform(Enum):
+	Windows = 0
+	Linux = 1
+	macOS = 2
+	iOS = 3
+	NotSupport = 4
+
+	@classmethod
+	def name(cls, name):
+		if name in cls:
+			return str(name).split('.')[-1]
+		return 'NotSupport'
 
 class BuildEnv:
 	def __init__(self, platform, build_type, working_path, verbose=False):
+		self.compiler_version = None
 		self.verbose = verbose
+
 		self.working_path = working_path
 		self.platform = platform
 		self.patch_path = '{}/patches'.format(self.working_path)
 		self.temp_path = '{}/temp'.format(self.working_path)
 		self.source_path = '{}/lib_source/{}'.format(self.working_path,
-			Platform.reverse_mapping[self.platform])
+			Platform.name(self.platform))
 		self.output_path = '{}/lib_build/{}'.format(self.working_path,
-			Platform.reverse_mapping[self.platform])
+			Platform.name(self.platform))
 
 		self.output_bin_path = '{}/bin'.format(self.output_path)
 		self.output_lib_path = '{}/lib'.format(self.output_path)
@@ -45,20 +62,20 @@ class BuildEnv:
 		self.apple_framework_plist = '''<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-<key>CFBundleExecutable</key>
-<string>${FRAMEWORK_NAME}</string>
-<key>CFBundleIdentifier</key>
-<string>org.boost</string>
-<key>CFBundleInfoDictionaryVersion</key>
-<string>6.0</string>
-<key>CFBundlePackageType</key>
-<string>FMWK</string>
-<key>CFBundleSignature</key>
-<string>????</string>
-<key>CFBundleVersion</key>
-<string>${FRAMEWORK_CURRENT_VERSION}</string>
-</dict>
+	<dict>
+		<key>CFBundleExecutable</key>
+		<string>${FRAMEWORK_NAME}</string>
+		<key>CFBundleIdentifier</key>
+		<string>org.boost</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundlePackageType</key>
+		<string>FMWK</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>${FRAMEWORK_CURRENT_VERSION}</string>
+	</dict>
 </plist>
 '''
 

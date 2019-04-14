@@ -3,9 +3,9 @@ import os
 import tarfile
 from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
-from scripts.build_package import Builder
+from scripts.package_builder import PackageBuilder
 
-class Builder_python(Builder):
+class Builder_python(PackageBuilder):
 	def __init__(self):
 		super(Builder_python, self)
 		self.setup = {

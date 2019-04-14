@@ -2,9 +2,9 @@
 import os
 from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
-from scripts.build_package import Builder
+from scripts.package_builder import PackageBuilder
 
-class Builder_gtest(Builder):
+class Builder_gtest(PackageBuilder):
 	def __init__(self):
 		super(Builder_gtest, self)
 		self.setup = {

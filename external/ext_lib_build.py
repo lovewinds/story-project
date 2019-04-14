@@ -927,7 +927,7 @@ if __name__ == "__main__":
 	print "#########################################"
 	print "## Prepare external libraries ..."
 	print "##"
-	print "## Platform    : [ "+Platform.reverse_mapping[CURRENT_PLATFORM]+" ]"
+	print "## Platform    : [ "+Platform.name(CURRENT_PLATFORM)+" ]"
 	if CURRENT_PLATFORM == Platform.Windows:
 		print "##        MSVC : [ "+args.msvc+" ]"
 	#print "## Build type  : [ "+args.type+" ]"

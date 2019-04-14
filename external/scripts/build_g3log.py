@@ -2,9 +2,9 @@
 import os
 from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
-from scripts.build_package import Builder
+from scripts.package_builder import PackageBuilder
 
-class Builder_g3log(Builder):
+class Builder_g3log(PackageBuilder):
 	def __init__(self):
 		super(Builder_g3log, self)
 		self.setup = {

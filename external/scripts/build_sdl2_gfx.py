@@ -3,9 +3,9 @@ import os
 from shutil import copytree, copy2
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
-from scripts.build_package import Builder
+from scripts.package_builder import PackageBuilder
 
-class Builder_SDL2_gfx(Builder):
+class Builder_SDL2_gfx(PackageBuilder):
 	def __init__(self):
 		super(Builder_SDL2_gfx, self)
 		self.setup = {

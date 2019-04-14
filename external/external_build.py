@@ -10,9 +10,9 @@ import scripts.build_env as benv
 
 from scripts.build_env import BuildEnv, Platform
 
-# TODO : Add build modules below
-from scripts.build_sdl2 import Builder_SDL2
-from scripts.build_sdl2_image import Builder_SDL2_Image
+# TODO: Support dynamic import under specific folder
+from scripts.packages.sdl import Builder_SDL2
+from scripts.packages.sdl_image import Builder_SDL2_Image
 from scripts.build_sdl2_ttf import Builder_SDL2_TTF
 from scripts.build_sdl2_gfx import Builder_SDL2_gfx
 from scripts.build_g3log import Builder_g3log
@@ -29,10 +29,10 @@ NJOBS = str(int(math.ceil(cpus * 0.7)))
 
 # Start building
 modules = [
-	# Builder_SDL2(),
-	# Builder_SDL2_Image(),
+	Builder_SDL2(),
+	Builder_SDL2_Image(),
 	# Builder_SDL2_TTF(),
-	Builder_SDL2_gfx(),
+	# Builder_SDL2_gfx(),
 	# Builder_g3log(),
 	# Builder_jsoncpp(),
 	# Builder_pugixml(),
@@ -49,7 +49,7 @@ def start_build(env_param):
 		try:
 			result = m.build(env_param)
 		except Exception as e:
-			print("Failed to build [{}] !".format(m.setup.get('name')))
+			print("Failed to build [{}] !".format(m.package.get('name')))
 			traceback.print_exc(file=sys.stdout)
 		
 		if result == False:
@@ -68,10 +68,10 @@ if __name__ == "__main__":
 					help='Select linking type (default: TRUE)')
 	parser.add_argument('--arch', default='x64',
 					choices=['x86', 'x64', 'x86_64'],
-					help='Select archtecture for desktop build (default: x86)')
-	parser.add_argument('--msvc', default='v140',
+					help='Select archtecture for desktop build (default: x64)')
+	parser.add_argument('--msvc', default='v142',
 					help='If you use MSVC, you can select MSVC version to build with. (default: v140)')
-	parser.add_argument('--platform', default='Linux',
+	parser.add_argument('--platform', default='Windows',
 					choices=['Windows', 'Linux', 'macOS', 'iOS'],
 					help='Select platform to build. (default: Windows)')
 	parser.add_argument('-v', '--verbose', action='store_true',
@@ -97,12 +97,14 @@ if __name__ == "__main__":
 
 	env = BuildEnv(CURRENT_PLATFORM, args.type, WORKING_PATH)
 	env.verbose = args.verbose
+	if CURRENT_PLATFORM == Platform.Windows:
+		env.compiler_version = args.msvc
 
 	print("###########################################")
 	print("## Prepare to build external libraries ...")
 	print("##")
 	print("## Platform    : [ {} ]".format(
-		Platform.reverse_mapping[CURRENT_PLATFORM]))
+		Platform.name(CURRENT_PLATFORM)))
 	if CURRENT_PLATFORM == Platform.Windows:
 		print("##        MSVC : [ {} ]".format(args.msvc))
 	print("## Build type  : [ {} ]".format(args.type))

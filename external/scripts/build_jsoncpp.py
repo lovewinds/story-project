@@ -1,9 +1,9 @@
 #!/usr/bin/python
 import os
 from scripts.build_env import BuildEnv, Platform
-from scripts.build_package import Builder
+from scripts.package_builder import PackageBuilder
 
-class Builder_jsoncpp(Builder):
+class Builder_jsoncpp(PackageBuilder):
 	def __init__(self):
 		super(Builder_jsoncpp, self)
 		self.setup = {
