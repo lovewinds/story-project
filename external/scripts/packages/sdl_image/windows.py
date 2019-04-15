@@ -10,7 +10,12 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
-        super().__init__(config_package, config_platform)
+        super().__init__(config_package)
+
+        if config_platform is not None:
+            for k in config_platform.keys():
+                self.config[k] = config_platform[k]
+
 
     def patch_static_MSVC(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -50,9 +55,9 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
         tree = ElementTree.parse(path)
         root = tree.getroot()
 
-        list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
         _include = PureWindowsPath(Path(self.env.output_path) / 'include')
         _library = PureWindowsPath(Path(self.env.output_path) / 'SDL2/$(Configuration)')
+        list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
         for child in list:
             item = child.find(msvc_ns_prefix+"ClCompile")
             item_include = item.find(msvc_ns_prefix+"AdditionalIncludeDirectories")
@@ -86,12 +91,12 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2_image
-        build_path = '{}\\{}\\release'.format(
+        install_path = '{}\\{}\\release'.format(
             self.env.output_path,
             self.config['name']
         )
 
-        _check = f'{build_path}\\{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -106,20 +111,20 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
         self.patch_static_MSVC("SDL_image.vcxproj")
         os.system(''' \
 msbuild SDL_image.sln \
-    /maxcpucount:3 \
+    /maxcpucount:{} \
     /t:SDL2_image \
     /p:PlatformToolSet={} \
     /p:Configuration=Release \
     /p:Platform=x64 \
     /p:OutDir={} \
-'''.format(self.env.compiler_version, build_path))
+'''.format(self.env.NJOBS, self.env.compiler_version, install_path))
 #         os.system('''
 # msbuild SDL_image.sln \
 #     /t:SDL2_image \
 #     /p:PlatformToolSet='+MSVC_VER+' \
 #     /p:Configuration=Release \
 #     /p:OutDir={}'''
-# .format(build_path))
+# .format(install_path))
 
         ## Install
         # Copy headers
@@ -133,8 +138,8 @@ msbuild SDL_image.sln \
 
         # Copy external libraries
         # TODO: Fix hardcoded arch
-        copy2(f'{sdl2_image_path}\\external\\lib\\x86\\libjpeg-9.dll', build_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x86\\libpng16-16.dll', build_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x86\\libtiff-5.dll', build_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x86\\libwebp-4.dll', build_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x86\\zlib1.dll', build_path)
+        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libjpeg-9.dll', install_path)
+        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libpng16-16.dll', install_path)
+        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libtiff-5.dll', install_path)
+        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libwebp-4.dll', install_path)
+        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\zlib1.dll', install_path)

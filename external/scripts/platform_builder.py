@@ -3,24 +3,17 @@
 
 class PlatformBuilder:
     def __init__(self,
-                 config: dict=None,
-                 config_platform: dict=None):
+                 config: dict=None):
         """Specify build commands for given package in platform-dependant way.
 
         :param name: Specify the package name.
         :param config: Package configuration to build.
-        :param config_platform: Platform-dependent config to build.
         """
         self.config = {}
         self.config_platform = {}
 
         if config is not None:
             self.config = config
-
-        # TODO: Overwrite params
-        if config_platform is not None:
-            for k in config_platform.keys():
-                self.config[k] = config_platform[k]
 
     def log(self, fmt=None, kwargs=None):
         print(f'  {fmt}'.format(kwargs))

@@ -10,8 +10,11 @@ class SDL2WindowsBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
-        # super(PlatformBuilder, self, config_package, config_platform)
-        super(SDL2WindowsBuilder, self).__init__(config_package, config_platform)
+        super().__init__(config_package)
+
+        if config_platform is not None:
+            for k in config_platform.keys():
+                self.config[k] = config_platform[k]
 
     def patch_static_MSVC(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -50,12 +53,12 @@ class SDL2WindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2
-        build_path = '{}/{}/release'.format(
+        install_path = '{}/{}/release'.format(
             self.env.output_path,
             self.config['name']
         )
 
-        _check = f'{build_path}/{self.config.get("checker")}'
+        _check = f'{install_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -65,16 +68,16 @@ class SDL2WindowsBuilder(PlatformBuilder):
             self.config['name']))
         self.patch_static_MSVC("SDL/SDL.vcxproj")
         self.patch_static_MSVC("SDLmain/SDLmain.vcxproj")
-        # os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet=v140 /p:Configuration=Debug /p:OutDir='+build_path_dbg)
+        # os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet=v140 /p:Configuration=Debug /p:OutDir='+install_path_dbg)
         os.system('''
 msbuild SDL.sln \
-    /maxcpucount:3 \
+    /maxcpucount:{} \
     /t:SDL2;SDL2main \
     /p:PlatformToolSet={} \
     /p:Configuration=Release \
     /p:Platform=x64 \
     /p:OutDir={}'''
-.format(self.env.compiler_version, build_path))
+.format(self.env.NJOBS, self.env.compiler_version, install_path))
 
         # Copy headers
         self.tag_log("Copying header files ..")

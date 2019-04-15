@@ -10,19 +10,22 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
     def __init__(self, 
                  config_package: dict=None,
                  config_platform: dict=None):
-        # super(PlatformBuilder, self, config_package, config_platform)
-        super().__init__(config_package, config_platform)
+        super().__init__(config_package)
+
+        if config_platform is not None:
+            for k in config_platform.keys():
+                self.config[k] = config_platform[k]
 
     def build(self):
         build_path = '{}/{}/Xcode-iOS'.format(
             self.env.source_path,
-            self.setup['name']
+            self.config['name']
         )
         if os.path.exists(self.env.output_lib_path+'/libSDL2_image.a'):
-            print("       [{}] already built.".format(self.setup['name']))
+            print("       [{}] already built.".format(self.config['name']))
             return
 
-        print("       [{}] Start building ...".format(self.setup['name']))
+        print("       [{}] Start building ...".format(self.config['name']))
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
         cmd = '{} PREFIX={} {}/ios-build.sh SDL2_image'.format(
@@ -30,9 +33,10 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
             self.env.output_path,
             self.env.working_path
         )
-        self.env.run_command(cmd, module_name=self.setup['name'])
+        self.env.run_command(cmd, module_name=self.config['name'])
 
     def post(self):
+        super().post()
         # Copy header file
         _header_source = '{}/{}/SDL_image.h'.format(
             self.env.source_path,

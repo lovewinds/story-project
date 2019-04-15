@@ -10,7 +10,11 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
-        super().__init__(config_package, config_platform)
+        super().__init__(config_package)
+
+        if config_platform is not None:
+            for k in config_platform.keys():
+                self.config[k] = config_platform[k]
 
     def ext_build_jpeg(self):
         ext_path = '{}/{}/external'.format(

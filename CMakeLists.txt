@@ -49,6 +49,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 		MESSAGE("Visual Studio 14.0 Found.")
 		MESSAGE("If build failed, please set environments with below executable.")
 		# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
+		# "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"
 		MESSAGE("  C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat")
 		EXECUTE_PROCESS(COMMAND "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat")
 	ELSEIF(MSVC AND MSVC12)

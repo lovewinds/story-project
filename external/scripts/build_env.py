@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import math
 import subprocess
 import tarfile
 import zipfile
@@ -80,7 +81,9 @@ class BuildEnv:
 '''
 
 		# Environments
-		self.NJOBS = str(multiprocessing.cpu_count() / 2)
+		cpus = multiprocessing.cpu_count()
+		self.NJOBS = str(int(math.ceil(cpus * 0.7)))
+		# self.NJOBS = str(multiprocessing.cpu_count() / 2)
 		if not self.NJOBS:
 			self.NJOBS="1"
 

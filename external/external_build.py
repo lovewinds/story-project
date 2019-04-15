@@ -13,8 +13,8 @@ from scripts.build_env import BuildEnv, Platform
 # TODO: Support dynamic import under specific folder
 from scripts.packages.sdl import Builder_SDL2
 from scripts.packages.sdl_image import Builder_SDL2_Image
-from scripts.build_sdl2_ttf import Builder_SDL2_TTF
-from scripts.build_sdl2_gfx import Builder_SDL2_gfx
+from scripts.packages.sdl_ttf import Builder_SDL2_TTF
+from scripts.packages.sdl_gfx import Builder_SDL2_gfx
 from scripts.build_g3log import Builder_g3log
 from scripts.build_jsoncpp import Builder_jsoncpp
 from scripts.build_pugixml import Builder_pugixml
@@ -24,15 +24,12 @@ from scripts.build_zeromq import Builder_zeromq
 from scripts.build_python3 import Builder_python
 from scripts.build_boost import Builder_boost
 
-cpus = multiprocessing.cpu_count()
-NJOBS = str(int(math.ceil(cpus * 0.7)))
-
 # Start building
 modules = [
-	Builder_SDL2(),
-	Builder_SDL2_Image(),
+	# Builder_SDL2(),
+	# Builder_SDL2_Image(),
 	# Builder_SDL2_TTF(),
-	# Builder_SDL2_gfx(),
+	Builder_SDL2_gfx(),
 	# Builder_g3log(),
 	# Builder_jsoncpp(),
 	# Builder_pugixml(),
@@ -110,8 +107,8 @@ if __name__ == "__main__":
 	print("## Build type  : [ {} ]".format(args.type))
 	print("## Static link : [ {} ]".format(args.static))
 	print("## Working path: [ {} ]".format(WORKING_PATH))
-	print("## NJOBS       : [ {} ]".format(NJOBS))
-	print("##      (CPUs) : [ {} ]".format(cpus))
+	print("## NJOBS       : [ {} ]".format(env.NJOBS))
+	print("##      (CPUs) : [ {} ]".format(multiprocessing.cpu_count()))
 	print("###########################################")
 
 	start_build(env)
