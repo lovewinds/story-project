@@ -19,7 +19,7 @@ from scripts.packages.sdl_gfx import Builder_SDL2_gfx
 from scripts.packages.g3log import Builder_g3log
 from scripts.packages.jsoncpp import Builder_jsoncpp
 from scripts.build_pugixml import Builder_pugixml
-from scripts.build_gtest import Builder_gtest
+from scripts.packages.gtest import Builder_gtest
 from scripts.build_protobuf import Builder_protobuf
 from scripts.build_zeromq import Builder_zeromq
 from scripts.build_python3 import Builder_python
@@ -32,9 +32,9 @@ modules = [
 	# Builder_SDL2_TTF(),
 	# Builder_SDL2_gfx(),
 	# Builder_g3log(),
-	Builder_jsoncpp(),
+	# Builder_jsoncpp(),
 	# Builder_pugixml(),
-	# Builder_gtest(),
+	Builder_gtest(),
 	# Builder_protobuf(),
 	# Builder_zeromq(),
 	# Builder_python(),
