@@ -5,6 +5,7 @@ import sys
 import math
 import argparse
 import traceback
+import subprocess
 import multiprocessing
 import scripts.build_env as benv
 
@@ -26,9 +27,9 @@ from scripts.build_boost import Builder_boost
 
 # Start building
 modules = [
-	# Builder_SDL2(),
-	# Builder_SDL2_Image(),
-	# Builder_SDL2_TTF(),
+	Builder_SDL2(),
+	Builder_SDL2_Image(),
+	Builder_SDL2_TTF(),
 	Builder_SDL2_gfx(),
 	# Builder_g3log(),
 	# Builder_jsoncpp(),
@@ -39,6 +40,16 @@ modules = [
 	# Builder_python(),
 	# Builder_boost(),
 ]
+
+def check_msvc(env_param):
+	v = subprocess.run(['msbuild', '/ver'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+	if v.returncode != 0:
+		print(f'MSBuild is not found !')
+		print('    Please set environment with script like below!')
+		# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
+		# "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"
+		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat"')
+		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"')
 
 def start_build(env_param):
 	for m in modules:
@@ -111,4 +122,6 @@ if __name__ == "__main__":
 	print("##      (CPUs) : [ {} ]".format(multiprocessing.cpu_count()))
 	print("###########################################")
 
+	if CURRENT_PLATFORM == Platform.Windows:
+		check_msvc(env)
 	start_build(env)
