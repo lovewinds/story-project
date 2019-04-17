@@ -21,11 +21,13 @@ class SDL2iOSBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         )
-        if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
-            print("       [{}] already built.".format(self.config['name']))
+        # if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
+        _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
+        if os.path.exists(_check):
+            self.tag_log("Already built.")
             return
 
-        print("       [{}] Start building ...".format(self.config['name']))
+        self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
         cmd = '{} PREFIX={} {}/ios-build.sh SDL2'.format(
@@ -55,7 +57,7 @@ class SDL2iOSBuilder(PlatformBuilder):
             self.env.output_include_path
         )
         copy2(header_ios_path, sdl_config_header)
-        print("       [{}] header file for iOS has been changed ...".format(self.config['name']))
+        self.tag_log("header file for iOS has been changed ...")
 
         self.create_framework_iOS()
 
@@ -79,7 +81,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         )
 
         # Copy headers into Framework directory
-        print("       [{}] Framework : Copying header ...".format(self.config['name']))
+        self.tag_log("Framework : Copying header ...")
         BuildEnv.mkdir_p(_framework_header_dir)
         _path = Path(sdl2_include_path)
         _files = [x for x in _path.iterdir() if x.is_file()]
@@ -87,8 +89,8 @@ class SDL2iOSBuilder(PlatformBuilder):
             copy2(str(file), _framework_header_dir)
 
         # Copy binaries
-        print("       [{}] Framework : Copying binary  ...".format(self.config['name']))
-        BuildEnv.mkdir_p(_framework_dir)
+        self.tag_log("Framework : Copying binary  ...")
+        BuildEnv.mkdr_p(_framework_dir)
         _lib_src_file = '{}/libSDL2.a'.format(self.env.output_lib_path)
         _lib_dst_file = '{}/SDL'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)

@@ -24,10 +24,10 @@ class SDL2LinuxBuilder(PlatformBuilder):
 
         _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
-            print("       [{}] already built.".format(self.config['name']))
+            self.tag_log("Already built.")
             return
 
-        print("       [{}] Start building ...".format(self.config['name']))
+        self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
         cmd = '{} ../configure --prefix={}; make -j {}; make install'.format(
