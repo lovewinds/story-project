@@ -91,10 +91,8 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2_image
-        install_path = '{}\\{}\\release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
 
         _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
@@ -109,29 +107,18 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
         #patch_sdl2_image("SDL_image_VS2012.vcxproj")
         self._patch("SDL_image.vcxproj")
         self.patch_static_MSVC("SDL_image.vcxproj")
-        os.system(''' \
-msbuild SDL_image.sln \
-    /maxcpucount:{} \
-    /t:SDL2_image \
-    /p:PlatformToolSet={} \
-    /p:Configuration=Release \
-    /p:Platform=x64 \
-    /p:OutDir={} \
-'''.format(self.env.NJOBS, self.env.compiler_version, install_path))
-#         os.system('''
-# msbuild SDL_image.sln \
-#     /t:SDL2_image \
-#     /p:PlatformToolSet='+MSVC_VER+' \
-#     /p:Configuration=Release \
-#     /p:OutDir={}'''
-# .format(install_path))
+        cmd = '''msbuild SDL_image.sln \
+                    /maxcpucount:{} \
+                    /t:SDL2_image \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={} \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         ## Install
-        # Copy headers
-        # include_path = '{}\\{}\\include'.format(
-        #     self.env.output_path,
-        #     self.config['name']
-        # )
         self.tag_log("Copying header files ..")
         copy2(PureWindowsPath(f'{sdl2_image_path}\\..\\SDL_image.h'),
               PureWindowsPath(f'{self.env.output_include_path}\\SDL_image.h'))

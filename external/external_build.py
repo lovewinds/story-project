@@ -34,10 +34,10 @@ modules = [
 	# Builder_g3log(),
 	# Builder_jsoncpp(),
 	# Builder_pugixml(),
-	# Builder_gtest(),
+	Builder_gtest(),
 	# Builder_protobuf(),
 	# Builder_zeromq(),
-	Builder_python(),
+	# Builder_python(),
 	# Builder_boost(),
 ]
 

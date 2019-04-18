@@ -72,8 +72,8 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
 	)
 	SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\")
 	SET(SDL2_PATH
-		"${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\Release\\"
-		"${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\Debug\\")
+		"${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\release\\"
+		"${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\debug\\")
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Search SDL2 libraries

@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -48,23 +48,18 @@ class protobufWindowsBuilder(PlatformBuilder):
         self.tag_log("Patched")
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
-    def pre(self):
-        super().pre()
-
     def build(self):
         super().build()
 
-        # Build g3log
-        install_path = '{}/{}/release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
-        build_path = '{}/{}/cmake/build'.format(
+        # Build protobuf
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
+        build_path = PureWindowsPath('{}/{}/cmake/build'.format(
             self.env.source_path,
             self.config['name']
-        )
+        ))
 
-        _check = f'{install_path}/{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -74,17 +69,23 @@ class protobufWindowsBuilder(PlatformBuilder):
         os.chdir(build_path)
         
         ## TODO: Change toolset dynamically
-        os.system('cmake -Dprotobuf_BUILD_TESTS=OFF  -G "Visual Studio 14 2015 Win64" ..')
+        cmd = '''cmake \
+                    -Dprotobuf_BUILD_TESTS=OFF \
+                    -G "Visual Studio 14 2015 Win64" \
+                    ..'''
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
-        os.system('''
-            msbuild protobuf.sln \
-                /maxcpucount:{} \
-                /t:libprotobuf \
-                /p:PlatformToolSet={} \
-                /p:Configuration=Release \
-                /p:Platform=x64 \
-                /p:OutDir={}'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path))
+        cmd = '''msbuild protobuf.sln \
+                    /maxcpucount:{} \
+                    /t:libprotobuf \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={}\
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         # required only debug release
         # os.rename(f'{install_path}\\libprotobufd.lib',

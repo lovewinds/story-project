@@ -71,15 +71,12 @@ class SDL2TTFWindowsBuilder(PlatformBuilder):
         self.tag_log("Patched")
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
-
     def build(self):
         super().build()
 
         # Build SDL2_ttf
-        install_path = PureWindowsPath('{}\\{}\\release'.format(
-            self.env.output_path,
-            self.config['name']
-        ))
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
 
         _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
@@ -92,16 +89,16 @@ class SDL2TTFWindowsBuilder(PlatformBuilder):
         os.chdir(sdl2_ttf_path)
         self.patch_sdl2_ttf("SDL_ttf.vcxproj")
         self.patch_static_MSVC("SDL_ttf.vcxproj")
-        _cmd = '''msbuild SDL_ttf.sln \
-                /maxcpucount:{} \
-                /t:SDL2_ttf \
-                /p:PlatformToolSet={} \
-                /p:Configuration=Release \
-                /p:Platform=x64 \
-                /p:OutDir={}'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path)
-        self.log('\n    '.join(f'[CMD]:: {_cmd}'.split()))
-        os.system(_cmd)
+        cmd = '''msbuild SDL_ttf.sln \
+                    /maxcpucount:{} \
+                    /t:SDL2_ttf \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={} \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         # Copy headers
         self.tag_log("Copying header files ..")

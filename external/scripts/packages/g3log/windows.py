@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -56,16 +56,14 @@ class g3logWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build g3log
-        install_path = '{}/{}/release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
-        build_path = '{}/{}/build'.format(
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
+        build_path = PureWindowsPath('{}/{}/build'.format(
             self.env.source_path,
             self.config['name']
-        )
+        ))
 
-        _check = f'{install_path}/{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -77,22 +75,27 @@ class g3logWindowsBuilder(PlatformBuilder):
         # TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
         #os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
         # Disable fatal signal handling on g3log 1.3
-        os.system('''cmake \
+        cmd = '''cmake \
             -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
             -DENABLE_FATAL_SIGNALHANDLING=OFF \
-            -DADD_BUILD_WIN_SHARED=ON ..''')
+            -DADD_BUILD_WIN_SHARED=ON ..'''
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+        # patch
         self.patch_static_MSVC("g3logger.vcxproj")
 
         # os.system('msbuild g3log.sln /t:g3logger;g3logger_shared /p:Configuration=Release /p:OutDir='+build_path_rel)
-        os.system('''
-            msbuild g3log.sln \
-                /maxcpucount:{} \
-                /t:g3logger;g3logger_shared \
-                /p:PlatformToolSet={} \
-                /p:Configuration=Release \
-                /p:Platform=x64 \
-                /p:OutDir={}'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path))
+        cmd = '''msbuild g3log.sln \
+                    /maxcpucount:{} \
+                    /t:g3logger;g3logger_shared \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={} \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
     def patch_g3log_remove_warnings(self):
         patch_path = '{}/{}'.format(

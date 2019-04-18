@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -53,12 +53,10 @@ class SDL2WindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2
-        install_path = '{}/{}/release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
 
-        _check = f'{install_path}/{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -68,16 +66,16 @@ class SDL2WindowsBuilder(PlatformBuilder):
             self.config['name']))
         self.patch_static_MSVC("SDL/SDL.vcxproj")
         self.patch_static_MSVC("SDLmain/SDLmain.vcxproj")
-        # os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet=v140 /p:Configuration=Debug /p:OutDir='+install_path_dbg)
-        os.system('''
-msbuild SDL.sln \
-    /maxcpucount:{} \
-    /t:SDL2;SDL2main \
-    /p:PlatformToolSet={} \
-    /p:Configuration=Release \
-    /p:Platform=x64 \
-    /p:OutDir={}'''
-.format(self.env.NJOBS, self.env.compiler_version, install_path))
+        cmd = '''msbuild SDL.sln \
+                    /maxcpucount:{} \
+                    /t:SDL2;SDL2main \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={} \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         # Copy headers
         self.tag_log("Copying header files ..")
@@ -85,11 +83,6 @@ msbuild SDL.sln \
             self.env.source_path,
             self.config['name']
         )
-        # include_path = '{}/{}/include'.format(
-        #     self.env.output_path,
-        #     self.config['name']
-        # )
-        # os.makedirs(sdl2_include_path, exist_ok=True)
 
         try:
             copytree(sdl2_include_path, self.env.output_include_path)

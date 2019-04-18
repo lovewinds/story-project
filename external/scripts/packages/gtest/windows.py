@@ -20,10 +20,8 @@ class gtestWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build gtest
-        install_path = PureWindowsPath('{}/{}/release'.format(
-            self.env.output_path,
-            self.config['name']
-        ))
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
         build_path = PureWindowsPath('{}/{}/build'.format(
             self.env.source_path,
             self.config['name']
@@ -33,7 +31,7 @@ class gtestWindowsBuilder(PlatformBuilder):
             self.config['name']
         ))
 
-        _check = f'{install_path}/{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -50,22 +48,25 @@ class gtestWindowsBuilder(PlatformBuilder):
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
         ## TODO: Change toolset dynamically
-        os.system('cmake .. -G "Visual Studio 14 2015 Win64"')
+        cmd = 'cmake .. -A x64'
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         os.chdir(project_path)
         # As CMake generates project file, so it can't be proceed in pre()
         self.patch_gtest("gtest.vcxproj")
         self.patch_gtest("gtest_main.vcxproj")
 
-        os.system('''
-            msbuild gtest.sln \
-                /maxcpucount:{} \
-                /t:gtest;gtest_main \
-                /p:PlatformToolSet={} \
-                /p:Configuration=Release \
-                /p:Platform=x64 \
-                /p:OutDir={}\\'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path))
+        cmd = '''msbuild gtest.sln \
+                    /maxcpucount:{} \
+                    /t:gtest;gtest_main \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={}\\ \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
                 # /p:NoWarn=4819 \
                 # /p:WarningLevel=0 \

@@ -37,19 +37,19 @@ class Builder_g3log(PackageBuilder):
             Platform.Windows: g3logWindowsBuilder(
                 self.package,
                 {
-                    'checker': 'g3log.lib'
+                    'checker': 'g3logger.lib'
                 }
             ),
             Platform.Linux: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libg3log.a'
+                    'checker': 'libg3logger.a'
                 }
             ),
             Platform.macOS: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'g3log.dylib'
+                    'checker': 'g3logger.dylib'
                 }
             )
         }

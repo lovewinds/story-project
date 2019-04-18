@@ -79,12 +79,10 @@ class SDL2gfxWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2_gfx
-        install_path = '{}\\{}\\release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
 
-        _check = PureWindowsPath(f'{install_path}\\{self.config.get("checker")}')
+        _check = f'{install_path}\\{self.config.get("checker")}'
         self.tag_log('checking {}'.format(_check))
         if os.path.exists(_check):
             self.tag_log("Already built.")
@@ -100,30 +98,30 @@ class SDL2gfxWindowsBuilder(PlatformBuilder):
         # Use patch script
         # https://github.com/techtonik/python-patch
         self.tag_log('Patch for x64')
-        _cmd = "python {}/patch.py {}/sdl2_gfx.x64_solution.patch".format(
+        cmd = "python {}/patch.py {}/sdl2_gfx.x64_solution.patch".format(
             self.env.working_path,
             self.env.patch_path
         )
-        self.env.run_command(_cmd, module_name=self.config['name'])
-        _cmd = "python {}/patch.py {}/sdl2_gfx.x64_project.patch".format(
+        self.env.run_command(cmd, module_name=self.config['name'])
+        cmd = "python {}/patch.py {}/sdl2_gfx.x64_project.patch".format(
             self.env.working_path,
             self.env.patch_path
         )
-        self.env.run_command(_cmd, module_name=self.config['name'])
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         self.patch_sdl2_gfx("SDL2_gfx.vcxproj")
         self.patch_static_MSVC("SDL2_gfx.vcxproj")
 
-        _cmd = '''msbuild SDL2_gfx.sln \
-                /maxcpucount:{} \
-                /t:SDL2_gfx \
-                /p:PlatformToolSet={} \
-                /p:Configuration=Release \
-                /p:Platform=x64 \
-                /p:OutDir={}'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path)
-        self.log(f'[CMD] :: {_cmd}')
-        os.system(_cmd)
+        cmd = '''msbuild SDL2_gfx.sln \
+                    /maxcpucount:{} \
+                    /t:SDL2_gfx \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=Release \
+                    /p:Platform=x64 \
+                    /p:OutDir={} \
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         # Copy headers
         self.tag_log("Copying header files ..")

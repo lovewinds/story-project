@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -16,23 +16,18 @@ class zeromqWindowsBuilder(PlatformBuilder):
             for k in config_platform.keys():
                 self.config[k] = config_platform[k]
 
-    def pre(self):
-        super().pre()
-
     def build(self):
         super().build()
 
-        # Build g3log
-        install_path = '{}/{}/release'.format(
-            self.env.output_path,
-            self.config['name']
-        )
-        build_path = '{}/{}/builds/msvc/vs2015'.format(
+        # Build zeromq
+        # TODO: Selective debug/release output
+        install_path = PureWindowsPath(f'{self.env.output_path}/release')
+        build_path = PureWindowsPath('{}/{}/builds/msvc/vs2015'.format(
             self.env.source_path,
             self.config['name']
-        )
+        ))
 
-        _check = f'{install_path}/{self.config.get("checker")}'
+        _check = f'{install_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -44,17 +39,17 @@ class zeromqWindowsBuilder(PlatformBuilder):
         # TODO: Need to check for secure connection
         self.patch_libzmq_win(f"{build_path}/libzmq/libzmq.props")
 
-        # os.system('msbuild libzmq.sln /t:libzmq /p:Option-sodium=false /p:Configuration=DynRelease /p:PlatformToolSet='+MSVC_VER+' /p:OutDir='+build_path_rel)
-        os.system('''
-            msbuild libzmq.sln \
-                /maxcpucount:{} \
-                /t:libzmq \
-                /p:Option-sodium=false \
-                /p:PlatformToolSet={} \
-                /p:Configuration=DynRelease \
-                /p:Platform=x64 \
-                /p:OutDir={}'''.format(
-                    self.env.NJOBS, self.env.compiler_version, install_path))
+        cmd = '''msbuild libzmq.sln \
+                    /maxcpucount:{} \
+                    /t:libzmq \
+                    /p:Option-sodium=false \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration=DynRelease \
+                    /p:Platform=x64 \
+                    /p:OutDir={}\
+                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
+        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
 
     def patch_libzmq_win(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
