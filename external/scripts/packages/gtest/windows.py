@@ -49,6 +49,7 @@ class gtestWindowsBuilder(PlatformBuilder):
 
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
+        ## TODO: Change toolset dynamically
         os.system('cmake .. -G "Visual Studio 14 2015 Win64"')
 
         os.chdir(project_path)

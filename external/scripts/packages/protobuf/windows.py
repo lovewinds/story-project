@@ -6,7 +6,7 @@ from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
-class g3logWindowsBuilder(PlatformBuilder):
+class protobufWindowsBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
@@ -50,7 +50,6 @@ class g3logWindowsBuilder(PlatformBuilder):
 
     def pre(self):
         super().pre()
-        self.patch_g3log_remove_warnings()
 
     def build(self):
         super().build()
@@ -60,7 +59,7 @@ class g3logWindowsBuilder(PlatformBuilder):
             self.env.output_path,
             self.config['name']
         )
-        build_path = '{}/{}/build'.format(
+        build_path = '{}/{}/cmake/build'.format(
             self.env.source_path,
             self.config['name']
         )
@@ -73,40 +72,20 @@ class g3logWindowsBuilder(PlatformBuilder):
         self.tag_log("Start building ..")
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
-        # patch_g3log_remove_warnings(build_path)
-        # TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
-        #os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
-        # Disable fatal signal handling on g3log 1.3
-        os.system('''cmake \
-            -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
-            -DENABLE_FATAL_SIGNALHANDLING=OFF \
-            -DADD_BUILD_WIN_SHARED=ON ..''')
-        self.patch_static_MSVC("g3logger.vcxproj")
+        
+        ## TODO: Change toolset dynamically
+        os.system('cmake -Dprotobuf_BUILD_TESTS=OFF  -G "Visual Studio 14 2015 Win64" ..')
 
-        # os.system('msbuild g3log.sln /t:g3logger;g3logger_shared /p:Configuration=Release /p:OutDir='+build_path_rel)
         os.system('''
-            msbuild g3log.sln \
+            msbuild protobuf.sln \
                 /maxcpucount:{} \
-                /t:g3logger;g3logger_shared \
+                /t:libprotobuf \
                 /p:PlatformToolSet={} \
                 /p:Configuration=Release \
                 /p:Platform=x64 \
                 /p:OutDir={}'''.format(
                     self.env.NJOBS, self.env.compiler_version, install_path))
 
-    def patch_g3log_remove_warnings(self):
-        patch_path = '{}/{}'.format(
-            self.env.source_path,
-            self.config['name']
-        )
-        os.chdir(patch_path)
-
-        # Use patch script
-        # https://github.com/techtonik/python-patch
-        cmd = "python {}/patch.py {}/g3log-1.2-remove_warnings.patch".format(
-            self.env.working_path,
-            self.env.patch_path
-        )
-        self.env.run_command(cmd, module_name=self.config['name'])
-
-        self.tag_log("Patched")
+        # required only debug release
+        # os.rename(f'{install_path}\\libprotobufd.lib',
+        #           f'{install_path}\\libprotobuf.lib')

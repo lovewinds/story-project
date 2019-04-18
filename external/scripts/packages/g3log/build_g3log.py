@@ -43,7 +43,7 @@ class Builder_g3log(PackageBuilder):
             Platform.Linux: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libg3log.so'
+                    'checker': 'libg3log.a'
                 }
             ),
             Platform.macOS: g3logLinuxBuilder(
