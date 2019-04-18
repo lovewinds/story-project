@@ -18,12 +18,12 @@ from scripts.packages.sdl_ttf import Builder_SDL2_TTF
 from scripts.packages.sdl_gfx import Builder_SDL2_gfx
 from scripts.packages.g3log import Builder_g3log
 from scripts.packages.jsoncpp import Builder_jsoncpp
-from scripts.build_pugixml import Builder_pugixml
+from scripts.packages.pugixml import Builder_pugixml
 from scripts.packages.gtest import Builder_gtest
-from scripts.build_protobuf import Builder_protobuf
-from scripts.build_zeromq import Builder_zeromq
-from scripts.build_python3 import Builder_python
-from scripts.build_boost import Builder_boost
+from scripts.packages.protobuf import Builder_protobuf
+from scripts.packages.zeromq import Builder_zeromq
+from scripts.packages.python3 import Builder_python
+from scripts.packages.boost import Builder_boost
 
 # Start building
 modules = [
