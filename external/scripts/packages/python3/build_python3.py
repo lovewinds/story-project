@@ -1,13 +1,12 @@
 #!/usr/bin/python
 import os
-import tarfile
 from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 
-from .windows import pythonWindowsBuilder
+# from .windows import pythonWindowsBuilder
 from .linux import pythonLinuxBuilder
-from .python import pythoniOSBuilder
+from .ios import pythoniOSBuilder
 
 class Builder_python(PackageBuilder):
     def __init__(self):
@@ -37,12 +36,12 @@ class Builder_python(PackageBuilder):
         # }
 
         self.builder = {
-            Platform.Windows: pythonWindowsBuilder(
-                self.package,
-                {
-                    'checker': 'libzmq.lib'
-                }
-            ),
+            # Platform.Windows: pythonWindowsBuilder(
+            #     self.package,
+            #     {
+            #         'checker': 'libpython.lib'
+            #     }
+            # ),
             Platform.Linux: pythonLinuxBuilder(
                 self.package,
                 {
@@ -54,7 +53,7 @@ class Builder_python(PackageBuilder):
                 {
                     'url': 'https://github.com/pybee/Python-Apple-support/archive/3.6-b6.tar.gz',
                     'filename': 'Python-Apple-support-3.6-b6.tar.gz',
-                    'checker': 'libpython3.6m.dylib'
+                    'checker': 'Python.framework'
                 }
             )
         }
