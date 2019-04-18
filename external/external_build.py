@@ -42,14 +42,23 @@ modules = [
 ]
 
 def check_msvc(env_param):
-	v = subprocess.run(['msbuild', '/ver'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-	if v.returncode != 0:
+	found = True
+	try:
+		v = subprocess.run(['msbuild', '/ver'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+		if v.returncode != 0:
+			found = False
+	except:
+		found = False
+
+	if not found:
 		print(f'MSBuild is not found !')
 		print('    Please set environment with script like below!')
 		# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
 		# "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"
 		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat"')
 		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"')
+
+		exit(1)
 
 def start_build(env_param):
 	for m in modules:

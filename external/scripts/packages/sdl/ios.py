@@ -90,7 +90,7 @@ class SDL2iOSBuilder(PlatformBuilder):
 
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
-        BuildEnv.mkdr_p(_framework_dir)
+        BuildEnv.mkdir_p(_framework_dir)
         _lib_src_file = '{}/libSDL2.a'.format(self.env.output_lib_path)
         _lib_dst_file = '{}/SDL'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
