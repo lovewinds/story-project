@@ -78,7 +78,9 @@ class g3logWindowsBuilder(PlatformBuilder):
         cmd = '''cmake \
             -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
             -DENABLE_FATAL_SIGNALHANDLING=OFF \
-            -DADD_BUILD_WIN_SHARED=ON ..'''
+            -DADD_BUILD_WIN_SHARED=ON \
+            -A x64 \
+            ..'''
         self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
@@ -97,6 +99,16 @@ class g3logWindowsBuilder(PlatformBuilder):
         self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
+    def post(self):
+        super().post()
+        
+        patch_target = PureWindowsPath('{}/{}/src/g3log/g3log.hpp'.format(
+            self.env.source_path,
+            self.config['name']
+        ))
+        self.patch_file_encoding(patch_target)
+
+
     def patch_g3log_remove_warnings(self):
         patch_path = '{}/{}'.format(
             self.env.source_path,
@@ -113,3 +125,20 @@ class g3logWindowsBuilder(PlatformBuilder):
         self.env.run_command(cmd, module_name=self.config['name'])
 
         self.tag_log("Patched")
+
+    def patch_file_encoding(self, path):
+        import codecs
+        BLOCKSIZE = 1048576 # or some other, desired size in bytes
+
+        from shutil import copyfile
+        backup = f'{path}.old'
+        if not os.path.exists(backup):
+            copyfile(path, backup)
+
+        with codecs.open(backup, "r", "utf-8") as sourceFile:
+            with codecs.open(path, "w", "utf-16") as targetFile:
+                while True:
+                    contents = sourceFile.read(BLOCKSIZE)
+                    if not contents:
+                        break
+                    targetFile.write(contents)

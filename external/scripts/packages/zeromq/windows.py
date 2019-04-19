@@ -16,6 +16,16 @@ class zeromqWindowsBuilder(PlatformBuilder):
             for k in config_platform.keys():
                 self.config[k] = config_platform[k]
 
+    def pre(self):
+        super().pre()
+        subpkg_url = 'https://github.com/zeromq/cppzmq/archive/v4.2.2.tar.gz'
+        subpkg_name = 'cppzmq'
+        subpkg_archive = 'cppzmq-4.2.2.tar.gz'
+
+        self.tag_log("[CPPZMQ] Preparing sub package")
+        self.env.download_file(subpkg_url, subpkg_archive)
+        self.env.extract_tarball(subpkg_archive, subpkg_name)
+
     def build(self):
         super().build()
 

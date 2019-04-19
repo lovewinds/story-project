@@ -71,7 +71,7 @@ class protobufWindowsBuilder(PlatformBuilder):
         ## TODO: Change toolset dynamically
         cmd = '''cmake \
                     -Dprotobuf_BUILD_TESTS=OFF \
-                    -G "Visual Studio 14 2015 Win64" \
+                    -A x64 \
                     ..'''
         self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])

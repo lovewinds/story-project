@@ -22,7 +22,7 @@ class zeromqLinuxBuilder(PlatformBuilder):
         subpkg_name = 'cppzmq'
         subpkg_archive = 'cppzmq-4.2.2.tar.gz'
 
-        print("  Preparing sub package")
+        self.tag_log("Preparing sub package")
         self.env.download_file(subpkg_url, subpkg_archive)
         self.env.extract_tarball(subpkg_archive, subpkg_name)
 
