@@ -130,6 +130,9 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 		${CMAKE_BINARY_DIR}
 	)
 ELSEIF(${PLATFORM} STREQUAL "Windows")
+	INCLUDE_DIRECTORIES(
+		${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/dirent/include/
+	)
 	LINK_DIRECTORIES(
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/$(Configuration)/
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/

@@ -18,11 +18,12 @@ class PackageBuilder(object):
         )
 
         # Check platform and trigger matching builder
-        _builder = self.builder.get(self.env.platform)
-        if _builder is not None:
-            _builder.configure(self.env)
-            _builder.pre()
-            _builder.build()
-            _builder.post()
+        if self.builder is not None:
+            _builder = self.builder.get(self.env.platform)
+            if _builder is not None:
+                _builder.configure(self.env)
+                _builder.pre()
+                _builder.build()
+                _builder.post()
 
         return True

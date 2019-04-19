@@ -16,7 +16,11 @@ How to build
 Build environment
 ---
 **[CMake](https://cmake.org/ "CMake")**
-**[Python 2.X](https://www.python.org/ "Python 2.X")**
+
+**[Python 3.X](https://www.python.org/ "Python 3.X")**
+
+**[Boost](https://www.boost.org/ "Boost")**
+
 **Autotools**
 
 Build dependencies
