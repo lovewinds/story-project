@@ -40,9 +40,9 @@ class Builder_boost(PackageBuilder):
             Platform.Windows: boostWindowsBuilder(
                 self.package,
                 {
-                    'checker': 'libboost.lib',
                     'url': 'https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.zip',
-                    'filename': 'boost_1_69_0.zip'
+                    'filename': 'boost_1_69_0.zip',
+                    'checker': 'libboost.lib'
                 }
             ),
             Platform.Linux: boostLinuxBuilder(
@@ -57,12 +57,12 @@ class Builder_boost(PackageBuilder):
                     'checker': 'libboost_python3.a'
                 }
             ),
-            Platform.iOS: boostiOSBuilder(
-                self.package,
-                {
-                    'url': 'https://github.com/faithfracture/Apple-Boost-BuildScript/archive/master.zip',
-                    'filename': 'Apple-Boost-BuildScript-master.zip',
-                    'checker': 'boost.framework'
-                }
-            )
+            # Platform.iOS: boostiOSBuilder(
+            #     self.package,
+            #     {
+            #         'url': 'https://github.com/faithfracture/Apple-Boost-BuildScript/archive/master.zip',
+            #         'filename': 'Apple-Boost-BuildScript-master.zip',
+            #         'checker': 'boost.framework'
+            #     }
+            # )
         }

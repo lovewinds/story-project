@@ -45,6 +45,11 @@ class boostWindowsBuilder(PlatformBuilder):
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
+        msvc_toolset = 'msvc-14.0'
+        if self.env.compiler_version == 'v141':
+            msvc_toolset = 'msvc-14.1'
+        if self.env.compiler_version == 'v142':
+            msvc_toolset = 'msvc-14.2'
         cmd = '''.\\b2 \
             -j {} \
             --build-dir=build\\x64 \
@@ -55,6 +60,8 @@ class boostWindowsBuilder(PlatformBuilder):
             address-model=64 \
             threading=multi \
             install'''.format(
-            self.env.output_path
+                self.env.NJOBS,
+                self.env.output_path,
+                msvc_toolset,
         )
         self.env.run_command(cmd, module_name=self.config['name'])
