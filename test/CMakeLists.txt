@@ -17,7 +17,8 @@ INCLUDE_DIRECTORIES(
 IF(UNIX AND NOT WIN32)
     LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/ ${CMAKE_BINARY_DIR})
 ELSE(UNIX AND NOT WIN32)
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/$(Configuration)/ ${CMAKE_BINARY_DIR})
+    # LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/$(Configuration)/ ${CMAKE_BINARY_DIR})
+    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/release/ ${CMAKE_BINARY_DIR})
 ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
@@ -48,20 +49,20 @@ IF(UNIX AND NOT WIN32)
 ELSE(UNIX AND NOT WIN32)
     # Windows
 	IF(USE_G3LOG)
-		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/g3logger.lib")
+		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/g3logger.lib")
 	ELSE(USE_G3LOG)
 		SET(LINK_G3LOG "")
 	ENDIF(USE_G3LOG)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/SDL2.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/SDL2main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/SDL2_image.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/SDL2_ttf.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/SDL2_gfx.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/gtest.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/gtest_main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_ttf.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/gtest.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/gtest_main.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/libzmq.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "dbghelp.lib")
@@ -71,7 +72,7 @@ ENDIF(UNIX AND NOT WIN32)
 IF(${PLATFORM} STREQUAL "Windows")
 ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
 	POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}//$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
 	COMMENT "Copy required dynamic libraries")
 ENDIF(${PLATFORM} STREQUAL "Windows")
 

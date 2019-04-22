@@ -5,7 +5,7 @@ from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 
-# from .windows import boostWindowsBuilder
+from .windows import boostWindowsBuilder
 from .linux import boostLinuxBuilder
 from .ios import boostiOSBuilder
 
@@ -14,8 +14,8 @@ class Builder_boost(PackageBuilder):
         super(Builder_boost, self)
         self.package = {
             'name': 'boost',
-            'url': 'https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz',
-            'filename': 'boost_1_64_0.tar.gz'
+            'url': 'https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz',
+            'filename': 'boost_1_69_0.tar.gz'
         }
         # 	'Linux': {
         # 		'pre': None,
@@ -37,12 +37,14 @@ class Builder_boost(PackageBuilder):
         # }
 
         self.builder = {
-            # Platform.Windows: boostWindowsBuilder(
-            #     self.package,
-            #     {
-            #         'checker': 'libboost.lib'
-            #     }
-            # ),
+            Platform.Windows: boostWindowsBuilder(
+                self.package,
+                {
+                    'checker': 'libboost.lib',
+                    'url': 'https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.zip',
+                    'filename': 'boost_1_69_0.zip'
+                }
+            ),
             Platform.Linux: boostLinuxBuilder(
                 self.package,
                 {

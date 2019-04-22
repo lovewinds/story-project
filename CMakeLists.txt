@@ -83,8 +83,9 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 FIND_PACKAGE(SDL2_gfx REQUIRED)
 
 # Search built Python 3
-SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/libpython3.6m.a)
-SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/include/python3.6m)
+# SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/libpython3.6m.a)
+# SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/include/python3.6m)
+
 #SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib")
 FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
 
@@ -132,9 +133,11 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	INCLUDE_DIRECTORIES(
 		${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/dirent/include/
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/include/boost-1_69/
 	)
 	LINK_DIRECTORIES(
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/$(Configuration)/
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/release/
 		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/
 		${CMAKE_BINARY_DIR}
 		${PYTHON_LIB_PATH}
@@ -276,19 +279,19 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
 	IF(USE_G3LOG)
-		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/g3logger.lib")
+		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/g3logger.lib")
 	ELSE(USE_G3LOG)
 		SET(LINK_G3LOG "")
 	ENDIF(USE_G3LOG)
 	ADD_LIBRARY(${LIBNAME} STATIC ${SOURCES})
 	SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
 	TARGET_LINK_LIBRARIES(${LIBNAME}
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2main.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_image.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_ttf.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_gfx.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/libzmq.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2main.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_image.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_ttf.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_gfx.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/libzmq.lib
 		${LINK_G3LOG}
 		${PYTHON_LIBRARIES}
 		"${pkgs_LDFLAGS}"
@@ -306,18 +309,18 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
 	# Windows
 	IF(USE_G3LOG)
-		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/g3logger.lib")
+		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/g3logger.lib")
 	ELSE(USE_G3LOG)
 		SET(LINK_G3LOG "")
 	ENDIF(USE_G3LOG)
 	TARGET_LINK_LIBRARIES(${PROJECT_NAME}
 		${pkgs_LDFLAGS}
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2main.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_image.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_ttf.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_gfx.lib
-		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/libzmq.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2main.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_image.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_ttf.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_gfx.lib
+		${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/libzmq.lib
 		${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
 		${LINK_G3LOG}
 		"dbghelp.lib")
