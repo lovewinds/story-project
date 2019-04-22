@@ -26,7 +26,7 @@ class boostWindowsBuilder(PlatformBuilder):
             self.config['name']
         ))
 
-        # if os.path.exists(self.env.output_lib_path+'/libboost_python3.a'):
+        # if os.path.exists(self.env.output_lib_path+'\\libboost_python3.lib'):
         _check = f'{self.env.output_lib_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
@@ -36,7 +36,7 @@ class boostWindowsBuilder(PlatformBuilder):
         BuildEnv.mkdir_p(build_path)
         os.chdir(pkg_path)
         # self.env.BUILD_FLAG,
-        cmd = '''.\\bootstrap.sh \
+        cmd = '''.\\bootstrap.bat \
              --with-python-root={} \
              --with-libraries=python \
              --prefix={}'''.format(
@@ -46,10 +46,14 @@ class boostWindowsBuilder(PlatformBuilder):
         self.env.run_command(cmd, module_name=self.config['name'])
 
         cmd = '''.\\b2 \
-            --build-dir=build \
+            -j {} \
+            --build-dir=build\\x64 \
             --prefix={} \
             --with-python \
+            --toolset={} \
             link=static \
+            address-model=64 \
+            threading=multi \
             install'''.format(
             self.env.output_path
         )
