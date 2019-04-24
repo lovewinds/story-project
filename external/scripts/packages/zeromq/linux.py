@@ -10,11 +10,7 @@ class zeromqLinuxBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
-        super().__init__(config_package)
-
-        if config_platform is not None:
-            for k in config_platform.keys():
-                self.config[k] = config_platform[k]
+        super().__init__(config_package, config_platform)
 
     def pre(self):
         super().pre()
@@ -66,6 +62,6 @@ class zeromqLinuxBuilder(PlatformBuilder):
             self.env.working_path,
             self.env.patch_path
         )
-        self.env.run_command(cmd, module_name=self.setup['name'])
+        self.env.run_command(cmd, module_name=self.config['name'])
         os.chdir(build_path)
         self.tag_log("Patched")

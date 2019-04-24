@@ -164,13 +164,13 @@ class BuildEnv:
 			proc = subprocess.Popen(cmd, bufsize=-1, shell=True)
 			while proc.poll() is None:
 				time.sleep(1)
-			(str_out, str_err) = proc.communicate()
+			(str_out, str_err) = proc.communicate(str.encode("utf-8"))
 		else:
 			# Store as a log file
 			log_dir = '{}/logs/{}'.format(self.working_path, module_name)
 			self.mkdir_p(log_dir)
 			log_file = '{}/{}.{}.log'.format(log_dir, module_name, self.log_time)
-			with open(log_file, 'a') as f:
+			with open(log_file, 'a', encoding='utf-8') as f:
 				f.write("="*80 + "\n")
 				# f.write("\n")
 				f.write("CMD : [{}]\n".format(cmd))
@@ -191,7 +191,7 @@ class BuildEnv:
 
 				sys.stdout.write("\r       [{}]                         ".format(module_name))
 				sys.stdout.write("\r       [{}] Finished !\n".format(module_name))
-				(str_out, str_err) = proc.communicate()
+				(str_out, str_err) = proc.communicate(str.encode("utf-8"))
 
 			allow_codes = [0, 255]
 			if proc.returncode not in allow_codes:
@@ -203,7 +203,7 @@ class BuildEnv:
 				print("         {}".format(log_file))
 				print("Return code: {}".format(proc.returncode))
 				print("="*80)
-				with open(log_file, 'r') as f:
+				with open(log_file, 'r', encoding='utf-8') as f:
 					for line in f.readlines():
 						print(line.rstrip('\n'))
 

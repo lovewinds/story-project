@@ -28,18 +28,18 @@ from scripts.packages.dirent import Builder_dirent
 
 # Start building
 modules = [
-	# Builder_SDL2(),
-	# Builder_SDL2_Image(),
-	# Builder_SDL2_TTF(),
-	# Builder_SDL2_gfx(),
-	# Builder_g3log(),
-	# Builder_jsoncpp(),
-	# Builder_pugixml(),
-	# Builder_gtest(),
-	# Builder_protobuf(),
-	# Builder_zeromq(),
-	# Builder_python(),
-	# Builder_boost(),
+	Builder_SDL2(),
+	Builder_SDL2_Image(),
+	Builder_SDL2_TTF(),
+	Builder_SDL2_gfx(),
+	Builder_g3log(),
+	Builder_jsoncpp(),
+	Builder_pugixml(),
+	Builder_gtest(),
+	Builder_protobuf(),
+	Builder_zeromq(),
+	Builder_python(),
+	Builder_boost(),
 	Builder_dirent(),
 ]
 
@@ -56,9 +56,9 @@ def check_msvc(env_param):
 		print(f'MSBuild is not found !')
 		print('    Please set environment with script like below!')
 		# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
-		# "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"
+		# "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
 		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat"')
-		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\Tools\\VsDevCmd.bat"')
+		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\VsDevCmd.bat"')
 
 		exit(1)
 
@@ -88,8 +88,8 @@ if __name__ == "__main__":
 	parser.add_argument('--arch', default='x64',
 					choices=['x86', 'x64', 'x86_64'],
 					help='Select archtecture for desktop build (default: x64)')
-	parser.add_argument('--msvc', default='v142',
-					help='If you use MSVC, you can select MSVC version to build with. (default: v140)')
+	parser.add_argument('--msvc', default='v141',
+					help='If you use MSVC, you can select MSVC version to build with. (default: v141)')
 	parser.add_argument('--platform', default='Windows',
 					choices=['Windows', 'Linux', 'macOS', 'iOS'],
 					help='Select platform to build. (default: Windows)')

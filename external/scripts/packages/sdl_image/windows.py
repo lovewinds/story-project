@@ -10,11 +10,7 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
-        super().__init__(config_package)
-
-        if config_platform is not None:
-            for k in config_platform.keys():
-                self.config[k] = config_platform[k]
+        super().__init__(config_package, config_platform)
 
 
     def patch_static_MSVC(self, path):
