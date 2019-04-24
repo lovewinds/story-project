@@ -20,7 +20,7 @@ class Builder_protobuf(PackageBuilder):
             Platform.Windows: protobufWindowsBuilder(
                 self.package,
                 {
-                    'checker': 'protobuf.lib'
+                    'checker': 'libprotobuf.lib'
                 }
             ),
             Platform.Linux: protobufLinuxBuilder(

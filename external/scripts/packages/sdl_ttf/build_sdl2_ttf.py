@@ -43,25 +43,3 @@ class Builder_SDL2_TTF(PackageBuilder):
                 }
             )
         }
-        # self.config = {
-        #     'name': 'SDL2_ttf',
-        #     'common': {
-        #         'url': 'https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.14.tar.gz',
-        #         'filename': 'SDL2_ttf-2.0.14.tar.gz'
-        #     },
-        #     'Linux': {
-        #         'pre': self._do_build_freetype,
-        #         'build': self._build_Linux,
-        #         'post': None,
-        #     },
-        #     'macOS': {
-        #         'pre': self._do_build_freetype,
-        #         'build': self._build_Linux,
-        #         'post': None,
-        #     },
-        #     'iOS': {
-        #         'pre': None,
-        #         'build': self.build_iOS,
-        #         'post': self.post_build_iOS,
-        #     }
-        # }

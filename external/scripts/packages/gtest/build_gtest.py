@@ -12,27 +12,9 @@ class Builder_gtest(PackageBuilder):
         super(Builder_gtest, self)
         self.package = {
             'name': 'gtest',
-            'url': 'https://github.com/google/googletest/archive/release-1.8.0.tar.gz',
-            'filename': 'googletest-release-1.8.0.tar.gz'
+            'url': 'https://github.com/google/googletest/archive/release-1.8.1.tar.gz',
+            'filename': 'googletest-release-1.8.1.tar.gz'
         }
-
-        # 	'Linux': {
-        # 		'pre': None,
-        # 		'build': self._build_Linux,
-        # 		'post': None,
-        # 	},
-        # 	'macOS': {
-        # 		'pre': None,
-        # 		'build': self._build_Linux,
-        # 		'post': None,
-        # 	},
-        # 	'iOS': {
-        # 		'pre': None,
-        # 		'build': None,
-        # 		'post': None,
-        # 	}
-        # }
-
         self.builder = {
             Platform.Windows: gtestWindowsBuilder(
                 self.package,

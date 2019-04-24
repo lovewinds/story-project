@@ -46,7 +46,7 @@ class g3logWindowsBuilder(PlatformBuilder):
 
     def pre(self):
         super().pre()
-        self.patch_g3log_remove_warnings()
+        # self.patch_g3log_remove_warnings()
 
     def build(self):
         super().build()

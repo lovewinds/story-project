@@ -43,26 +43,3 @@ class Builder_SDL2_gfx(PackageBuilder):
                 }
             )
         }
-
-        # self.config = {
-        #     'name': 'SDL2_gfx',
-        #     'common': {
-        #         'url': 'http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-1.0.4.tar.gz',
-        #         'filename': 'SDL2_gfx-1.0.4.tar.gz'
-        #     },
-        #     'Linux': {
-        #         'pre': None,
-        #         'build': self._build_Linux,
-        #         'post': None,
-        #     },
-        #     'macOS': {
-        #         'pre': None,
-        #         'build': self._build_Linux,
-        #         'post': None,
-        #     },
-        #     'iOS': {
-        #         'pre': None,
-        #         'build': self.build_iOS,
-        #         'post': self.post_build_iOS,
-        #     }
-        # }

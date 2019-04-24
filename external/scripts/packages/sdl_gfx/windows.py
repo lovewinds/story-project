@@ -79,7 +79,6 @@ class SDL2gfxWindowsBuilder(PlatformBuilder):
         install_path = PureWindowsPath(f'{self.env.output_path}/release')
 
         _check = f'{install_path}\\{self.config.get("checker")}'
-        self.tag_log('checking {}'.format(_check))
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return

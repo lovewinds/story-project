@@ -38,14 +38,14 @@ class gtestWindowsBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         ))
-        self.patch_file_encoding(patch_target)
+        # self.patch_file_encoding(patch_target)
 
 
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
         ## TODO: Change toolset dynamically
         cmd = 'cmake .. -A x64'
-        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+        self.log(f'[CMD]:: {cmd}'.split())
         self.env.run_command(cmd, module_name=self.config['name'])
 
         os.chdir(project_path)

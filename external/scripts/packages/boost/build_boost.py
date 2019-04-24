@@ -17,25 +17,6 @@ class Builder_boost(PackageBuilder):
             'url': 'https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz',
             'filename': 'boost_1_69_0.tar.gz'
         }
-        # 	'Linux': {
-        # 		'pre': None,
-        # 		'build': self._build_Linux,
-        # 		'post': None,
-        # 	},
-        # 	'macOS': {
-        # 		'pre': None,
-        # 		'build': self._build_Linux,
-        # 		'post': None,
-        # 	},
-        # 	'iOS': {
-        # 		'url': 'https://github.com/faithfracture/Apple-Boost-BuildScript/archive/master.zip',
-        # 		'filename': 'Apple-Boost-BuildScript-master.zip',
-        # 		'pre': self.patch_boost_apple,
-        # 		'build': self._build_iOS,
-        # 		'post': self.post_build_iOS,
-        # 	}
-        # }
-
         self.builder = {
             Platform.Windows: boostWindowsBuilder(
                 self.package,
@@ -57,12 +38,12 @@ class Builder_boost(PackageBuilder):
                     'checker': 'libboost_python3.a'
                 }
             ),
-            # Platform.iOS: boostiOSBuilder(
-            #     self.package,
-            #     {
-            #         'url': 'https://github.com/faithfracture/Apple-Boost-BuildScript/archive/master.zip',
-            #         'filename': 'Apple-Boost-BuildScript-master.zip',
-            #         'checker': 'boost.framework'
-            #     }
-            # )
+            Platform.iOS: boostiOSBuilder(
+                self.package,
+                {
+                    'url': 'https://github.com/faithfracture/Apple-Boost-BuildScript/archive/master.zip',
+                    'filename': 'Apple-Boost-BuildScript-master.zip',
+                    'checker': 'boost.framework'
+                }
+            )
         }
