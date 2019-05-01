@@ -5,9 +5,6 @@
 
 #include <chrono>
 
-#include <boost/python/class.hpp>
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
 
 std::vector<std::wstring> PythonScript::path_list;
 PythonScript* PythonScript::instance = nullptr;
@@ -16,8 +13,9 @@ bool PythonScript::state_ipc = true;
 std::thread PythonScript::thread_python;
 std::thread PythonScript::thread_ipc;
 
-#define __PYTHON_AVAILABLE
+//#define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE
+#include <pybind11/pybind11.h>
 #include <stdio.h>
 #include <stdlib.h>
 /* To remove python debug lib - not found error */
@@ -56,7 +54,7 @@ std::string invite(const hello& w) {
 	return w.greet() + "! Please come soon!";
 }
 
-BOOST_PYTHON_MODULE(helloModule)
+PYBIND11_MODULE(helloModule)
 {
     using namespace boost::python;
     class_<hello>("hello", init<std::string>())
@@ -345,7 +343,9 @@ void PythonScript::finalize()
 void PythonScript::preparePath(std::string script_path)
 {
 	if (!script_path.empty()) {
-		path_list.push_back(script_path);
+		std::wstring ws;
+		ws.assign(script_path.begin(), script_path.end());
+		path_list.push_back(ws);
 	}
 }
 

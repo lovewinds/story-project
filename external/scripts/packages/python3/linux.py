@@ -18,8 +18,8 @@ class pythonLinuxBuilder(PlatformBuilder):
             self.config['name']
         )
 
-        # if os.path.exists(self.env.output_lib_path+'/libpython3.6m.a'):
-        _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
+        # if os.path.exists(self.env.install_lib_path+'/libpython3.6m.a'):
+        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -29,8 +29,8 @@ class pythonLinuxBuilder(PlatformBuilder):
         os.chdir(build_path)
         cmd = '{} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
             self.env.BUILD_FLAG,
-            self.env.output_bin_path,
-            self.env.output_path,
+            self.env.install_bin_path,
+            self.env.install_path,
             self.env.NJOBS
         )
         self.env.run_command(cmd, module_name=self.config['name'])
@@ -38,12 +38,12 @@ class pythonLinuxBuilder(PlatformBuilder):
     def post(self):
         super().post()
         # Create symbolic link
-        os.chdir(self.env.output_include_path)
+        os.chdir(self.env.install_include_path)
         if not os.path.exists('python3.6'):
             cmd = 'ln -s python3.6m python3.6'
             self.env.run_command(cmd, module_name=self.config['name'])
 
-        os.chdir(self.env.output_bin_path)
+        os.chdir(self.env.install_bin_path)
         if not os.path.exists('python'):
             cmd = 'ln -s python3 python'
             self.env.run_command(cmd, module_name=self.config['name'])

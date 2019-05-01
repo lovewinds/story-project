@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 from shutil import copytree, copy2
-from xml.etree import ElementTree
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
@@ -17,8 +16,8 @@ class SDL2iOSBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         )
-        # if os.path.exists(self.env.output_lib_path+'/libSDL2.a'):
-        _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
+        # if os.path.exists(self.env.install_lib_path+'/libSDL2.a'):
+        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -28,7 +27,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         os.chdir(build_path)
         cmd = '{} PREFIX={} {}/ios-build.sh SDL2'.format(
             self.env.BUILD_FLAG,
-            self.env.output_path,
+            self.env.install_path,
             self.env.working_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
@@ -42,7 +41,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         _path = Path(sdl2_include_path)
         _files = [x for x in _path.iterdir() if x.is_file()]
         for file in _files:
-            copy2(str(file), self.env.output_include_path)
+            copy2(str(file), self.env.install_include_path)
 
         # Overwrite to use iOS header
         header_ios_path = '{}/{}/include/SDL_config_iphoneos.h'.format(
@@ -50,7 +49,7 @@ class SDL2iOSBuilder(PlatformBuilder):
             self.config['name']
         )
         sdl_config_header = '{}/SDL_config.h'.format(
-            self.env.output_include_path
+            self.env.install_include_path
         )
         copy2(header_ios_path, sdl_config_header)
         self.tag_log("header file for iOS has been changed ...")
@@ -87,7 +86,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
-        _lib_src_file = '{}/libSDL2.a'.format(self.env.output_lib_path)
+        _lib_src_file = '{}/libSDL2.a'.format(self.env.install_lib_path)
         _lib_dst_file = '{}/SDL'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 

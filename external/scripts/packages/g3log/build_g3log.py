@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import os
 from shutil import copytree, copy2
 from scripts.build_env import BuildEnv, Platform
@@ -12,8 +12,8 @@ class Builder_g3log(PackageBuilder):
         super(Builder_g3log, self)
         self.package = {
             'name': 'g3log',
-            'url': 'https://github.com/KjellKod/g3log/archive/1.3.tar.gz',
-            'filename': 'g3log-1.3.tar.gz'
+            'url': 'https://github.com/KjellKod/g3log/archive/1.3.2.tar.gz',
+            'filename': 'g3log-1.3.2.tar.gz'
         }
         self.builder = {
             Platform.Windows: g3logWindowsBuilder(

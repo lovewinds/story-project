@@ -11,19 +11,18 @@ FIND_PACKAGE(Threads REQUIRED)
 
 # Include and library directories
 INCLUDE_DIRECTORIES(
-	${CMAKE_SOURCE_DIR}/../include/
+    ${CMAKE_SOURCE_DIR}/../include/
     ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/gtest/googletest/include/
 )
 IF(UNIX AND NOT WIN32)
     LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/ ${CMAKE_BINARY_DIR})
 ELSE(UNIX AND NOT WIN32)
-    # LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/$(Configuration)/ ${CMAKE_BINARY_DIR})
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/release/ ${CMAKE_BINARY_DIR})
+    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/ ${CMAKE_BINARY_DIR})
 ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
 IF(UNIX AND NOT WIN32)
-	SET(ADDITIONAL_CXXFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable -std=c++11")
+    SET(ADDITIONAL_CXXFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable -std=c++11")
 ENDIF(UNIX AND NOT WIN32)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ADDITIONAL_CXXFLAGS} ")
@@ -33,7 +32,7 @@ MESSAGE(${CMAKE_CXX_FLAGS})
 
 # Test project files
 FILE(GLOB_RECURSE TEST_FILES
-	"${CMAKE_SOURCE_DIR}/test/*.c"
+    "${CMAKE_SOURCE_DIR}/test/*.c"
     "${CMAKE_SOURCE_DIR}/test/*.cpp"
     "${CMAKE_SOURCE_DIR}/test/*.h"
     "${CMAKE_SOURCE_DIR}/test/*.hpp"
@@ -48,32 +47,44 @@ IF(UNIX AND NOT WIN32)
         "-ldl -lgtest -lgtest_main -lstory-project -lpthread")
 ELSE(UNIX AND NOT WIN32)
     # Windows
-	IF(USE_G3LOG)
-		SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/g3logger.lib")
-	ELSE(USE_G3LOG)
-		SET(LINK_G3LOG "")
-	ENDIF(USE_G3LOG)
+    IF(USE_G3LOG)
+        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/g3logger.lib")
+    ELSE(USE_G3LOG)
+        SET(LINK_G3LOG "")
+    ENDIF(USE_G3LOG)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_image.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_ttf.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/SDL2_gfx.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/gtest.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/gtest_main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/release/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2.lib
+        # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
+        # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest_main.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
+        "winmm.lib"
+        "version.lib"
+        "imm32.lib"
+        "setupapi.lib"
+        "opengl32.lib"
+        "glu32.lib"
         "dbghelp.lib")
 ENDIF(UNIX AND NOT WIN32)
 
 # Post build
 IF(${PLATFORM} STREQUAL "Windows")
-ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
-	POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
-	COMMENT "Copy required dynamic libraries")
+MESSAGE("Copying all required DLLs ...")
+file(GLOB GENERATED_DLLS
+    "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/*.dll"
+)
+file(COPY ${GENERATED_DLLS} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+# ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
+#     POST_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
+#     COMMENT "Copy required dynamic libraries")
 ENDIF(${PLATFORM} STREQUAL "Windows")
 
 ADD_DEPENDENCIES(${PROJECT_NAME} ${LIBNAME})

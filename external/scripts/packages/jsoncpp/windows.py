@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 from shutil import copytree, copy2
-from xml.etree import ElementTree
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder

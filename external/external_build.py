@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -25,13 +25,14 @@ from scripts.packages.zeromq import Builder_zeromq
 from scripts.packages.python3 import Builder_python
 from scripts.packages.boost import Builder_boost
 from scripts.packages.dirent import Builder_dirent
+from scripts.packages.pybind11 import Builder_pybind11
 
 # Start building
 modules = [
 	Builder_SDL2(),
 	Builder_SDL2_Image(),
 	Builder_SDL2_TTF(),
-	Builder_SDL2_gfx(),
+	# Builder_SDL2_gfx(),
 	Builder_g3log(),
 	Builder_jsoncpp(),
 	Builder_pugixml(),
@@ -39,8 +40,8 @@ modules = [
 	Builder_protobuf(),
 	Builder_zeromq(),
 	Builder_python(),
-	Builder_boost(),
 	Builder_dirent(),
+	Builder_pybind11(),
 ]
 
 def check_msvc(env_param):

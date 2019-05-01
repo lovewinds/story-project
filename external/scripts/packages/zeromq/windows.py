@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -26,14 +26,12 @@ class zeromqWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build zeromq
-        # TODO: Selective debug/release output
-        install_path = PureWindowsPath(f'{self.env.output_path}/release')
-        build_path = PureWindowsPath('{}/{}/builds/msvc/vs2015'.format(
+        build_path = Path('{}/{}/builds/msvc/vs2015'.format(
             self.env.source_path,
             self.config['name']
         ))
 
-        _check = f'{install_path}\\{self.config.get("checker")}'
+        _check = f'{self.env.install_lib_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -50,11 +48,13 @@ class zeromqWindowsBuilder(PlatformBuilder):
                     /t:libzmq \
                     /p:Option-sodium=false \
                     /p:PlatformToolSet={} \
-                    /p:Configuration=DynRelease \
+                    /p:Configuration=Static{} \
                     /p:Platform=x64 \
-                    /p:OutDir={}\
-                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
-        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+                    /p:OutDir={}\\ \
+                '''.format(self.env.NJOBS,
+                           self.env.compiler_version, self.env.BUILD_TYPE,
+                           self.env.install_lib_path)
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
     def patch_libzmq_win(self, path):

@@ -1,5 +1,5 @@
 #include <SDL.h>
-#include <SDL2_gfxPrimitives.h>
+//#include <SDL2_gfxPrimitives.h>
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
@@ -73,6 +73,7 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 	int width = Ecore::getScreenWidth();
 	int height = Ecore::getScreenHeight();
 
+#if 0
 	if (Ecore::isHighDPI() == true) {
 		auto n_x = p_x * Ecore::getDisplayScale();
 		auto n_y = p_y * Ecore::getDisplayScale();
@@ -84,6 +85,7 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 		boxRGBA(renderer, p_x, p_y, p_x + mWidth, p_y + mHeight,
 			color.r, color.g, color.b, 0xAA );
 	}
+#endif
 
 #if 0
 	if (animating == false)

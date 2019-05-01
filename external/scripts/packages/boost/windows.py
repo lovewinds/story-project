@@ -2,7 +2,7 @@
 import os
 from shutil import copytree, copy2
 from xml.etree import ElementTree
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -13,17 +13,17 @@ class boostWindowsBuilder(PlatformBuilder):
         super().__init__(config_package, config_platform)
 
     def build(self):
-        pkg_path = PureWindowsPath('{}\\{}'.format(
+        pkg_path = Path('{}\\{}'.format(
             self.env.source_path,
             self.config['name']
         ))
-        build_path = PureWindowsPath('{}\\{}\\build'.format(
+        build_path = Path('{}\\{}\\build'.format(
             self.env.source_path,
             self.config['name']
         ))
 
-        # if os.path.exists(self.env.output_lib_path+'\\libboost_python3.lib'):
-        _check = f'{self.env.output_lib_path}\\{self.config.get("checker")}'
+        # if os.path.exists(self.env.install_lib_path+'\\libboost_python3.lib'):
+        _check = f'{self.env.install_lib_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -36,8 +36,8 @@ class boostWindowsBuilder(PlatformBuilder):
              --with-python-root={} \
              --with-libraries=python \
              --prefix={}'''.format(
-            self.env.output_path,
-            self.env.output_path
+            self.env.install_path,
+            self.env.install_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
@@ -58,7 +58,7 @@ class boostWindowsBuilder(PlatformBuilder):
             threading=multi \
             install'''.format(
                 self.env.NJOBS,
-                self.env.output_path,
+                self.env.install_path,
                 msvc_toolset,
         )
         self.env.run_command(cmd, module_name=self.config['name'])

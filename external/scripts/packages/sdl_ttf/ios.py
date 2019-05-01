@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 from shutil import copytree, copy2
-from xml.etree import ElementTree
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
@@ -18,7 +17,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
             self.config['name']
         )
 
-        _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
+        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -28,7 +27,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
         os.chdir(build_path)
         cmd = '{} PREFIX={} {}/ios-build.sh SDL2_ttf'.format(
             self.env.BUILD_FLAG,
-            self.env.output_path,
+            self.env.install_path,
             self.env.working_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
@@ -40,7 +39,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
             self.config['name']
         )
         _header_dest = '{}/SDL_ttf.h'.format(
-            self.env.output_include_path
+            self.env.install_include_path
         )
         self.tag_log("copying header ...")
         copy2(_header_source, _header_dest)
@@ -76,7 +75,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
-        _lib_src_file = '{}/libSDL2_ttf.a'.format(self.env.output_lib_path)
+        _lib_src_file = '{}/libSDL2_ttf.a'.format(self.env.install_lib_path)
         _lib_dst_file = '{}/SDL_ttf'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 

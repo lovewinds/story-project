@@ -1,7 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import os
-from shutil import copytree, copy2
-from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 
@@ -14,8 +12,8 @@ class Builder_SDL2_Image(PackageBuilder):
         super(Builder_SDL2_Image, self)
         self.package = {
             'name': 'SDL2_image',
-            'url': 'https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.tar.gz',
-            'filename': 'SDL2_image-2.0.1.tar.gz'
+            'url': 'https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.tar.gz',
+            'filename': 'SDL2_image-2.0.4.tar.gz'
         }
         self.builder = {
             Platform.Windows: SDL2ImageWindowsBuilder(

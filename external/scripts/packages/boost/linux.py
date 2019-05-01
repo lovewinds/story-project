@@ -22,8 +22,8 @@ class boostLinuxBuilder(PlatformBuilder):
             self.config['name']
         )
 
-        # if os.path.exists(self.env.output_lib_path+'/libboost_python3.a'):
-        _check = f'{self.env.output_lib_path}/{self.config.get("checker")}'
+        # if os.path.exists(self.env.install_lib_path+'/libboost_python3.a'):
+        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
@@ -37,9 +37,9 @@ class boostLinuxBuilder(PlatformBuilder):
              --with-libraries=python \
              --prefix={}'''.format(
             self.env.BUILD_FLAG,
-            self.env.output_bin_path,
-            self.env.output_path,
-            self.env.output_path
+            self.env.install_bin_path,
+            self.env.install_path,
+            self.env.install_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
@@ -51,6 +51,6 @@ class boostLinuxBuilder(PlatformBuilder):
             cxxflags="-fPIC" \
             linkflags="-fPIC" install'''.format(
             self.env.BUILD_FLAG,
-            self.env.output_path
+            self.env.install_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])

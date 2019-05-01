@@ -1,6 +1,4 @@
-#!/usr/bin/python
-import os
-from shutil import copytree, copy2
+#!/usr/bin/env python3
 from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 

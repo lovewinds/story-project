@@ -1,6 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 import os
-
 from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 
@@ -13,8 +12,8 @@ class Builder_SDL2(PackageBuilder):
 		super(Builder_SDL2, self)
 		self.package = {
 			'name': 'SDL2',
-			'url': 'https://www.libsdl.org/release/SDL2-2.0.5.tar.gz',
-			'filename': 'SDL2-2.0.5.tar.gz'
+			'url': 'https://www.libsdl.org/release/SDL2-2.0.9.tar.gz',
+			'filename': 'SDL2-2.0.9.tar.gz'
 		}
 		self.builder = {
 			Platform.Windows: SDL2WindowsBuilder(

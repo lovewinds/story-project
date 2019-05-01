@@ -79,7 +79,7 @@ def patch_static_MSVC(path):
 		except:
 			pass
 
-	print "   [SDL2] Patched\n"
+	print("   [SDL2] Patched\n")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -102,9 +102,8 @@ def patch_sdl2_image(path):
 			note.text = "..\\..\\..\\built\\$(Configuration);"
 			item.append(note)
 
-	list = root.findall(msvc_ns_prefix+"ItemGroup")
-	print list
-	for child in list:
+	itemlist = root.findall(msvc_ns_prefix+"ItemGroup")
+	for child in itemlist:
 		libPaths = child.findall(msvc_ns_prefix+"Library")
 		if libPaths == None:
 			continue
@@ -113,7 +112,7 @@ def patch_sdl2_image(path):
 			dir.attrib["Include"] = dir.attrib["Include"].replace("..\\..\\SDL\\VisualC\\SDLmain\\$(Platform)\\$(Configuration)\\SDL2main.lib", "..\\..\\..\\built\\$(Configuration)\\SDL2main.lib")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
-	print "   [SDL2_image] Patched\n"
+	print("   [SDL2_image] Patched\n")
 
 def patch_sdl2_ttf(path):
 	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -131,7 +130,7 @@ def patch_sdl2_ttf(path):
 		item = item.find(msvc_ns_prefix+"AdditionalLibraryDirectories")
 		item.text = "..\\..\\..\\built\\$(Configuration);"+item.text
 
-	print "   [SDL2_ttf] Patched\n"
+	print("   [SDL2_ttf] Patched\n")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -157,7 +156,7 @@ def patch_sdl2_gfx(path):
 		if item != None:
 			child.remove(item)
 
-	print "   [SDL2_gfx] Patched\n"
+	print("   [SDL2_gfx] Patched\n")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -176,27 +175,27 @@ def patch_gtest(path):
 		elif item.text == 'MultiThreadedDebug':
 			item.text = "MultiThreadedDebugDLL"
 
-	print "   [gtest] Patched\n"
+	print("   [gtest] Patched\n")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def patch_libzmq_linux(path):
 	os.chdir(path)
 	os.chdir('..')
-	print "Current path: ["+os.getcwd()+"]"
+	print("Current path: ["+os.getcwd()+"]")
 	os.system('patch -p0 < ../../libzmq.patch')
 	os.chdir(path)
-	print "   [ZeroMQ] Patched\n"
+	print("   [ZeroMQ] Patched\n")
 
 def patch_g3log_remove_warnings(path):
 	os.chdir(path)
 	os.chdir('..')
-	print "Current path: ["+os.getcwd()+"]"
+	print("Current path: ["+os.getcwd()+"]")
 	# Use patch script
 	# https://github.com/techtonik/python-patch
 	os.system('../../patch.py ../../g3log-1.2-remove_warnings.patch')
 	os.chdir(path)
-	print "   [g3log] Patched\n"
+	print("   [g3log] Patched\n")
 
 def patch_libzmq_win(path):
 	msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
@@ -212,30 +211,30 @@ def patch_libzmq_win(path):
 		except:
 			pass
 
-	print "  [ZeroMQ] Patched\n"
+	print("  [ZeroMQ] Patched\n")
 
 	tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def patch_python_apple(path):
 	os.chdir(path)
-	print "Current path: ["+os.getcwd()+"]"
+	print("Current path: ["+os.getcwd()+"]")
 	os.system('patch -p0 < ../../python-support-bitcode.patch')
 	os.chdir(path)
-	print "   [Python] Patched\n"
+	print("   [Python] Patched\n")
 
 def patch_boost_apple(path):
 	os.chdir(path)
-	print "Current path: ["+os.getcwd()+"]"
+	print("Current path: ["+os.getcwd()+"]")
 	os.system('patch -p0 < ../../boost-use-python3.patch')
 	os.chdir(path)
-	print "   [Boost] Patched\n"
+	print("   [Boost] Patched\n")
 
 
 def extract_sources():
-	print "\n"
-	print "#########################################"
-	print "## Checking source files ..."
-	print "#########################################"
+	print("\n")
+	print("#########################################")
+	print("## Checking source files ...")
+	print("#########################################")
 	os.chdir(WORKING_PATH)
 
 	# Extract sources
@@ -244,116 +243,116 @@ def extract_sources():
 
 	# extract SDL2
 	if os.path.exists(source_path+'SDL2/'):
-		print "   [SDL2] already extracted."
+		print("   [SDL2] already extracted.")
 	else:
 		tarfile.open(SDL2+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2, source_path+'SDL2')
-		print "   [SDL2] extracted."
+		print("   [SDL2] extracted.")
 
 	# extract SDL2_image
 	if os.path.exists(source_path+'SDL2_image/'):
-		print "   [SDL2_image] already extracted."
+		print("   [SDL2_image] already extracted.")
 	else:
 		tarfile.open(SDL2_IMAGE+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_IMAGE, source_path+'SDL2_image')
-		print "   [SDL2_image] extracted."
+		print("   [SDL2_image] extracted.")
 
 	# extract SDL2_ttf
 	if os.path.exists(source_path+'SDL2_ttf/'):
-		print "   [SDL2_ttf] already extracted."
+		print("   [SDL2_ttf] already extracted.")
 	else:
 		tarfile.open(SDL2_TTF+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_TTF, source_path+'SDL2_ttf')
-		print "   [SDL2_ttf] extracted."
+		print("   [SDL2_ttf] extracted.")
 
 	# extract SDL2_gfx
 	if os.path.exists(source_path+'SDL2_gfx/'):
-		print "   [SDL2_gfx] already extracted."
+		print("   [SDL2_gfx] already extracted.")
 	else:
 		tarfile.open(SDL2_GFX+'.tar.gz').extractall(source_path)
 		os.rename(source_path+SDL2_GFX, source_path+'SDL2_gfx')
-		print "   [SDL2_gfx] extracted."
+		print("   [SDL2_gfx] extracted.")
 
 	# extract g3log
 	if os.path.exists(source_path+'g3log/'):
-		print "   [g3log] already extracted."
+		print("   [g3log] already extracted.")
 	else:
 		tarfile.open(G3LOG+'.tar.gz').extractall(source_path)
 		os.rename(source_path+G3LOG, source_path+'g3log')
-		print "   [g3log] extracted."
+		print("   [g3log] extracted.")
 
 	# extract jsoncpp
 	if os.path.exists(source_path+'jsoncpp/'):
-		print "   [jsoncpp] already extracted."
+		print("   [jsoncpp] already extracted.")
 	else:
 		tarfile.open(JSONCPP+'.tar.gz').extractall(source_path)
 		os.rename(source_path+JSONCPP, source_path+'jsoncpp')
-		print "   [jsoncpp] extracted."
+		print("   [jsoncpp] extracted.")
 
 	# extract pugixml
 	if os.path.exists(source_path+'pugixml/'):
-		print "   [pugixml] already extracted."
+		print("   [pugixml] already extracted.")
 	else:
 		tarfile.open(PUGIXML+'.tar.gz').extractall(source_path)
 		os.rename(source_path+PUGIXML, source_path+'pugixml')
-		print "   [pugixml] extracted."
+		print("   [pugixml] extracted.")
 
 	# extract gtest
 	if os.path.exists(source_path+'gtest/'):
-		print "   [gtest] already extracted."
+		print("   [gtest] already extracted.")
 	else:
 		tarfile.open(GTEST+'.tar.gz').extractall(source_path)
 		os.rename(source_path+GTEST, source_path+'gtest')
-		print "   [gtest] extracted."
+		print("   [gtest] extracted.")
 
 	# extract protobuf
 	if os.path.exists(source_path+'protobuf/'):
-		print "   [protobuf] already extracted."
+		print("   [protobuf] already extracted.")
 	else:
 		tarfile.open(PROTOBUF+'.tar.gz').extractall(source_path)
 		os.rename(source_path+PROTOBUF, source_path+'protobuf')
-		print "   [protobuf] extracted."
+		print("   [protobuf] extracted.")
 
 	# extract ZeroMQ
 	if os.path.exists(source_path+'zeromq/'):
-		print "   [ZeroMQ] already extracted."
+		print("   [ZeroMQ] already extracted.")
 	else:
 		tarfile.open(ZEROMQ+'.tar.gz').extractall(source_path)
 		os.rename(source_path+ZEROMQ, source_path+'zeromq')
-		print "   [ZeroMQ] extracted."
+		print("   [ZeroMQ] extracted.")
 
 	# extract ZeroMQ - C++ binding
 	if os.path.exists(source_path+'cppzmq/'):
-		print "   [cppzmq] already extracted."
+		print("   [cppzmq] already extracted.")
 	else:
 		tarfile.open(CPPZMQ+'.tar.gz').extractall(source_path)
-		print "   [cppzmq] extracted."
+		print("   [cppzmq] extracted.")
 
 	# extract Python 3
 	if CURRENT_PLATFORM != Platform.iOS:
 		if os.path.exists(source_path+'python3/'):
-			print "   [Python3] already extracted."
+			print("   [Python3] already extracted.")
 		else:
 			tarfile.open(PYTHON3+'.tgz').extractall(source_path)
 			os.rename(source_path+PYTHON3, source_path+'python3')
-			print "   [Python3] extracted."
+			print("   [Python3] extracted.")
 	else:
 		# Get python support
 		if os.path.exists(source_path+'python_apple/'):
-			print "   [Python3] already extracted."
+			print("   [Python3] already extracted.")
 		else:
 			def unzip(source_file, dest_path):
 				with zipfile.ZipFile(source_file, 'r') as zf:
 					zf.extractall(path=dest_path)
 					zf.close()
 			unzip(PYTHON_APPLE+'.zip', source_path+'python_apple')
-			print "   [Python3] extracted."
+			print("   [Python3] extracted.")
 
 
 	# extract Boost python
 	if CURRENT_PLATFORM != Platform.iOS:
 		if os.path.exists(source_path+'boost/'):
-			print "   [Boost] already extracted."
+			print("   [Boost] already extracted.")
 		else:
 			# Check file exists
 			if not os.path.exists(BOOST+'.tar.gz'):
@@ -364,25 +363,25 @@ def extract_sources():
 
 			tarfile.open(BOOST+'.tar.gz').extractall(source_path)
 			os.rename(source_path+BOOST, source_path+'boost')
-			print "   [Boost] extracted."
+			print("   [Boost] extracted.")
 	else:
 		# Get python support
 		if os.path.exists(source_path+'boost_apple/'):
-			print "   [Boost] already extracted."
+			print("   [Boost] already extracted.")
 		else:
 			def unzip(source_file, dest_path):
 				with zipfile.ZipFile(source_file, 'r') as zf:
 					zf.extractall(path=dest_path)
 					zf.close()
 			unzip(BOOST_APPLE+'.zip', source_path+'boost_apple')
-			print "   [Boost] extracted."
+			print("   [Boost] extracted.")
 
 
 def build_sources_iOS(build_type):
-	print "\n"
-	print "#########################################"
-	print "## Trying to build extracted sources ..."
-	print "#########################################"
+	print("\n")
+	print("#########################################")
+	print("## Trying to build extracted sources ...")
+	print("#########################################")
 	
 	build_path = WORKING_PATH+'built/'
 	bin_path = WORKING_PATH+'built/bin/'
@@ -408,18 +407,18 @@ def build_sources_iOS(build_type):
 
 # Copy headers
 	if os.path.exists(include_path):
-		print "   [SDL2] Header files are exist."
+		print("   [SDL2] Header files are exist.")
 	else:
-		print "   [SDL2] Copying header files .."
+		print("   [SDL2] Copying header files ..")
 		copytree(sdl2_include_path, include_path)
 
-		print "   [SDL2_image] Copying header files .."
+		print("   [SDL2_image] Copying header files ..")
 		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
 
-		print "   [SDL2_ttf] Copying header files .."
+		print("   [SDL2_ttf] Copying header files ..")
 		copy2(sdl2_ttf_path+'../SDL_ttf.h', include_path+'SDL_ttf.h')
 
-		print "   [SDL2_gfx] Copying header files .."
+		print("   [SDL2_gfx] Copying header files ..")
 		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
@@ -431,28 +430,28 @@ def build_sources_iOS(build_type):
 
 # Build SDL2
 	if os.path.exists(library_path+'libSDL2.a'):
-		print "   [SDL2] already built."
+		print("   [SDL2] already built.")
 	else:
 		os.chdir(sdl2_path)
 		os.system(WORKING_PATH+'ios-build.sh SDL2')
 
 # Build SDL2_image
 	if os.path.exists(library_path+'libSDL2_image.a'):
-		print "   [SDL2_image] already built."
+		print("   [SDL2_image] already built.")
 	else:
 		os.chdir(sdl2_image_path)
 		os.system(WORKING_PATH+'ios-build.sh SDL2_image')
 
 # Build SDL2_ttf
 	if os.path.exists(library_path+'libSDL2_ttf.a'):
-		print "   [SDL2_ttf] already built."
+		print("   [SDL2_ttf] already built.")
 	else:
 		os.chdir(sdl2_ttf_path)
 		os.system(WORKING_PATH+'ios-build.sh SDL2_ttf')
 
 # Build SDL2_gfx
 	if os.path.exists(library_path+'libSDL2_gfx.a'):
-		print "   [SDL2_gfx] already built."
+		print("   [SDL2_gfx] already built.")
 	else:
 		os.chdir(sdl2_gfx_path)
 		os.system(WORKING_PATH+'ios-build.sh SDL2_gfx armv7')
@@ -460,9 +459,9 @@ def build_sources_iOS(build_type):
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
-		print "   [g3log] already built."
+		print("   [g3log] already built.")
 	else:
-		print "   [g3log] Start building .."
+		print("   [g3log] Start building ..")
 		os.chdir(g3log_path)
 		patch_g3log_remove_warnings(g3log_path+'src/')
 		# Make fat binary
@@ -472,15 +471,15 @@ def build_sources_iOS(build_type):
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
-		print "   [jsoncpp] Copying header files .."
+		print("   [jsoncpp] Copying header files ..")
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
 # Build pugixml
 	if os.path.exists(library_path+'libpugixml.a'):
-		print "   [pugixml] already built."
+		print("   [pugixml] already built.")
 	else:
-		print "Start building pugixml .."
+		print("Start building pugixml ..")
 		os.chdir(pugixml_path)
 		# Make fat binary
 		os.system(WORKING_PATH+'ios-build.sh pugixml armv7')
@@ -488,9 +487,9 @@ def build_sources_iOS(build_type):
 
 # Build gtest
 	if os.path.exists(library_path+'libgtest.a'):
-		print "   [gtest] already built."
+		print("   [gtest] already built.")
 	else:
-		print "   [gtest] Start building .."
+		print("   [gtest] Start building ..")
 		os.chdir(gtest_path)
 		# Make fat binary
 		os.system(WORKING_PATH+'ios-build.sh gtest armv7')
@@ -498,9 +497,9 @@ def build_sources_iOS(build_type):
 
 # Build protobuf
 	if os.path.exists(library_path+'libprotobuf.a'):
-		print "   [protobuf] already built."
+		print("   [protobuf] already built.")
 	else:
-		print "   [protobuf] Start building .."
+		print("   [protobuf] Start building ..")
 		os.chdir(protobuf_path)
 		# Make fat binary
 		os.system(WORKING_PATH+'ios-build.sh protobuf armv7')
@@ -508,9 +507,9 @@ def build_sources_iOS(build_type):
 
 # Build ZeroMQ
 	if os.path.exists(library_path+'libzmq-static.a'):
-		print "   [ZeroMQ] already built."
+		print("   [ZeroMQ] already built.")
 	else:
-		print "   [ZeroMQ] Start building .."
+		print("   [ZeroMQ] Start building ..")
 		os.chdir(zeromq_path)
 		patch_libzmq_linux(zeromq_path)
 		# Make fat binary
@@ -519,9 +518,9 @@ def build_sources_iOS(build_type):
 
 # Build Python 3
 	if os.path.exists(framework_path+'Python.framework'):
-		print "   [Python] already built."
+		print("   [Python] already built.")
 	else:
-		print "   [Python] Start building .."
+		print("   [Python] Start building ..")
 		os.chdir(python_path)
 		patch_python_apple(python_path)
 		os.system('make iOS')
@@ -532,9 +531,9 @@ def build_sources_iOS(build_type):
 
 # Build Boost python
 	if os.path.exists(framework_path+'boost.framework'):
-		print "   [Boost] already built."
+		print("   [Boost] already built.")
 	else:
-		print "   [Boost] Start building .."
+		print("   [Boost] Start building ..")
 		os.chdir(boost_path)
 		patch_boost_apple(boost_path)
 		os.system('chmod +x boost.sh')
@@ -542,13 +541,13 @@ def build_sources_iOS(build_type):
 		# Copy built framework
 		copytree(boost_path+'build/boost/1.64.0/ios/framework/boost.framework', framework_path+'boost.framework')
 
-	print "\n\n"
+	print("\n\n")
 
 def build_sources_MSVC(build_type):
-	print "\n"
-	print "#########################################"
-	print "## Trying to build extracted sources ..."
-	print "#########################################"
+	print("\n")
+	print("#########################################")
+	print("## Trying to build extracted sources ...")
+	print("#########################################")
 	
 	build_path_dbg = WORKING_PATH+'built/Debug/'
 	build_path_dbg = build_path_dbg.replace('/','\\')
@@ -569,7 +568,7 @@ def build_sources_MSVC(build_type):
 
 # Build SDL2
 	if os.path.exists(build_path_rel+'SDL2.lib'):
-		print "   [SDL2] already built."
+		print("   [SDL2] already built.")
 	else:
 		os.chdir(sdl2_path)
 		if STATIC_LINK == True:
@@ -578,12 +577,12 @@ def build_sources_MSVC(build_type):
 		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL.sln /t:SDL2;SDL2main /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "   [SDL2] Copying header files .."
+		print("   [SDL2] Copying header files ..")
 		copytree(sdl2_include_path, include_path)
 
 # Build SDL2_image
 	if os.path.exists(build_path_rel+'SDL2_image.lib'):
-		print "   [SDL2_image] already built."
+		print("   [SDL2_image] already built.")
 	else:
 		os.chdir(sdl2_image_path)
 		# !REQUIRED! Patch additional library and include path
@@ -594,7 +593,7 @@ def build_sources_MSVC(build_type):
 		os.system('msbuild SDL_image.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL_image.sln /t:SDL2_image /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "   [SDL2_image] Copying header files .."
+		print("   [SDL2_image] Copying header files ..")
 		copy2(sdl2_image_path+'../SDL_image.h', include_path+'SDL_image.h')
 		# Copy external libraries
 		# TODO: Fix hardcoded arch
@@ -611,7 +610,7 @@ def build_sources_MSVC(build_type):
 
 # Build SDL2_ttf
 	if os.path.exists(build_path_rel+'SDL2_ttf.lib'):
-		print "   [SDL2_ttf] already built."
+		print("   [SDL2_ttf] already built.")
 	else:
 		os.chdir(sdl2_ttf_path)
 		# !REQUIRED! Patch additional library and include path
@@ -621,7 +620,7 @@ def build_sources_MSVC(build_type):
 		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL_ttf.sln /t:SDL2_ttf /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "   [SDL2_ttf] Copying header files .."
+		print("   [SDL2_ttf] Copying header files ..")
 		copy2(sdl2_ttf_path+'../SDL_ttf.h', include_path+'SDL_ttf.h')
 		# Copy external libraries
 		# TODO: Fix hardcoded arch
@@ -630,7 +629,7 @@ def build_sources_MSVC(build_type):
 
 # Build SDL2_gfx
 	if os.path.exists(build_path_rel+'SDL2_gfx.lib'):
-		print "   [SDL2_gfx] already built."
+		print("   [SDL2_gfx] already built.")
 	else:
 		os.chdir(sdl2_gfx_path)
 		# !REQUIRED! Patch additional library and include path
@@ -640,7 +639,7 @@ def build_sources_MSVC(build_type):
 		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Debug /p:OutDir='+build_path_dbg)
 		os.system('msbuild SDL2_gfx.sln /t:SDL2_gfx /p:PlatformToolSet='+MSVC_VER+' /p:Configuration=Release /p:OutDir='+build_path_rel)
 		# Copy headers
-		print "   [SDL2_gfx] Copying header files .."
+		print("   [SDL2_gfx] Copying header files ..")
 		copy2(sdl2_gfx_path+'SDL2_framerate.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives.h', include_path)
 		copy2(sdl2_gfx_path+'SDL2_gfxPrimitives_font.h', include_path)
@@ -649,14 +648,14 @@ def build_sources_MSVC(build_type):
 
 # Build g3log
 	if os.path.exists(build_path_rel+'g3logger.lib'):
-		print "   [g3log] already built."
+		print("   [g3log] already built.")
 	else:
-		print "   [g3log] Start building .."
+		print("   [g3log] Start building ..")
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
 		patch_g3log_remove_warnings(g3log_path)
 		# TODO: Check 'CMAKE_BUILD_TYPE' is required if it builds both build type?
-		#os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' -G "Visual Studio 12" ..')
+		#os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_TYPE+' -G "Visual Studio 12" ..')
 		# Disable fatal signal handling on g3log 1.3
 		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DENABLE_FATAL_SIGNALHANDLING=OFF -DADD_BUILD_WIN_SHARED=ON ..')
 		if STATIC_LINK == True:
@@ -666,15 +665,15 @@ def build_sources_MSVC(build_type):
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
-		print "   [jsoncpp] Copying header files .."
+		print("   [jsoncpp] Copying header files ..")
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
 # Build gtest
 	if os.path.exists(build_path_rel+'gtest.lib'):
-		print "   [gtest] already built."
+		print("   [gtest] already built.")
 	else:
-		print "   [gtest] Start building .."
+		print("   [gtest] Start building ..")
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
 		os.system('cmake ..')
@@ -686,9 +685,9 @@ def build_sources_MSVC(build_type):
 
 # Build protobuf
 	if os.path.exists(build_path_rel+'libprotobuf.lib'):
-		print "   [protobuf] already built."
+		print("   [protobuf] already built.")
 	else:
-		print "   [protobuf] Start building .."
+		print("   [protobuf] Start building ..")
 		mkdir_p(protobuf_path)
 		os.chdir(protobuf_path)
 		os.system('cmake .. -Dprotobuf_BUILD_TESTS=OFF')
@@ -698,9 +697,9 @@ def build_sources_MSVC(build_type):
 
 # Build zeromq
 	if os.path.exists(build_path_rel+'libzmq.lib'):
-		print "   [ZeroMQ] is already built."
+		print("   [ZeroMQ] is already built.")
 	else:
-		print "   [ZeroMQ] Start building .."
+		print("   [ZeroMQ] Start building ..")
 		mkdir_p(zeromq_path)
 		os.chdir(zeromq_path)
 		# Disable libsodium
@@ -709,13 +708,13 @@ def build_sources_MSVC(build_type):
 		os.system('msbuild libzmq.sln /t:libzmq /p:Option-sodium=false /p:Configuration=DynDebug /p:PlatformToolSet='+MSVC_VER+' /p:OutDir='+build_path_dbg)
 		os.system('msbuild libzmq.sln /t:libzmq /p:Option-sodium=false /p:Configuration=DynRelease /p:PlatformToolSet='+MSVC_VER+' /p:OutDir='+build_path_rel)
 
-	print "\n\n"
+	print("\n\n")
 
 def build_sources(build_type):
-	print "\n"
-	print "#########################################"
-	print "## Trying to build extracted sources ..."
-	print "#########################################"
+	print("\n")
+	print("#########################################")
+	print("## Trying to build extracted sources ...")
+	print("#########################################")
 
 	build_path = WORKING_PATH+'built/'
 	bin_path = WORKING_PATH+'built/bin/'
@@ -740,15 +739,15 @@ def build_sources(build_type):
 	# TODO: Check its working
 	if build_type == 'debug':
 		DEBUG_BUILD_FLAG = 'CFLAGS="-ggdb3 -O0" CXXFLAGS="-ggdb3 -O0" LDFLAGS="-ggdb3" '
-		BUILD_CONF = 'Debug'
+		BUILD_TYPE = 'Debug'
 	else:
 		DEBUG_BUILD_FLAG = ''
-		BUILD_CONF = 'Release'
+		BUILD_TYPE = 'Release'
 	mkdir_p(build_path)
 
 # Build SDL2
 	if os.path.exists(library_path+'libSDL2.a'):
-		print "   [SDL2] already built."
+		print("   [SDL2] already built.")
 	else:
 		mkdir_p(sdl2_path)
 		os.chdir(sdl2_path)
@@ -760,7 +759,7 @@ def build_sources(build_type):
 
 # Build SDL2_image
 	if os.path.exists(library_path+'libSDL2_image.a'):
-		print "   [SDL2_image] already built."
+		print("   [SDL2_image] already built.")
 	else:
 		mkdir_p(sdl2_image_path)
 		os.chdir(sdl2_image_path)
@@ -768,7 +767,7 @@ def build_sources(build_type):
 
 # Build FreeType2
 	if os.path.exists(bin_path+'freetype-config'):
-		print "   [FreeType2] already built."
+		print("   [FreeType2] already built.")
 	else:
 		mkdir_p(freetype2_path)
 		os.chdir(freetype2_path)
@@ -776,7 +775,7 @@ def build_sources(build_type):
 
 # Build SDL2_ttf
 	if os.path.exists(library_path+'libSDL2_ttf.a'):
-		print "   [SDL2_ttf] already built."
+		print("   [SDL2_ttf] already built.")
 	else:
 		mkdir_p(sdl2_ttf_path)
 		os.chdir(sdl2_ttf_path)
@@ -784,7 +783,7 @@ def build_sources(build_type):
 
 # Build SDL2_gfx
 	if os.path.exists(library_path+'libSDL2_gfx.a'):
-		print "   [SDL2_gfx] already built."
+		print("   [SDL2_gfx] already built.")
 	else:
 		os.chdir(sdl2_gfx_parent_path)
 		os.system('PATH='+bin_path+':$PATH ./autogen.sh --prefix='+build_path)
@@ -795,13 +794,13 @@ def build_sources(build_type):
 
 # Build g3log
 	if os.path.exists(library_path+'libg3logger.a'):
-		print "   [g3log] already built."
+		print("   [g3log] already built.")
 	else:
-		print "   [g3log] Start building .."
+		print("   [g3log] Start building ..")
 		mkdir_p(g3log_path)
 		os.chdir(g3log_path)
 		patch_g3log_remove_warnings(g3log_path)
-		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_CONF+' ..; make g3logger; make g3logger_shared')
+		os.system('cmake -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_BUILD_TYPE='+BUILD_TYPE+' ..; make g3logger; make g3logger_shared')
 		# There is no install rule, just copy library file into built directory.
 		copy2(g3log_path+'libg3logger.a', library_path)
 		if os.path.exists(g3log_path+'libg3logger.so'):
@@ -811,24 +810,24 @@ def build_sources(build_type):
 
 # Generate amalgamated source and header for jsoncpp
 	if not os.path.exists(jsoncpp_path+'dist/'):
-		print "   [jsoncpp] Copying header files .."
+		print("   [jsoncpp] Copying header files ..")
 		os.chdir(jsoncpp_path)
 		os.system('python amalgamate.py')
 
 # Build pugixml
 	if os.path.exists(library_path+'libpugixml.a'):
-		print "   [pugixml] already built."
+		print("   [pugixml] already built.")
 	else:
-		print "Start building pugixml .."
+		print("Start building pugixml ..")
 		mkdir_p(pugixml_path)
 		os.chdir(pugixml_path)
 		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make -j'+NJOBS+'; make install')
 
 # Build gtest
 	if os.path.exists(library_path+'libgtest.a'):
-		print "   [gtest] already built."
+		print("   [gtest] already built.")
 	else:
-		print "   [gtest] Start building .."
+		print("   [gtest] Start building ..")
 		mkdir_p(gtest_path)
 		os.chdir(gtest_path)
 		os.system('cmake -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make -j'+NJOBS+'; make install')
@@ -837,9 +836,9 @@ def build_sources(build_type):
 
 # Build protobuf
 	if os.path.exists(library_path+'libprotobuf.a'):
-		print "   [protobuf] already built."
+		print("   [protobuf] already built.")
 	else:
-		print "   [protobuf] Start building .."
+		print("   [protobuf] Start building ..")
 		mkdir_p(protobuf_path)
 		os.chdir(protobuf_path)
 		os.system('cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR='+library_path+' -DCMAKE_INSTALL_INCLUDEDIR='+include_path+' ..; make libprotobuf -j'+NJOBS)
@@ -847,9 +846,9 @@ def build_sources(build_type):
 
 # Build ZeroMQ
 	if os.path.exists(library_path+'libzmq-static.a'):
-		print "   [ZeroMQ] already built."
+		print("   [ZeroMQ] already built.")
 	else:
-		print "   [ZeroMQ] Start building .."
+		print("   [ZeroMQ] Start building ..")
 		mkdir_p(zeromq_path)
 		os.chdir(zeromq_path)
 		patch_libzmq_linux(zeromq_path)
@@ -858,9 +857,9 @@ def build_sources(build_type):
 
 # Build Python3
 	if os.path.exists(library_path+'libpython3.6m.a'):
-		print "   [Python3] already built."
+		print("   [Python3] already built.")
 	else:
-		print "   [Python3] Start building .."
+		print("   [Python3] Start building ..")
 		mkdir_p(python3_path)
 		os.chdir(python3_path)
 		os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
@@ -870,9 +869,9 @@ def build_sources(build_type):
 
 # Build Boost python
 	if os.path.exists(library_path+'libboost_python3.a'):
-		print "   [Boost] already built."
+		print("   [Boost] already built.")
 	else:
-		print "   [Boost] Start building .."
+		print("   [Boost] Start building ..")
 		mkdir_p(boost_path+'build')
 		os.chdir(boost_path)
 		#os.system(DEBUG_BUILD_FLAG+'PATH='+bin_path+':$PATH ../configure --prefix='+build_path+';make -j'+NJOBS+';make install')
@@ -884,7 +883,7 @@ def build_sources(build_type):
 				(bin_path, build_path, build_path))
 		os.system('./b2 --build-dir=build --cxxflags=\'-fPIC\' --prefix='+build_path+' --with-python link=static install')
 
-	print "\n\n"
+	print("\n\n")
 
 if __name__ == "__main__":
 	# Handle arguments
@@ -924,17 +923,17 @@ if __name__ == "__main__":
 	else:
 		WORKING_PATH = args.path + '/'
 
-	print "#########################################"
-	print "## Prepare external libraries ..."
-	print "##"
-	print "## Platform    : [ "+Platform.name(CURRENT_PLATFORM)+" ]"
+	print("#########################################")
+	print("## Prepare external libraries ...")
+	print("##")
+	print("## Platform    : [ "+Platform.name(CURRENT_PLATFORM)+" ]")
 	if CURRENT_PLATFORM == Platform.Windows:
-		print "##        MSVC : [ "+args.msvc+" ]"
-	#print "## Build type  : [ "+args.type+" ]"
-	print "## Static link : [ "+args.static+" ]"
-	print "## Working path: [ "+WORKING_PATH+" ]"
-	print "## CPU Count   : [ "+NJOBS+" ]"
-	print "#########################################"
+		print("##        MSVC : [ "+args.msvc+" ]")
+	#print("## Build type  : [ "+args.type+" ]")
+	print("## Static link : [ "+args.static+" ]")
+	print("## Working path: [ "+WORKING_PATH+" ]")
+	print("## CPU Count   : [ "+NJOBS+" ]")
+	print("#########################################")
 
 	# Extract sources from archive files
 	extract_sources()
@@ -951,5 +950,5 @@ if __name__ == "__main__":
 	elif CURRENT_PLATFORM == Platform.macOS:
 		build_sources(args.type)
 	elif CURRENT_PLATFORM == Platform.iOS:
-		print "Build external libs for iOS !"
+		print("Build external libs for iOS !")
 		build_sources_iOS(args.type)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import os
-from shutil import copytree, copy2
+from shutil import copytree, copy2, move
 from xml.etree import ElementTree
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
@@ -12,65 +12,47 @@ class SDL2WindowsBuilder(PlatformBuilder):
                  config_platform: dict=None):
         super().__init__(config_package, config_platform)
 
-    def patch_static_MSVC(self, path):
-        msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
-        ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
-        tree = ElementTree.parse(path)
-        root = tree.getroot()
-
-        # Change build result to .lib
-        list = root.findall(msvc_ns_prefix+"PropertyGroup")
-        for child in list:
-            try:
-                item = child.find(msvc_ns_prefix+"ConfigurationType")
-                if item.text == "DynamicLibrary":
-                    item.text = "StaticLibrary"
-            except:
-                pass
-
-        # Change runtime library
-        list = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
-        for child in list:
-            try:
-                item = child.find(msvc_ns_prefix+"ClCompile")
-                item = item.find(msvc_ns_prefix+"RuntimeLibrary")
-                if item.text == 'MultiThreadedDLL':
-                    item.text = "MultiThreaded"
-                elif item.text == 'MultiThreadedDebugDLL':
-                    item.text = "MultiThreadedDebug"
-            except:
-                pass
-
-        self.tag_log("Patched")
-        tree.write(path, encoding="utf-8", xml_declaration=True)
-
-
     def build(self):
         super().build()
 
         # Build SDL2
-        # TODO: Selective debug/release output
-        install_path = PureWindowsPath(f'{self.env.output_path}/release')
-
-        _check = f'{install_path}\\{self.config.get("checker")}'
+        _check = f'{self.env.install_lib_path}\\{self.config.get("checker")}'
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return
 
-        os.chdir('{}/{}/VisualC'.format(
+        # Use default project configuration
+        # os.chdir('{}/{}/VisualC'.format(
+        #     self.env.source_path,
+        #     self.config['name']))
+        # self.env.patch_static_MSVC("SDL/SDL.vcxproj", self.env.BUILD_TYPE)
+        # self.env.patch_static_MSVC("SDLmain/SDLmain.vcxproj", self.env.BUILD_TYPE)
+
+        # Use CMake
+        build_path = Path('{}/{}/build'.format(
             self.env.source_path,
-            self.config['name']))
-        self.patch_static_MSVC("SDL/SDL.vcxproj")
-        self.patch_static_MSVC("SDLmain/SDLmain.vcxproj")
-        cmd = '''msbuild SDL.sln \
+            self.config['name']
+        ))
+        self.env.mkdir_p(build_path)
+        os.chdir(build_path)
+        cmd = '''cmake .. \
+                    -A x64 \
+                    -DFORCE_STATIC_VCRT=ON \
+                    -DLIBC=ON'''
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+        cmd = '''msbuild SDL2.sln \
                     /maxcpucount:{} \
-                    /t:SDL2;SDL2main \
+                    /t:SDL2-static;SDL2main \
                     /p:PlatformToolSet={} \
-                    /p:Configuration=Release \
+                    /p:Configuration={} \
                     /p:Platform=x64 \
-                    /p:OutDir={} \
-                '''.format(self.env.NJOBS, self.env.compiler_version, install_path)
-        self.log('\n    '.join(f'[CMD]:: {cmd}'.split()))
+                    /p:OutDir={}\\ \
+                '''.format(self.env.NJOBS,
+                           self.env.compiler_version, self.env.BUILD_TYPE,
+                           self.env.install_lib_path)
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
         # Copy headers
@@ -81,6 +63,21 @@ class SDL2WindowsBuilder(PlatformBuilder):
         )
 
         try:
-            copytree(sdl2_include_path, self.env.output_include_path)
+            copytree(sdl2_include_path, self.env.install_include_path)
         except FileExistsError:
             self.tag_log('Header files are already exists. Ignoring.')
+
+        self.tag_log("Copying header files (platform customized) ..")
+        copy2(Path(f'{build_path}\\include\\SDL_config.h'),
+              Path(f'{self.env.install_include_path}\\SDL_config.h'))
+
+        # required only debug release
+        self.tag_log("Renaming built libraries ..")
+        if self.env.BUILD_TYPE == 'Release':
+            move(f'{self.env.install_lib_path}\\SDL2-static.lib',
+                 f'{self.env.install_lib_path}\\SDL2.lib')
+        elif self.env.BUILD_TYPE == 'Debug':
+            move(f'{self.env.install_lib_path}\\SDL2maind.lib',
+                 f'{self.env.install_lib_path}\\SDL2main.lib')
+            move(f'{self.env.install_lib_path}\\SDL2-staticd.lib',
+                 f'{self.env.install_lib_path}\\SDL2.lib')

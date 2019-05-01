@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 from shutil import copytree, copy2
-from xml.etree import ElementTree
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
@@ -17,7 +16,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         )
-        if os.path.exists(self.env.output_lib_path+'/libSDL2_image.a'):
+        if os.path.exists(self.env.install_lib_path+'/libSDL2_image.a'):
             print("       [{}] already built.".format(self.config['name']))
             return
 
@@ -26,7 +25,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         os.chdir(build_path)
         cmd = '{} PREFIX={} {}/ios-build.sh SDL2_image'.format(
             self.env.BUILD_FLAG,
-            self.env.output_path,
+            self.env.install_path,
             self.env.working_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
@@ -39,7 +38,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
             self.config['name']
         )
         _header_dest = '{}/SDL_image.h'.format(
-            self.env.output_include_path
+            self.env.install_include_path
         )
         self.tag_log("copying header ...")
         copy2(_header_source, _header_dest)
@@ -75,7 +74,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
-        _lib_src_file = '{}/libSDL2_image.a'.format(self.env.output_lib_path)
+        _lib_src_file = '{}/libSDL2_image.a'.format(self.env.install_lib_path)
         _lib_dst_file = '{}/SDL_image'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 

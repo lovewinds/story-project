@@ -95,7 +95,7 @@ class pythoniOSBuilder(PlatformBuilder):
         build_path = '{}/python_bin/build'.format(
             self.env.source_path
         )
-        if os.path.exists(self.env.output_bin_path+'/python3'):
+        if os.path.exists(self.env.install_bin_path+'/python3'):
             self.tag_log("[macOS] Already built.")
             return
 
@@ -103,8 +103,8 @@ class pythoniOSBuilder(PlatformBuilder):
         os.chdir(build_path)
         cmd = '{} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
             self.env.BUILD_FLAG,
-            self.env.output_bin_path,
-            self.env.output_path,
+            self.env.install_bin_path,
+            self.env.install_path,
             self.env.NJOBS
         )
         self.env.run_command(cmd, module_name=self.config['name'])
@@ -112,12 +112,12 @@ class pythoniOSBuilder(PlatformBuilder):
     def _create_symlink(self):
         '''Create symbolic link (required to build boost)
         '''
-        os.chdir(self.env.output_include_path)
+        os.chdir(self.env.install_include_path)
         if not os.path.exists('python3.6'):
             cmd = 'ln -s python3.6m python3.6'
             self.env.run_command(cmd, module_name=self.config['name'])
 
-        os.chdir(self.env.output_bin_path)
+        os.chdir(self.env.install_bin_path)
         if not os.path.exists('python'):
             cmd = 'ln -s python3 python'
             self.env.run_command(cmd, module_name=self.config['name'])

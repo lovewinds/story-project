@@ -40,7 +40,7 @@ class boostiOSBuilder(PlatformBuilder):
                 --python-root {} \
                 --min-ios-version 7.0'''.format(
             self.env.BUILD_FLAG,
-            self.env.output_path
+            self.env.install_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
