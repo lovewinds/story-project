@@ -5,25 +5,24 @@ Cross platform game development framework based on story.
 
 Build status
 ===
-Build is tested with [Travis CI](https://travis-ci.org/lovewinds/story-project "Travis CI")
+Build is tested with 
 
-![Travis CI](https://travis-ci.org/lovewinds/story-project.svg?branch=test)
+| [Travis CI](https://travis-ci.org/lovewinds/story-project "Travis CI") | [Appveyor](https://ci.appveyor.com/project/lovewinds/story-project "Appveyor") |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![Travis CI](https://travis-ci.org/lovewinds/story-project.svg?branch=test) | [![Build status](https://ci.appveyor.com/api/projects/status/v0mlftorv3a5kmb6?svg=true)](https://ci.appveyor.com/project/lovewinds/story-project) |
+
 
 
 How to build
 ===
 
-Build environment
+Build requirements
 ---
 **[CMake](https://cmake.org/ "CMake")**
 
-**[Python 3.X](https://www.python.org/ "Python 3.X")**
+**[Python >=3.6](https://www.python.org/ "Python >=3.6")**
 
-**[Boost](https://www.boost.org/ "Boost")**
-
-**Autotools**
-
-Build dependencies
+Build environments
 ---
 
 #### Setup build environment
@@ -68,14 +67,14 @@ cmake ..
 make
 ```
 
-Windows (Visual Studio 2013 or higher)
+Windows (Visual Studio 2015 or higher)
 ---
 
 ```
 mkdir build
 cd build
-cmake ..
-/* Build with VS or msbuild.exe */
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build .
 ```
 
 iOS (Xcode)
@@ -83,11 +82,11 @@ iOS (Xcode)
 1. Setup environment for macOS
 2. Build required external packages with these commands.
 ```
-cd <Project root>/external/
-./build_packages.py --platform iOS
+cd external/
+python external_build.py --platform iOS
 ```
 3. Open 'projects/xcode-ios/story-project.xcodeproj' with Xcode and build it.
 
 
 #### Limitation
-There is a build script for external library, but only manual build is supported now.
+There is a script to build external library for iOS, but only manual build is supported now.
