@@ -75,16 +75,15 @@ ELSE(UNIX AND NOT WIN32)
 ENDIF(UNIX AND NOT WIN32)
 
 # Post build
-IF(${PLATFORM} STREQUAL "Windows")
-MESSAGE("Copying all required DLLs ...")
-file(GLOB GENERATED_DLLS
-    "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/*.dll"
+ADD_CUSTOM_COMMAND(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND python
+    ARGS
+        "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
+        "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/"
+        "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    COMMENT "Copy required dynamic libraries"
 )
-file(COPY ${GENERATED_DLLS} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
-# ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
-#     POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory ARGS "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)" "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)"
-#     COMMENT "Copy required dynamic libraries")
-ENDIF(${PLATFORM} STREQUAL "Windows")
 
 ADD_DEPENDENCIES(${PROJECT_NAME} ${LIBNAME})

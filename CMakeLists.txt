@@ -6,8 +6,8 @@ SET(EXEC_PREFIX "\${prefix}")
 SET(LIBDIR "\${prefix}/lib")
 SET(INCLUDEDIR "\${prefix}/include")
 SET(LIBNAME "lib${PROJECT_NAME}")
-#SET(STATIC_LINKING "TRUE")
-SET(STATIC_LINKING "FALSE")
+SET(STATIC_LINKING "TRUE")
+# SET(STATIC_LINKING "FALSE")
 
 # Build Type
 IF( NOT CMAKE_BUILD_TYPE )
@@ -372,14 +372,20 @@ ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Post build
 # Copy external dynamic libraries into specific directory to execute process.
-IF(${PLATFORM} STREQUAL "Windows")
-    MESSAGE("Copying all required DLLs ...")
-    file(GLOB GENERATED_DLLS
-        "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/*.dll"
-    )
-    file(COPY ${GENERATED_DLLS} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+ADD_CUSTOM_COMMAND(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND python
+    ARGS
+        "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
+        "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/"
+        "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    COMMENT "Copy required dynamic libraries"
+)
 
-    # Build python binding modules for Windows
+# Build python binding modules
+IF(${PLATFORM} STREQUAL "Windows")
+    # for Windows
     # ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
     # 	POST_BUILD
     # 	COMMAND "python.exe"
@@ -392,28 +398,27 @@ IF(${PLATFORM} STREQUAL "Windows")
     # 	COMMENT "Build python binding modules..."
     # )
 ELSE(${PLATFORM} STREQUAL "Windows")
-# Build python binding modules
-ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
-    POST_BUILD
-    COMMAND _PLATFORM=${PLATFORM} ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/bin/python3
-    "setup.py"
-    "build"
-    --debug
-    "install"
-    --home=build
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMENT "Build python binding modules..."
-)
-
-# Copy python default modules
-#ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
-#	POST_BUILD
-#	COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python36.zip ./*"
-#	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/python3.6
-#	COMMENT "Copy default python modules"
-#)
+    ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
+        POST_BUILD
+        COMMAND _PLATFORM=${PLATFORM} ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/bin/python3
+        "setup.py"
+        "build"
+        --debug
+        "install"
+        --home=build
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Build python binding modules..."
+    )
+    # # Copy python default modules
+    # ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
+    #     POST_BUILD
+    #     COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python36.zip ./*"
+    #     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/python3.6
+    #     COMMENT "Copy default python modules"
+    # )
 ENDIF(${PLATFORM} STREQUAL "Windows")
 
+# For test
 IF(NOT IOS)
     ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/test)
 ENDIF(NOT IOS)
@@ -421,10 +426,13 @@ ENDIF(NOT IOS)
 # Build dependency
 ADD_DEPENDENCIES(${PROJECT_NAME} ${LIBNAME})
 
-# install
-#INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
-#INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/ DESTINATION ${CMAKE_SOURCE_DIR}/bin
-#	FILES_MATCHING PATTERN "*.so*")
-#INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/ DESTINATION ${CMAKE_SOURCE_DIR}/bin
-#	FILES_MATCHING PATTERN "*.dll")
-#INSTALL(FILES ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/*.dll DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+# Install
+# INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+# INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/
+#     DESTINATION ${CMAKE_SOURCE_DIR}/bin
+#    FILES_MATCHING PATTERN "*.so*")
+# INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/
+#     DESTINATION ${CMAKE_SOURCE_DIR}/bin
+#     FILES_MATCHING PATTERN "*.dll")
+# INSTALL(FILES ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/*.dll
+#     DESTINATION ${CMAKE_SOURCE_DIR}/bin)
