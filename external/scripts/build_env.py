@@ -120,12 +120,12 @@ class BuildEnv:
             else: raise
 
     def download_file(self, url, file_name, headers=None):
-        # Proxy : http://bsnippet.tistory.com/45
+        # Disable SSL verify to support proxy environment.
         self.mkdir_p(self.temp_path)
         if not os.path.isfile("{}/{}".format(self.temp_path, file_name)):
             # urllib.request.urlretrieve(url,
             # 	"{}/{}".format(self.temp_path, file_name))
-            req = requests.get(url, stream=True, headers=headers)
+            req = requests.get(url, stream=True, headers=headers, verify=False)
             if req.status_code == 200:
                 with open("{}/{}".format(self.temp_path, file_name), 'wb') as f:
                     req.raw.decode_content = True
