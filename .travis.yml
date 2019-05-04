@@ -1,5 +1,5 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: cpp
 compiler:
   - gcc
@@ -10,7 +10,6 @@ env:
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "HSoWxjReZA8lWHbPkadtFdzx5r+Cf1+XGG2AuOnI8HfuMrY6fumG3H8PFHQt5PAQ53fFaHvsxg2qqrdUX3qdh/95K2tlGDyCete+hpCVrujIN9fG3OdODAytj2RnqR9sXqpicELbLekNGLH5I0GxchAnhJpzbaHQyWz6FiZULNvHcwherfOOX+WmBn/UQ85TDy1J9hmiMv5opZyKPBSS1o4ASHZs5ZGrYGsJQoCctv6H74ZcIA7q+xP0+HFZxTsnNoh95WgoMpPuVIZQJdiw++NnDtjuGNS+AghG4cEeoipVkIRE2dSUM58geGOxUCkOUwKCbVVGw9ZZZ3Mkw/6WrwiP/HTuysFJmFc/kf6n+u2PlJd2bPjxsTkAJf3SgmTJnk0KDFWmAGxnJZzMxYHaMFSLEcLBI6ehIJciGB/ex09fAp6x7IU+gdqaVx3RCQGDIBuJm4qx8IrjkASnyIOiR3NCeXZ5yqLJOR+HEszznj3RdtHl6Kobx3RdmZLuKf0A33MJUJVBO2wrbUYhGdq/9ThzPgbbuPaqGr1gOB/J68edktGjYG9QNFqEE5ANc2TCE/iN9jm9sgYwOQmVoDtH/Qq/4wXUTRx2S3dbvfEXYLYIxswI+hlo9g3hadY/2E1kaETvYliDZjG0jQHdb6iP6y7/1G+8A2i3hk2gEuW7Yas="
 
-
 before_install:
   - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
@@ -18,10 +17,11 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - deadsnakes
     packages:
       - gcc-5
       - g++-5
-      - python-dev
+      - python3.6-dev
       - build-essential
 
   coverity_scan:
@@ -36,9 +36,13 @@ addons:
 # command to run tests
 # NOTE: 'make -j N' can affect sequential build. just use one worker.
 script: 
+  - cmake --version
+  - pyenv versions
+  - pyenv global 3.6.7
+  - python --version
+  - pip install -r requirements.txt
   - mkdir -p build
   - cd build
-  - cmake --version
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then cmake .. && make ; fi
 
 install:
