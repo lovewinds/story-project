@@ -55,7 +55,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         --platform "${PLATFORM}"
         --type "${BUILD_TYPE}"
     )
-    SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/")
+    SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     IF(MSVC AND MSVC141)
         SET(VC_VER "--msvc=v${MSVC_TOOLSET_VERSION}")
@@ -100,10 +100,10 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 # FIND_PACKAGE(SDL2_gfx REQUIRED)
 
 # Search built Python 3
-# SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/libpython3.6m.a)
-# SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/include/python3.6m)
+# SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/libpython3.6m.a)
+# SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/include/python3.6m)
 
-#SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib")
+#SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib")
 FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
 
 FOREACH(flag ${pkgs_CFLAGS})
@@ -146,8 +146,11 @@ ADD_DEFINITIONS("${PLATFORM_DEF}")
 ADD_DEFINITIONS("-DLIBC=ON")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
+    INCLUDE_DIRECTORIES(
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/include/
+    )
     LINK_DIRECTORIES(
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/
         ${CMAKE_BINARY_DIR}
     )
     #ADD_DEFINITIONS("-DBOOST_PYTHON_STATIC_LIB")
@@ -173,7 +176,7 @@ IF(${PLATFORM} STREQUAL "Linux")
     # Debug
     SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
 
-    # Python /external/lib_build/${PLATFORM}/lib/python3.6/config-3.6m-x86_64-linux-gnu
+    # Python /external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/python3.6/config-3.6m-x86_64-linux-gnu
     # 	"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
     SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
     # SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS_INIT}
@@ -186,7 +189,7 @@ ELSEIF(${PLATFORM} STREQUAL "macOS")
     # Debug
     SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
 
-    # Python /external/lib_build/${PLATFORM}/lib/python3.6/config-3.6m-darwin
+    # Python /external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/python3.6/config-3.6m-darwin
     SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
     SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm")
 ENDIF(${PLATFORM} STREQUAL "Linux")
@@ -400,7 +403,7 @@ IF(${PLATFORM} STREQUAL "Windows")
 ELSE(${PLATFORM} STREQUAL "Windows")
     ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
         POST_BUILD
-        COMMAND _PLATFORM=${PLATFORM} ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/bin/python3
+        COMMAND _PLATFORM=${PLATFORM} ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/bin/python3
         "setup.py"
         "build"
         --debug
@@ -413,7 +416,7 @@ ELSE(${PLATFORM} STREQUAL "Windows")
     # ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
     #     POST_BUILD
     #     COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python36.zip ./*"
-    #     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/python3.6
+    #     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/python3.6
     #     COMMENT "Copy default python modules"
     # )
 ENDIF(${PLATFORM} STREQUAL "Windows")
