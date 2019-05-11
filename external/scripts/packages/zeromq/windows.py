@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-from shutil import copytree, copy2
+from shutil import copytree, copy2, move
 from xml.etree import ElementTree
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
@@ -14,9 +14,9 @@ class zeromqWindowsBuilder(PlatformBuilder):
 
     def pre(self):
         super().pre()
-        subpkg_url = 'https://github.com/zeromq/cppzmq/archive/v4.2.2.tar.gz'
+        subpkg_url = 'https://github.com/zeromq/cppzmq/archive/v4.3.0.tar.gz'
         subpkg_name = 'cppzmq'
-        subpkg_archive = 'cppzmq-4.2.2.tar.gz'
+        subpkg_archive = 'cppzmq-4.3.0.tar.gz'
 
         self.tag_log("[CPPZMQ] Preparing sub package")
         self.env.download_file(subpkg_url, subpkg_archive)
@@ -25,8 +25,21 @@ class zeromqWindowsBuilder(PlatformBuilder):
     def build(self):
         super().build()
 
+        self.build_libzmq()
+
+    def post(self):
+        super().post()
+
+        if self.env.BUILD_TYPE == 'Debug':
+            self.tag_log("Renaming built libraries ..")
+            if os.path.exists(Path(f'{self.env.install_lib_path}\\libzmq-v141-mt-sgd-4_3_1.lib')):
+                move(f'{self.env.install_lib_path}\\libzmq-v141-mt-sgd-4_3_1.lib',
+                    f'{self.env.install_lib_path}\\libzmq.lib')
+
+    def build_libzmq(self):
         # Build zeromq
-        build_path = Path('{}/{}/builds/msvc/vs2015'.format(
+        # build_path = Path('{}/{}/builds/msvc/vs2015'.format(
+        build_path = Path('{}/{}/build'.format(
             self.env.source_path,
             self.config['name']
         ))
@@ -39,25 +52,46 @@ class zeromqWindowsBuilder(PlatformBuilder):
         self.tag_log("Start building ..")
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
-        # Disable libsodium
-        # TODO: Need to check for secure connection
-        self.patch_libzmq_win(f"{build_path}/libzmq/libzmq.props")
 
-        cmd = '''msbuild libzmq.sln \
+        # CMake build
+        cmd = '''cmake .. -A x64 \
+                    -D POLLER="" \
+                    -D WITH_LIBSODIUM=OFF \
+                    -DWITH_PERF_TOOL=OFF \
+                    -DZMQ_BUILD_TESTS=OFF \
+                    -DCMAKE_INSTALL_PREFIX={} \
+                    '''.format(
+                        self.env.install_path
+                    )
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name='cppzmq')
+
+
+        BuildEnv.patch_static_MSVC(Path(f'{build_path}/libzmq-static.vcxproj'), self.env.BUILD_TYPE)
+        cmd = '''msbuild ZeroMQ.sln \
                     /maxcpucount:{} \
-                    /t:libzmq \
+                    /t:libzmq-static \
                     /p:Option-sodium=false \
                     /p:PlatformToolSet={} \
-                    /p:Configuration=Static{} \
+                    /p:Configuration={} \
                     /p:Platform=x64 \
                     /p:OutDir={}\\ \
                 '''.format(self.env.NJOBS,
                            self.env.compiler_version, self.env.BUILD_TYPE,
                            self.env.install_lib_path)
+        # TODO: Apply CMake installation
+        # cmd = '''cmake --build . \
+        #             -j {} \
+        #             --config {} \
+        #             --target install \
+        #             '''.format(
+        #                 self.env.NJOBS,
+        #                 self.env.BUILD_TYPE
+        #             )
         self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
-    def patch_libzmq_win(self, path):
+    def patch_libzmq_prop(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
         ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
         tree = ElementTree.parse(path)

@@ -29,19 +29,18 @@ from scripts.packages.pybind11 import Builder_pybind11
 
 # Start building
 modules = [
-	Builder_SDL2(),
-	Builder_SDL2_Image(),
-	Builder_SDL2_TTF(),
-	# Builder_SDL2_gfx(),
-	Builder_g3log(),
-	Builder_jsoncpp(),
-	Builder_pugixml(),
-	Builder_gtest(),
-	Builder_protobuf(),
-	Builder_zeromq(),
+	# Builder_SDL2(),
+	# Builder_SDL2_Image(),
+	# Builder_SDL2_TTF(),
+	# Builder_g3log(),
+	# Builder_jsoncpp(),
+	# Builder_pugixml(),
+	# Builder_gtest(),
+	# Builder_protobuf(),
 	Builder_python(),
-	Builder_dirent(),
-	Builder_pybind11(),
+	# Builder_zeromq(),
+	# Builder_dirent(),
+	# Builder_pybind11(),
 ]
 
 def check_msvc(env_param):

@@ -100,8 +100,13 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 # FIND_PACKAGE(SDL2_gfx REQUIRED)
 
 # Search built Python 3
-# SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/libpython3.6m.a)
-# SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/include/python3.6m)
+IF(${PLATFORM} STREQUAL "Windows")
+    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/python36.lib)
+    SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/include/python)
+ELSEIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
+    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/libpython3.6m.a)
+    SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/include/python3.6m)
+ENDIF(${PLATFORM} STREQUAL "Windows")
 
 #SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib")
 FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
@@ -141,9 +146,11 @@ INCLUDE_DIRECTORIES(
 ELSE(USE_G3LOG)
 ADD_DEFINITIONS("-DUSE_SDL_LOG")
 ENDIF(USE_G3LOG)
-#ADD_DEFINITIONS("-DZMQ_STATIC")
+
+# Required if use zmq static linking
+ADD_DEFINITIONS("-DZMQ_STATIC")
+
 ADD_DEFINITIONS("${PLATFORM_DEF}")
-ADD_DEFINITIONS("-DLIBC=ON")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
     INCLUDE_DIRECTORIES(
@@ -153,13 +160,17 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/
         ${CMAKE_BINARY_DIR}
     )
-    #ADD_DEFINITIONS("-DBOOST_PYTHON_STATIC_LIB")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
-    # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    # NOMINMAX for pybind11 on windows build
+    ADD_DEFINITIONS("-DNOMINMAX")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /MP /EHsc")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /MP /EHsc")
     INCLUDE_DIRECTORIES(
         ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/dirent/include/
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/include/boost-1_69/
+        ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/python/include/
+        ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/python/Python/
+        ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/python/PC/
+        ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/python/Modules/
     )
     LINK_DIRECTORIES(
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/
@@ -196,8 +207,6 @@ ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")
 SET(CMAKE_CPP_FLAGS "${CMAKE_CPP_FLAGS} ${EXTRA_CPPFLAGS} ${ADDITIONAL_CPPFLAGS} ")
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 # Dynamically replace MT / MD for MSVC
 IF(MSVC AND STATIC_LINKING)
@@ -305,7 +314,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         ${PYTHON_LIBRARIES}
         # -lpython3.6m -lutil
         "${pkgs_LDFLAGS}"
-        "-ldl -lpugixml -lprotobuf -lzmq-static -lboost_python3")
+        "-ldl -lpugixml -lprotobuf -lzmq-static")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)
@@ -323,7 +332,6 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
         ${LINK_G3LOG}
-        ${PYTHON_LIBRARIES}
         "${pkgs_LDFLAGS}"
         "winmm.lib"
         "version.lib"
@@ -331,16 +339,20 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         "setupapi.lib"
         "opengl32.lib"
         "glu32.lib"
-        "dbghelp.lib")
+        "dbghelp.lib"
+        # for ZeroMQ
+        "wsock32.lib"
+        "ws2_32.lib"
+        "Iphlpapi.lib"
+        # for Python
+        "shlwapi.lib"
+    )
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES PREFIX "" OUTPUT_NAME ${LIBNAME})
 
 
 ##################### Binary build
 ADD_EXECUTABLE(${PROJECT_NAME} "src/main.cpp")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
@@ -370,7 +382,14 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         "setupapi.lib"
         "opengl32.lib"
         "glu32.lib"
-        "dbghelp.lib")
+        "dbghelp.lib"
+        # for ZeroMQ
+        "wsock32.lib"
+        "ws2_32.lib"
+        "Iphlpapi.lib"
+        # for Python
+        "shlwapi.lib"
+    )
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Post build

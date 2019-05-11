@@ -11,8 +11,8 @@ class Builder_zeromq(PackageBuilder):
         super(Builder_zeromq, self)
         self.package = {
             'name': 'zeromq',
-            'url': 'https://github.com/zeromq/libzmq/releases/download/v4.2.1/zeromq-4.2.1.tar.gz',
-            'filename': 'zeromq-4.2.1.tar.gz'
+            'url': 'https://github.com/zeromq/libzmq/releases/download/v4.3.1/zeromq-4.3.1.tar.gz',
+            'filename': 'zeromq-4.3.1.tar.gz'
         }
         self.builder = {
             Platform.Windows: zeromqWindowsBuilder(

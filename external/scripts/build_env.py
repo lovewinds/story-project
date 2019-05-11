@@ -243,6 +243,10 @@ class BuildEnv:
         itemlist = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
         for child in itemlist:
             try:
+                # prune
+                if child.attrib['Condition'].find(build_type) < 0:
+                    continue
+
                 item = child.find(msvc_ns_prefix+"ClCompile")
                 item = item.find(msvc_ns_prefix+"RuntimeLibrary")
 
@@ -295,6 +299,10 @@ class BuildEnv:
         itemlist = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
         for child in itemlist:
             try:
+                # prune
+                if child.attrib['Condition'].find(build_type) < 0:
+                    continue
+
                 item = child.find(msvc_ns_prefix+"ClCompile")
                 item = item.find(msvc_ns_prefix+"RuntimeLibrary")
                 
@@ -315,6 +323,54 @@ class BuildEnv:
                     item.text = "MultiThreadedDLL"
                 elif item.text == 'MultiThreadedDebug':
                     item.text = "MultiThreadedDebugDLL"
+            except:
+                pass
+
+        print("        [MSVC] Patched")
+        tree.write(path, encoding="utf-8", xml_declaration=True)
+
+    @classmethod
+    def patch_static_props(cls, path, build_type='Release'):
+        '''
+        Change project configuration to build static library.
+        :param path: Path for MSVC property settings (*.props)
+        :param type: Choose from ['Release', 'Debug']
+        '''
+        msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+        ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
+        tree = ElementTree.parse(path)
+        root = tree.getroot()
+
+        # Change runtime library
+        itemlist = root.findall(msvc_ns_prefix+"ItemDefinitionGroup")
+        for child in itemlist:
+            try:
+                settings = child.findall(msvc_ns_prefix+"ClCompile")
+                for comp in settings:
+                    # prune
+                    if (child.attrib.get('Condition') is not None
+                            and child.attrib['Condition'].find(build_type) < 0):
+                        continue
+
+                    item = comp.find(msvc_ns_prefix+"RuntimeLibrary")
+
+                    # Change to proper build type
+                    if build_type.lower() == 'release':
+                        if item.text == 'MultiThreadedDebugDLL':
+                            item.text = 'MultiThreadedDLL'
+                        if item.text == 'MultiThreadedDebug':
+                            item.text = 'MultiThreaded'
+                    elif build_type.lower() == 'debug':
+                        if item.text == 'MultiThreadedDLL':
+                            item.text = 'MultiThreadedDebugDLL'
+                        if item.text == 'MultiThreaded':
+                            item.text = 'MultiThreadedDebug'
+                    
+                    # Change to /MD -> /MT (static)
+                    if item.text == 'MultiThreadedDLL':
+                        item.text = "MultiThreaded"
+                    elif item.text == 'MultiThreadedDebugDLL':
+                        item.text = "MultiThreadedDebug"
             except:
                 pass
 
