@@ -3,7 +3,6 @@
 #include "util/IPCHelper.hpp"
 #include "Ecore.hpp"
 
-#include <chrono>
 
 
 std::vector<std::wstring> PythonScript::path_list;
@@ -13,7 +12,9 @@ bool PythonScript::state_ipc = true;
 std::thread PythonScript::thread_python;
 std::thread PythonScript::thread_ipc;
 
-//#define __PYTHON_AVAILABLE
+void thread_loop_ipc(bool& running_state);
+
+#define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE
 #include <pybind11/pybind11.h>
 #include <stdio.h>
@@ -54,18 +55,15 @@ std::string invite(const hello& w) {
 	return w.greet() + "! Please come soon!";
 }
 
-PYBIND11_MODULE(helloModule)
-{
-    using namespace boost::python;
-    class_<hello>("hello", init<std::string>())
+namespace py = pybind11;
+PYBIND11_MODULE(story, m) {
+    py::class_<hello>(m, "hello")
+		.def(py::init<const std::string &>())
         // Add a regular member function.
         .def("greet", &hello::greet)
         // Add invite() as a member of hello!
         .def("invite", invite)
         ;
-    
-    // Also add invite() as a regular function to the module.
-    def("invite", invite);
 }
 
 void PrintMyFunc() {
@@ -132,6 +130,7 @@ void PythonScript::preparePath(std::string script_path)
 /**********************************************************************
  * Module Start
  **********************************************************************/
+
 static int numargs=0;
 
 /* Return the number of arguments of the application command line */
@@ -159,45 +158,10 @@ PyInit_emb(void)
 {
     return PyModule_Create(&EmbModule);
 }
+
 /**********************************************************************
  * Module End
  **********************************************************************/
-
-
-/**********************************************************************
- * Threading 
- **********************************************************************/
-
-static void thread_loop_ipc(bool& running_state)
-{
-	IPCServer ipc_server;
-	void *handle = ipc_server.CreateIPC();
-	if (nullptr == handle) {
-		LOG_ERR("Failed to initialize IPC");
-		return;
-	}
-	
-	char pData[1024] = {0,};
-	size_t tDataSize = 1023;
-	unsigned long ret;
-
-	// with blocking manner
-	while(running_state) {
-		LOG_DBG("Waiting for data receiving");
-		ret = ipc_server.RecvIPC(handle, pData, tDataSize);
-		LOG_DBG("Received data [%lu]", ret);
-
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-	}
-
-	// On terminate
-	ipc_server.DestroyIPC();
-}
-
-/**********************************************************************
- * Threading end
- **********************************************************************/
-
 
 void PythonScript::initialize()
 {
@@ -229,7 +193,7 @@ void PythonScript::initialize()
 		/* Export internal modules */
 		numargs = 8;
 		PyImport_AppendInittab("emb", &PyInit_emb);
-		PyImport_AppendInittab("helloModule", PyInit_helloModule);
+		// PyImport_AppendInittab("helloModule", PyInit_helloModule);
 
 		Py_Initialize();
 		LOG_DBG("GetProgramName: %ls", Py_GetProgramName());
@@ -359,8 +323,43 @@ std::string PythonScript::runString(std::string cmd)
 
 PythonScript::PythonScript()
 {
+	IPCServer ipc_server22;
 }
 
 PythonScript::~PythonScript()
 {
 }
+
+/**********************************************************************
+ * Threading 
+ **********************************************************************/
+
+static void thread_loop_ipc(bool& running_state)
+{
+	IPCServer ipc_server;
+	void *handle = ipc_server.CreateIPC();
+	if (nullptr == handle) {
+		LOG_ERR("Failed to initialize IPC");
+		return;
+	}
+
+	char pData[1024] = {0,};
+	size_t tDataSize = 1023;
+	unsigned long ret;
+
+	// with blocking manner
+	while(running_state) {
+		LOG_DBG("Waiting for data receiving");
+		ret = ipc_server.RecvIPC(handle, pData, tDataSize);
+		LOG_DBG("Received data [%lu]", ret);
+
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+
+	// On terminate
+	ipc_server.DestroyIPC();
+}
+
+/**********************************************************************
+ * Threading end
+ **********************************************************************/

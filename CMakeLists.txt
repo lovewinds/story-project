@@ -150,6 +150,9 @@ ENDIF(USE_G3LOG)
 # Required if use zmq static linking
 ADD_DEFINITIONS("-DZMQ_STATIC")
 
+# Python static build
+ADD_DEFINITIONS("-DPy_NO_ENABLE_SHARED")
+
 ADD_DEFINITIONS("${PLATFORM_DEF}")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
@@ -331,6 +334,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
         # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/python36.lib
         ${LINK_G3LOG}
         "${pkgs_LDFLAGS}"
         "winmm.lib"
@@ -374,6 +378,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
         # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/python36.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"

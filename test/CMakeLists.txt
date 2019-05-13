@@ -63,6 +63,7 @@ ELSE(UNIX AND NOT WIN32)
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest.lib
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest_main.lib
         ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/python36.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"
@@ -71,7 +72,14 @@ ELSE(UNIX AND NOT WIN32)
         "setupapi.lib"
         "opengl32.lib"
         "glu32.lib"
-        "dbghelp.lib")
+        "dbghelp.lib"
+        # for ZeroMQ
+        "wsock32.lib"
+        "ws2_32.lib"
+        "Iphlpapi.lib"
+        # for Python
+        "shlwapi.lib"
+    )
 ENDIF(UNIX AND NOT WIN32)
 
 # Post build

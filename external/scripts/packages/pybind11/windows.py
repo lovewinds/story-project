@@ -30,7 +30,13 @@ class pybind11WindowsBuilder(PlatformBuilder):
         os.chdir(build_path)
         
         ## TODO: Change toolset dynamically
-        cmd = '''cmake -A x64 ..'''
+        cmd = '''cmake ..  \
+                    -A x64 \
+                    -DPYBIND11_LTO_CXX_FLAGS="" \
+                    -DPYTHON_LIBRARY={}/python36.lib \
+                    -DPYTHON_INCLUDE_DIR={}/python \
+                '''.format(self.env.install_lib_path,
+                           self.env.install_include_path)
         self.log(f'     [CMD]:: {cmd}')
         self.env.run_command(cmd, module_name=self.config['name'])
 
