@@ -13,7 +13,7 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
 
     def pre(self):
         super().pre()
-        self.ext_build_png()
+        self.ext_build_zlib()
         self.ext_build_jpeg()
 
     def build(self):
@@ -56,18 +56,18 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         )
-        build_path = '{}/{}/external/jpeg-9/build'.format(
+        build_path = '{}/{}/external/jpeg-9b/build'.format(
             self.env.source_path,
             self.config['name']
         )
-        if os.path.exists(self.env.install_lib_path+'/libjpeg.a'):
+        if os.path.exists(self.env.install_lib_path / 'libjpeg.a'):
             print("       [{}] already built.".format('libjpeg'))
             return
 
         print("       [{}] Start building ...".format('libjpeg'))
         # Apply patch
         os.chdir(ext_path)
-        cmd = "{}/patch.py jpeg-9.patch".format(
+        cmd = "{}/patch.py jpeg-9b.patch".format(
             self.env.working_path
         )
         self.env.run_command(cmd, module_name='libjpeg')
@@ -83,26 +83,26 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
         )
         self.env.run_command(cmd, module_name='libjpeg')
 
-    def ext_build_png(self):
+    def ext_build_zlib(self):
         ext_path = '{}/{}/external'.format(
             self.env.source_path,
             self.config['name']
         )
-        build_path = '{}/{}/external/libpng-1.6.2/build'.format(
+        build_path = '{}/{}/external/zlib-1.2.11/build'.format(
             self.env.source_path,
             self.config['name']
         )
-        if os.path.exists(self.env.install_lib_path+'/libpng16.a'):
-            print("       [{}] already built.".format('libpng'))
+        if os.path.exists(self.env.install_lib_path / 'libz.dylib'):
+            print("       [{}] already built.".format('zlib'))
             return
 
-        print("       [{}] Start building ...".format('libpng'))
+        print("       [{}] Start building ...".format('zlib'))
         # Apply patch
         os.chdir(ext_path)
-        cmd = "{}/patch.py libpng-1.6.2.patch".format(
+        cmd = "{}/patch.py zlib-1.2.11.patch".format(
             self.env.working_path
         )
-        self.env.run_command(cmd, module_name='libpng')
+        self.env.run_command(cmd, module_name='zlib')
 
         # Build
         BuildEnv.mkdir_p(build_path)
@@ -113,4 +113,4 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
             self.env.install_path,
             self.env.NJOBS
         )
-        self.env.run_command(cmd, module_name='libpng')
+        self.env.run_command(cmd, module_name='zlib')
