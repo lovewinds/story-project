@@ -13,6 +13,7 @@ from scripts.build_env import BuildEnv, Platform
 
 # TODO: Support dynamic import under specific folder
 from scripts.packages.sdl import Builder_SDL2
+from scripts.packages.libpng import Builder_libpng
 from scripts.packages.sdl_image import Builder_SDL2_Image
 from scripts.packages.sdl_ttf import Builder_SDL2_TTF
 from scripts.packages.sdl_gfx import Builder_SDL2_gfx
@@ -30,6 +31,7 @@ from scripts.packages.pybind11 import Builder_pybind11
 # Start building
 modules = [
 	# Builder_SDL2(),
+	Builder_libpng(),
 	# Builder_SDL2_Image(),
 	# Builder_SDL2_TTF(),
 	# Builder_g3log(),
@@ -37,7 +39,7 @@ modules = [
 	# Builder_pugixml(),
 	# Builder_gtest(),
 	# Builder_protobuf(),
-	Builder_python(),
+	# Builder_python(),
 	# Builder_zeromq(),
 	# Builder_dirent(),
 	# Builder_pybind11(),
