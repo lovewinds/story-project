@@ -31,7 +31,7 @@ class Builder_SDL2(PackageBuilder):
 			Platform.macOS: SDL2LinuxBuilder(
 				self.package,
 				{
-					'checker': 'SDL2.dylib'
+					'checker': 'libSDL2.dylib'
 				}
 			),
 			Platform.iOS: SDL2iOSBuilder(

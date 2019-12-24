@@ -31,7 +31,7 @@ class Builder_SDL2_Image(PackageBuilder):
             Platform.macOS: SDL2ImageLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'SDL2_image.dylib'
+                    'checker': 'libSDL2_image.dylib'
                 }
             ),
             Platform.iOS: SDL2ImageiOSBuilder(

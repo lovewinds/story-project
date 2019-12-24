@@ -31,7 +31,7 @@ class Builder_SDL2_TTF(PackageBuilder):
             Platform.macOS: SDL2TTFLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'SDL2_ttf.dylib'
+                    'checker': 'libSDL2_ttf.dylib'
                 }
             ),
             Platform.iOS: SDL2TTFiOSBuilder(

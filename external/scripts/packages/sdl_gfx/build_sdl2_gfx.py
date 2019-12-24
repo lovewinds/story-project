@@ -31,7 +31,7 @@ class Builder_SDL2_gfx(PackageBuilder):
             Platform.macOS: SDL2gfxLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'SDL2_gfx.dylib'
+                    'checker': 'libSDL2_gfx.dylib'
                 }
             ),
             Platform.iOS: SDL2gfxiOSBuilder(
