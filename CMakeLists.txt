@@ -8,6 +8,7 @@ SET(INCLUDEDIR "\${prefix}/include")
 SET(LIBNAME "lib${PROJECT_NAME}")
 SET(STATIC_LINKING "TRUE")
 # SET(STATIC_LINKING "FALSE")
+OPTION(VERBOSE "Displays entire build log" OFF)
 
 # Build Type
 IF( NOT CMAKE_BUILD_TYPE )
@@ -18,6 +19,11 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     SET(BUILD_TYPE "debug")
 ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
+# Log verbosity
+SET(LOG_VERBOSE_FLAG "")
+IF(VERBOSE)
+    SET(LOG_VERBOSE_FLAG "--verbose")
+ENDIF()
 
 # Detect Platform
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -54,6 +60,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         --path "${CMAKE_SOURCE_DIR}/external"
         --platform "${PLATFORM}"
         --type "${BUILD_TYPE}"
+        ${LOG_VERBOSE_FLAG}
     )
     SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
@@ -85,6 +92,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
          --static "${STATIC_LINKING}"
          --platform "${PLATFORM}"
          --type "${BUILD_TYPE}"
+         ${LOG_VERBOSE_FLAG}
          ${VC_VER}
     )
     SET(ENV{SDL2DIR} "${CMAKE_SOURCE_DIR}\\external\\lib_build\\${PLATFORM}\\${BUILD_TYPE}\\")
