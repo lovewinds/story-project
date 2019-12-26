@@ -325,7 +325,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         ${PYTHON_LIBRARIES}
         # -lpython3.6m -lutil
         "${pkgs_LDFLAGS}"
-        "-ldl -lpugixml -lprotobuf -lzmq-static")
+        "-ldl -lpugixml -lprotobuf -lzmq")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)
@@ -369,7 +369,7 @@ ADD_EXECUTABLE(${PROJECT_NAME} "src/main.cpp")
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
-        "-ldl -lprotobuf -lzmq-static -lstory-project")
+        "-ldl -lprotobuf -lzmq -lstory-project")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)

@@ -12,7 +12,7 @@ bool PythonScript::state_ipc = true;
 std::thread PythonScript::thread_python;
 std::thread PythonScript::thread_ipc;
 
-void thread_loop_ipc(bool& running_state);
+static void thread_loop_ipc(bool& running_state);
 
 #define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE

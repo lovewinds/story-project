@@ -30,7 +30,6 @@ class zeromqLinuxBuilder(PlatformBuilder):
             self.config['name']
         )
 
-        # if os.path.exists(self.env.install_lib_path+'/libzmq-static.a'):
         _check = self.env.install_lib_path / self.config.get("checker")
         if os.path.exists(_check):
             self.tag_log("Already built.")

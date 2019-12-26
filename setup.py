@@ -25,7 +25,7 @@ setup(name="story",
 				'external/build/target/{}/lib'.format(PLATFORM),
 				'build'
 			],
-			libraries=['g3logger', 'zmq-static', 'story-project'],
+			libraries=['g3logger', 'zmq', 'story-project'],
 			extra_compile_args=['-std=c++11', '-DSWIG_PYTHON_INTERPRETER_NO_DEBUG'],
 		)
 	],

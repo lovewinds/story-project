@@ -24,13 +24,13 @@ class Builder_zeromq(PackageBuilder):
             Platform.Linux: zeromqLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libzmq-static.a'
+                    'checker': 'libzmq.a'
                 }
             ),
             Platform.macOS: zeromqLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'zmq-static.dylib'
+                    'checker': 'libzmq.dylib'
                 }
             )
         }
