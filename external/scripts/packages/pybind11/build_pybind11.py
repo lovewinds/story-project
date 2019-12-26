@@ -24,7 +24,7 @@ class Builder_pybind11(PackageBuilder):
             Platform.Linux: pybind11LinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libpybind11.a'
+                    'checker': '../include/pybind11'
                 }
             ),
             Platform.macOS: pybind11LinuxBuilder(
