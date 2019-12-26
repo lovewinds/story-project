@@ -25,7 +25,7 @@ class Builder_g3log(PackageBuilder):
             Platform.Linux: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libg3logger.a'
+                    'checker': 'libg3logger.so'
                 }
             ),
             Platform.macOS: g3logLinuxBuilder(

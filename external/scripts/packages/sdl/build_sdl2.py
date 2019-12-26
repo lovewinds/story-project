@@ -25,7 +25,7 @@ class Builder_SDL2(PackageBuilder):
 			Platform.Linux: SDL2LinuxBuilder(
 				self.package,
 				{
-					'checker': 'SDL2.so'
+					'checker': 'libSDL2.so'
 				}
 			),
 			Platform.macOS: SDL2LinuxBuilder(
