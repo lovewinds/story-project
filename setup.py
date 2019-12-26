@@ -15,14 +15,14 @@ setup(name="story",
 			["scripting/SpLogHelper_wrap.cxx"],
 			include_dirs=[
 				'include/',
-				'external/lib_build/{}/include/SDL2/'.format(PLATFORM),
-				'external/lib_source/{}/g3log/src/'.format(PLATFORM),
-				'external/lib_source/{}/cppzmq/'.format(PLATFORM),
-				'external/lib_source/{}/zeromq/include/'.format(PLATFORM),
+				'external/build/target/{}/include/SDL2/'.format(PLATFORM),
+				'external/build/source/{}/g3log/src/'.format(PLATFORM),
+				'external/build/source/{}/cppzmq/'.format(PLATFORM),
+				'external/build/source/{}/zeromq/include/'.format(PLATFORM),
 				'scripting/'
 			],
 			library_dirs=[
-				'external/lib_build/{}/lib'.format(PLATFORM),
+				'external/build/target/{}/lib'.format(PLATFORM),
 				'build'
 			],
 			libraries=['g3logger', 'zmq-static', 'story-project'],

@@ -95,7 +95,7 @@ class pythoniOSBuilder(PlatformBuilder):
         build_path = '{}/python_bin/build'.format(
             self.env.source_path
         )
-        if os.path.exists(self.env.install_bin_path+'/python3'):
+        if os.path.exists(self.env.install_bin_path / 'python3'):
             self.tag_log("[macOS] Already built.")
             return
 

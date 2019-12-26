@@ -33,7 +33,7 @@ class libPNGLinuxBuilder(PlatformBuilder):
             self.env.working_path,
             self.env.patch_path
         )
-        self.env.run_command(cmd, module_name='libpng')
+        self.env.run_command(cmd, module_name=self.config['name'])
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)

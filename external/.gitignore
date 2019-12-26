@@ -1,8 +1,8 @@
 # Built result files
 built
 sources
-lib_build
-lib_source
+build/target
+build/source
 temp
 logs
 

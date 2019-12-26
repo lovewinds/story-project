@@ -1,5 +1,5 @@
 #!/bin/bash
-# export PREFIX="story-project/external/lib_build/iOS"
+# export PREFIX="story-project/external/build/target/iOS"
 export BINPATH="${PREFIX}/bin"
 export LIBPATH="${PREFIX}/lib"
 export INCLUDEPATH="${PREFIX}/include"

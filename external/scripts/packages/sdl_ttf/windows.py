@@ -16,7 +16,7 @@ class SDL2TTFWindowsBuilder(PlatformBuilder):
         super().build()
 
         # Build SDL2_ttf
-        _check = f'{self.env.install_lib_path}\\{self.config.get("checker")}'
+        _check = self.env.install_lib_path / self.config.get("checker")
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return

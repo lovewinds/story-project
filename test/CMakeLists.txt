@@ -12,12 +12,12 @@ FIND_PACKAGE(Threads REQUIRED)
 # Include and library directories
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/../include/
-    ${CMAKE_SOURCE_DIR}/external/lib_source/${PLATFORM}/gtest/googletest/include/
+    ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/gtest/googletest/include/
 )
 IF(UNIX AND NOT WIN32)
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/lib/ ${CMAKE_BINARY_DIR})
+    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/lib/ ${CMAKE_BINARY_DIR})
 ELSE(UNIX AND NOT WIN32)
-    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/ ${CMAKE_BINARY_DIR})
+    LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/ ${CMAKE_BINARY_DIR})
 ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
@@ -48,22 +48,22 @@ IF(UNIX AND NOT WIN32)
 ELSE(UNIX AND NOT WIN32)
     # Windows
     IF(USE_G3LOG)
-        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/g3logger.lib")
+        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/g3logger.lib")
     ELSE(USE_G3LOG)
         SET(LINK_G3LOG "")
     ENDIF(USE_G3LOG)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2.lib
-        # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_image.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
-        # ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/SDL2_gfx.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/gtest_main.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/$(Configuration)/lib/python36.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2.lib
+        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
+        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/gtest.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/gtest_main.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python36.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"
@@ -89,7 +89,7 @@ ADD_CUSTOM_COMMAND(
     COMMAND python
     ARGS
         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
-        "${CMAKE_SOURCE_DIR}/external/lib_build/${PLATFORM}/${BUILD_TYPE}/lib/"
+        "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
         "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
     COMMENT "Copy required dynamic libraries"
 )

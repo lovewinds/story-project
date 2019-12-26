@@ -51,9 +51,9 @@ class BuildEnv:
         self.platform = platform
         self.patch_path = Path('{}/patches'.format(self.working_path))
         self.temp_path = Path('{}/temp'.format(self.working_path))
-        self.source_path = Path('{}/lib_source/{}'.format(self.working_path,
+        self.source_path = Path('{}/build/source/{}'.format(self.working_path,
                                     Platform.name(self.platform)))
-        self.install_path = Path('{}/lib_build/{}/{}'.format(self.working_path,
+        self.install_path = Path('{}/build/target/{}/{}'.format(self.working_path,
                                     Platform.name(self.platform), build_type))
 
         self.install_bin_path = Path('{}/bin'.format(self.install_path))

@@ -23,7 +23,7 @@ class boostLinuxBuilder(PlatformBuilder):
         )
 
         # if os.path.exists(self.env.install_lib_path+'/libboost_python3.a'):
-        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
+        _check = self.env.install_lib_path / self.config.get("checker")
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return

@@ -17,7 +17,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
             self.config['name']
         )
 
-        _check = f'{self.env.install_lib_path}/{self.config.get("checker")}'
+        _check = self.env.install_lib_path / self.config.get("checker")
         if os.path.exists(_check):
             self.tag_log("Already built.")
             return

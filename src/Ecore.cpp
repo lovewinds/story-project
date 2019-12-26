@@ -47,7 +47,7 @@ gRenderer(NULL)
 #elif defined(PLATFORM_MACOS)
 	/* macOS */
 	/* TODO: Handle install path for all resources */
-	PythonScript::preparePath(makeBasePath("../external/lib_build/macOS/lib/python3.6"));
+	PythonScript::preparePath(makeBasePath("../external/build/target/macOS/lib/python3.6"));
 	PythonScript::preparePath(makeBasePath("."));
 	PythonScript::preparePath(makeBasePath("python36.zip"));
 	PythonScript::preparePath(makeBasePath("lib"));
@@ -55,7 +55,7 @@ gRenderer(NULL)
 #else
 	/* Linux */
 	/* TODO: Handle install path for all resources */
-	PythonScript::preparePath(makeBasePath("../external/lib_build/Linux/lib/python3.6"));
+	PythonScript::preparePath(makeBasePath("../external/build/target/Linux/lib/python3.6"));
 	PythonScript::preparePath(makeBasePath("."));
 	PythonScript::preparePath(makeBasePath("python36.zip"));
 	PythonScript::preparePath(makeBasePath("lib"));
