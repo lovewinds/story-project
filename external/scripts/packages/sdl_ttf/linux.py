@@ -28,7 +28,8 @@ class SDL2TTFLinuxBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
+        cmd = 'PKG_CONFIG_PATH={}/pkgconfig {} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
+            self.env.install_lib_path,
             self.env.BUILD_FLAG,
             self.env.install_bin_path,
             self.env.install_path,
@@ -48,8 +49,7 @@ class SDL2TTFLinuxBuilder(PlatformBuilder):
         self.log("[FreeType] Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = 'PKG_CONFIG_PATH={}/pkgconfig {} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
-            self.env.install_lib_path,
+        cmd = '{} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
             self.env.BUILD_FLAG,
             self.env.install_bin_path,
             self.env.install_path,
