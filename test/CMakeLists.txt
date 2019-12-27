@@ -63,7 +63,7 @@ ELSE(UNIX AND NOT WIN32)
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/gtest.lib
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/gtest_main.lib
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python36.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python37.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"

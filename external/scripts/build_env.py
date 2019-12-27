@@ -382,10 +382,12 @@ class BuildEnv:
                 for scr in settings:
                     # prune
                     if (scr.attrib.get('Lines') is not None):
-                        scr.attrib['Lines'] = """/* This file created by pyproject.props /t:GeneratePythonNtRcH */
+                        scr.attrib['Lines'] = """<![CDATA[
+/* This file created by pyproject.props /t:GeneratePythonNtRcH */
 #define FIELD3 $(Field3Value)
-#define MS_DLL_ID &quot;$(SysWinVer)&quot;
-#define PYTHON_DLL_NAME &quot;$(TargetName)$(TargetExt)&quot;"""
+#define MS_DLL_ID "$(SysWinVer)"
+#define PYTHON_DLL_NAME "$(TargetName)$(TargetExt)"
+]]>"""
             except:
                 pass
 

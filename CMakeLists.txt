@@ -109,15 +109,15 @@ FIND_PACKAGE(SDL2_ttf REQUIRED)
 
 # Search built Python 3
 IF(${PLATFORM} STREQUAL "Windows")
-    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python36.lib)
+    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python37.lib)
     SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/include/python)
 ELSEIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
-    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/libpython3.6m.a)
-    SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/include/python3.6m)
+    SET(PYTHON_LIBRARY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/libpython3.7m.a)
+    SET(PYTHON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/include/python3.7m)
 ENDIF(${PLATFORM} STREQUAL "Windows")
 
 #SET(_Python_PREFIX "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib")
-FIND_PACKAGE(PythonLibs 3.6 REQUIRED)
+FIND_PACKAGE(PythonLibs 3.7 REQUIRED)
 
 FOREACH(flag ${pkgs_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
@@ -342,7 +342,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
         # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python36.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python37.lib
         ${LINK_G3LOG}
         "${pkgs_LDFLAGS}"
         "winmm.lib"
@@ -386,7 +386,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
         # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
         ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python36.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python37.lib
         ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"
@@ -447,8 +447,8 @@ ELSE(${PLATFORM} STREQUAL "Windows")
     # # Copy python default modules
     # ADD_CUSTOM_COMMAND(TARGET ${LIBNAME}
     #     POST_BUILD
-    #     COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python36.zip ./*"
-    #     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.6
+    #     COMMAND /bin/sh -c "zip -r ${CMAKE_SOURCE_DIR}/build/python37.zip ./*"
+    #     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.7
     #     COMMENT "Copy default python modules"
     # )
 ENDIF(${PLATFORM} STREQUAL "Windows")

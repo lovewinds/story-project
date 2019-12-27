@@ -55,8 +55,8 @@ class pythonWindowsBuilder(PlatformBuilder):
         # required only debug release
         if self.env.BUILD_TYPE == 'Debug':
             self.tag_log("Renaming built libraries ..")
-            move(f'{self.env.install_lib_path}\\python36_d.lib',
-                 f'{self.env.install_lib_path}\\python36.lib')
+            move(f'{self.env.install_lib_path}\\python37_d.lib',
+                 f'{self.env.install_lib_path}\\python37.lib')
 
     def post(self):
         super().post()

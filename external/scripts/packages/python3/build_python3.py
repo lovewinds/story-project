@@ -20,13 +20,13 @@ class Builder_python(PackageBuilder):
             Platform.Windows: pythonWindowsBuilder(
                 self.package,
                 {
-                    'checker': 'python36.lib'
+                    'checker': 'python37.lib'
                 }
             ),
             Platform.Linux: pythonLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libpython3.6m.a'
+                    'checker': 'libpython3.7m.a'
                 }
             ),
             Platform.iOS: pythoniOSBuilder(
