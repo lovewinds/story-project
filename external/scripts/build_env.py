@@ -374,6 +374,21 @@ class BuildEnv:
             except:
                 pass
 
+        # Change runtime library
+        itemlist = root.findall(msvc_ns_prefix+"Target")
+        for child in itemlist:
+            try:
+                settings = child.findall(msvc_ns_prefix+"WriteLinesToFile")
+                for scr in settings:
+                    # prune
+                    if (scr.attrib.get('Lines') is not None):
+                        scr.attrib['Lines'] = """/* This file created by pyproject.props /t:GeneratePythonNtRcH */
+#define FIELD3 $(Field3Value)
+#define MS_DLL_ID &quot;$(SysWinVer)&quot;
+#define PYTHON_DLL_NAME &quot;$(TargetName)$(TargetExt)&quot;"""
+            except:
+                pass
+
         print("        [MSVC] Patched")
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
