@@ -31,10 +31,11 @@ class pythonWindowsBuilder(PlatformBuilder):
         os.chdir(build_path)
 
         # Patch all projects
+        # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
         for proj in glob.glob(r'*.vcxproj'):
             self.tag_log(f'    Patching [{proj}]')
             BuildEnv.patch_static_MSVC(proj, self.env.BUILD_TYPE)
-            # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
+            BuildEnv.patch_SDK_version(proj, '10.0')
         BuildEnv.patch_static_props('pyproject.props', self.env.BUILD_TYPE)
 
         # Just build python core only

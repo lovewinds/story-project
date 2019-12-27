@@ -376,3 +376,41 @@ class BuildEnv:
 
         print("        [MSVC] Patched")
         tree.write(path, encoding="utf-8", xml_declaration=True)
+
+    @classmethod
+    def patch_SDK_version(cls, path, version='10.0'):
+        '''
+        Change project configuration to use specific SDK version.
+        :param path: Path for MSVC project file (*.vcxproj)
+        :param version: Version number (e.g. 10.0)
+        '''
+        msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
+        ElementTree.register_namespace('', "http://schemas.microsoft.com/developer/msbuild/2003")
+        tree = ElementTree.parse(path)
+        root = tree.getroot()
+
+        # Change runtime library
+        itemlist = root.findall(msvc_ns_prefix+"PropertyGroup")
+        for child in itemlist:
+            try:
+                # prune
+                if (child.attrib.get('Label') is None 
+                        or child.attrib['Label'].find('Globals') < 0):
+                    continue
+
+                item = child.find(msvc_ns_prefix+"WindowsTargetPlatformVersion")
+
+                # Rewrite
+                if item is not None:
+                    item.text = version
+                else:
+                    added = ElementTree.Element(msvc_ns_prefix+"WindowsTargetPlatformVersion")
+                    added.text = version
+                    child.append(added)
+
+            except Exception as ex:
+                print("        [MSVC] Error : " + ex)
+                pass
+
+        print("        [MSVC] Patched")
+        tree.write(path, encoding="utf-8", xml_declaration=True)

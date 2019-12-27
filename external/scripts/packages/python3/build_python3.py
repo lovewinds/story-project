@@ -13,8 +13,8 @@ class Builder_python(PackageBuilder):
         super(Builder_python, self)
         self.package = {
             'name': 'python',
-            'url': 'https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz',
-            'filename': 'Python-3.6.1.tgz'
+            'url': 'https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz',
+            'filename': 'Python-3.7.6.tgz'
         }
         self.builder = {
             Platform.Windows: pythonWindowsBuilder(
