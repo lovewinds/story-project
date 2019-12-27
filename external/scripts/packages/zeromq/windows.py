@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import glob
 from shutil import copytree, copy2, move
 from xml.etree import ElementTree
 from pathlib import Path
@@ -90,6 +91,12 @@ class zeromqWindowsBuilder(PlatformBuilder):
         #             )
         self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
+
+        # Rename to 'libzmq.lib'
+        os.chdir(self.env.install_lib_path)
+        for proj in glob.glob(r'libzmq*.lib'):
+            self.tag_log(f'    Patching [{proj}]')
+            os.renames(proj, 'libzmq.lib')
 
     def patch_libzmq_prop(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"
