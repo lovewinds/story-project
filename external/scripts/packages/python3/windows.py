@@ -54,9 +54,10 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # required only debug release
         if self.env.BUILD_TYPE == 'Debug':
-            self.tag_log("Renaming built libraries ..")
-            move(f'{self.env.install_lib_path}\\python37_d.lib',
-                 f'{self.env.install_lib_path}\\python37.lib')
+            if os.path.exists(self.env.install_lib_path / 'python37_d.lib'):
+                self.tag_log("Renaming built libraries ..")
+                move(f'{self.env.install_lib_path}\\python37_d.lib',
+                    f'{self.env.install_lib_path}\\python37.lib')
 
     def post(self):
         super().post()
@@ -81,3 +82,24 @@ class pythonWindowsBuilder(PlatformBuilder):
                 pass
         else:
             self.tag_log('Header files are already exists. Ignoring.')
+
+        # Process custom module installation
+        import zipfile
+        module_file = self.env.install_path / 'python37_modules.zip'
+        folders = ['Lib', 'Tools']
+        index = 1
+        
+        try:
+            with zipfile.ZipFile(module_file, 'w') as zf:
+                for subdir in folders:
+                    for folder, _, files in os.walk(python_dir / subdir):
+                        for file in files:
+                            archive_path = os.path.relpath(Path(folder) / file, python_dir)
+                            zf.write(
+                                Path(folder) / file,
+                                archive_path,
+                                compress_type = zipfile.ZIP_DEFLATED)
+                            print(f'{index:03d} :: {archive_path}')
+                            index += 1
+        except FileExistsError:
+            self.tag_log('Uses already created module files')
