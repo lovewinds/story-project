@@ -417,6 +417,12 @@ ADD_CUSTOM_COMMAND(
         "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
     COMMENT "Copy required dynamic libraries"
 )
+# Copy 
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/*.zip"
+    "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    COPYONLY
+)
 
 # Build python binding modules
 IF(${PLATFORM} STREQUAL "Windows")

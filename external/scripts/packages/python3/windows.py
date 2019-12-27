@@ -85,16 +85,23 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Process custom module installation
         import zipfile
-        module_file = self.env.install_path / 'python37_modules.zip'
-        folders = ['Lib', 'Tools']
-        index = 1
-        
+        pkgdirs = ['Lib', 'Tools']
         try:
-            with zipfile.ZipFile(module_file, 'w') as zf:
-                for subdir in folders:
-                    for folder, _, files in os.walk(python_dir / subdir):
+            for pkgdir in pkgdirs:
+                index = 1
+                module_file = self.env.install_path / f'python37_modules_{pkgdir}.zip'
+                with zipfile.ZipFile(module_file, 'w') as zf:
+                    # os.chdir(python_dir / pkgdir)
+                    # for fileitem in os.listdir(python_dir / pkgdir):
+                    #     # archive_path = os.path.relpath(fileitem, python_dir / pkgdir)
+                    #     zf.write(fileitem, compress_type = zipfile.ZIP_DEFLATED)
+
+                    #     print(f'{index:03d} :: {fileitem}')
+                    #     index += 1
+
+                    for folder, subdir, files in os.walk(python_dir / pkgdir):
                         for file in files:
-                            archive_path = os.path.relpath(Path(folder) / file, python_dir)
+                            archive_path = os.path.relpath(Path(folder) / file, python_dir / pkgdir)
                             zf.write(
                                 Path(folder) / file,
                                 archive_path,
