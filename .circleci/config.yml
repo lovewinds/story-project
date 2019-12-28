@@ -13,8 +13,10 @@ jobs:
           name: Prepare build environments
           command: |
             sudo apt update && \
-            sudo apt install -y \
-              software-properties-common \
+            sudo apt install -y software-properties-common && \
+            wget --no-check-certificate -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add - && \
+            sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
+            sudo apt update && sudo apt install -y \
               build-essential cmake \
               python3-pip
 
