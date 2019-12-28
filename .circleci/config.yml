@@ -2,24 +2,28 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/buildpack-deps:xenial-curl
+      - image: circleci/buildpack-deps:bionic
+    environment:
+      - CC: gcc-7
+      - CXX: g++-7
+
     steps:
       - checkout
-      - run: echo "A first hello"
       - run:
           name: Prepare build environments
           command: |
             sudo apt update && \
             sudo apt install -y \
-              gcc-7 g++-7 python3.7 \
-              build-essential
+              software-properties-common \
+              build-essential cmake \
+              python3-pip
 
       - run:
           name: Build
           command: |
             cmake --version && \
-            python --version && \
-            pip install -r requirements.txt && \
+            python3 --version && \
+            pip3 install -r requirements.txt && \
             mkdir -p build && cd build && \
             cmake .. -DCMAKE_BUILD_TYPE=Release && \
             cmake --build . --config Release --parallel 2
