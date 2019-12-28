@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps:xenial-curl
+    steps:
+      - checkout
+      - run: echo "A first hello"
+      - run:
+          name: Prepare build environments
+          command: |
+            sudo apt update && \
+            sudo apt install -y \
+              gcc-7 g++-7 python3.7 \
+              build-essential
+
+      - run:
+          name: Build
+          command: |
+            cmake --version && \
+            python --version && \
+            pip install -r requirements.txt && \
+            mkdir -p build && cd build && \
+            cmake .. -DCMAKE_BUILD_TYPE=Release && \
+            cmake --build . --config Release --parallel 2
