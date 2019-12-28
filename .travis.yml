@@ -19,9 +19,9 @@ addons:
       - ubuntu-toolchain-r-test
       - deadsnakes
     packages:
-      - gcc-5
-      - g++-5
-      - python3.6-dev
+      - gcc-7
+      - g++-7
+      - python3.7-dev
       - build-essential
 
   coverity_scan:
@@ -38,7 +38,7 @@ addons:
 script: 
   - cmake --version
   - pyenv versions
-  - pyenv global 3.6.7
+  - pyenv global 3.7.1
   - python --version
   - pip install -r requirements.txt
   - mkdir -p build
