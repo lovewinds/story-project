@@ -32,10 +32,15 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Patch all projects
         # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
+        winsdk_ver = os.environ.get('WindowsSDKVersion')
+        if winsdk_ver is not None:
+            winsdk_ver = winsdk_ver.strip().replace('\\','')
+        else:
+            winsdk_ver = '10.0'
         for proj in glob.glob(r'*.vcxproj'):
             self.tag_log(f'    Patching [{proj}]')
             BuildEnv.patch_static_MSVC(proj, self.env.BUILD_TYPE)
-            BuildEnv.patch_SDK_version(proj, '10.0')
+            BuildEnv.patch_SDK_version(proj, winsdk_ver)
         BuildEnv.patch_static_props('pyproject.props', self.env.BUILD_TYPE)
 
         # Just build python core only
