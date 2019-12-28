@@ -4,6 +4,7 @@ from scripts.build_env import BuildEnv, Platform
 from scripts.package_builder import PackageBuilder
 
 from .linux import zlibLinuxBuilder
+from .windows import zlibWindowsBuilder
 
 class Builder_zlib(PackageBuilder):
     def __init__(self):
@@ -14,6 +15,12 @@ class Builder_zlib(PackageBuilder):
             'filename': 'zlib-1.2.11.tar.gz'
         }
         self.builder = {
+            Platform.Windows: zlibWindowsBuilder(
+                self.package,
+                {
+                    'checker': 'zlib1.dll'
+                }
+            ),
             Platform.Linux: zlibLinuxBuilder(
                 self.package,
                 {
