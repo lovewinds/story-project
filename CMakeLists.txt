@@ -417,9 +417,14 @@ ADD_CUSTOM_COMMAND(
         "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
     COMMENT "Copy required dynamic libraries"
 )
-# Copy 
+# Copy Python modules
 CONFIGURE_FILE(
-    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/*.zip"
+    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"
+    "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    COPYONLY
+)
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Tools.zip"
     "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
     COPYONLY
 )

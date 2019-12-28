@@ -90,6 +90,9 @@ class pythonWindowsBuilder(PlatformBuilder):
             for pkgdir in pkgdirs:
                 index = 1
                 module_file = self.env.install_path / f'python37_modules_{pkgdir}.zip'
+                if os.path.exists(module_file):
+                    self.tag_log('Uses already created module files')
+                    return
                 with zipfile.ZipFile(module_file, 'w') as zf:
                     # os.chdir(python_dir / pkgdir)
                     # for fileitem in os.listdir(python_dir / pkgdir):
