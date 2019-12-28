@@ -29,15 +29,18 @@ ENDIF()
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # Mac OS X
     SET(PLATFORM "macOS")
+    SET(PYTHON "python3")
     SET(PLATFORM_DEF "-DPLATFORM_MACOS")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # Linux
     SET(PLATFORM "Linux")
+    SET(PYTHON "python3")
     SET(PLATFORM_DEF "-DPLATFORM_LINUX")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 IF(WIN32)
     SET(PLATFORM "Windows")
+    SET(PYTHON "python")
     SET(PLATFORM_DEF "-DPLATFORM_WINDOWS")
 ENDIF(WIN32)
 
@@ -55,7 +58,7 @@ SET(Python_USE_STATIC_LIBS "TRUE")
 
 # Build external packages
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
-    EXECUTE_PROCESS(COMMAND python
+    EXECUTE_PROCESS(COMMAND ${PYTHON}
         "${CMAKE_SOURCE_DIR}/external/external_build.py"
         --path "${CMAKE_SOURCE_DIR}/external"
         --platform "${PLATFORM}"
@@ -86,7 +89,7 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         SET(VC_VER " ")
     ENDIF(MSVC AND MSVC141)
 
-    EXECUTE_PROCESS(COMMAND python
+    EXECUTE_PROCESS(COMMAND ${PYTHON}
          "${CMAKE_SOURCE_DIR}/external/external_build.py"
          --path "${CMAKE_SOURCE_DIR}/external"
          --static "${STATIC_LINKING}"
@@ -410,7 +413,7 @@ ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ADD_CUSTOM_COMMAND(
     TARGET ${PROJECT_NAME}
     POST_BUILD
-    COMMAND python
+    COMMAND ${PYTHON}
     ARGS
         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
