@@ -88,7 +88,7 @@ class pythonWindowsBuilder(PlatformBuilder):
         pkgdirs = ['Lib', 'Tools']
         try:
             for pkgdir in pkgdirs:
-                index = 1
+                index = 0
                 module_file = self.env.install_path / f'python37_modules_{pkgdir}.zip'
                 if os.path.exists(module_file):
                     self.tag_log('Uses already created module files')
@@ -109,7 +109,7 @@ class pythonWindowsBuilder(PlatformBuilder):
                                 Path(folder) / file,
                                 archive_path,
                                 compress_type = zipfile.ZIP_DEFLATED)
-                            print(f'{index:03d} :: {archive_path}')
                             index += 1
+                self.tag_log(f'{index:03d} files archived')
         except FileExistsError:
             self.tag_log('Uses already created module files')
