@@ -37,7 +37,7 @@ class zlibLinuxBuilder(PlatformBuilder):
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} cmake -DCMAKE_INSTALL_PREFIX={} .. ; make -j{} png png_static; make install/local'.format(
+        cmd = '{} cmake -DCMAKE_INSTALL_PREFIX={} .. ; make -j{}; make install/local'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.NJOBS
