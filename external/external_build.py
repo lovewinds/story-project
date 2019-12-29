@@ -125,7 +125,20 @@ if __name__ == "__main__":
 					help='Select platform to build. (default: Windows)')
 	parser.add_argument('-v', '--verbose', action='store_true',
 					help='Display compile messages (default: False)')
+	parser.add_argument('--gen-cache', action='store_true',
+					help='Only generates script cache list')
 	args = parser.parse_args()
+
+	# Set current working directory
+	if not args.path:
+		working_path = os.getcwd()
+	else:
+		working_path = args.path
+
+	# Only generates cache
+	if args.gen_cache:
+		update_cache(working_path)
+		exit(0)
 
 	if args.platform == 'Windows':
 		current_platform = Platform.Windows
@@ -137,12 +150,6 @@ if __name__ == "__main__":
 		current_platform = Platform.iOS
 	else:
 		current_platform = Platform.NotSupport
-
-	# Set current working directory
-	if not args.path:
-		working_path = os.getcwd()
-	else:
-		working_path = args.path
 
 	env = BuildEnv(current_platform, args.type, working_path)
 	env.verbose = args.verbose
@@ -163,7 +170,6 @@ if __name__ == "__main__":
 	print("##      (CPUs) : [ {} ]".format(multiprocessing.cpu_count()))
 	print("###########################################")
 
-	update_cache(working_path)
 	if current_platform == Platform.Windows:
 		check_msvc(env)
 	start_build(env)

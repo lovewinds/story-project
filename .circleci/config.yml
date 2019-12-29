@@ -19,7 +19,17 @@ jobs:
             sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' && \
             sudo apt update && sudo apt install -y \
               build-essential cmake \
-              python3-pip
+              python3-pip && \
+            cmake --version && \
+            python3 --version && \
+            mkdir -p ~/story/build
+
+      - run:
+          name: Generates cache
+          working_directory: ~/story/external
+          command: |
+            pip3 install -r ../requirements.txt && \
+            python3 ./external_build.py --gen-cache
 
       - restore_cache:
           keys:
@@ -29,16 +39,14 @@ jobs:
 
       - run:
           name: Build
+          working_directory: ~/story/build
           command: |
-            cmake --version && \
-            python3 --version && \
-            pip3 install -r requirements.txt && \
-            mkdir -p build && cd build && \
             cmake .. -DCMAKE_BUILD_TYPE=Release && \
             cmake --build . --config Release --parallel 2 --target story-project
 
       - run:
           name: Perform tests
+          working_directory: ~/story/build
           command: |
             cmake --build . --config Release --parallel 2 --target story-test
 
