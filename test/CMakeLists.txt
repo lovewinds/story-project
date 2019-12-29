@@ -9,6 +9,25 @@ SET(INCLUDEDIR "\${prefix}/include")
 
 FIND_PACKAGE(Threads REQUIRED)
 
+# Detect Platform
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    # Mac OS X
+    SET(PLATFORM "macOS")
+    SET(PYTHON "python3")
+    SET(PLATFORM_DEF "-DPLATFORM_MACOS")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    # Linux
+    SET(PLATFORM "Linux")
+    SET(PYTHON "python3")
+    SET(PLATFORM_DEF "-DPLATFORM_LINUX")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+IF(WIN32)
+    SET(PLATFORM "Windows")
+    SET(PYTHON "python")
+    SET(PLATFORM_DEF "-DPLATFORM_WINDOWS")
+ENDIF(WIN32)
+
 # Include and library directories
 INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/../include/
@@ -41,9 +60,15 @@ FILE(GLOB_RECURSE TEST_FILES
 # binary build
 ADD_EXECUTABLE(${PROJECT_NAME} ${TEST_FILES})
 IF(UNIX AND NOT WIN32)
+    IF(USE_G3LOG)
+        SET(LINK_G3LOG "-lg3logger")
+    ELSE(USE_G3LOG)
+        SET(LINK_G3LOG "")
+    ENDIF(USE_G3LOG)
     # -lpthread should be last position
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
+        ${LINK_G3LOG}
         "-ldl -lgtest -lgtest_main -lstory-project -lpthread")
 ELSE(UNIX AND NOT WIN32)
     # Windows
@@ -86,7 +111,7 @@ ENDIF(UNIX AND NOT WIN32)
 ADD_CUSTOM_COMMAND(
     TARGET ${PROJECT_NAME}
     POST_BUILD
-    COMMAND python
+    COMMAND ${PYTHON}
     ARGS
         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
