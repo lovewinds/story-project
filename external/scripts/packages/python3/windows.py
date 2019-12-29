@@ -32,13 +32,11 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Patch all projects
         # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
-        self.tag_log(f'WindowsSDKVersion :: ' + os.environ.get('WindowsSDKVersion'))
-        self.tag_log(f'UCRTVersion       :: ' + os.environ.get('UCRTVersion'))
-        winsdk_ver = os.environ.get('WindowsSDKVersion')
+        self.tag_log(f'WindowsSDKVersion :: ' + os.environ.get('WindowsSDKVersion', 'N/A'))
+        self.tag_log(f'UCRTVersion       :: ' + os.environ.get('UCRTVersion', 'N/A'))
+        winsdk_ver = os.environ.get('WindowsSDKVersion', '10.0')
         if winsdk_ver is not None:
             winsdk_ver = winsdk_ver.strip().replace('\\','')
-        else:
-            winsdk_ver = '10.0'
         for proj in glob.glob(r'*.vcxproj'):
             self.tag_log(f'    Patching [{proj}]')
             BuildEnv.patch_static_MSVC(proj, self.env.BUILD_TYPE)
