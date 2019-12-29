@@ -45,10 +45,11 @@ jobs:
             cmake --build . --config Release --parallel 2 --target story-project
 
       - run:
-          name: Perform tests
+          name: Build & Perform tests
           working_directory: ~/story/build
           command: |
-            cmake --build . --config Release --parallel 2 --target story-test
+            cmake --build . --config Release --parallel 2 --target story-test &&
+            ./story-test || true
 
       - save_cache:
           key: story-external-scripts-{{ checksum "external/script.cache" }}
