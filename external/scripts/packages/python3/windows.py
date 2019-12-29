@@ -32,6 +32,8 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Patch all projects
         # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
+        self.tag_log(f'WindowsSDKVersion :: ' + os.environ.get('WindowsSDKVersion'))
+        self.tag_log(f'UCRTVersion       :: ' + os.environ.get('UCRTVersion'))
         winsdk_ver = os.environ.get('WindowsSDKVersion')
         if winsdk_ver is not None:
             winsdk_ver = winsdk_ver.strip().replace('\\','')
