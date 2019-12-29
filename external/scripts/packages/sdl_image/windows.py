@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import glob
 from shutil import copytree, copy2
 from xml.etree import ElementTree
 from pathlib import Path
@@ -48,11 +49,13 @@ class SDL2ImageWindowsBuilder(PlatformBuilder):
 
         # Copy external libraries
         # TODO: Fix hardcoded arch
-        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libjpeg-9.dll', self.env.install_lib_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libpng16-16.dll', self.env.install_lib_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libtiff-5.dll', self.env.install_lib_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libwebp-7.dll', self.env.install_lib_path)
-        copy2(f'{sdl2_image_path}\\external\\lib\\x64\\zlib1.dll', self.env.install_lib_path)
+        for dll in glob.glob(f'{sdl2_image_path}\\external\\lib\\x64\\*.dll'):
+            copy2(dll, self.env.install_lib_path)
+        # copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libjpeg-9.dll', self.env.install_lib_path)
+        # copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libpng16-16.dll', self.env.install_lib_path)
+        # copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libtiff-5.dll', self.env.install_lib_path)
+        # copy2(f'{sdl2_image_path}\\external\\lib\\x64\\libwebp-7.dll', self.env.install_lib_path)
+        # copy2(f'{sdl2_image_path}\\external\\lib\\x64\\zlib1.dll', self.env.install_lib_path)
 
     def _patch(self, path):
         msvc_ns_prefix = "{http://schemas.microsoft.com/developer/msbuild/2003}"

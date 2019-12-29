@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import glob
 from shutil import copytree, copy2
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
@@ -49,12 +50,12 @@ class g3logLinuxBuilder(PlatformBuilder):
         )
 
         # There is no install rule, just copy library file into built directory.
-        if os.path.exists(f'{build_path}/libg3logger.a'):
-                    copy2(f'{build_path}/libg3logger.a', self.env.install_lib_path)
-        if os.path.exists(f'{build_path}/libg3logger.so'):
-                    copy2(f'{build_path}/libg3logger.so', self.env.install_lib_path)
-        if os.path.exists(f'{build_path}/libg3logger_shared.dylib'):
-                    copy2(f'{build_path}/libg3logger_shared.dylib', self.env.install_lib_path)
+        for h in glob.glob(f'{build_path}/libg3logger.a*'):
+            copy2(h, self.env.install_lib_path)
+        for h in glob.glob(f'{build_path}/libg3logger.so*'):
+            copy2(h, self.env.install_lib_path)
+        for h in glob.glob(f'{build_path}/libg3logger_shared.dylib*'):
+            copy2(h, self.env.install_lib_path)
 
     def patch_g3log_remove_warnings(self):
         patch_path = '{}/{}'.format(
