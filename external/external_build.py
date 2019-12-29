@@ -3,12 +3,13 @@
 import os
 import sys
 import math
+import hashlib
 import argparse
 import traceback
 import subprocess
 import multiprocessing
 import scripts.build_env as benv
-
+from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 
 # TODO: Support dynamic import under specific folder
@@ -59,9 +60,6 @@ def check_msvc(env_param):
 	if not found:
 		print(f'MSBuild is not found !')
 		print('    Please set environment with script like below!')
-		# "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
-		# "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
-		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\VsDevCmd.bat"')
 		print('    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\VsDevCmd.bat"')
 
 		exit(1)
@@ -78,6 +76,34 @@ def start_build(env_param):
 		if result == False:
 			# TODO: Append into failed list and print detail log
 			pass
+
+def getHash(path, blocksize=65536):
+	afile = open(path, 'rb')
+	hasher = hashlib.md5()
+	buf = afile.read(blocksize)
+	while len(buf) > 0:
+		hasher.update(buf)
+		buf = afile.read(blocksize)
+	afile.close()
+	return hasher.hexdigest()
+
+def update_cache(extdir):
+	file_count = 0
+	with open('script.cache', mode='w', encoding='utf-8') as cf:
+		for folder, _, files in os.walk(extdir):
+			rel_dir = os.path.relpath(Path(folder), extdir)
+			if len(rel_dir) != '.' and not rel_dir.startswith('scripts'):
+				continue
+			for file in files:
+				_, ext = os.path.splitext(file)
+				if ext != '.py':
+					continue
+				archive_path = os.path.relpath(Path(folder) / file, extdir)
+				hashstr = getHash(Path(folder) / file)
+				cf.writelines(f'{hashstr} :: {archive_path}')
+				file_count += 1
+	list_hash = getHash('script.cache')
+	print(f'Script cache :: [{list_hash}] / Total {file_count} scripts are found.\n')
 
 if __name__ == "__main__":
 	# Handle arguments
@@ -102,41 +128,42 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	if args.platform == 'Windows':
-		CURRENT_PLATFORM = Platform.Windows
+		current_platform = Platform.Windows
 	elif args.platform == 'Linux':
-		CURRENT_PLATFORM = Platform.Linux
+		current_platform = Platform.Linux
 	elif args.platform == 'macOS':
-		CURRENT_PLATFORM = Platform.macOS
+		current_platform = Platform.macOS
 	elif args.platform == 'iOS':
-		CURRENT_PLATFORM = Platform.iOS
+		current_platform = Platform.iOS
 	else:
-		CURRENT_PLATFORM = Platform.NotSupport
+		current_platform = Platform.NotSupport
 
 	# Set current working directory
 	if not args.path:
-		WORKING_PATH = os.getcwd()
+		working_path = os.getcwd()
 	else:
-		WORKING_PATH = args.path
+		working_path = args.path
 
-	env = BuildEnv(CURRENT_PLATFORM, args.type, WORKING_PATH)
+	env = BuildEnv(current_platform, args.type, working_path)
 	env.verbose = args.verbose
-	if CURRENT_PLATFORM == Platform.Windows:
+	if current_platform == Platform.Windows:
 		env.compiler_version = args.msvc
 
 	print("###########################################")
 	print("## Prepare to build external libraries ...")
 	print("##")
 	print("## Platform    : [ {} ]".format(
-		Platform.name(CURRENT_PLATFORM)))
-	if CURRENT_PLATFORM == Platform.Windows:
+		Platform.name(current_platform)))
+	if current_platform == Platform.Windows:
 		print("##        MSVC : [ {} ]".format(args.msvc))
 	print("## Build type  : [ {} ]".format(args.type))
 	print("## Static link : [ {} ]".format(args.static))
-	print("## Working path: [ {} ]".format(WORKING_PATH))
+	print("## Working path: [ {} ]".format(working_path))
 	print("## NJOBS       : [ {} ]".format(env.NJOBS))
 	print("##      (CPUs) : [ {} ]".format(multiprocessing.cpu_count()))
 	print("###########################################")
 
-	if CURRENT_PLATFORM == Platform.Windows:
+	update_cache(working_path)
+	if current_platform == Platform.Windows:
 		check_msvc(env)
 	start_build(env)

@@ -47,3 +47,6 @@ WinDebug
 # Python caches
 __pycache__
 *.pyc
+
+# Cache for external build scripts
+script.cache

@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/story
     docker:
       - image: circleci/buildpack-deps:bionic
     environment:
@@ -20,6 +21,12 @@ jobs:
               build-essential cmake \
               python3-pip
 
+      - restore_cache:
+          keys:
+            - story-external-scripts-{{ checksum "external/script.cache" }}
+            # if cache for exact version of `project.clj` is not present then load any most recent one
+            - story-external-scripts-
+
       - run:
           name: Build
           command: |
@@ -28,4 +35,14 @@ jobs:
             pip3 install -r requirements.txt && \
             mkdir -p build && cd build && \
             cmake .. -DCMAKE_BUILD_TYPE=Release && \
-            cmake --build . --config Release --parallel 2
+            cmake --build . --config Release --parallel 2 --target story-project
+
+      - run:
+          name: Perform tests
+          command: |
+            cmake --build . --config Release --parallel 2 --target story-test
+
+      - save_cache:
+          key: story-external-scripts-{{ checksum "external/script.cache" }}
+          paths:
+            - /home/circleci/story/external/build
