@@ -7,9 +7,9 @@ Build status
 ===
 Build is tested with 
 
-| [Travis CI](https://travis-ci.org/lovewinds/story-project "Travis CI") | [Appveyor](https://ci.appveyor.com/project/lovewinds/story-project "Appveyor") |
+| [CircleCI](https://circleci.com/gh/lovewinds/story-project "CircleCI") | [Appveyor](https://ci.appveyor.com/project/lovewinds/story-project "Appveyor") |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![Travis CI](https://travis-ci.org/lovewinds/story-project.svg?branch=test) | [![Build status](https://ci.appveyor.com/api/projects/status/v0mlftorv3a5kmb6?svg=true)](https://ci.appveyor.com/project/lovewinds/story-project) |
+| [![CircleCI](https://circleci.com/gh/lovewinds/story-project/tree/develop.svg?style=svg)](https://circleci.com/gh/lovewinds/story-project/tree/develop) | [![Build status](https://ci.appveyor.com/api/projects/status/v0mlftorv3a5kmb6?svg=true)](https://ci.appveyor.com/project/lovewinds/story-project) |
 
 
 
