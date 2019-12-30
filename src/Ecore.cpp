@@ -47,24 +47,10 @@ gRenderer(NULL)
 	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
 	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
     PythonScript::preparePath(makeBasePath("python"));
-#elif defined(PLATFORM_MACOS)
-	/* macOS */
-	/* TODO: Handle install path for all resources */
-	PythonScript::preparePath(makeBasePath("../external/build/target/macOS/lib/python3.7"));
-	PythonScript::preparePath(makeBasePath("."));
-	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
-	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
-	PythonScript::preparePath(makeBasePath("lib"));
-	PythonScript::preparePath(makeBasePath("lib/python3.7"));
 #else
+	/* macOS */
 	/* Linux */
-	/* TODO: Handle install path for all resources */
-	PythonScript::preparePath(makeBasePath("../external/build/target/Linux/lib/python3.7"));
-	PythonScript::preparePath(makeBasePath("."));
-	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
-	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
-	PythonScript::preparePath(makeBasePath("lib"));
-	PythonScript::preparePath(makeBasePath("lib/python3.7"));
+	PythonScript::preparePath(makeBasePath("python3.7"));
 #endif
 	PythonScript::initialize();
 

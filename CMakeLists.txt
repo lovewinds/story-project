@@ -441,6 +441,12 @@ CONFIGURE_FILE(
     COPYONLY
 )
 
+# Install python modules
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.7
+            DESTINATION ${INSTALL_TARGET_DIR})
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
+
 # Build python binding modules
 IF(${PLATFORM} STREQUAL "Windows")
     # for Windows
