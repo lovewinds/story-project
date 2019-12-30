@@ -36,8 +36,7 @@ jobs:
       - restore_cache:
           keys:
             - story-external-scripts-{{ checksum "external/script.cache" }}
-            # if cache for exact version of `project.clj` is not present then load any most recent one
-            - story-external-scripts-
+            # Only loads cache exactly matching !!
 
       - run:
           name: Build
@@ -51,6 +50,7 @@ jobs:
           working_directory: ~/story/build
           command: |
             cmake --build . --config Release --parallel 2 --target story-test &&
+            cp test/story-test ./ &&
             ./story-test || true
 
       - save_cache:
