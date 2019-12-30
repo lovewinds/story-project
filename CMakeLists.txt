@@ -30,17 +30,20 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # Mac OS X
     SET(PLATFORM "macOS")
     SET(PYTHON "python3")
+    SET(BUILD_TYPE_DIR ${BUILD_TYPE})
     SET(PLATFORM_DEF "-DPLATFORM_MACOS")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # Linux
     SET(PLATFORM "Linux")
     SET(PYTHON "python3")
+    SET(BUILD_TYPE_DIR ${BUILD_TYPE})
     SET(PLATFORM_DEF "-DPLATFORM_LINUX")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 IF(WIN32)
     SET(PLATFORM "Windows")
     SET(PYTHON "python")
+    SET(BUILD_TYPE_DIR "$(Configuration)")
     SET(PLATFORM_DEF "-DPLATFORM_WINDOWS")
 ENDIF(WIN32)
 
@@ -140,8 +143,9 @@ INCLUDE_DIRECTORIES(
     ${SDL2_INCLUDE_DIRS}
     ${PYTHON_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/include/
-    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/include/
-    # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/include/SDL2/
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/python
+    # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/SDL2/
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/jsoncpp/dist/
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/pugixml/src/
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/protobuf/src/
@@ -168,10 +172,10 @@ ADD_DEFINITIONS("${PLATFORM_DEF}")
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
     INCLUDE_DIRECTORIES(
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/include/
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/
     )
     LINK_DIRECTORIES(
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/
         ${CMAKE_BINARY_DIR}
     )
 ELSEIF(${PLATFORM} STREQUAL "Windows")
@@ -187,8 +191,8 @@ ELSEIF(${PLATFORM} STREQUAL "Windows")
         ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/python/Modules/
     )
     LINK_DIRECTORIES(
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/
         ${CMAKE_BINARY_DIR}
         ${PYTHON_LIB_PATH}
     )
@@ -207,7 +211,7 @@ IF(${PLATFORM} STREQUAL "Linux")
     # SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS_INIT}
     # 	" -lpthread -ldl -lutil -lm -Xlinker -export-dynamic")
     #  -lpython3.6m
-    SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm")
+    SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lz")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
     # -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
     SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
@@ -216,7 +220,7 @@ ELSEIF(${PLATFORM} STREQUAL "macOS")
 
     # Python /external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.6/config-3.6m-darwin
     SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
-    SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm")
+    SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lz")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ${ADDITIONAL_CXXFLAGS} ")
@@ -332,20 +336,20 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)
-        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/g3logger.lib")
+        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/g3logger.lib")
     ELSE(USE_G3LOG)
         SET(LINK_G3LOG "")
     ENDIF(USE_G3LOG)
     ADD_LIBRARY(${LIBNAME} STATIC ${SOURCES})
     SET_TARGET_PROPERTIES(${LIBNAME} PROPERTIES LINKER_LANGUAGE CXX)
     TARGET_LINK_LIBRARIES(${LIBNAME}
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2main.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_image.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
-        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python37.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_ttf.lib
+        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/python37.lib
         ${LINK_G3LOG}
         "${pkgs_LDFLAGS}"
         "winmm.lib"
@@ -376,21 +380,21 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)
-        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/g3logger.lib")
+        SET(LINK_G3LOG "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/g3logger.lib")
     ELSE(USE_G3LOG)
         SET(LINK_G3LOG "")
     ENDIF(USE_G3LOG)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2main.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_image.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_ttf.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libfreetype-6.lib
-        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/SDL2_gfx.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/libzmq.lib
-        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/$(Configuration)/lib/python37.lib
-        ${CMAKE_SOURCE_DIR}/build/$(Configuration)/libstory-project.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2main.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_image.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_ttf.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/libfreetype-6.lib
+        # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/SDL2_gfx.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/libzmq.lib
+        ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/lib/python37.lib
+        ${CMAKE_SOURCE_DIR}/build/${BUILD_TYPE_DIR}/libstory-project.lib
         ${LINK_G3LOG}
         "winmm.lib"
         "version.lib"
@@ -410,6 +414,11 @@ ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Post build
 # Copy external dynamic libraries into specific directory to execute process.
+IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
+    SET(INSTALL_TARGET_DIR "${CMAKE_CURRENT_BINARY_DIR}/")
+ELSEIF(${PLATFORM} STREQUAL "Windows")
+    SET(INSTALL_TARGET_DIR "${CMAKE_CURRENT_BINARY_DIR}/${BUILD_TYPE_DIR}/")
+ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ADD_CUSTOM_COMMAND(
     TARGET ${PROJECT_NAME}
     POST_BUILD
@@ -417,18 +426,18 @@ ADD_CUSTOM_COMMAND(
     ARGS
         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
-        "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+        "${INSTALL_TARGET_DIR}"
     COMMENT "Copy required dynamic libraries"
 )
 # Copy Python modules
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"
-    "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    "${INSTALL_TARGET_DIR}"
     COPYONLY
 )
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Tools.zip"
-    "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+    "${INSTALL_TARGET_DIR}"
     COPYONLY
 )
 
