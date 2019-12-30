@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import glob
+import subprocess
 from shutil import copytree, copy2, move
 from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
@@ -32,15 +33,26 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Patch all projects
         # BuildEnv.patch_static_MSVC("pythoncore.vcxproj", self.env.BUILD_TYPE)
-        self.tag_log(f'WindowsSDKVersion :: ' + os.environ.get('WindowsSDKVersion', 'N/A'))
-        self.tag_log(f'UCRTVersion       :: ' + os.environ.get('UCRTVersion', 'N/A'))
-        winsdk_ver = os.environ.get('WindowsSDKVersion', '10.0')
-        if winsdk_ver is not None:
-            winsdk_ver = winsdk_ver.strip().replace('\\','')
+        
+        try:
+            winsdk = subprocess.check_output('reg query "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v10.0" /v ProductVersion', shell=True)
+            winsdk = str(winsdk).split('\\r\\n')[2]
+            winsdk = winsdk.strip().split()[2]
+        except:
+            winsdk = 'N/A'
+        if winsdk == 'N/A':
+            try:
+                winsdk = subprocess.check_output('reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\v10.0" /v ProductVersion', shell=True)
+                winsdk = str(winsdk).split('\\r\\n')[2]
+                winsdk = winsdk.strip().split()[2]
+            except:
+                winsdk = '10.0'
+        self.tag_log(f'Windows SDK :: {winsdk}')
+
         for proj in glob.glob(r'*.vcxproj'):
             self.tag_log(f'    Patching [{proj}]')
             BuildEnv.patch_static_MSVC(proj, self.env.BUILD_TYPE)
-            BuildEnv.patch_SDK_version(proj, winsdk_ver)
+            BuildEnv.patch_SDK_version(proj, winsdk)
         BuildEnv.patch_static_props('pyproject.props', self.env.BUILD_TYPE)
 
         # Just build python core only
