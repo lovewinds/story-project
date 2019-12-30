@@ -45,8 +45,11 @@ class pythonLinuxBuilder(PlatformBuilder):
 
         # Create symbolic link
         os.chdir(self.env.install_include_path)
-        if not os.path.isfile('python3.6'):
-            cmd = 'ln -s python3.6m python3.6'
+        if not os.path.isdir('python3.7'):
+            cmd = 'ln -s python3.7m python3.7'
+            self.env.run_command(cmd, module_name=self.config['name'])
+        if not os.path.isdir('python'):
+            cmd = 'ln -s python3.7m python'
             self.env.run_command(cmd, module_name=self.config['name'])
 
         os.chdir(self.env.install_bin_path)

@@ -37,9 +37,13 @@ class zlibLinuxBuilder(PlatformBuilder):
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} cmake -DCMAKE_INSTALL_PREFIX={} .. ; make -j{}; make install/local'.format(
+        cmd = '{} cmake -DCMAKE_INSTALL_PREFIX={} .. ; make -j{}; make install'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.NJOBS
         )
         self.env.run_command(cmd, module_name=self.config['name'])
+
+        # Install 'zlib.pc' file manually
+        copy2(Path(build_path) / 'zlib.pc',
+              self.env.install_lib_path / 'pkgconfig')

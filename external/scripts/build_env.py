@@ -98,7 +98,7 @@ class BuildEnv:
         )
         self.BUILD_TYPE = 'Release'
         if build_type == 'debug':
-            self.BUILD_FLAG = 'CFLAGS="-g3 -O0 -fPIC" CXXFLAGS="-g3 -O0 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}"'.format(
+            self.BUILD_FLAG = 'CFLAGS="-g -O0 -fPIC" CXXFLAGS="-g -O0 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}"'.format(
                 self.install_include_path,
                 self.install_lib_path
             )
