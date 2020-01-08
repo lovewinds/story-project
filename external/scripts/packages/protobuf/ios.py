@@ -5,14 +5,14 @@ from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
-class SDL2ImageiOSBuilder(PlatformBuilder):
+class protobufiOSBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
         super().__init__(config_package, config_platform)
 
     def build(self):
-        build_path = '{}/{}/Xcode-iOS'.format(
+        build_path = '{}/{}/cmake/build'.format(
             self.env.source_path,
             self.config['name']
         )
@@ -22,34 +22,22 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
             self.tag_log("Already built.")
             return
 
-        print("       [{}] Start building ...".format(self.config['name']))
+        self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2_image'.format(
-            self.env.BUILD_FLAG,
+        # self.env.BUILD_FLAG,
+        cmd = 'CMD_PREFIX={} {}/ios-build.sh protobuf'.format(
             self.env.install_path,
             self.env.working_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
     def post(self):
-        super().post()
-        # Copy header file
-        _header_source = '{}/{}/SDL_image.h'.format(
-            self.env.source_path,
-            self.config['name']
-        )
-        _header_dest = '{}/SDL_image.h'.format(
-            self.env.install_include_path
-        )
-        self.tag_log("copying header ...")
-        copy2(_header_source, _header_dest)
-
         self.create_framework_iOS()
 
     def create_framework_iOS(self):
         # Required path
-        _include_path = '{}/{}'.format(
+        include_path = '{}/{}/src'.format(
             self.env.source_path,
             self.config['name']
         )
@@ -68,16 +56,20 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
 
         # Copy headers into Framework directory
         self.tag_log("Framework : Copying header ...")
-        BuildEnv.mkdir_p(_framework_header_dir)
-        _header_src_file = '{}/SDL_image.h'.format(_include_path)
-        _header_dst_file = '{}/SDL_image.h'.format(_framework_header_dir)
-        copy2(_header_src_file, _header_dst_file)
+        for folder, _, files in os.walk(include_path):
+            for ff in files:
+                if not ff.endswith('.proto') and not ff.endswith('.h'):
+                    continue
+                rel_path = os.path.relpath(Path(folder) / ff, include_path)
+                dir_path, _ = os.path.split(rel_path)
+                BuildEnv.mkdir_p(Path(_framework_header_dir) / dir_path)
+                copy2(Path(folder) / ff, Path(_framework_header_dir) / rel_path)
 
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
-        _lib_src_file = '{}/libSDL2_image.a'.format(self.env.install_lib_path)
-        _lib_dst_file = '{}/SDL_image'.format(_framework_dir)
+        _lib_src_file = '{}/libprotobuf.a'.format(self.env.install_lib_path)
+        _lib_dst_file = '{}/protobuf'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 
         # Create plist

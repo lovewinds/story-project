@@ -5,6 +5,7 @@ from scripts.package_builder import PackageBuilder
 
 from .windows import protobufWindowsBuilder
 from .linux import protobufLinuxBuilder
+from .ios import protobufiOSBuilder
 
 class Builder_protobuf(PackageBuilder):
     def __init__(self):
@@ -32,6 +33,12 @@ class Builder_protobuf(PackageBuilder):
                 self.package,
                 {
                     'checker': 'protobuf.dylib'
+                }
+            ),
+            Platform.iOS: protobufiOSBuilder(
+                self.package,
+                {
+                    'checker': 'libprotobuf.a'
                 }
             )
         }

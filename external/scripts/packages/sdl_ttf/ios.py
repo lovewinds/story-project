@@ -25,7 +25,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} PREFIX={} {}/ios-build.sh SDL2_ttf'.format(
+        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2_ttf'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.working_path

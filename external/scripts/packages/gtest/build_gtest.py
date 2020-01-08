@@ -4,6 +4,7 @@ from scripts.package_builder import PackageBuilder
 
 from .windows import gtestWindowsBuilder
 from .linux import gtestLinuxBuilder
+from .ios import gtestiOSBuilder
 
 class Builder_gtest(PackageBuilder):
     def __init__(self):
@@ -30,6 +31,12 @@ class Builder_gtest(PackageBuilder):
                 self.package,
                 {
                     'checker': 'gtest.dylib'
+                }
+            ),
+            Platform.iOS: gtestiOSBuilder(
+                self.package,
+                {
+                    'checker': 'libgtest.a'
                 }
             )
         }

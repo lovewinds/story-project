@@ -28,8 +28,7 @@ class SDL2gfxiOSBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_parent_path)
-        cmd = '{} PREFIX={} {}/ios-build.sh SDL2_gfx'.format(
-            self.env.BUILD_FLAG,
+        cmd = 'CMD_PREFIX={} {}/ios-build.sh SDL2_gfx'.format(
             self.env.install_path,
             self.env.working_path
         )

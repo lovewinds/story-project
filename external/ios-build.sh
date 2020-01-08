@@ -1,14 +1,19 @@
 #!/bin/bash
-# export PREFIX="story-project/external/build/target/iOS"
-export BINPATH="${PREFIX}/bin"
-export LIBPATH="${PREFIX}/lib"
-export INCLUDEPATH="${PREFIX}/include"
-export IOS32_PREFIX="$PREFIX/tmp/ios32"
-export IOS64_PREFIX="$PREFIX/tmp/ios64"
-export SIMULATOR32_PREFIX="$PREFIX/tmp/simulator32"
-export SIMULATOR64_PREFIX="$PREFIX/tmp/simulator64"
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+SCRIPT_PATH=$(dirname $(realpath $0))
+
+# export PREFIX="story-project/external/build/target/iOS/{release,debug}"
+export BINPATH="${CMD_PREFIX}/bin"
+export LIBPATH="${CMD_PREFIX}/lib"
+export INCLUDEPATH="${CMD_PREFIX}/include"
+export IOS32_PREFIX="${CMD_PREFIX}/tmp/ios32"
+export IOS64_PREFIX="${CMD_PREFIX}/tmp/ios64"
+export SIMULATOR32_PREFIX="${CMD_PREFIX}/tmp/simulator32"
+export SIMULATOR64_PREFIX="${CMD_PREFIX}/tmp/simulator64"
 export IOS_SIMULATOR_VERSION_MIN=${IOS_SIMULATOR_VERSION_MIN-"8.0"}
-export IOS_VERSION_MIN=${IOS_VERSION_MIN-"7.0"}
+export IOS_VERSION_MIN=${IOS_VERSION_MIN-"8.0"}
 export XCODEDIR=$(xcode-select -p)
 
 # Build
@@ -19,9 +24,9 @@ export PATH="${BINPATH}:${BASEDIR}/usr/bin:$BASEDIR/usr/sbin:$PATH"
 #-fobjc-abi-version=2
 export SDK="${BASEDIR}/SDKs/iPhoneOS.sdk"
 export PATH_FRAMEWORK_DEFAULT="${SDK}/System/Library/Frameworks/"
-export PATH_FRAMEWORK_USER="${PREFIX}/frameworks/"
+export PATH_FRAMEWORK_USER="${CMD_PREFIX}/frameworks/"
 export CC="$(xcrun -sdk iphoneos -find clang)"
-export CPP="$(xcrun -sdk iphoneos -find clang) -E"
+export CXX="$(xcrun -sdk iphoneos -find clang++)"
 export AR=$(xcrun -sdk iphoneos -find ar)
 export RANLIB=$(xcrun -sdk iphoneos -find ranlib)
 export LIBTOOL=$(xcrun -sdk iphoneos -find libtool)
@@ -62,6 +67,8 @@ else
 		-F${PATH_FRAMEWORK_DEFAULT} -F${PATH_FRAMEWORK_USER} ${FRAMEWORK_LIST}"
 fi
 
+echo "SCRIPT_PATH : ${SCRIPT_PATH}"
+echo "PREFIX : ${CMD_PREFIX}"
 echo "CFLAGS : ${CFLAGS}"
 echo "ARGC : $#"
 echo "ARGS : $0"
@@ -113,11 +120,11 @@ case "$1" in
 	export LDFLAGS="${LDFLAGS} -L${LIBPATH} -lSDL2"
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
+		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${CMD_PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
 		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_arm64.a
 	else
-		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
+		../configure --host=arm-apple-darwin --target=arm-apple-darwin --prefix=${CMD_PREFIX} --disable-mmx --with-sdl-prefix="${INCLUDEPATH}/SDL2" --with-sdl-exec-prefix="${LIBPATH}"
 		make -j$NJOB
 		cp .libs/libSDL2_gfx.a ../libSDL2_gfx_armv7.a
 	fi
@@ -198,18 +205,32 @@ case "$1" in
 	;;
 
 "protobuf")
-	# Build directory : external/sources-ios/protobuf/cmake
-	rm -rf build-ios
-	mkdir build-ios
-	cd build-ios
+	# Build directory : external/sources-ios/protobuf/cmake/build
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${SCRIPT_PATH}/toolchain-ios.cmake \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-Wno-dev \
+			-D "CMAKE_OSX_ARCHITECTURES=arm64" \
+			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+			-Dprotobuf_BUILD_TESTS=OFF \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
+			# -DCMAKE_INSTALL_LIBDIR=${LIBPATH} \
+			# -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
 		make libprotobuf -j$NJOB
 		cp libprotobuf.a ../libprotobuf_arm64.a
 	else
-		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${SCRIPT_PATH}/toolchain-ios.cmake \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-Wno-dev \
+			-D "CMAKE_OSX_ARCHITECTURES=armv7" \
+			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+			-Dprotobuf_BUILD_TESTS=OFF \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make libprotobuf -j$NJOB
+		make install
 		cp libprotobuf.a ../libprotobuf_armv7.a
 	fi
 
@@ -256,17 +277,17 @@ esac
 #######mkdir build32
 #######cd build32
 
-#../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX}
+#../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${CMD_PREFIX}
 
 #pugixml
 #cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKEƒ_INSTALL_INCLUDEDIR=${INCLUDEPATH}
 
 #SDL2_gfx
-#######../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${PREFIX} --disable-mmx
+#######../configure --host=armv7-apple-darwin --target=arm-apple-darwin --prefix=${CMD_PREFIX} --disable-mmx
 
 
 #cp ../include/SDL_config_iphoneos.h ../include/SDL_config.h
-#../configure --host=aarch64-apple-darwin11-lipo --target=arm-apple-darwin --prefix=${PREFIX}
+#../configure --host=aarch64-apple-darwin11-lipo --target=arm-apple-darwin --prefix=${CMD_PREFIX}
 
 #######make
 #make install

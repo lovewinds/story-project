@@ -5,14 +5,14 @@ from pathlib import Path
 from scripts.build_env import BuildEnv, Platform
 from scripts.platform_builder import PlatformBuilder
 
-class SDL2ImageiOSBuilder(PlatformBuilder):
+class gtestiOSBuilder(PlatformBuilder):
     def __init__(self,
                  config_package: dict=None,
                  config_platform: dict=None):
         super().__init__(config_package, config_platform)
 
     def build(self):
-        build_path = '{}/{}/Xcode-iOS'.format(
+        build_path = '{}/{}/build'.format(
             self.env.source_path,
             self.config['name']
         )
@@ -22,10 +22,10 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
             self.tag_log("Already built.")
             return
 
-        print("       [{}] Start building ...".format(self.config['name']))
+        self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2_image'.format(
+        cmd = '{} CMD_PREFIX={} {}/ios-build.sh gtest'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.working_path
@@ -33,23 +33,17 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         self.env.run_command(cmd, module_name=self.config['name'])
 
     def post(self):
-        super().post()
-        # Copy header file
-        _header_source = '{}/{}/SDL_image.h'.format(
-            self.env.source_path,
-            self.config['name']
-        )
-        _header_dest = '{}/SDL_image.h'.format(
-            self.env.install_include_path
-        )
-        self.tag_log("copying header ...")
-        copy2(_header_source, _header_dest)
+        # Copy header files also
+        # _path = self.env.source_path / self.config['name'] / 'googletest/include/gtest'
+        # copytree(_path, self.env.install_include_path)
+        # _path = self.env.source_path / self.config['name'] / 'googlemock/include/gmock'
+        # copytree(_path, self.env.install_include_path)
 
         self.create_framework_iOS()
 
     def create_framework_iOS(self):
         # Required path
-        _include_path = '{}/{}'.format(
+        include_path = '{}/{}/include'.format(
             self.env.source_path,
             self.config['name']
         )
@@ -69,15 +63,19 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         # Copy headers into Framework directory
         self.tag_log("Framework : Copying header ...")
         BuildEnv.mkdir_p(_framework_header_dir)
-        _header_src_file = '{}/SDL_image.h'.format(_include_path)
-        _header_dst_file = '{}/SDL_image.h'.format(_framework_header_dir)
-        copy2(_header_src_file, _header_dst_file)
+        # _path = Path(include_path)
+        if not os.path.isdir(Path(_framework_header_dir) / 'gtest'):
+            _path = self.env.source_path / self.config['name'] / 'googletest/include/gtest'
+            copytree(_path, f'{_framework_header_dir}/gtest')
+        if not os.path.isdir(Path(_framework_header_dir) / 'gmock'):
+            _path = self.env.source_path / self.config['name'] / 'googlemock/include/gmock'
+            copytree(_path, f'{_framework_header_dir}/gmock')
 
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
-        _lib_src_file = '{}/libSDL2_image.a'.format(self.env.install_lib_path)
-        _lib_dst_file = '{}/SDL_image'.format(_framework_dir)
+        _lib_src_file = '{}/libgtest.a'.format(self.env.install_lib_path)
+        _lib_dst_file = '{}/gtest'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 
         # Create plist

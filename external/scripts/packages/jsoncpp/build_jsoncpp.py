@@ -32,5 +32,11 @@ class Builder_jsoncpp(PackageBuilder):
                 {
                     'checker': 'jsoncpp.dylib'
                 }
+            ),
+            Platform.iOS: jsoncppLinuxBuilder(
+                self.package,
+                {
+                    'checker': 'jsoncpp.dylib'
+                }
             )
         }

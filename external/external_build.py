@@ -65,6 +65,13 @@ def check_msvc(env_param):
 		exit(1)
 
 def start_build(env_param):
+	# Prepare environements
+	BuildEnv.mkdir_p(env_param.install_bin_path)
+	BuildEnv.mkdir_p(env_param.install_lib_path)
+	BuildEnv.mkdir_p(env_param.install_include_path)
+	BuildEnv.mkdir_p(env_param.install_packaging_path)
+
+	# Build each modules
 	for m in modules:
 		result = False
 		try:

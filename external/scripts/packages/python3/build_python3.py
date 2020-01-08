@@ -32,8 +32,8 @@ class Builder_python(PackageBuilder):
             Platform.iOS: pythoniOSBuilder(
                 self.package,
                 {
-                    'url': 'https://github.com/pybee/Python-Apple-support/archive/3.6-b6.tar.gz',
-                    'filename': 'Python-Apple-support-3.6-b6.tar.gz',
+                    'url': 'https://github.com/beeware/Python-Apple-support/archive/3.7.zip',
+                    'filename': 'Python-Apple-support-3.7.zip',
                     'checker': 'Python.framework'
                 }
             )

@@ -5,6 +5,7 @@ from scripts.package_builder import PackageBuilder
 
 from .windows import pugixmlWindowsBuilder
 from .linux import pugixmlLinuxBuilder
+from .ios import pugixmliOSBuilder
 
 class Builder_pugixml(PackageBuilder):
     def __init__(self):
@@ -31,6 +32,12 @@ class Builder_pugixml(PackageBuilder):
                 self.package,
                 {
                     'checker': 'pugixml.dylib'
+                }
+            ),
+            Platform.iOS: pugixmliOSBuilder(
+                self.package,
+                {
+                    'checker': 'libpugixml.a'
                 }
             )
         }

@@ -25,7 +25,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} PREFIX={} {}/ios-build.sh SDL2'.format(
+        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.working_path
@@ -87,7 +87,7 @@ class SDL2iOSBuilder(PlatformBuilder):
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
         _lib_src_file = '{}/libSDL2.a'.format(self.env.install_lib_path)
-        _lib_dst_file = '{}/SDL'.format(_framework_dir)
+        _lib_dst_file = '{}/SDL2'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 
         # Create plist
