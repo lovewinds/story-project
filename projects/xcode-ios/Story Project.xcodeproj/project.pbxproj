@@ -20,6 +20,8 @@
 		F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169B51D05593A00C50450 /* moderngirl02x2.png */; };
 		F42169C01D05593A00C50450 /* sample_scene.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B61D05593A00C50450 /* sample_scene.xml */; };
 		F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B71D05593A00C50450 /* sample_scene2.xml */; };
+		F42AFD2823C45CDF00AC0221 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42AFD2723C45CDF00AC0221 /* jsoncpp.cpp */; };
+		F42AFD2A23C45D0000AC0221 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42AFD2923C45D0000AC0221 /* pugixml.cpp */; };
 		F43DB9DC1C78B44800BE5C9A /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */; };
 		F43DB9E21C78B60300BE5C9A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43DB9E11C78B60300BE5C9A /* Launch Screen.storyboard */; };
 		F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED9F1E6286C100C14B4E /* AVFoundation.framework */; };
@@ -34,15 +36,12 @@
 		F46D5D291F0FB6AB00E5373E /* XZ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D251F0FB6AB00E5373E /* XZ.framework */; };
 		F46D5D2B1F0FB97B00E5373E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */; };
 		F46D5D2D1F0FB9C400E5373E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2C1F0FB9C400E5373E /* libz.tbd */; };
-		F46D67351F0FD4AF00E5373E /* story.cpython-36.pyc in Resources */ = {isa = PBXBuildFile; fileRef = F46D672B1F0FD4AF00E5373E /* story.cpython-36.pyc */; };
 		F46D67371F0FD4AF00E5373E /* ipc.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = F46D672D1F0FD4AF00E5373E /* ipc.pb.h */; };
 		F46D67381F0FD4AF00E5373E /* ipc.proto in Resources */ = {isa = PBXBuildFile; fileRef = F46D672E1F0FD4AF00E5373E /* ipc.proto */; };
 		F46D673C1F0FD4AF00E5373E /* SpLogHelper_wrap.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F46D67321F0FD4AF00E5373E /* SpLogHelper_wrap.cxx */; };
 		F46D673D1F0FD4AF00E5373E /* SpLogHelper_wrap.h in Headers */ = {isa = PBXBuildFile; fileRef = F46D67331F0FD4AF00E5373E /* SpLogHelper_wrap.h */; };
 		F48617601D96C44F008641CB /* gom-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = F486175F1D96C44F008641CB /* gom-sprite.png */; };
 		F48617621D96C691008641CB /* JapaneseVillage.png in Resources */ = {isa = PBXBuildFile; fileRef = F48617611D96C691008641CB /* JapaneseVillage.png */; };
-		F49371E01F10758B003DC4CD /* python36.zip in Resources */ = {isa = PBXBuildFile; fileRef = F49371DF1F107428003DC4CD /* python36.zip */; };
-		F49371EE1F1076EF003DC4CD /* python in Resources */ = {isa = PBXBuildFile; fileRef = F49371ED1F1076EF003DC4CD /* python */; };
 		F4A37F4A1D8D929400186118 /* f069.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3E1D8D929400186118 /* f069.png */; };
 		F4A37F4B1D8D929400186118 /* f071.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F3F1D8D929400186118 /* f071.png */; };
 		F4A37F4C1D8D929400186118 /* gom-002.png in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F401D8D929400186118 /* gom-002.png */; };
@@ -51,8 +50,6 @@
 		F4A37F4F1D8D929400186118 /* JewelSaviorFREE-readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F431D8D929400186118 /* JewelSaviorFREE-readme.txt */; };
 		F4A37F501D8D929400186118 /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F441D8D929400186118 /* NanumBarunpenR.ttf */; };
 		F4A37F511D8D929400186118 /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A37F451D8D929400186118 /* NanumGothic.ttf */; };
-		F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F551D8D94D800186118 /* jsoncpp.cpp */; };
-		F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F571D8D94EB00186118 /* pugixml.cpp */; };
 		F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = F4A37F591D8D94F900186118 /* ipc.pb.cc */; };
 		F4B4F9F11EF5031800B28C48 /* Ecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C61EF5031800B28C48 /* Ecore.cpp */; };
 		F4B4F9F21EF5031800B28C48 /* ESceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F9C71EF5031800B28C48 /* ESceneManager.cpp */; };
@@ -162,6 +159,8 @@
 		F42169B51D05593A00C50450 /* moderngirl02x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moderngirl02x2.png; path = ../../res/moderngirl02x2.png; sourceTree = "<group>"; };
 		F42169B61D05593A00C50450 /* sample_scene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample_scene.xml; path = ../../res/sample_scene.xml; sourceTree = "<group>"; };
 		F42169B71D05593A00C50450 /* sample_scene2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = sample_scene2.xml; path = ../../res/sample_scene2.xml; sourceTree = "<group>"; };
+		F42AFD2723C45CDF00AC0221 /* jsoncpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../external/build/source/iOS/jsoncpp/dist/jsoncpp.cpp; sourceTree = "<group>"; };
+		F42AFD2923C45D0000AC0221 /* pugixml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../../external/build/source/iOS/pugixml/src/pugixml.cpp; sourceTree = "<group>"; };
 		F43DB9D91C78B41700BE5C9A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F43DB9DB1C78B44800BE5C9A /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F43DB9DD1C78B51300BE5C9A /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -351,6 +350,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F42AFD2923C45D0000AC0221 /* pugixml.cpp */,
+				F42AFD2723C45CDF00AC0221 /* jsoncpp.cpp */,
 				F49371ED1F1076EF003DC4CD /* python */,
 				F49371DF1F107428003DC4CD /* python36.zip */,
 				F4B4FA151EF5032700B28C48 /* include */,
@@ -755,7 +756,8 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = WE4KGJQLAQ;
@@ -764,13 +766,11 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Story Project" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -786,8 +786,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F49371EE1F1076EF003DC4CD /* python in Resources */,
-				F49371E01F10758B003DC4CD /* python36.zip in Resources */,
 				F4A37F4C1D8D929400186118 /* gom-002.png in Resources */,
 				F42169BD1D05593A00C50450 /* japanvillage.jpg in Resources */,
 				F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */,
@@ -810,7 +808,6 @@
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
 				F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
-				F46D67351F0FD4AF00E5373E /* story.cpython-36.pyc in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
 				F48617621D96C691008641CB /* JapaneseVillage.png in Resources */,
 				F4468A061D96392A003AB89B /* Images-2.xcassets in Resources */,
@@ -843,6 +840,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42AFD2A23C45D0000AC0221 /* pugixml.cpp in Sources */,
+				F42AFD2823C45CDF00AC0221 /* jsoncpp.cpp in Sources */,
 				F4B4FA041EF5031800B28C48 /* EScene.cpp in Sources */,
 				F4B4FA0C1EF5031800B28C48 /* EImageTexture.cpp in Sources */,
 				F4B4F9F11EF5031800B28C48 /* Ecore.cpp in Sources */,
@@ -861,7 +860,6 @@
 				F4B4FA0F1EF5031800B28C48 /* IPCHelper.cpp in Sources */,
 				F4B4FA101EF5031800B28C48 /* JsonHelper.cpp in Sources */,
 				F4B4F9F71EF5031800B28C48 /* EGridMoveAnimation.cpp in Sources */,
-				F4A37F581D8D94EB00186118 /* pugixml.cpp in Sources */,
 				F4B4F9FF1EF5031800B28C48 /* EResourceManager.cpp in Sources */,
 				F4A37F5A1D8D94F900186118 /* ipc.pb.cc in Sources */,
 				F4B4FA141EF5031800B28C48 /* XmlHelper.cpp in Sources */,
@@ -874,7 +872,6 @@
 				F4B4FA121EF5031800B28C48 /* PythonScript.cpp in Sources */,
 				F4B4FA0D1EF5031800B28C48 /* ESprite.cpp in Sources */,
 				F4B4F9F91EF5031800B28C48 /* ESmoothRotateAnimation.cpp in Sources */,
-				F4A37F561D8D94D800186118 /* jsoncpp.cpp in Sources */,
 				F4B4FA001EF5031800B28C48 /* ESpriteType.cpp in Sources */,
 				F46D673C1F0FD4AF00E5373E /* SpLogHelper_wrap.cxx in Sources */,
 				F4B4FA0A1EF5031800B28C48 /* EFigure.cpp in Sources */,
@@ -895,13 +892,14 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = WE4KGJQLAQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../external/built/frameworks",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -909,29 +907,29 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_IOS;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/built/include_ios",
-					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
-					"$(PROJECT_DIR)/../../external/built/frameworks/Python.framework/Headers",
-					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
-					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
-					"$(PROJECT_DIR)/../../external/sources/cppzmq",
-					"$(PROJECT_DIR)/../../external/sources/zeromq/include",
-					"$(PROJECT_DIR)/../../external/sources/g3log/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include/SDL2",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/Python.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/pugixml/src",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/protobuf/src",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/zeromq/include",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../external/built/lib/ios",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/lib",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.story;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include_ios $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
+				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include $(PROJECT_DIR)/../../external/build/source/iOS/$(CONFIGURATION:lower)/jsoncpp/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -942,41 +940,42 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = WE4KGJQLAQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../external/built/frameworks",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_IOS;
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/built/include_ios",
-					"$(PROJECT_DIR)/../../external/built/include_ios/SDL2",
-					"$(PROJECT_DIR)/../../external/built/frameworks/Python.framework/Headers",
-					"$(PROJECT_DIR)/../../external/sources/pugixml/src",
-					"$(PROJECT_DIR)/../../external/sources/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/sources/protobuf/src",
-					"$(PROJECT_DIR)/../../external/sources/cppzmq",
-					"$(PROJECT_DIR)/../../external/sources/zeromq/include",
-					"$(PROJECT_DIR)/../../external/sources/g3log/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include/SDL2",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/Python.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/pugixml/src",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/protobuf/src",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/zeromq/include",
+					"$(PROJECT_DIR)/../../external/build/source/iOS/g3log/src",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../../external/built/lib/ios",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/lib",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.sdl;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ariens.story;
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/built/include_ios $(PROJECT_DIR)/../../external/sources/jsoncpp/include";
+				USER_HEADER_SEARCH_PATHS = "../../include $(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include $(PROJECT_DIR)/../../external/build/source/iOS/$(CONFIGURATION:lower)/jsoncpp/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
@@ -984,7 +983,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c11;
@@ -1001,7 +1000,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c11;
