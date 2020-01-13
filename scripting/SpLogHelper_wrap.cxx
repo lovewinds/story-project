@@ -171,7 +171,9 @@ template <typename T> T SwigValueInit() {
 # include <Python.h>
 # define _DEBUG
 #else
-# include <Python.h>
+#if !defined(PLATFORM_IOS)
+#include <Python.h>
+#endif
 #endif
 
 /* -----------------------------------------------------------------------------

@@ -12,9 +12,11 @@
 #endif
 
 #ifdef USE_SDL_LOG
+#include <SDL.h>
 #define LOG_ERR(fmt, ...)	SDL_LogError(SDL_LOG_CATEGORY_ERROR, fmt, ##__VA_ARGS__)
 #define LOG_DBG(fmt, ...)	SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, fmt, ##__VA_ARGS__)
 #define LOG_INFO(fmt, ...)	SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, fmt, ##__VA_ARGS__)
+#define PY_LOG SDL_LOG_CATEGORY_APPLICATION
 #else
 #define LOG_ERR(fmt, ...)	LOGF(WARNING, fmt, ##__VA_ARGS__)
 #define LOG_DBG(fmt, ...)	LOGF(DBUG, fmt, ##__VA_ARGS__)

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <limits>
 
 #include "Ecore.hpp"

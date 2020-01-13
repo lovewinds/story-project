@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <pugixml.hpp>
 
 #include "Ecore.hpp"

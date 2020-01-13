@@ -23,18 +23,10 @@ static void thread_loop_ipc(bool& running_state);
 #ifdef _DEBUG
   //#include <crtdefs.h>
   #undef _DEBUG
-  #if defined(PLATFORM_IOS)
-  	#include <Python/Python.h>
-  #else
-  	#include <Python.h>
-  #endif
+	#include <Python.h>
   #define _DEBUG
 #else
-  #if defined(PLATFORM_IOS)
-  	#include <Python/Python.h>
-  #else
-  	#include <Python.h>
-  #endif
+	#include <Python.h>
 #endif
 
 // A friendly class.
@@ -43,7 +35,7 @@ class hello
 public:
 	hello(const std::string& country) { this->country = country; }
 	std::string greet() const {
-		LOGF(PY_LOG, "Hello from %s", country.c_str());
+		// LOGF(PY_LOG, "Hello from %s", country.c_str());
 		return "Hello from " + country;
 	}
 private:

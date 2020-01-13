@@ -73,7 +73,7 @@ Log::~Log()
 
 void Log::dbg()
 {
-	LOGF(PY_LOG, "Python debug Message !!!");
+	// LOGF(PY_LOG, "Python debug Message !!!");
 }
 
 void Log::init()
