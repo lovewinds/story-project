@@ -88,21 +88,21 @@ fi
 ### /Users/ariens/Documents/source/github/story-project/external/built/include
 case "$1" in
 "SDL2")
-	# path : external/sources-ios/SDL2/Xcode-iOS/SDL
+	# path : external/build/source/iOS/SDL2/Xcode-iOS/SDL
 	xcodebuild -arch arm64 -arch armv7 \
 		HEADER_SEARCH_PATHS=${INCLUDEPATH} \
 		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
 	cp build/Release-iphoneos/libSDL2.a ${LIBPATH}
 	;;
 "SDL2_image")
-	# path : external/sources-ios/SDL2_image/Xcode-iOS
+	# path : external/build/source/iOS/SDL2_image/Xcode-iOS
 	xcodebuild -arch arm64 -arch armv7 \
 		USER_HEADER_SEARCH_PATHS=${INCLUDEPATH} \
 		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
 	cp build/Release-iphoneos/libSDL2_image.a ${LIBPATH}
 	;;
 "SDL2_ttf")
-	# path : external/sources-ios/SDL2_ttf/Xcode-iOS
+	# path : external/build/source/iOS/SDL2_ttf/Xcode-iOS
 	xcodebuild -arch arm64 -arch armv7 \
 		HEADER_SEARCH_PATHS_QUOTED_FOR_PROJECT_1=${INCLUDEPATH} \
 		FRAMEWORK_SEARCH_PATHS="${PATH_FRAMEWORK_DEFAULT}"
@@ -135,130 +135,136 @@ case "$1" in
 	fi
 	;;
 "pugixml")
-	# Build directory : external/sources-ios/pugixml/scripts
-	rm -rf build-ios
-	mkdir build-ios
-	cd build-ios
-
+	# Build directory : external/build/source/iOS/pugixml/scripts/build
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=arm64 \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make -j$NJOB
-		cp libpugixml.a ../libpugixml_arm64.a
 	else
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=armv7 \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make -j$NJOB
-		cp libpugixml.a ../libpugixml_armv7.a
 	fi
 
-	# Make fat binary
-	if [ -f "../libpugixml_armv7.a" ] &&  [ -f "../libpugixml_arm64.a" ]; then
-		lipo -create ../libpugixml_armv7.a ../libpugixml_arm64.a -output "${LIBPATH}/libpugixml.a"
+	ARCHS=$(lipo -info libpugixml.a | grep 'Architectures')
+	if [ "$?" == "0" ]; then
+		make install
 	fi
 	;;
 
 "g3log")
-	# Build directory
-	rm -rf build-ios
-	mkdir build-ios
-	cd build-ios
+	# Build directory : external/build/source/iOS/g3log/build
 
 	# Build.cmake file of g3log doesn't accept previous CMAKE_CXX_FLAGS.
 	# Fix to provide additional flags for cross compile.
 	sed -i '' 's/SET(CMAKE_CXX_FLAGS \"-Wall/SET(CMAKE_CXX_FLAGS \"${CMAKE_CXX_FLAGS} -Wall/' ../Build.cmake
 
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=arm64 \
+			-DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
+			-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make g3logger -j$NJOB
-		cp libg3logger.a ../libg3logger_arm64.a
 	else
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH} -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=armv7 \
+			-DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
+			-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make g3logger -j$NJOB
-		cp libg3logger.a ../libg3logger_armv7.a
 	fi
 
-	# Make fat binary
-	if [ -f "../libg3logger_armv7.a" ] &&  [ -f "../libg3logger_arm64.a" ]; then
-		lipo -create ../libg3logger_armv7.a ../libg3logger_arm64.a -output "${LIBPATH}/libg3logger.a"
+	ARCHS=$(lipo -info libg3logger.a | grep 'Architectures')
+	if [ "$?" == "0" ]; then
+		make install
 	fi
 	;;
 
 "gtest")
-	# Build directory
-	rm -rf build-ios
-	mkdir build-ios
-	cd build-ios
-
+	# Build directory : external/build/source/iOS/gtest/build
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=arm64 \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make -j$NJOB
-		cp libgtest.a ../libgtest_arm64.a
 	else
-		cmake .. -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
+		cmake .. \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DCMAKE_OSX_ARCHITECTURES=armv7 \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make -j$NJOB
-		cp libgtest.a ../libgtest_armv7.a
 	fi
 
-	# Make fat binary
-	if [ -f "../libgtest_armv7.a" ] &&  [ -f "../libgtest_arm64.a" ]; then
-		lipo -create ../libgtest_armv7.a ../libgtest_arm64.a -output "${LIBPATH}/libgtest.a"
+	ARCHS=$(lipo -info googlemock/gtest/libgtest.a | grep 'Architectures')
+	if [ "$?" == "0" ]; then
+		make install
 	fi
 	;;
 
 "protobuf")
-	# Build directory : external/sources-ios/protobuf/cmake/build
-
+	# Build directory : external/build/source/iOS/protobuf/cmake/build
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
 		cmake .. \
-			-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${SCRIPT_PATH}/toolchain-ios.cmake \
 			-DCMAKE_OSX_SYSROOT=${SDK} \
 			-Wno-dev \
-			-D "CMAKE_OSX_ARCHITECTURES=arm64" \
+			-DCMAKE_OSX_ARCHITECTURES=arm64 \
 			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 			-Dprotobuf_BUILD_TESTS=OFF \
 			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
-			# -DCMAKE_INSTALL_LIBDIR=${LIBPATH} \
-			# -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
 		make libprotobuf -j$NJOB
-		cp libprotobuf.a ../libprotobuf_arm64.a
 	else
 		cmake .. \
-			-DCMAKE_TOOLCHAIN_FILE:FILEPATH=${SCRIPT_PATH}/toolchain-ios.cmake \
 			-DCMAKE_OSX_SYSROOT=${SDK} \
 			-Wno-dev \
-			-D "CMAKE_OSX_ARCHITECTURES=armv7" \
+			-DCMAKE_OSX_ARCHITECTURES=armv7 \
 			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 			-Dprotobuf_BUILD_TESTS=OFF \
 			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
 		make libprotobuf -j$NJOB
-		make install
-		cp libprotobuf.a ../libprotobuf_armv7.a
 	fi
 
-	# Make fat binary
-	if [ -f "../libprotobuf_armv7.a" ] &&  [ -f "../libprotobuf_arm64.a" ]; then
-		lipo -create ../libprotobuf_armv7.a ../libprotobuf_arm64.a -output "${LIBPATH}/libprotobuf.a"
+	ARCHS=$(lipo -info libprotobuf.a | grep 'Architectures')
+	if [ "$?" == "0" ]; then
+		make install
 	fi
 	;;
 
 "zeromq")
-	# Build directory
-	rm -rf build-ios
-	mkdir build-ios
-	cd build-ios
-
+	# Build directory : external/build/source/iOS/zeromq/build
 	if [ 2 -eq $# ] && [ "$2" = "arm64" ]; then
-		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libzmq-static -j$NJOB
-		cp lib/libzmq-static.a ../libzmq-static_arm64.a
+		rm -r ./*
+		cmake .. \
+			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DZMQ_BUILD_TESTS=OFF \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
+		make -j$NJOB
+		cp lib/libzmq.a ../libzmq_arm64.a
 	else
-		cmake .. -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DZMQ_BUILD_TESTS=OFF -DCMAKE_INSTALL_LIBDIR=${LIBPATH} -DCMAKE_INSTALL_INCLUDEDIR=${INCLUDEPATH}
-		make libzmq-static -j$NJOB
-		cp lib/libzmq-static.a ../libzmq-static_armv7.a
+		rm -r ./*
+		cmake .. \
+			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+			-DCMAKE_OSX_SYSROOT=${SDK} \
+			-DZMQ_BUILD_TESTS=OFF \
+			-DCMAKE_INSTALL_PREFIX=${CMD_PREFIX}
+		make -j$NJOB
+		cp lib/libzmq.a ../libzmq_armv7.a
 	fi
 
 	# Make fat binary
-	if [ -f "../libzmq-static_armv7.a" ] &&  [ -f "../libzmq-static_arm64.a" ]; then
-		lipo -create ../libzmq-static_armv7.a ../libzmq-static_arm64.a -output "${LIBPATH}/libzmq-static.a"
+	if [ -f "../libzmq_armv7.a" ] && [ -f "../libzmq_arm64.a" ]; then
+		lipo -create \
+			../libzmq_armv7.a \
+			../libzmq_arm64.a \
+			-output "${LIBPATH}/libzmq.a"
 	fi
 	;;
 

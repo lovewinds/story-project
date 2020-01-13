@@ -32,5 +32,11 @@ class Builder_pybind11(PackageBuilder):
                 {
                     'checker': 'pybind11.dylib'
                 }
+            ),
+            Platform.iOS: pybind11LinuxBuilder(
+                self.package,
+                {
+                    'checker': '../include/pybind11'
+                }
             )
         }

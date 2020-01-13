@@ -43,9 +43,9 @@ modules = [
 	Builder_gtest(),
 	Builder_protobuf(),
 	Builder_pybind11(),
-	Builder_python(),
+	# Builder_python(),
 	Builder_zeromq(),
-	Builder_dirent(),
+	# Builder_dirent(),
 ]
 
 def check_msvc(env_param):

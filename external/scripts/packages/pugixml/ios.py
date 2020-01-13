@@ -25,7 +25,13 @@ class pugixmliOSBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = 'CMD_PREFIX={} {}/ios-build.sh pugixml'.format(
+        cmd = 'CMD_PREFIX={} {}/ios-build.sh pugixml arm64'.format(
+            self.env.install_path,
+            self.env.working_path
+        )
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+        cmd = 'CMD_PREFIX={} {}/ios-build.sh pugixml armv7'.format(
             self.env.install_path,
             self.env.working_path
         )

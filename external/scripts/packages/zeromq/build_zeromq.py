@@ -5,6 +5,7 @@ from scripts.package_builder import PackageBuilder
 
 from .windows import zeromqWindowsBuilder
 from .linux import zeromqLinuxBuilder
+from .ios import zeromqiOSBuilder
 
 class Builder_zeromq(PackageBuilder):
     def __init__(self):
@@ -31,6 +32,12 @@ class Builder_zeromq(PackageBuilder):
                 self.package,
                 {
                     'checker': 'libzmq.dylib'
+                }
+            ),
+            Platform.iOS: zeromqiOSBuilder(
+                self.package,
+                {
+                    'checker': 'libzmq.a'
                 }
             )
         }

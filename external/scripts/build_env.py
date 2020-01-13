@@ -14,6 +14,8 @@ from shutil import move
 from pathlib import Path
 from xml.etree import ElementTree
 from enum import Enum
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # python 2.X
 # def enum(*sequential, **named):
