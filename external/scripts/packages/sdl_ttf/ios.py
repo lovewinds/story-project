@@ -76,7 +76,7 @@ class SDL2TTFiOSBuilder(PlatformBuilder):
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
         _lib_src_file = '{}/libSDL2_ttf.a'.format(self.env.install_lib_path)
-        _lib_dst_file = '{}/SDL_ttf'.format(_framework_dir)
+        _lib_dst_file = '{}/SDL2_ttf'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 
         # Create plist

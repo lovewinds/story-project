@@ -77,7 +77,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)
         _lib_src_file = '{}/libSDL2_image.a'.format(self.env.install_lib_path)
-        _lib_dst_file = '{}/SDL_image'.format(_framework_dir)
+        _lib_dst_file = '{}/SDL2_image'.format(_framework_dir)
         copy2(_lib_src_file, _lib_dst_file)
 
         # Create plist

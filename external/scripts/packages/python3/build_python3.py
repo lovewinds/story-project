@@ -32,7 +32,7 @@ class Builder_python(PackageBuilder):
             Platform.iOS: pythoniOSBuilder(
                 self.package,
                 {
-                    'url': 'https://github.com/beeware/Python-Apple-support/archive/3.7.zip',
+                    'url': 'https://github.com/beeware/Python-Apple-support/archive/3.7-b2.zip',
                     'filename': 'Python-Apple-support-3.7.zip',
                     'checker': 'Python.framework'
                 }
