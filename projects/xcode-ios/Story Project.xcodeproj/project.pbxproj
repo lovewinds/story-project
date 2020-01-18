@@ -11,6 +11,15 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		F415DE8E23D1D53A00069B27 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED623C8AA5500256624 /* Python.framework */; };
+		F415DE8F23D1D53A00069B27 /* Python.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED623C8AA5500256624 /* Python.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F415DE9323D1D53A00069B27 /* XZ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9023D1D53A00069B27 /* XZ.framework */; };
+		F415DE9423D1D53A00069B27 /* XZ.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9023D1D53A00069B27 /* XZ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F415DE9523D1D53A00069B27 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9123D1D53A00069B27 /* OpenSSL.framework */; };
+		F415DE9623D1D53A00069B27 /* OpenSSL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9123D1D53A00069B27 /* OpenSSL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F415DE9723D1D53A00069B27 /* BZip2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9223D1D53A00069B27 /* BZip2.framework */; };
+		F415DE9823D1D53A00069B27 /* BZip2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F415DE9223D1D53A00069B27 /* BZip2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F415DE9A23D1DAEE00069B27 /* python37.zip in Resources */ = {isa = PBXBuildFile; fileRef = F415DE9923D1DAEE00069B27 /* python37.zip */; };
 		F41BCEA723C96EE80078DD3F /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA323C96EE70078DD3F /* gtest.framework */; };
 		F41BCEA823C96EE80078DD3F /* gtest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA323C96EE70078DD3F /* gtest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F41BCEA923C96EE80078DD3F /* protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA423C96EE70078DD3F /* protobuf.framework */; };
@@ -19,6 +28,7 @@
 		F41BCEAC23C96EE80078DD3F /* pugixml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA523C96EE70078DD3F /* pugixml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F41BCEAD23C96EE80078DD3F /* zeromq.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA623C96EE70078DD3F /* zeromq.framework */; };
 		F41BCEAE23C96EE80078DD3F /* zeromq.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F41BCEA623C96EE70078DD3F /* zeromq.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F41E06CF23D0989900CD7954 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED921E627A6600C14B4E /* Metal.framework */; };
 		F42169B81D05593A00C50450 /* BerryGarden.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169AE1D05593A00C50450 /* BerryGarden.png */; };
 		F42169B91D05593A00C50450 /* bg-black.png in Resources */ = {isa = PBXBuildFile; fileRef = F42169AF1D05593A00C50450 /* bg-black.png */; };
 		F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F42169B01D05593A00C50450 /* FreeSans.ttf */; };
@@ -30,8 +40,6 @@
 		F42169C11D05593A00C50450 /* sample_scene2.xml in Resources */ = {isa = PBXBuildFile; fileRef = F42169B71D05593A00C50450 /* sample_scene2.xml */; };
 		F42AFD2823C45CDF00AC0221 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42AFD2723C45CDF00AC0221 /* jsoncpp.cpp */; };
 		F42AFD2A23C45D0000AC0221 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F42AFD2923C45D0000AC0221 /* pugixml.cpp */; };
-		F42C2ED723C8AA5500256624 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED623C8AA5500256624 /* Python.framework */; };
-		F42C2ED823C8AA5500256624 /* Python.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED623C8AA5500256624 /* Python.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F42C2EDF23C8AFC500256624 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED323C8AA3700256624 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F42C2EE123C8AFC600256624 /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ED023C8AA2800256624 /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F42C2EE823C8BC4900256624 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42C2ECC23C8AA1000256624 /* SDL2.framework */; };
@@ -44,7 +52,6 @@
 		F45B1D351E62DC4E003C10E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43DB9DF1C78B59400BE5C9A /* MobileCoreServices.framework */; };
 		F46CE4701FC5C97000ABAB5C /* LostGarden_Grid_BasicTile.png in Resources */ = {isa = PBXBuildFile; fileRef = F46CE46F1FC5C96F00ABAB5C /* LostGarden_Grid_BasicTile.png */; };
 		F46CE4721FC5C97F00ABAB5C /* LostGarden_License.txt in Resources */ = {isa = PBXBuildFile; fileRef = F46CE4711FC5C97F00ABAB5C /* LostGarden_License.txt */; };
-		F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D241F0FB6AB00E5373E /* Python.framework */; };
 		F46D5D2B1F0FB97B00E5373E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2A1F0FB97B00E5373E /* libsqlite3.tbd */; };
 		F46D5D2D1F0FB9C400E5373E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46D5D2C1F0FB9C400E5373E /* libz.tbd */; };
 		F46D67371F0FD4AF00E5373E /* ipc.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = F46D672D1F0FD4AF00E5373E /* ipc.pb.h */; };
@@ -136,11 +143,6 @@
 		F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB61E66EF1A00A552C0 /* ic_cross.png */; };
 		F4C63ABB1E66EF1A00A552C0 /* ic_rect.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB71E66EF1A00A552C0 /* ic_rect.png */; };
 		F4C63ABC1E66EF1A00A552C0 /* ic_triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F4C63AB81E66EF1A00A552C0 /* ic_triangle.png */; };
-		F4D902E51E6A45920097C515 /* libSDL2_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6A1E6272D100C14B4E /* libSDL2_gfx.a */; };
-		F4D902E61E6A45920097C515 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6B1E6272D100C14B4E /* libSDL2_image.a */; };
-		F4D902E71E6A45920097C515 /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6C1E6272D100C14B4E /* libSDL2_ttf.a */; };
-		F4D902E81E6A45920097C515 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6D1E6272D100C14B4E /* libSDL2.a */; };
-		F4D902E91E6A45920097C515 /* libzmq-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F444ED6E1E6272D100C14B4E /* libzmq-static.a */; };
 		FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8B4B96196703B400F8EB7C /* CoreMotion.framework */; };
 		FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE0E9641BAF967F0098DFA4 /* GameController.framework */; };
 		FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD779EDD0E26BA1200F39101 /* CoreAudio.framework */; };
@@ -151,20 +153,23 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		F42C2ECF23C8AA1000256624 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F42C2ED823C8AA5500256624 /* Python.framework in Embed Frameworks */,
+				F415DE8F23D1D53A00069B27 /* Python.framework in Embed Frameworks */,
 				F42C2EDF23C8AFC500256624 /* SDL2_ttf.framework in Embed Frameworks */,
+				F415DE9423D1D53A00069B27 /* XZ.framework in Embed Frameworks */,
 				F41BCEAE23C96EE80078DD3F /* zeromq.framework in Embed Frameworks */,
+				F415DE9823D1D53A00069B27 /* BZip2.framework in Embed Frameworks */,
 				F41BCEAA23C96EE80078DD3F /* protobuf.framework in Embed Frameworks */,
 				F41BCEA823C96EE80078DD3F /* gtest.framework in Embed Frameworks */,
+				F415DE9623D1D53A00069B27 /* OpenSSL.framework in Embed Frameworks */,
 				F42C2EE123C8AFC600256624 /* SDL2_image.framework in Embed Frameworks */,
 				F41BCEAC23C96EE80078DD3F /* pugixml.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -175,10 +180,18 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F415DE9023D1D53A00069B27 /* XZ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XZ.framework; path = ../../external/build/target/iOS/release/frameworks/XZ.framework; sourceTree = "<group>"; };
+		F415DE9123D1D53A00069B27 /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = ../../external/build/target/iOS/release/frameworks/OpenSSL.framework; sourceTree = "<group>"; };
+		F415DE9223D1D53A00069B27 /* BZip2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BZip2.framework; path = ../../external/build/target/iOS/release/frameworks/BZip2.framework; sourceTree = "<group>"; };
+		F415DE9923D1DAEE00069B27 /* python37.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = python37.zip; path = ../../external/build/target/iOS/release/frameworks/Python.framework/Resources/lib/python37.zip; sourceTree = "<group>"; };
 		F41BCEA323C96EE70078DD3F /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../external/build/target/iOS/release/frameworks/gtest.framework; sourceTree = "<group>"; };
 		F41BCEA423C96EE70078DD3F /* protobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = protobuf.framework; path = ../../external/build/target/iOS/release/frameworks/protobuf.framework; sourceTree = "<group>"; };
 		F41BCEA523C96EE70078DD3F /* pugixml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = pugixml.framework; path = ../../external/build/target/iOS/release/frameworks/pugixml.framework; sourceTree = "<group>"; };
 		F41BCEA623C96EE70078DD3F /* zeromq.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zeromq.framework; path = ../../external/build/target/iOS/release/frameworks/zeromq.framework; sourceTree = "<group>"; };
+		F41E06C223D0879700CD7954 /* libPython.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPython.a; path = ../../external/build/target/iOS/release/frameworks/Python.framework/Python/libPython.a; sourceTree = "<group>"; };
+		F41E06C923D08FE400CD7954 /* libbzip2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbzip2.a; path = ../../external/build/target/iOS/release/frameworks/Python.framework/BZip2/libbzip2.a; sourceTree = "<group>"; };
+		F41E06CA23D08FE400CD7954 /* libOpenSSL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOpenSSL.a; path = ../../external/build/target/iOS/release/frameworks/Python.framework/OpenSSL/libOpenSSL.a; sourceTree = "<group>"; };
+		F41E06CB23D08FE400CD7954 /* libxz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxz.a; path = ../../external/build/target/iOS/release/frameworks/Python.framework/XZ/libxz.a; sourceTree = "<group>"; };
 		F42169AE1D05593A00C50450 /* BerryGarden.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BerryGarden.png; path = ../../res/BerryGarden.png; sourceTree = "<group>"; };
 		F42169AF1D05593A00C50450 /* bg-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-black.png"; path = "../../res/bg-black.png"; sourceTree = "<group>"; };
 		F42169B01D05593A00C50450 /* FreeSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FreeSans.ttf; path = ../../res/FreeSans.ttf; sourceTree = "<group>"; };
@@ -344,24 +357,22 @@
 				F42C2EE923C8BC8300256624 /* SDL2_image.framework in Frameworks */,
 				F41BCEAD23C96EE80078DD3F /* zeromq.framework in Frameworks */,
 				F42C2EEA23C8BC8300256624 /* SDL2_ttf.framework in Frameworks */,
+				F415DE9523D1D53A00069B27 /* OpenSSL.framework in Frameworks */,
 				F46D5D2D1F0FB9C400E5373E /* libz.tbd in Frameworks */,
 				F46D5D2B1F0FB97B00E5373E /* libsqlite3.tbd in Frameworks */,
-				F46D5D281F0FB6AB00E5373E /* Python.framework in Frameworks */,
 				F41BCEA923C96EE80078DD3F /* protobuf.framework in Frameworks */,
-				F4D902E51E6A45920097C515 /* libSDL2_gfx.a in Frameworks */,
-				F4D902E61E6A45920097C515 /* libSDL2_image.a in Frameworks */,
-				F4D902E71E6A45920097C515 /* libSDL2_ttf.a in Frameworks */,
-				F4D902E81E6A45920097C515 /* libSDL2.a in Frameworks */,
-				F4D902E91E6A45920097C515 /* libzmq-static.a in Frameworks */,
 				F41BCEA723C96EE80078DD3F /* gtest.framework in Frameworks */,
 				F444EDA01E6286C100C14B4E /* AVFoundation.framework in Frameworks */,
 				F41BCEAB23C96EE80078DD3F /* pugixml.framework in Frameworks */,
+				F415DE9323D1D53A00069B27 /* XZ.framework in Frameworks */,
 				FAE0E9651BAF967F0098DFA4 /* GameController.framework in Frameworks */,
 				FA8B4B97196703B400F8EB7C /* CoreMotion.framework in Frameworks */,
-				F42C2ED723C8AA5500256624 /* Python.framework in Frameworks */,
+				F415DE9723D1D53A00069B27 /* BZip2.framework in Frameworks */,
 				FD779EDE0E26BA1200F39101 /* CoreAudio.framework in Frameworks */,
 				FD77A0850E26BDB800F39101 /* AudioToolbox.framework in Frameworks */,
+				F41E06CF23D0989900CD7954 /* Metal.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				F415DE8E23D1D53A00069B27 /* Python.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				FDB8BFC60E5A0F6A00980157 /* CoreGraphics.framework in Frameworks */,
 				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
@@ -406,6 +417,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F415DE9923D1DAEE00069B27 /* python37.zip */,
 				F46CE4711FC5C97F00ABAB5C /* LostGarden_License.txt */,
 				F46CE46F1FC5C96F00ABAB5C /* LostGarden_Grid_BasicTile.png */,
 				F4C63AB51E66EF1A00A552C0 /* ic_circle.png */,
@@ -442,6 +454,13 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F415DE9223D1D53A00069B27 /* BZip2.framework */,
+				F415DE9123D1D53A00069B27 /* OpenSSL.framework */,
+				F415DE9023D1D53A00069B27 /* XZ.framework */,
+				F41E06C923D08FE400CD7954 /* libbzip2.a */,
+				F41E06CA23D08FE400CD7954 /* libOpenSSL.a */,
+				F41E06CB23D08FE400CD7954 /* libxz.a */,
+				F41E06C223D0879700CD7954 /* libPython.a */,
 				F41BCEA323C96EE70078DD3F /* gtest.framework */,
 				F41BCEA423C96EE70078DD3F /* protobuf.framework */,
 				F41BCEA523C96EE70078DD3F /* pugixml.framework */,
@@ -852,6 +871,7 @@
 				F42169BF1D05593A00C50450 /* moderngirl02x2.png in Resources */,
 				F4A37F4A1D8D929400186118 /* f069.png in Resources */,
 				F42169BE1D05593A00C50450 /* moderngirl02.png in Resources */,
+				F415DE9A23D1DAEE00069B27 /* python37.zip in Resources */,
 				F4C63ABA1E66EF1A00A552C0 /* ic_cross.png in Resources */,
 				F4A37F4B1D8D929400186118 /* f071.png in Resources */,
 				F42169BA1D05593A00C50450 /* FreeSans.ttf in Resources */,
@@ -938,13 +958,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = WE4KGJQLAQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -955,17 +975,16 @@
 					USE_SDL_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/build/source/iOS/pugixml/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/protobuf/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/zeromq/include",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/g3log/src",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2_ttf.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2_image.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/Python.framework/Python/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/include",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/zeromq.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_ttf.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_image.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/Python.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_PREPROCESS = YES;
@@ -981,7 +1000,7 @@
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../include";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -999,7 +1018,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -1008,17 +1026,16 @@
 					USE_SDL_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/build/source/iOS/pugixml/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/protobuf/src",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/zeromq/include",
-					"$(PROJECT_DIR)/../../external/build/source/iOS/g3log/src",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2_ttf.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/SDL2_image.framework/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/frameworks/Python.framework/Python/Headers",
-					"/Users/ariens/source/story-project/external/build/target/iOS/release/include",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/zeromq.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_ttf.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_image.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/Python.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/include",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_PREPROCESS = YES;
@@ -1034,7 +1051,7 @@
 				PRODUCT_NAME = "story-project";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../include";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};

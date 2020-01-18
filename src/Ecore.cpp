@@ -44,9 +44,8 @@ gRenderer(NULL)
 	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
 	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
 #elif defined(PLATFORM_IOS)
-	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
-	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
-    PythonScript::preparePath(makeBasePath("python"));
+	PythonScript::preparePath(makeBasePath("python37.zip"));
+	PythonScript::preparePath(makeBasePath("python"));
 #else
 	/* macOS */
 	/* Linux */
