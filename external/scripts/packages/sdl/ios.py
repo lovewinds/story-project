@@ -12,10 +12,6 @@ class SDL2iOSBuilder(PlatformBuilder):
         super().__init__(config_package, config_platform)
 
     def build(self):
-        build_path = '{}/{}/Xcode-iOS/SDL'.format(
-            self.env.source_path,
-            self.config['name']
-        )
         # if os.path.exists(self.env.install_lib_path+'/libSDL2.a'):
         _check = self.env.install_lib_path / self.config.get("checker")
         if os.path.exists(_check):
@@ -23,14 +19,22 @@ class SDL2iOSBuilder(PlatformBuilder):
             return
 
         self.tag_log("Start building ...")
+        build_path = self.env.source_path / self.config['name'] / 'Xcode-iOS/SDL'
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2'.format(
+        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2 arm64'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.working_path
         )
         self.env.run_command(cmd, module_name=self.config['name'])
+
+        # cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2 arm64'.format(
+        #     self.env.BUILD_FLAG,
+        #     self.env.install_path,
+        #     self.env.working_path
+        # )
+        # self.env.run_command(cmd, module_name=self.config['name'])
 
     def post(self):
         # Copy header files also

@@ -94,6 +94,14 @@ class zeromqiOSBuilder(PlatformBuilder):
                 continue
             copy2(str(ff), _framework_header_dir)
 
+        # Copy CPPZMQ Headers also
+        _path = Path(self.env.source_path / 'cppzmq')
+        _files = [x for x in _path.iterdir() if x.is_file()]
+        for ff in _files:
+            if not ff.name.endswith('.hpp') and not ff.name.endswith('.h'):
+                continue
+            copy2(str(ff), _framework_header_dir)
+
         # Copy binaries
         self.tag_log("Framework : Copying binary  ...")
         BuildEnv.mkdir_p(_framework_dir)

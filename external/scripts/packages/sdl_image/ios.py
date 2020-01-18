@@ -25,7 +25,7 @@ class SDL2ImageiOSBuilder(PlatformBuilder):
         print("       [{}] Start building ...".format(self.config['name']))
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2_image'.format(
+        cmd = '{} CMD_PREFIX={} {}/ios-build.sh SDL2_image arm64'.format(
             self.env.BUILD_FLAG,
             self.env.install_path,
             self.env.working_path
