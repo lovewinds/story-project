@@ -37,7 +37,7 @@ class Builder_SDL2_Image(PackageBuilder):
             Platform.iOS: SDL2ImageiOSBuilder(
                 self.package,
                 {
-                    'checker': 'libSDL2_image.a'
+                    'checker': '../frameworks/SDL2_image.framework'
                 }
             )
         }

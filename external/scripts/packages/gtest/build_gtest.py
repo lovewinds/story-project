@@ -36,7 +36,7 @@ class Builder_gtest(PackageBuilder):
             Platform.iOS: gtestiOSBuilder(
                 self.package,
                 {
-                    'checker': 'libgtest.a'
+                    'checker': '../frameworks/gtest.framework'
                 }
             )
         }

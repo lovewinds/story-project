@@ -37,7 +37,7 @@ class Builder_SDL2_TTF(PackageBuilder):
             Platform.iOS: SDL2TTFiOSBuilder(
                 self.package,
                 {
-                    'checker': 'libSDL2_ttf.a'
+                    'checker': '../frameworks/SDL2_ttf.framework'
                 }
             )
         }

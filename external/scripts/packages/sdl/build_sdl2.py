@@ -37,7 +37,7 @@ class Builder_SDL2(PackageBuilder):
 			Platform.iOS: SDL2iOSBuilder(
 				self.package,
 				{
-					'checker': 'libSDL2.a'
+					'checker': '../frameworks/SDL2.framework'
 				}
 			)
 		}

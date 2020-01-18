@@ -37,7 +37,7 @@ class Builder_zeromq(PackageBuilder):
             Platform.iOS: zeromqiOSBuilder(
                 self.package,
                 {
-                    'checker': 'libzmq.a'
+                    'checker': '../frameworks/zeromq.framework'
                 }
             )
         }

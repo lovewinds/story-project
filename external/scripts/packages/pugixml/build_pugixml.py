@@ -37,7 +37,7 @@ class Builder_pugixml(PackageBuilder):
             Platform.iOS: pugixmliOSBuilder(
                 self.package,
                 {
-                    'checker': 'libpugixml.a'
+                    'checker': '../frameworks/pugixml.framework'
                 }
             )
         }

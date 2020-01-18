@@ -38,7 +38,7 @@ class Builder_protobuf(PackageBuilder):
             Platform.iOS: protobufiOSBuilder(
                 self.package,
                 {
-                    'checker': 'libprotobuf.a'
+                    'checker': '../frameworks/protobuf.framework'
                 }
             )
         }
