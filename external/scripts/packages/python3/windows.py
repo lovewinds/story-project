@@ -18,7 +18,11 @@ class pythonWindowsBuilder(PlatformBuilder):
 
         # Prepare external libraries (including BZip2)
         os.chdir(self.env.source_path / self.config['name'] / 'PCBuild')
-        cmd = 'get_externals.bat'
+        if os.getenv('PYTHON') is not None:
+            # For Appveyor issue
+            cmd = 'set PYTHON=%PYTHON%\\python.exe && get_externals.bat'
+        else:
+            cmd = 'get_externals.bat'
         self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 

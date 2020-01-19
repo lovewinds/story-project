@@ -37,7 +37,7 @@ class zlibWindowsBuilder(PlatformBuilder):
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = 'cmake -DCMAKE_INSTALL_PREFIX={} .. ; cmake --build . --config {}'.format(
+        cmd = 'cmake -DCMAKE_INSTALL_PREFIX={} .. && cmake --build . --config {}'.format(
             self.env.install_path,
             self.env.BUILD_TYPE
         )
