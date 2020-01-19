@@ -63,7 +63,7 @@ class boostiOSBuilder(PlatformBuilder):
             self.config['name']
         )
         os.chdir(build_path)
-        # cmd = '{}/patch.py {}/boost-use-python3.patch'.format(
+        # cmd = 'python {}/patch.py {}/boost-use-python3.patch'.format(
         # 	self.env.working_path,
         # 	self.env.patch_path
         # )

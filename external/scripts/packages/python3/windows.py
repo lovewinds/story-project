@@ -13,6 +13,16 @@ class pythonWindowsBuilder(PlatformBuilder):
                  config_platform: dict=None):
         super().__init__(config_package, config_platform)
 
+    def pre(self):
+        super().pre()
+
+        # Prepare external libraries (including BZip2)
+        os.chdir(self.env.source_path / self.config['name'] / 'PCBuild')
+        cmd = 'get_externals.bat'
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+
     def build(self):
         super().build()
 
@@ -47,6 +57,9 @@ class pythonWindowsBuilder(PlatformBuilder):
                 winsdk = winsdk.strip().split()[2]
             except:
                 winsdk = '10.0'
+        # WinSDK version string format should be '10.0.XXXXX.0'
+        if winsdk.count('.') == 2:
+            winsdk += '.0'
         self.tag_log(f'Windows SDK :: {winsdk}')
 
         for proj in glob.glob(r'*.vcxproj'):
@@ -58,7 +71,7 @@ class pythonWindowsBuilder(PlatformBuilder):
         # Just build python core only
         cmd = '''msbuild pcbuild.sln \
                     /maxcpucount:{} \
-                    /t:pythoncore \
+                    /t:_bz2,pythoncore \
                     /p:PlatformToolSet={} \
                     /p:Configuration={} \
                     /p:Platform=x64 \

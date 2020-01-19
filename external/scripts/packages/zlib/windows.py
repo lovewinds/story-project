@@ -29,7 +29,7 @@ class zlibWindowsBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         # Apply patch
         os.chdir(pkg_path)
-        cmd = "{}/patch.py {}/zlib-1.2.11.patch".format(
+        cmd = "python {}/patch.py {}/zlib-1.2.11.patch".format(
             self.env.working_path,
             self.env.patch_path
         )
@@ -37,9 +37,8 @@ class zlibWindowsBuilder(PlatformBuilder):
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = 'cmake -DCMAKE_INSTALL_PREFIX={} .. ; cmake --build . --config {} --parallel {}'.format(
+        cmd = 'cmake -DCMAKE_INSTALL_PREFIX={} .. ; cmake --build . --config {}'.format(
             self.env.install_path,
-            self.env.BUILD_TYPE,
-            self.env.NJOBS
+            self.env.BUILD_TYPE
         )
         self.env.run_command(cmd, module_name=self.config['name'])

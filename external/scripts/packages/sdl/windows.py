@@ -57,19 +57,16 @@ class SDL2WindowsBuilder(PlatformBuilder):
 
         # Copy headers
         self.tag_log("Copying header files ..")
-        sdl2_include_path = '{}/{}/include'.format(
-            self.env.source_path,
-            self.config['name']
-        )
-
-        try:
-            copytree(sdl2_include_path, self.env.install_include_path)
-        except FileExistsError:
-            self.tag_log('Header files are already exists. Ignoring.')
+        sdl2_include_path = self.env.source_path / self.config['name'] / 'include'
+        _files = [x for x in sdl2_include_path.iterdir() if x.is_file()]
+        for ff in _files:
+            if not ff.name.endswith('.h'):
+                continue
+            copy2(str(ff), self.env.install_include_path)
 
         self.tag_log("Copying header files (platform customized) ..")
-        copy2(Path(f'{build_path}\\include\\SDL_config.h'),
-              Path(f'{self.env.install_include_path}\\SDL_config.h'))
+        copy2(build_path / 'include' / 'SDL_config.h',
+              self.env.install_include_path / 'SDL_config.h')
 
         # required only debug release
         self.tag_log("Renaming built libraries ..")

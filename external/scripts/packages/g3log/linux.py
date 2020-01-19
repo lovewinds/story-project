@@ -66,7 +66,7 @@ class g3logLinuxBuilder(PlatformBuilder):
 
         # Use patch script
         # https://github.com/techtonik/python-patch
-        cmd = "{}/patch.py {}/g3log-1.2-remove_warnings.patch".format(
+        cmd = "python {}/patch.py {}/g3log-1.2-remove_warnings.patch".format(
             self.env.working_path,
             self.env.patch_path
         )

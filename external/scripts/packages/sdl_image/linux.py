@@ -67,7 +67,7 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
         print("       [{}] Start building ...".format('libjpeg'))
         # Apply patch
         os.chdir(ext_path)
-        cmd = "{}/patch.py jpeg-9b.patch".format(
+        cmd = "python {}/patch.py jpeg-9b.patch".format(
             self.env.working_path
         )
         self.env.run_command(cmd, module_name='libjpeg')
@@ -99,7 +99,7 @@ class SDL2ImageLinuxBuilder(PlatformBuilder):
         print("       [{}] Start building ...".format('zlib'))
         # Apply patch
         os.chdir(ext_path)
-        cmd = "{}/patch.py zlib-1.2.11.patch".format(
+        cmd = "python {}/patch.py zlib-1.2.11.patch".format(
             self.env.working_path
         )
         self.env.run_command(cmd, module_name='zlib')

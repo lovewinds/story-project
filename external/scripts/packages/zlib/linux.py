@@ -29,7 +29,7 @@ class zlibLinuxBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         # Apply patch
         os.chdir(pkg_path)
-        cmd = "{}/patch.py {}/zlib-1.2.11.patch".format(
+        cmd = "python {}/patch.py {}/zlib-1.2.11.patch".format(
             self.env.working_path,
             self.env.patch_path
         )

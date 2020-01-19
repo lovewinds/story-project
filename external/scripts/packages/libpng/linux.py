@@ -29,7 +29,7 @@ class libPNGLinuxBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         # Apply patch
         os.chdir(pkg_path)
-        cmd = "{}/patch.py {}/libpng-1.6.37.patch".format(
+        cmd = "python {}/patch.py {}/libpng-1.6.37.patch".format(
             self.env.working_path,
             self.env.patch_path
         )
