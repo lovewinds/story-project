@@ -28,12 +28,12 @@ class zlibWindowsBuilder(PlatformBuilder):
 
         self.tag_log("Start building ...")
         # Apply patch
-        os.chdir(pkg_path)
-        cmd = "python {}/patch.py {}/zlib-1.2.11.patch".format(
-            self.env.working_path,
-            self.env.patch_path
-        )
-        self.env.run_command(cmd, module_name=self.config['name'])
+        # os.chdir(pkg_path)
+        # cmd = "python {}/patch.py {}/zlib-1.2.11.patch".format(
+        #     self.env.working_path,
+        #     self.env.patch_path
+        # )
+        # self.env.run_command(cmd, module_name=self.config['name'])
 
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
