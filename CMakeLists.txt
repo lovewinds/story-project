@@ -433,12 +433,12 @@ ADD_CUSTOM_COMMAND(
 # Copy Python modules
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"
-    "${INSTALL_TARGET_DIR}"
+    "${INSTALL_TARGET_DIR}/python37_modules_Lib.zip"
     COPYONLY
 )
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Tools.zip"
-    "${INSTALL_TARGET_DIR}"
+    "${INSTALL_TARGET_DIR}/python37_modules_Tools.zip"
     COPYONLY
 )
 
