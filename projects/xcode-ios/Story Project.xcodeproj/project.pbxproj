@@ -975,10 +975,10 @@
 					USE_SDL_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/zeromq.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_ttf.framework/Headers",
@@ -1026,10 +1026,10 @@
 					USE_SDL_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/jsoncpp/dist",
-					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/source/iOS/cppzmq",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/protobuf.framework/Headers",
+					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/pugixml.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/zeromq.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2.framework/Headers",
 					"$(PROJECT_DIR)/../../external/build/target/iOS/$(CONFIGURATION:lower)/frameworks/SDL2_ttf.framework/Headers",
