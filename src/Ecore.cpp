@@ -497,41 +497,10 @@ bool Ecore::init(void* hwnd)
 		gWindow = SDL_CreateWindow("Story",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			SCREEN_WIDTH, SCREEN_HEIGHT, flags);
-
-		int dr_width = 0;
-		int dr_height = 0;
-		int win_width = 0;
-		int win_height = 0;
-		SDL_GL_GetDrawableSize(gWindow, &dr_width, &dr_height);
-		SDL_GetWindowSize(gWindow, &win_width, &win_height);
-
-		LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
-		LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
-		if (dr_width != win_width && dr_height != win_height) {
-			Ecore::is_retina_display = true;
-			Ecore::display_scale = 2.0f;
-		}
 	}
 	if (gWindow == NULL) {
 		LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
 		return false;
-	}
-	
-	/* Per-monitor DPI awareness (Windows) */
-	totalDisplayNum = SDL_GetNumVideoDisplays();
-	currentDisplayIdx = SDL_GetWindowDisplayIndex(gWindow);
-	SDL_GetDisplayDPI(currentDisplayIdx, &currentDPI, NULL, NULL);
-	if (false == Ecore::is_retina_display)
-		Ecore::display_scale = (currentDPI / 96.0f);
-
-	LOG_DBG("Current display [%d / %d]", currentDisplayIdx+1, totalDisplayNum);
-	LOG_DBG("   DPI  : %f", currentDPI);
-	LOG_DBG("   Scale: %f", Ecore::display_scale);
-	
-	if (false == Ecore::is_retina_display) {
-		SDL_SetWindowSize(gWindow,
-			(int)(SCREEN_WIDTH * Ecore::display_scale),
-			(int)(SCREEN_HEIGHT * Ecore::display_scale));
 	}
 
 	/* Create vsynced renderer for window */
@@ -544,21 +513,50 @@ bool Ecore::init(void* hwnd)
 	}
 	else
 	{
+		int dr_width = 0, dr_height = 0;
+		int win_width = 0, win_height = 0;
+		SDL_GL_GetDrawableSize(gWindow, &dr_width, &dr_height);
+		SDL_GetWindowSize(gWindow, &win_width, &win_height);
+
+		LOG_INFO("Drawable size [%4d x %4d]", dr_width, dr_height);
+		LOG_INFO("Window   size [%4d x %4d]", win_width, win_height);
+		if (dr_width != win_width && dr_height != win_height) {
+			Ecore::is_retina_display = true;
+			Ecore::display_scale = dr_width / win_width;
+		}
+
+		/* Per-monitor DPI awareness (Windows) */
+		totalDisplayNum = SDL_GetNumVideoDisplays();
+		currentDisplayIdx = SDL_GetWindowDisplayIndex(gWindow);
+		SDL_GetDisplayDPI(currentDisplayIdx, &currentDPI, NULL, NULL);
+		if (false == Ecore::is_retina_display)
+			Ecore::display_scale = (currentDPI / 96.0f);
+
+		LOG_INFO("Current display [%d / %d]", currentDisplayIdx+1, totalDisplayNum);
+		LOG_INFO("   DPI  : %f", currentDPI);
+		LOG_INFO("   Scale: %f", Ecore::display_scale);
+		
+		if (false == Ecore::is_retina_display) {
+			SDL_SetWindowSize(gWindow,
+				(int)(SCREEN_WIDTH * Ecore::display_scale),
+				(int)(SCREEN_HEIGHT * Ecore::display_scale));
+		}
+
 #ifdef PLATFORM_IOS
-        /* iCade Support */
-        SDL_StartTextInput();
-        SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
-        if (SDL_FALSE == SDL_IsScreenKeyboardShown(Ecore::getInstance()->getWindow())) {
-            LOG_ERR("There is no screen keyboard !!!!!!!!!!");
-            /* Don't stop text input state for hardware keyboard */
-        } else {
-        	LOG_DBG("Screen keyboard is present !!!!!!!!!!!");
-        	/* But not used currently */
-        	SDL_StopTextInput();
-        }
+		/* iCade Support */
+		SDL_StartTextInput();
+		SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
+		if (SDL_FALSE == SDL_IsScreenKeyboardShown(Ecore::getInstance()->getWindow())) {
+				LOG_ERR("There is no screen keyboard !!!!!!!!!!");
+				/* Don't stop text input state for hardware keyboard */
+		} else {
+			LOG_DBG("Screen keyboard is present !!!!!!!!!!!");
+			/* But not used currently */
+			SDL_StopTextInput();
+		}
 #else
-        /* Disable text input */
-        SDL_StopTextInput();
+		/* Disable text input */
+		SDL_StopTextInput();
 #endif
 
 		/* Initialize renderer color */
