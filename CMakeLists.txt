@@ -333,7 +333,7 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
         ${PYTHON_LIBRARIES}
         # -lpython3.6m -lutil
         "${pkgs_LDFLAGS}"
-        "-ldl -lpugixml -lprotobuf -lzmq")
+        "-ldl -lpugixml -lprotobuf -lzmq -lbz2 -lz")
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # Windows
     IF(USE_G3LOG)

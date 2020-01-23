@@ -1,0 +1,11 @@
+--- Makefile	2020-01-23 15:39:12.952492661 +0900
++++ Makefile.fix	2020-01-23 15:39:06.252492806 +0900
+@@ -21,7 +21,7 @@
+ LDFLAGS=
+ 
+ BIGFILES=-D_FILE_OFFSET_BITS=64
+-CFLAGS=-Wall -Winline -O2 -g $(BIGFILES)
++CFLAGS=-fPIC -Wall -Winline -O2 -g $(BIGFILES)
+ 
+ # Where you want it installed when you do 'make install'
+ PREFIX=/usr/local

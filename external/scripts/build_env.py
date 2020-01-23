@@ -94,18 +94,18 @@ class BuildEnv:
 
         # Currently, build process for external libs doesn't override main build flag.
         # It uses its separated build flags in order to build libs as release version.
-        self.BUILD_FLAG = 'CFLAGS="-O2 -fPIC" CXXFLAGS="-O2 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}" PKG_CONFIG_PATH="{}:$PKG_CONFIG_PATH"'.format(
-            self.install_include_path,
-            self.install_lib_path,
-            self.install_lib_path / 'pkgconfig'
-        )
+        self.BUILD_FLAG = f'CFLAGS="-O2 -fPIC" '
+        self.BUILD_FLAG += f'CXXFLAGS="-O2 -fPIC" '
+        self.BUILD_FLAG += f'CPPFLAGS="-I{self.install_include_path}" '
+        self.BUILD_FLAG += f'LDFLAGS="-L{self.install_lib_path}" '
+        self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH"'
         self.BUILD_TYPE = 'Release'
         if build_type == 'debug':
-            self.BUILD_FLAG = 'CFLAGS="-g -O0 -fPIC" CXXFLAGS="-g -O0 -fPIC" CPPFLAGS="-I{}" LDFLAGS="-L{}" PKG_CONFIG_PATH="{}:$PKG_CONFIG_PATH"'.format(
-                self.install_include_path,
-                self.install_lib_path,
-                self.install_lib_path / 'pkgconfig'
-            )
+            self.BUILD_FLAG = f'CFLAGS="-g -O0 -fPIC" '
+            self.BUILD_FLAG += f'CXXFLAGS="-g -O0 -fPIC" '
+            self.BUILD_FLAG += f'CPPFLAGS="-I{self.install_include_path,}" '
+            self.BUILD_FLAG += f'LDFLAGS="-L{self.install_lib_path}" '
+            self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH"'
             self.BUILD_TYPE = 'Debug'
 
         # Use identical start time for all sub packages.
