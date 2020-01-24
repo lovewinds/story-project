@@ -98,14 +98,16 @@ class BuildEnv:
         self.BUILD_FLAG += f'CXXFLAGS="-O2 -fPIC" '
         self.BUILD_FLAG += f'CPPFLAGS="-I{self.install_include_path}" '
         self.BUILD_FLAG += f'LDFLAGS="-L{self.install_lib_path}" '
-        self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH"'
+        self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH" '
+        self.BUILD_FLAG += f'LD_LIBRARY_PATH="{self.install_lib_path}" '
         self.BUILD_TYPE = 'Release'
         if build_type == 'debug':
             self.BUILD_FLAG = f'CFLAGS="-g -O0 -fPIC" '
             self.BUILD_FLAG += f'CXXFLAGS="-g -O0 -fPIC" '
             self.BUILD_FLAG += f'CPPFLAGS="-I{self.install_include_path,}" '
             self.BUILD_FLAG += f'LDFLAGS="-L{self.install_lib_path}" '
-            self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH"'
+            self.BUILD_FLAG += f'PKG_CONFIG_PATH="{self.install_lib_path}/pkgconfig:$PKG_CONFIG_PATH" '
+            self.BUILD_FLAG += f'LD_LIBRARY_PATH="{self.install_lib_path}" '
             self.BUILD_TYPE = 'Debug'
 
         # Use identical start time for all sub packages.

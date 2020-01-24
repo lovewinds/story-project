@@ -54,7 +54,7 @@ class g3logLinuxBuilder(PlatformBuilder):
             copy2(h, self.env.install_lib_path)
         for h in glob.glob(f'{build_path}/libg3logger.so*'):
             copy2(h, self.env.install_lib_path)
-        for h in glob.glob(f'{build_path}/libg3logger_shared.dylib*'):
+        for h in glob.glob(f'{build_path}/libg3logger*.dylib*'):
             copy2(h, self.env.install_lib_path)
 
     def patch_g3log_remove_warnings(self):

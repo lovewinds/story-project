@@ -29,6 +29,12 @@ class Builder_python(PackageBuilder):
                     'checker': 'libpython3.7m.a'
                 }
             ),
+            Platform.macOS: pythonLinuxBuilder(
+                self.package,
+                {
+                    'checker': 'libpython3.7m.a'
+                }
+            ),
             Platform.iOS: pythoniOSBuilder(
                 self.package,
                 {
