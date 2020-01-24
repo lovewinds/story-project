@@ -26,6 +26,14 @@ class SDL2TTFLinuxBuilder(PlatformBuilder):
             return
 
         self.tag_log("Start building ...")
+        self.tag_log("      Patching ...")
+        os.chdir(self.env.source_path / self.config['name'])
+        cmd = "python {}/patch.py {}/sdl2_ttf_2.0.15_freetype.patch".format(
+            self.env.working_path,
+            self.env.patch_path
+        )
+        self.env.run_command(cmd, module_name=self.config['name'])
+
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
         cmd = 'PKG_CONFIG_PATH={}/pkgconfig {} PATH={}:$PATH ../configure --prefix={}; make -j {}; make install'.format(
@@ -38,11 +46,8 @@ class SDL2TTFLinuxBuilder(PlatformBuilder):
         self.env.run_command(cmd, module_name=self.config['name'])
 
     def _build_freetype(self):
-        build_path = '{}/{}/external/freetype-2.9.1/build'.format(
-            self.env.source_path,
-            self.config['name']
-        )
-        if os.path.exists(self.env.install_bin_path / 'freetype-config'):
+        build_path = self.env.source_path / self.config['name'] / 'external/freetype-2.9.1/build'
+        if os.path.exists(self.env.install_lib_path / 'libfreetype.a'):
             self.log("[FreeType2] already built.")
             return
 
@@ -60,5 +65,5 @@ class SDL2TTFLinuxBuilder(PlatformBuilder):
         # Manually install
         self.tag_log("Copying freetype-config ...")
         if os.path.exists(Path(build_path) / 'freetype-config'):
-            copy2(Path(build_path) / 'freetype-config',
-                Path(f'{self.env.install_bin_path}'))
+            if not os.path.exists(self.env.install_bin_path / 'freetype-config'):
+                copy2(build_path / 'freetype-config', self.env.install_bin_path)
