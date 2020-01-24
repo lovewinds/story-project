@@ -239,14 +239,10 @@ void Ecore::Start()
 		/* Event handler */
 		SDL_Event e;
 
-		/* Flip type */
-		SDL_RendererFlip flipType = SDL_FLIP_NONE;
-
 		/* Time management */
 		const Uint32 MAX_FRAMESKIP = 5;			/* Maximun count of skipping frame rendering */
 		const Uint32 UPDATE_TICKS_PER_SECOND = 25;	/* Tick time for each update function. it affects game speed */
 		const Uint32 RENDER_TICKS_PER_SECOND = 59;	/* Tick time for each render function. it affects FPS */
-		Uint32 t = 0;
 		const Uint32 SKIP_UPDATE_TICKS = 1000 / UPDATE_TICKS_PER_SECOND;
 		const Uint32 SKIP_RENDER_TICKS = 1000 / RENDER_TICKS_PER_SECOND;
 
@@ -367,8 +363,6 @@ void Ecore::Render(Uint32 currentTime, Uint32 accumulator)
 {
 	static Uint32 prevTime = 0;
 	static unsigned int drawed_frames = 0;
-
-	char str[256] = { 0, };
 
 	/* Update latest position */
 	Update(currentTime, accumulator);

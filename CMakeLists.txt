@@ -201,26 +201,27 @@ ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # TODO: Below additional flags are not working on MSVC. need check.
 IF(${PLATFORM} STREQUAL "Linux")
-    SET(ADDITIONAL_CPPFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable")
-    SET(ADDITIONAL_CXXFLAGS "-std=c++11 ${PLATFORM_DEF}")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -std=c++11")
+    # STRING(APPEND ADDITIONAL_CXXFLAGS " -Werror")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-variable")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-but-set-parameter")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-but-set-variable")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " ${PLATFORM_DEF}")
     # Debug
-    SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
-
-    # Python /external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.6/config-3.6m-x86_64-linux-gnu
-    # 	"-L${PYTHON_LIBRARY}/python3.6/config-3.6m-x86_64-linux-gnu -lpthread -ldl -lutil -lm -lpython3.6m -Xlinker -export-dynamic")
-    SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
-    # SET(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS_INIT}
-    # 	" -lpthread -ldl -lutil -lm -Xlinker -export-dynamic")
-    #  -lpython3.6m
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -g -O0")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -DNDEBUG -fwrapv -Wall -fPIC")
     SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lz")
 ELSEIF(${PLATFORM} STREQUAL "macOS")
     # -Wno-deprecated-declarations for protobuf on macos sierra 10.12.1
-    SET(ADDITIONAL_CXXFLAGS "-std=c++11 -Wno-deprecated-declarations ${PLATFORM_DEF}")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -std=c++11")
+    # STRING(APPEND ADDITIONAL_CXXFLAGS " -Werror")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-deprecated-declarations")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-variable")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-parameter")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " ${PLATFORM_DEF}")
     # Debug
-    SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -g -O0")
-
-    # Python /external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.6/config-3.6m-darwin
-    SET(ADDITIONAL_CXXFLAGS "${ADDITIONAL_CXXFLAGS} -DNDEBUG -fwrapv -Wall -fPIC")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -g -O0")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -DNDEBUG -fwrapv -Wall -fPIC")
     SET(pkgs_LDFLAGS ${pkgs_LDFLAGS} "-lpthread -ldl -lutil -lm -lz")
 ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} ${ADDITIONAL_CFLAGS} ")
@@ -244,7 +245,7 @@ ENDIF(MSVC AND STATIC_LINKING)
 MESSAGE("############################################")
 MESSAGE("  CMake build environments")
 MESSAGE("")
-MESSAGE("Platform: ${PLATFORM}")
+MESSAGE("Platform :: ${PLATFORM}")
 MESSAGE("")
 MESSAGE("C_FLAGS      : " ${CMAKE_C_FLAGS})
 MESSAGE("CXX_FLAGS    : " ${CMAKE_CXX_FLAGS})
@@ -254,11 +255,12 @@ MESSAGE("Python Libs     : " ${PYTHON_LIBRARIES})
 MESSAGE("Python Lib path : " ${PYTHON_LIB_PATH})
 MESSAGE("Python include  : " ${PYTHON_INCLUDE_DIRS})
 MESSAGE("")
-MESSAGE("  Features")
+MESSAGE("Features ::")
 IF(USE_G3LOG)
-    MESSAGE("[g3log] : Enabled")
+    MESSAGE("  [g3log] : Enabled")
+    MESSAGE("            ${G3LOG_INCLUDE_DIR}")
 ELSE(USE_G3LOG)
-    MESSAGE("[g3log] : Disabled")
+    MESSAGE("  [g3log] : Disabled")
 ENDIF(USE_G3LOG)
 MESSAGE("############################################")
 
@@ -287,10 +289,10 @@ LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/main.cpp")
 LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_win.cpp")
 LIST(REMOVE_ITEM TMP_FILES "${CMAKE_SOURCE_DIR}/src/util/IPCHelper_nix.cpp")
 
-MESSAGE("Compiled code files :")
-foreach(f ${TMP_FILES})
-    MESSAGE("   ${f}")
-endforeach()
+# MESSAGE("Compiled code files :")
+# foreach(f ${TMP_FILES})
+#     MESSAGE("   ${f}")
+# endforeach()
 
 # Append external libraries
 SET(SOURCES ${TMP_FILES}
