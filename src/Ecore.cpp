@@ -49,6 +49,7 @@ gRenderer(NULL)
 #else
 	/* macOS */
 	/* Linux */
+	PythonScript::preparePath(makeBasePath("python37-dylib"));
 	PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
 	PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
 #endif

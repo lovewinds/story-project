@@ -444,8 +444,14 @@ CONFIGURE_FILE(
 
 # Install python modules
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
-    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.7
-            DESTINATION ${INSTALL_TARGET_DIR})
+    MESSAGE("Installing python modules ...")
+    ADD_CUSTOM_COMMAND(
+        TARGET ${PROJECT_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/python3.7/lib-dynload/
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/python37-dylib/
+    )
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 
 # Build python binding modules
