@@ -4,7 +4,7 @@ PROJECT(story-project C CXX)
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 SET(EXEC_PREFIX "\${prefix}")
 SET(LIBDIR "\${prefix}/lib")
-SET(INCLUDEDIR "\${prefix}/include")
+SET(INCLUDEDIR "\${prefix}/src")
 SET(LIBNAME "lib${PROJECT_NAME}")
 SET(STATIC_LINKING "TRUE")
 # SET(STATIC_LINKING "FALSE")
@@ -143,7 +143,7 @@ get_filename_component(PYTHON_LIB_PATH ${PYTHON_LIBRARIES} PATH)
 INCLUDE_DIRECTORIES(
     ${SDL2_INCLUDE_DIRS}
     ${PYTHON_INCLUDE_DIR}
-    ${CMAKE_SOURCE_DIR}/include/
+    ${CMAKE_SOURCE_DIR}/src/
     ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/
     ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/python
     # ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE_DIR}/include/SDL2/
@@ -268,11 +268,11 @@ MESSAGE("############################################")
 FILE(GLOB_RECURSE TMP_FILES
     "src/*.c"
     "src/*.cpp"
+    "src/*.h"
+    "src/*.hpp"
     "scripting/*.cc"
     "scripting/*.cxx"
     "scripting/*.h"
-    "include/*.h"
-    "include/*.hpp"
 )
 
 # Remove single file from list
