@@ -8,7 +8,7 @@ setup(name="story",
 		Extension("_story",
 			["scripting/SpLogHelper_wrap.cxx"],
 			include_dirs=[
-				'include/',
+				'src/',
 				'external/build/target/Windows/include/SDL2/',
 				'external/build/source/Windows/g3log/src/',
 				'external/build/source/Windows/cppzmq/',

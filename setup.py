@@ -14,7 +14,7 @@ setup(name="story",
 		Extension("_story",
 			["scripting/SpLogHelper_wrap.cxx"],
 			include_dirs=[
-				'include/',
+				'src/',
 				'external/build/target/{}/include/SDL2/'.format(PLATFORM),
 				'external/build/source/{}/g3log/src/'.format(PLATFORM),
 				'external/build/source/{}/cppzmq/'.format(PLATFORM),
