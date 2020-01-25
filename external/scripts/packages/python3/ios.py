@@ -44,7 +44,7 @@ class pythoniOSBuilder(PlatformBuilder):
 
         # Extract archive first
         os.chdir(archive_path)
-        tarfile.open('Python-3.7-iOS-support.b2.tar.gz').extractall(archive_path)
+        tarfile.open('Python-3.7-iOS-support.b3.tar.gz').extractall(archive_path)
         # os.chmod('{}/Python/libPython.a'.format(path_framework), 0o755)
 
         self.tag_log("Installing frameworks ...")
