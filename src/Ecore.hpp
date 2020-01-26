@@ -83,7 +83,7 @@ private:
 	bool initialized = false;
 
 	/* Loads game resource */
-	bool loadResources();
+	bool loadProject();
 
 	inline bool handleEvent(SDL_Event *e);
 

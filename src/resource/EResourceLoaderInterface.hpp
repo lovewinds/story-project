@@ -11,10 +11,7 @@ public:
 	virtual ~EResourceLoaderInterface(){ }
 
 	/* Load all resources information from resource archive */
-	virtual bool loadResources(std::string& res_path) = 0;
-
-	/* Load specific scene and related resource(e.g. sprites) into memory */
-	virtual bool loadScene(std::string& scene_name) = 0;
+	virtual bool loadProject(std::string& res_path) = 0;
 
 protected:
 	EResourceManager	*resManager;

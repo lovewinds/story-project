@@ -227,7 +227,7 @@ void Ecore::Start()
 	resFactory = new EResourceFactory();
 
 	/* Load game resources */
-	if (loadResources() == false)
+	if (loadProject() == false)
 	{
 		LOG_ERR("Failed to load media!");
 	}
@@ -612,7 +612,7 @@ std::shared_ptr<SDLFontWrap> Ecore::loadFont(std::string family, int size)
 	return font;
 }
 
-bool Ecore::loadResources()
+bool Ecore::loadProject()
 {
 	/* Loading success flag */
 	bool success = true;
@@ -623,12 +623,12 @@ bool Ecore::loadResources()
 	std::string res_xml("sample_scene.xml");
 	if (Ecore::checkPlatform("Linux"))
 		res_xml = "sample_scene2.xml";
-	success = resManager->loadResources(res_xml);
+	success = resManager->loadProject(res_xml);
 	if (!success) {
 		LOG_ERR("Failed to load resources!");
 		return false;
 	}
-	//success = screenManager->loadResources(std::string("sample_scene.xml"));
+	//success = screenManager->loadProject(std::string("sample_scene.xml"));
 
 	/* Create debug scene
 	 *   It displays some helpful variables on transparent screen.

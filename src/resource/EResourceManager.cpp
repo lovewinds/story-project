@@ -9,6 +9,7 @@
 #include "resource/XMLResourceLoader.hpp"
 
 #include "scene/ERPGScene.hpp"
+#include "scene/EMapScene.hpp"
 #include "scene/EVisualNovelScene.hpp"
 #include "scene/EDbgOverlayScene.hpp"
 #include "scene/ETitleScene.hpp"
@@ -35,7 +36,7 @@ EResourceManager::~EResourceManager()
 	LOG_DBG("Bye ResourceManager !");
 }
 
-bool EResourceManager::loadResources(std::string res_file)
+bool EResourceManager::loadProject(std::string res_file)
 {
 	std::string path = Ecore::getResourcePath(res_file);
 	if (path.empty()) {
@@ -61,7 +62,7 @@ bool EResourceManager::loadResources(std::string res_file)
 		}
 	}
 
-	return loader->loadResources(path);
+	return loader->loadProject(path);
 }
 
 bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<ESceneDesc> desc)
@@ -108,6 +109,9 @@ std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::stri
 		break;
 	case SCENE_TITLE:
 		scene = std::shared_ptr<EScene>(new ETitleScene(scene_name));
+		break;
+	case SCENE_MAP:
+		scene = std::shared_ptr<EScene>(new EMapScene(scene_name));
 		break;
 	default:
 		/* TODO: If new scene type added, should be created here */

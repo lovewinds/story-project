@@ -24,7 +24,7 @@ public:
 	EResourceManager(EResourceManager& self) = delete;
 
 	/* Load all resources information from resource archive */
-	bool loadResources(std::string res_file);
+	bool loadProject(std::string res_file);
 
 /*
  * SceneDesc Functions

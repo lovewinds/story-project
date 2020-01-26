@@ -14,11 +14,14 @@ public:
 	virtual ~XMLResourceLoader();
 
 	/* Load all resources information from resource archive */
-	virtual bool loadResources(std::string& res_path);
-
-	/* Load specific scene and related resource(e.g. sprites) into memory */
-	virtual bool loadScene(std::string& scene_name);
+	virtual bool loadProject(std::string& res_path);
 
 private:
-	void loadSprites(pugi::xml_document &xml_document);
+	void loadSprites(pugi::xml_document &document);
+	void loadCommonResources(pugi::xml_document &document);
+	void loadScenes(pugi::xml_document &document);
+
+	std::shared_ptr<ESceneDesc> loadSceneDesc(
+		pugi::xml_document &document,
+		std::string scene_name, ESceneType scene_type);
 };
