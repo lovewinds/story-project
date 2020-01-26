@@ -9,6 +9,7 @@
 #include "object/GraphicObject.hpp"
 
 #include "scene/ERPGScene.hpp"
+#include "scene/EMapScene.hpp"
 #include "scene/EVisualNovelScene.hpp"
 #include "scene/EDbgOverlayScene.hpp"
 
@@ -129,12 +130,17 @@ std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
 			std::string base_tile_image = "MapTile";
 			base_tile_image = gridDesc->getBaseImage();
 
+			/* RECOMMEND: Do not use dynamic_cast */
 			ERPGScene* rpg_scene = dynamic_cast<ERPGScene*>(scene.get());
-			std::shared_ptr<EGridMapTexture> map(
-					new EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc));
+			EMapScene* map_scene = dynamic_cast<EMapScene*>(scene.get());
+			std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc));
 			if (rpg_scene) {
 				rpg_scene->setMap(map);
 				rpg_scene->setGridDescriptor(gridDesc);
+			}
+			else if (map_scene) {
+				map_scene->setMap(map);
+				map_scene->setGridDescriptor(gridDesc);
 			}
 		}
 	}

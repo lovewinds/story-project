@@ -14,36 +14,6 @@ EMapScene::EMapScene(std::string name)
  : EScene(name)
 {
 	LOG_INFO("EMapScene[%s] created", name.c_str());
-#if 0
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
-	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
-	tt->movePositionTo(10, 100);
-	auto result = _text_texture_map.emplace("test string", tt);
-	if (!result.second) {
-		LOG_ERR("Failed to insert text set !");
-	}
-#endif
-
-#if 0
-	/* Create base map textures */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	/* Create sprite by manually for test */
-
-	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
-	std::shared_ptr<ESprite> sprite;
-
-	sprite = resManager.createSprite("char_girl", "movingChar");
-	object->setName(sprite->getName());
-	object->movePositionTo(10, 10);
-	object->addSprite(sprite);
-	
-	auto ins = _object_map.emplace("movingChar", object);
-	if (!ins.second) {
-		LOG_ERR("Failed to insert object map!");
-	}
-#endif
 }
 
 EMapScene::~EMapScene()

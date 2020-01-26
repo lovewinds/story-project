@@ -306,12 +306,10 @@ void XMLResourceLoader::loadScenes(pugi::xml_document &document) {
 			//scene = resManager->createScene(SCENE_RPG, scene_name);
 		}
 		else if (scene_type == "Map") {
-			scene_type_object = SCENE_VISUAL_NOVEL;
-			//scene = resManager->createScene(SCENE_VISUAL_NOVEL, scene_name);
+			scene_type_object = SCENE_MAP;
 		}
 		else if (scene_type == "VNovel") {
 			scene_type_object = SCENE_VISUAL_NOVEL;
-			//scene = resManager->createScene(SCENE_VISUAL_NOVEL, scene_name);
 		}
 		else if (scene_type == "Title") {
 			scene_type_object = SCENE_TITLE;
