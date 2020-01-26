@@ -17,11 +17,11 @@ EDbgOverlayScene::EDbgOverlayScene(std::string name)
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-	std::shared_ptr<ETextTexture> tt(new ETextTexture("FPS: 0.0", textColor, bgColor));
+	std::shared_ptr<ETextTexture> tt(new ETextTexture("FPS: 0.0", textColor, bgColor, 20));
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
 	object->setName("FPS");
-	object->movePositionTo(Ecore::getScreenWidth() - 160, 10);
+	object->movePositionTo(20, 60);
 	object->addText(tt);
 
 	addObject(object);

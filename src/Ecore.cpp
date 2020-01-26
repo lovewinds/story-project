@@ -15,8 +15,8 @@
 #include "util/XmlHelper.hpp"
 
 /* Screen dimension constants */
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 768;
+const int SCREEN_WIDTH = 540;
+const int SCREEN_HEIGHT = 960;
 
 Ecore* Ecore::instance = NULL;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
