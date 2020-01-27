@@ -11,8 +11,8 @@ SET(STATIC_LINKING "TRUE")
 OPTION(VERBOSE "Displays entire build log" OFF)
 
 # Build Type
-IF( NOT CMAKE_BUILD_TYPE )
-    SET( CMAKE_BUILD_TYPE Release ... FORCE )
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Release CACHE STRING "Set default build type as Release" FORCE)
 ENDIF()
 SET(BUILD_TYPE "release")
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
