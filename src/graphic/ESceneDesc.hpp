@@ -12,15 +12,18 @@
 #include "texture/EFigure.hpp"
 #include "object/animation/EAnimation.hpp"
 
+namespace story {
+namespace Graphic {
+
 /* TODO: Inherit serializable class */
 
-enum ESceneType
+enum LayerType
 {
-	SCENE_RPG = 0,
-	SCENE_VISUAL_NOVEL,
-	SCENE_DEBUG,
-	SCENE_TITLE,
-	SCENE_MAP
+	LAYER_RPG = 0,
+	LAYER_CHAT,
+	LAYER_DEBUG,
+	LAYER_TITLE,
+	LAYER_MAP
 };
 
 /*
@@ -173,12 +176,12 @@ protected:
 class ESceneDesc
 {
 public:
-	ESceneDesc(std::string name, ESceneType type);
+	ESceneDesc(std::string name, LayerType type);
 
 	void appendLayerDesc(std::shared_ptr<ESceneLayerDesc> layer);
 
 	std::string getName();
-	ESceneType getType();
+	LayerType getType();
 
 	const std::vector<std::shared_ptr<ESceneLayerDesc>>& layer_list;
 
@@ -186,6 +189,9 @@ protected:
 	ESceneDesc();
 
 	std::string name;
-	ESceneType type;
+	LayerType type;
 	std::vector<std::shared_ptr<ESceneLayerDesc>> _layer_list;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

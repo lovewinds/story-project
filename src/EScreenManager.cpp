@@ -1,12 +1,12 @@
 #include "EScreenManager.hpp"
 
 #include "Ecore.hpp"
-#include "ESceneManager.hpp"
+#include "SceneManager.hpp"
 #include "util/LogHelper.hpp"
 
 EScreenManager::EScreenManager()
 {
-	sceneManager = new ESceneManager();
+	sceneManager = new SceneManager();
 }
 
 EScreenManager::~EScreenManager()

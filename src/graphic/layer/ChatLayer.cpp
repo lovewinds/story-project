@@ -10,12 +10,15 @@
 #include "object/GraphicObject.hpp"
 #include "object/animation/EAccelAnimation.hpp"
 
-#include "scene/EVisualNovelScene.hpp"
+#include "graphic/layer/ChatLayer.hpp"
 
-EVisualNovelScene::EVisualNovelScene(std::string name)
+namespace story {
+namespace Graphic {
+
+ChatLayer::ChatLayer(std::string name)
  : Layer(name)
 {
-	LOG_INFO("EVisualNovelScene[%s] created", name.c_str());
+	LOG_INFO("ChatLayer[%s] created", name.c_str());
 
 	//SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	//SDL_Color bgColor = { 0x0, 0x0, 0x0 };
@@ -44,12 +47,12 @@ EVisualNovelScene::EVisualNovelScene(std::string name)
 	addObject(object);
 }
 
-EVisualNovelScene::~EVisualNovelScene()
+ChatLayer::~ChatLayer()
 {
-	LOG_INFO("EVisualNovelScene[%s] removed", name.c_str());
+	LOG_INFO("ChatLayer[%s] removed", name.c_str());
 }
 
-void EVisualNovelScene::testAnimation(AnimationState state)
+void ChatLayer::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
 	//for (auto& it : _img_texture_map)
@@ -101,7 +104,7 @@ void EVisualNovelScene::testAnimation(AnimationState state)
 #endif
 }
 
-void EVisualNovelScene::handleEvent(SDL_Event e)
+void ChatLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -128,7 +131,7 @@ void EVisualNovelScene::handleEvent(SDL_Event e)
 	}
 }
 
-void EVisualNovelScene::render()
+void ChatLayer::render()
 {
 	for (auto &it : _img_texture_map)
 	{
@@ -156,7 +159,7 @@ void EVisualNovelScene::render()
 	}
 }
 
-void EVisualNovelScene::update(Uint32 currentTime, Uint32 accumulator)
+void ChatLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;
@@ -187,3 +190,6 @@ void EVisualNovelScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 }
+
+} /* namespace Graphic */
+} /* namespace story */

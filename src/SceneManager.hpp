@@ -3,7 +3,7 @@
 #include <string>
 
 #include "Ecore.hpp"
-#include "scene/EScene.hpp"
+#include "graphic/layer/Layer.hpp"
 
 enum TextureType {
 	TEXTURE_TYPE_FONT,
@@ -20,11 +20,11 @@ enum MoveDirection {
 	DIR_ALL = 0x1111,
 };
 
-class ESceneManager
+class SceneManager
 {
 public:
-	ESceneManager();
-	~ESceneManager();
+	SceneManager();
+	~SceneManager();
 
 	void handleEvent(SDL_Event e);
 	void render();
@@ -42,9 +42,9 @@ public:
 	void initDebugScene();
 
 private:
-	std::shared_ptr<Layer> currentScene;
-	std::shared_ptr<Layer> overlay;
-	std::shared_ptr<Layer> debug_overlay;
+	std::shared_ptr<story::Graphic::Layer> currentScene;
+	std::shared_ptr<story::Graphic::Layer> overlay;
+	std::shared_ptr<story::Graphic::Layer> debug_overlay;
 
 	bool overlayState;
 

@@ -7,12 +7,15 @@
 #include "resource/EResourceManager.hpp"
 #include "object/GraphicObject.hpp"
 
-#include "scene/EDbgOverlayScene.hpp"
+#include "graphic/layer/DbgOverlayLayer.hpp"
 
-EDbgOverlayScene::EDbgOverlayScene(std::string name)
+namespace story {
+namespace Graphic {
+
+DbgOverlayLayer::DbgOverlayLayer(std::string name)
  : Layer(name)
 {
-	LOG_INFO("EDbgOverlayScene[%s] created", name.c_str());
+	LOG_INFO("DbgOverlayLayer[%s] created", name.c_str());
 
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
@@ -27,16 +30,16 @@ EDbgOverlayScene::EDbgOverlayScene(std::string name)
 	addObject(object);
 }
 
-EDbgOverlayScene::~EDbgOverlayScene()
+DbgOverlayLayer::~DbgOverlayLayer()
 {
-	LOG_INFO("EDbgOverlayScene[%s] removed", name.c_str());
+	LOG_INFO("DbgOverlayLayer[%s] removed", name.c_str());
 }
 
-void EDbgOverlayScene::handleEvent(SDL_Event e)
+void DbgOverlayLayer::handleEvent(SDL_Event e)
 {
 }
 
-void EDbgOverlayScene::render()
+void DbgOverlayLayer::render()
 {
 	for (auto &it : _img_texture_map)
 	{
@@ -64,7 +67,7 @@ void EDbgOverlayScene::render()
 	}
 }
 
-void EDbgOverlayScene::update(Uint32 currentTime, Uint32 accumulator)
+void DbgOverlayLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;
@@ -105,3 +108,6 @@ void EDbgOverlayScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 }
+
+} /* namespace Graphic */
+} /* namespace story */

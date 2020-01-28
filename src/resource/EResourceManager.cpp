@@ -8,11 +8,11 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
-#include "scene/ERPGScene.hpp"
-#include "scene/EMapScene.hpp"
-#include "scene/EVisualNovelScene.hpp"
-#include "scene/EDbgOverlayScene.hpp"
-#include "scene/ETitleScene.hpp"
+#include "graphic/layer/RPGLayer.hpp"
+#include "graphic/layer/MapLayer.hpp"
+#include "graphic/layer/ChatLayer.hpp"
+#include "graphic/layer/DbgOverlayLayer.hpp"
+#include "graphic/layer/TitleLayer.hpp"
 
 EResourceManager::EResourceManager()
 {
@@ -65,7 +65,7 @@ bool EResourceManager::loadProject(std::string res_file)
 	return loader->loadProject(path);
 }
 
-bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<ESceneDesc> desc)
+bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<story::Graphic::ESceneDesc> desc)
 {
 	auto result = scene_desc_map.emplace(name, desc);
 	if (!result.second) {
@@ -76,9 +76,10 @@ bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<ESceneDesc
 	return true;
 }
 
-std::shared_ptr<ESceneDesc> EResourceManager::getSceneDesc(std::string name)
+std::shared_ptr<story::Graphic::ESceneDesc>
+EResourceManager::getSceneDesc(std::string name)
 {
-	std::shared_ptr<ESceneDesc> result = nullptr;
+	std::shared_ptr<story::Graphic::ESceneDesc> result = nullptr;
 	auto sceneDesc = scene_desc_map.find(name);
 
 	if (sceneDesc != scene_desc_map.end()) {
@@ -90,28 +91,29 @@ std::shared_ptr<ESceneDesc> EResourceManager::getSceneDesc(std::string name)
 	return result;
 }
 
-std::shared_ptr<Layer> EResourceManager::createScene(ESceneType type, std::string scene_name)
+std::shared_ptr<story::Graphic::Layer>
+EResourceManager::createScene(story::Graphic::LayerType type, std::string scene_name)
 {
 	LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
 	//std::shared_ptr<Layer> scene(new Layer(scene_name));
-	std::shared_ptr<Layer> scene;
+	std::shared_ptr<story::Graphic::Layer> scene;
 
 	switch (type)
 	{
-	case SCENE_RPG:
-		scene = std::shared_ptr<Layer>(new ERPGScene(scene_name));
+	case story::Graphic::LAYER_RPG:
+		scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::RPGLayer(scene_name));
 		break;
-	case SCENE_VISUAL_NOVEL:
-		scene = std::shared_ptr<Layer>(new EVisualNovelScene(scene_name));
+	case story::Graphic::LAYER_CHAT:
+		scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::ChatLayer(scene_name));
 		break;
-	case SCENE_DEBUG:
-		scene = std::shared_ptr<Layer>(new EDbgOverlayScene(scene_name));
+	case story::Graphic::LAYER_DEBUG:
+		scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::DbgOverlayLayer(scene_name));
 		break;
-	case SCENE_TITLE:
-		scene = std::shared_ptr<Layer>(new ETitleScene(scene_name));
+	case story::Graphic::LAYER_TITLE:
+		scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::TitleLayer(scene_name));
 		break;
-	case SCENE_MAP:
-		scene = std::shared_ptr<Layer>(new EMapScene(scene_name));
+	case story::Graphic::LAYER_MAP:
+		scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::MapLayer(scene_name));
 		break;
 	default:
 		/* TODO: If new scene type added, should be created here */

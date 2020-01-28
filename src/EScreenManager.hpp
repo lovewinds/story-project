@@ -3,7 +3,7 @@
 #include <string>
 #include <SDL.h>
 
-class ESceneManager;
+class SceneManager;
 
 class EScreenManager
 {
@@ -23,5 +23,5 @@ public:
 	void handleEvent(SDL_Event e);
 
 private:
-	ESceneManager* sceneManager;
+	SceneManager* sceneManager;
 };

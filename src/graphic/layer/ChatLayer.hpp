@@ -5,32 +5,20 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "scene/EScene.hpp"
+#include "graphic/layer/Layer.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "object/animation/EAnimation.hpp"
 
-/* TODO: Inherit serializable class */
-/*
-* This class stores only resource information for actual allocation.
-* All of these ~~Info classes are stored in ResourceManager.
-* When scene is changed, SceneManager allocates actual Scene instance
-* with this SceneInfo instance on ResourceManager.
-*/
+namespace story {
+namespace Graphic {
 
-/* Scene
-*
-* This class indicates specific scene on screen.
-*  - It should handle creation of resources to show.
-*  - It should own textures to show.
-*  - It should perform render and update.
-*/
-class EVisualNovelScene : public Layer
+class ChatLayer : public Layer
 {
 public:
-	EVisualNovelScene(std::string name);
-	virtual ~EVisualNovelScene();
+	ChatLayer(std::string name);
+	virtual ~ChatLayer();
 
 	/* Primitive Scene actions */
 	virtual void handleEvent(SDL_Event e);
@@ -42,3 +30,6 @@ public:
 protected:
 
 };
+
+} /* namespace Graphic */
+} /* namespace story */

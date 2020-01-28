@@ -5,8 +5,8 @@
 #include <unordered_map>
 #include <memory>
 
-#include "scene/EScene.hpp"
-#include "scene/ESceneDesc.hpp"
+#include "graphic/layer/Layer.hpp"
+#include "graphic/ESceneDesc.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"
@@ -30,13 +30,13 @@ public:
  * SceneDesc Functions
  */
 	/* Create scene descriptor with given parameters */
-	bool addSceneDesc(std::string name, std::shared_ptr<ESceneDesc> desc);
+	bool addSceneDesc(std::string name, std::shared_ptr<story::Graphic::ESceneDesc> desc);
 
-	std::shared_ptr<ESceneDesc> getSceneDesc(std::string name);
+	std::shared_ptr<story::Graphic::ESceneDesc> getSceneDesc(std::string name);
 
 	/* Create scene with name
 	 * (for some debug purpose) */
-	std::shared_ptr<Layer> createScene(ESceneType type, std::string scene_name);
+	std::shared_ptr<story::Graphic::Layer> createScene(story::Graphic::LayerType type, std::string scene_name);
 
 /*
  * Image Resource Functions
@@ -92,7 +92,7 @@ protected:
 	/* Store sprite info here for caching */
 	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;
 
-	std::map<std::string, std::shared_ptr<ESceneDesc>> scene_desc_map;
+	std::map<std::string, std::shared_ptr<story::Graphic::ESceneDesc>> scene_desc_map;
 
 	/* image map uses path as a key, it can have simillar prefix.
 	 * unordered_map can be more effecient for this case */

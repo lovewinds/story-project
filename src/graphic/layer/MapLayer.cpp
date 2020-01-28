@@ -8,23 +8,26 @@
 #include "texture/ESprite.hpp"
 #include "object/animation/EGridMoveAnimation.hpp"
 
-#include "scene/EMapScene.hpp"
+#include "graphic/layer/MapLayer.hpp"
 
-EMapScene::EMapScene(std::string name)
+namespace story {
+namespace Graphic {
+
+MapLayer::MapLayer(std::string name)
  : Layer(name)
 {
-	LOG_INFO("EMapScene[%s] created", name.c_str());
+	LOG_INFO("MapLayer[%s] created", name.c_str());
 }
 
-EMapScene::~EMapScene()
+MapLayer::~MapLayer()
 {
 	gridMap.reset();
 
-	LOG_INFO("EMapScene[%s] removed", name.c_str());
+	LOG_INFO("MapLayer[%s] removed", name.c_str());
 }
 
 /* Store Image and Sprite to render position based */
-bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool MapLayer::addObject(std::shared_ptr<story::Graphic::Object> object)
 {
 	double _x = 0.0;
 	double _y = 0.0;
@@ -52,7 +55,7 @@ bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 
 	if (object->isControllable()) {
 		object->setPositionCallback(
-			std::bind(&EMapScene::objectPositionCallback, this,
+			std::bind(&MapLayer::objectPositionCallback, this,
 				std::placeholders::_1, std::placeholders::_2));
 	}
 
@@ -65,7 +68,7 @@ bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 	return true;
 }
 
-void EMapScene::setMap(std::shared_ptr<EGridMapTexture> map)
+void MapLayer::setMap(std::shared_ptr<EGridMapTexture> map)
 {
 	//std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
 	auto result = _raw_texture_map.emplace("GridMap", map);
@@ -76,12 +79,12 @@ void EMapScene::setMap(std::shared_ptr<EGridMapTexture> map)
 	gridMap = map;
 }
 
-void EMapScene::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+void MapLayer::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
 {
 	gridDesc = desc;
 }
 
-void EMapScene::testAnimation(AnimationState state)
+void MapLayer::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
 	//for (auto& it : _sprite_map)
@@ -110,7 +113,7 @@ void EMapScene::testAnimation(AnimationState state)
 	}
 }
 
-void EMapScene::handleDirectonFactor(float axis_x, float axis_y)
+void MapLayer::handleDirectonFactor(float axis_x, float axis_y)
 {
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
@@ -198,7 +201,7 @@ void EMapScene::handleDirectonFactor(float axis_x, float axis_y)
 
 /* TODO: Logic should be changed to register clickable position
    for each object */
-bool EMapScene::testRotate(int x, int y)
+bool MapLayer::testRotate(int x, int y)
 {
 	bool event_consume = false;
 
@@ -227,7 +230,7 @@ bool EMapScene::testRotate(int x, int y)
 	return false;
 }
 
-bool EMapScene::checkGridMoveable(int x, int y)
+bool MapLayer::checkGridMoveable(int x, int y)
 {
 	bool res = false;
 
@@ -241,7 +244,7 @@ bool EMapScene::checkGridMoveable(int x, int y)
 	return res;
 }
 
-void EMapScene::objectPositionCallback(double x, double y)
+void MapLayer::objectPositionCallback(double x, double y)
 {
 	float ax = 0.0f, ay = 0.0f;
 
@@ -333,7 +336,7 @@ void EMapScene::objectPositionCallback(double x, double y)
 	}
 }
 
-void EMapScene::handleEvent(SDL_Event e)
+void MapLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -480,7 +483,7 @@ void EMapScene::handleEvent(SDL_Event e)
 	}
 }
 
-void EMapScene::render()
+void MapLayer::render()
 {
 	if (gridMap)
 		gridMap->render(0, 0, 0);
@@ -511,7 +514,7 @@ void EMapScene::render()
 	}
 }
 
-void EMapScene::update(Uint32 currentTime, Uint32 accumulator)
+void MapLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;
@@ -539,3 +542,6 @@ void EMapScene::update(Uint32 currentTime, Uint32 accumulator)
 	if (gridMap)
 		gridMap->update(currentTime, accumulator);
 }
+
+} /* namespace Graphic */
+} /* namespace story */

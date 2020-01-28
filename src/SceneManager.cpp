@@ -1,10 +1,10 @@
-#include "ESceneManager.hpp"
+#include "SceneManager.hpp"
 
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
 
-ESceneManager::ESceneManager()
+SceneManager::SceneManager()
 {
 	currentScene = nullptr;
 
@@ -14,15 +14,15 @@ ESceneManager::ESceneManager()
 	overlayState = false;
 }
 
-ESceneManager::~ESceneManager()
+SceneManager::~SceneManager()
 {
 	stopCurrentScene();
-	LOG_INFO("Bye ESceneManager !");
+	LOG_INFO("Bye SceneManager !");
 }
 
-bool ESceneManager::playScene(std::string scene_name)
+bool SceneManager::playScene(std::string scene_name)
 {
-	std::shared_ptr<Layer> scene;
+	std::shared_ptr<story::Graphic::Layer> scene;
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	if (nullptr == currentScene) {
@@ -43,7 +43,7 @@ bool ESceneManager::playScene(std::string scene_name)
 	return true;
 }
 
-void ESceneManager::stopCurrentScene()
+void SceneManager::stopCurrentScene()
 {
 	if (currentScene) {
 		EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
@@ -53,30 +53,30 @@ void ESceneManager::stopCurrentScene()
 	}
 }
 
-void ESceneManager::pauseCurrentScene()
+void SceneManager::pauseCurrentScene()
 {
 	if (currentScene)
 		currentScene->setActiveState(false);
 }
 
-void ESceneManager::startCurrentScene()
+void SceneManager::startCurrentScene()
 {
 	if (currentScene)
 		currentScene->setActiveState(true);
 }
 
-void ESceneManager::initDebugScene()
+void SceneManager::initDebugScene()
 {
 	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 
 	LOG_DBG("Create debug overlay scene");
-	debug_overlay = resMgr.createScene(SCENE_DEBUG, "debug");
+	debug_overlay = resMgr.createScene(story::Graphic::LAYER_DEBUG, "debug");
 	if (nullptr == debug_overlay) {
 		LOG_ERR("Failed to create debug scene !");
 	}
 }
 
-void ESceneManager::handleEvent(SDL_Event e)
+void SceneManager::handleEvent(SDL_Event e)
 {
 	/* Handler inter-scene events */
 	bool ret = false;
@@ -282,7 +282,7 @@ void ESceneManager::handleEvent(SDL_Event e)
 #endif
 }
 
-void ESceneManager::propagateEvent(SDL_Event e)
+void SceneManager::propagateEvent(SDL_Event e)
 {
 #if 0
 	/* TODO: This logic should be executed in animation actor */
@@ -297,7 +297,7 @@ void ESceneManager::propagateEvent(SDL_Event e)
 #endif
 }
 
-void ESceneManager::render()
+void SceneManager::render()
 {
 	if (currentScene)
 		currentScene->render();
@@ -309,7 +309,7 @@ void ESceneManager::render()
 		debug_overlay->render();
 }
 
-void ESceneManager::update(Uint32 currentTime, Uint32 accumulator)
+void SceneManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (currentScene)
 		currentScene->update(currentTime, accumulator);
@@ -321,12 +321,12 @@ void ESceneManager::update(Uint32 currentTime, Uint32 accumulator)
 		debug_overlay->update(currentTime, accumulator);
 }
 
-void ESceneManager::temp_moveBackGround(double dx, double dy)
+void SceneManager::temp_moveBackGround(double dx, double dy)
 {
 //	background->movePositionBy(dx, dy);
 }
 
-void ESceneManager::temp_moveCharacter(double dx, double dy)
+void SceneManager::temp_moveCharacter(double dx, double dy)
 {
 //	sprite->movePositionBy(dx, dy);
 }

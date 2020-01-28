@@ -3,7 +3,10 @@
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
 
-#include "scene/ESceneDesc.hpp"
+#include "graphic/ESceneDesc.hpp"
+
+namespace story {
+namespace Graphic {
 
 ESpriteDesc::ESpriteDesc(std::string name, std::string sourceType, int x, int y)
 {
@@ -256,7 +259,7 @@ std::string ESceneLayerDesc::getName()
  * ESceneDesc class
  */
 
-ESceneDesc::ESceneDesc(std::string name, ESceneType type)
+ESceneDesc::ESceneDesc(std::string name, LayerType type)
 : layer_list(_layer_list)
 {
 	this->name = name;
@@ -274,7 +277,10 @@ std::string ESceneDesc::getName()
 	return name;
 }
 
-ESceneType ESceneDesc::getType()
+LayerType ESceneDesc::getType()
 {
 	return type;
 }
+
+} /* namespace Graphic */
+} /* namespace story */

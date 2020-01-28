@@ -12,22 +12,25 @@
 #include "object/GraphicObject.hpp"
 #include "object/animation/EAccelAnimation.hpp"
 
-#include "scene/ETitleScene.hpp"
+#include "graphic/layer/TitleLayer.hpp"
 
-ETitleScene::ETitleScene(std::string name)
+namespace story {
+namespace Graphic {
+
+TitleLayer::TitleLayer(std::string name)
  : Layer(name)
 {
-	LOG_INFO("ETitleScene[%s] created", name.c_str());
+	LOG_INFO("TitleLayer[%s] created", name.c_str());
 
 	initMenuItem();
 }
 
-ETitleScene::~ETitleScene()
+TitleLayer::~TitleLayer()
 {
-	LOG_INFO("ETitleScene[%s] removed", name.c_str());
+	LOG_INFO("TitleLayer[%s] removed", name.c_str());
 }
 
-void ETitleScene::initMenuItem()
+void TitleLayer::initMenuItem()
 {
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x00, 0x00, 0x00 };
@@ -121,7 +124,7 @@ void ETitleScene::initMenuItem()
 	}
 }
 
-void ETitleScene::sampleMenuState(std::string id)
+void TitleLayer::sampleMenuState(std::string id)
 {
 	for (auto& it : _object_map)
 	{
@@ -148,7 +151,7 @@ void ETitleScene::sampleMenuState(std::string id)
 
 /* TODO: Logic should be changed to register clickable position
    for each object */
-bool ETitleScene::checkMenuClicked(int x, int y)
+bool TitleLayer::checkMenuClicked(int x, int y)
 {
 	for (auto& it : _object_map)
 	{
@@ -183,7 +186,7 @@ bool ETitleScene::checkMenuClicked(int x, int y)
 	return false;
 }
 
-void ETitleScene::handleEvent(SDL_Event e)
+void TitleLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -197,7 +200,7 @@ void ETitleScene::handleEvent(SDL_Event e)
 	}
 }
 
-void ETitleScene::render()
+void TitleLayer::render()
 {
 	for (auto &it : _img_texture_map)
 	{
@@ -225,7 +228,7 @@ void ETitleScene::render()
 	}
 }
 
-void ETitleScene::update(Uint32 currentTime, Uint32 accumulator)
+void TitleLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;
@@ -256,3 +259,6 @@ void ETitleScene::update(Uint32 currentTime, Uint32 accumulator)
 	}
 
 }
+
+} /* namespace Graphic */
+} /* namespace story */

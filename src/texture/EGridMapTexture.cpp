@@ -9,8 +9,7 @@
 #define T2	327
 
 EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
-	std::shared_ptr<EGridDesc> desc)
-:EDrawable()
+	std::shared_ptr<story::Graphic::EGridDesc> desc) : EDrawable()
 {
 	this->name = name;
 	this->base_image = base_image;

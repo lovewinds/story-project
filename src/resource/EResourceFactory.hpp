@@ -7,8 +7,8 @@
 
 #include <SDL.h>
 
-#include "scene/EScene.hpp"
-#include "scene/ESceneDesc.hpp"
+#include "graphic/ESceneDesc.hpp"
+#include "graphic/layer/Layer.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"
@@ -28,7 +28,7 @@ public:
  * Scene Functions
  */
 	/* Create scene from stored scene descriptor */
-	std::shared_ptr<Layer> createScene(std::string scene_name);
+	std::shared_ptr<story::Graphic::Layer> createScene(std::string scene_name);
 
 	/* Remove and de-allocate specific scene
 	 * and related resource(i.e. sprites) from memory */
@@ -38,7 +38,7 @@ public:
  * Image texture Functions
  */
 	std::shared_ptr<EImageTexture>
-	createImageTexture(std::shared_ptr<EImageDesc> imageDesc);
+	createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc);
 
 	void removeImageTexture(std::string name);
 
@@ -46,7 +46,7 @@ public:
  * Sprite Functions
  */
 	std::shared_ptr<ESprite>
-	createSprite(std::shared_ptr<ESpriteDesc> spriteDesc);
+	createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc);
 
 	void removeSprite(std::string name);
 

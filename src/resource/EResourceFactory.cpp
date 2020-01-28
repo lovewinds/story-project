@@ -8,10 +8,10 @@
 #include "resource/EResourceFactory.hpp"
 #include "object/GraphicObject.hpp"
 
-#include "scene/ERPGScene.hpp"
-#include "scene/EMapScene.hpp"
-#include "scene/EVisualNovelScene.hpp"
-#include "scene/EDbgOverlayScene.hpp"
+#include "graphic/layer/RPGLayer.hpp"
+#include "graphic/layer/MapLayer.hpp"
+#include "graphic/layer/ChatLayer.hpp"
+#include "graphic/layer/DbgOverlayLayer.hpp"
 
 EResourceFactory::EResourceFactory()
 {
@@ -25,13 +25,14 @@ EResourceFactory::~EResourceFactory()
 /*
  * Scene Functions
  */
-std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
+std::shared_ptr<story::Graphic::Layer>
+EResourceFactory::createScene(std::string scene_name)
 {
-	std::shared_ptr<Layer> scene = nullptr;
+	std::shared_ptr<story::Graphic::Layer> scene = nullptr;
 
 	/* Search scene desc */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<ESceneDesc> sceneDesc = resManager.getSceneDesc(scene_name);
+	std::shared_ptr<story::Graphic::ESceneDesc> sceneDesc = resManager.getSceneDesc(scene_name);
 	if (nullptr == sceneDesc) {
 		LOG_ERR("Failed to find scene descriptor");
 		return nullptr;
@@ -43,13 +44,13 @@ std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
 	/* For each layer */
 	for (auto& layer_iter : sceneDesc->layer_list)
 	{
-		std::shared_ptr<ESceneLayerDesc> layer = layer_iter;
+		std::shared_ptr<story::Graphic::ESceneLayerDesc> layer = layer_iter;
 		LOG_DBG("  Scene Layer  [%s]", layer->getName().c_str());
 
 		/* Create sprites from sprite descriptor */
 		for (auto& sprite_it : layer->sprite_list)
 		{
-			std::shared_ptr<ESpriteDesc> spriteDesc = sprite_it;
+			std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc = sprite_it;
 			std::shared_ptr<ESprite> sprite;
 			std::shared_ptr<story::Graphic::Object> object
 				(new story::Graphic::Object());
@@ -70,7 +71,7 @@ std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
 		/* Create images from image descriptor */
 		for (auto& image_it : layer->image_list)
 		{
-			std::shared_ptr<EImageDesc> imageDesc = image_it;
+			std::shared_ptr<story::Graphic::EImageDesc> imageDesc = image_it;
 			std::shared_ptr<EImageTexture> image;
 			std::shared_ptr<story::Graphic::Object> object
 				(new story::Graphic::Object());
@@ -108,10 +109,10 @@ std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
 					height = image->getHeight();
 				}
 
-				if (imageDesc->getHorizontalAlign() == IMAGE_ALIGN_RIGHT) {
+				if (imageDesc->getHorizontalAlign() == story::Graphic::IMAGE_ALIGN_RIGHT) {
 					px = (Ecore::getScreenWidth() - (int)width) - px;
 				}
-				if (imageDesc->getVerticalAlign() == IMAGE_ALIGN_BOTTOM) {
+				if (imageDesc->getVerticalAlign() == story::Graphic::IMAGE_ALIGN_BOTTOM) {
 					py = (Ecore::getScreenHeight() - (int)height) + py;
 				}
 
@@ -126,13 +127,13 @@ std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
 		/* Create images from image descriptor */
 		for (auto& grid_it : layer->grid_list)
 		{
-			std::shared_ptr<EGridDesc> gridDesc = grid_it;
+			std::shared_ptr<story::Graphic::EGridDesc> gridDesc = grid_it;
 			std::string base_tile_image = "MapTile";
 			base_tile_image = gridDesc->getBaseImage();
 
 			/* RECOMMEND: Do not use dynamic_cast */
-			ERPGScene* rpg_scene = dynamic_cast<ERPGScene*>(scene.get());
-			EMapScene* map_scene = dynamic_cast<EMapScene*>(scene.get());
+			story::Graphic::RPGLayer* rpg_scene = dynamic_cast<story::Graphic::RPGLayer*>(scene.get());
+			story::Graphic::MapLayer* map_scene = dynamic_cast<story::Graphic::MapLayer*>(scene.get());
 			std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc));
 			if (rpg_scene) {
 				rpg_scene->setMap(map);
@@ -157,7 +158,7 @@ void EResourceFactory::removeScene(std::string scene_name)
 * Image texture Functions
 */
 std::shared_ptr<EImageTexture>
-EResourceFactory::createImageTexture(std::shared_ptr<EImageDesc> imageDesc)
+EResourceFactory::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
 	/* Search image desc */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
@@ -180,7 +181,7 @@ void EResourceFactory::removeImageTexture(std::string name)
 * Sprite Functions
 */
 std::shared_ptr<ESprite>
-EResourceFactory::createSprite(std::shared_ptr<ESpriteDesc> spriteDesc)
+EResourceFactory::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	std::shared_ptr<ESprite> sprite = nullptr;

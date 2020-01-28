@@ -4,7 +4,7 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "scene/ESceneDesc.hpp"
+#include "graphic/ESceneDesc.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
@@ -93,12 +93,13 @@ void XMLResourceLoader::loadCommonResources(pugi::xml_document &document) {
 	}
 }
 
-std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
+std::shared_ptr<story::Graphic::ESceneDesc>
+XMLResourceLoader::loadSceneDesc(
 		pugi::xml_document &document,
-		std::string scene_name, ESceneType scene_type) {
+		std::string scene_name, story::Graphic::LayerType layer_type) {
 
-	std::shared_ptr<ESceneDesc> scene_desc
-		= std::shared_ptr<ESceneDesc>(new ESceneDesc(scene_name, scene_type));
+	std::shared_ptr<story::Graphic::ESceneDesc> scene_desc
+		= std::shared_ptr<story::Graphic::ESceneDesc>(new story::Graphic::ESceneDesc(scene_name, layer_type));
 
 	/* Load all scene layers */
 	std::stringstream s;
@@ -113,7 +114,7 @@ std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
 		std::string layer_name(layer_node.node().attribute("name").value());
 
 		/* Create Layer descriptor */
-		std::shared_ptr<ESceneLayerDesc> layerDesc(new ESceneLayerDesc(layer_name));
+		std::shared_ptr<story::Graphic::ESceneLayerDesc> layerDesc(new story::Graphic::ESceneLayerDesc(layer_name));
 
 		/* Layer contents */
 		int idx = 0;
@@ -183,8 +184,8 @@ std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
 				std::string itm_ctrl(node.node().attribute("controllable").value());
 				LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
 					itm_name.c_str(), itm_source.c_str(), p_x, p_y);
-				std::shared_ptr<ESpriteDesc> spriteDesc(
-					new ESpriteDesc(itm_name, itm_source, p_x, p_y)
+				std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc(
+					new story::Graphic::ESpriteDesc(itm_name, itm_source, p_x, p_y)
 				);
 
 				if (itm_ctrl.empty() == false) {
@@ -199,8 +200,8 @@ std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
 				/* Image descriptor */
 				LOG_INFO("Create Image descriptor [%s](T:%s) into (%3d, %3d)",
 					itm_name.c_str(), itm_source.c_str(), p_x, p_y);
-				std::shared_ptr<EImageDesc> imageDesc(
-					new EImageDesc(itm_name, itm_source, p_x, p_y)
+				std::shared_ptr<story::Graphic::EImageDesc> imageDesc(
+					new story::Graphic::EImageDesc(itm_name, itm_source, p_x, p_y)
 				);
 				if (width_percent)
 					imageDesc->setWidthRatio(p_w);
@@ -212,9 +213,9 @@ std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
 					imageDesc->setHeight(p_h);
 
 				if (itm_h_align.compare("right") == 0)
-					imageDesc->setHorizontalAlign(IMAGE_ALIGN_RIGHT);
+					imageDesc->setHorizontalAlign(story::Graphic::IMAGE_ALIGN_RIGHT);
 				if (itm_v_align.compare("bottom") == 0)
-					imageDesc->setVerticalAlign(IMAGE_ALIGN_BOTTOM);
+					imageDesc->setVerticalAlign(story::Graphic::IMAGE_ALIGN_BOTTOM);
 
 				layerDesc->addImageDesc(imageDesc);
 			}
@@ -224,7 +225,9 @@ std::shared_ptr<ESceneDesc> XMLResourceLoader::loadSceneDesc(
 				std::string base_tile(node.node().attribute("source").value());
 
 				/* Tile map data */
-				std::shared_ptr<EGridDesc> gridDesc(new EGridDesc(p_w, p_h, p_levels));
+				std::shared_ptr<story::Graphic::EGridDesc> gridDesc(
+					new story::Graphic::EGridDesc(p_w, p_h, p_levels)
+				);
 				gridDesc->setBaseImage(base_tile);
 				for (auto map_layer : node.node().children()) {
 					/* Map layer */
@@ -295,31 +298,31 @@ void XMLResourceLoader::loadScenes(pugi::xml_document &document) {
 	//pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene[@name='main']");
 	pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene");
 	for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it) {
-		std::shared_ptr<ESceneDesc> sceneDesc = nullptr;
-		ESceneType scene_type_object;
+		std::shared_ptr<story::Graphic::ESceneDesc> sceneDesc = nullptr;
+		story::Graphic::LayerType layer_type_object;
 		pugi::xpath_node node = *scene_it;
 		std::string scene_name(node.node().attribute("name").value());
-		std::string scene_type(node.node().attribute("type").value());
+		std::string layer_type(node.node().attribute("type").value());
 
-		if (scene_type == "RPG") {
-			scene_type_object = SCENE_RPG;
+		if (layer_type == "RPG") {
+			layer_type_object = story::Graphic::LAYER_RPG;
 			//scene = resManager->createScene(SCENE_RPG, scene_name);
 		}
-		else if (scene_type == "Map") {
-			scene_type_object = SCENE_MAP;
+		else if (layer_type == "Map") {
+			layer_type_object = story::Graphic::LAYER_MAP;
 		}
-		else if (scene_type == "VNovel") {
-			scene_type_object = SCENE_VISUAL_NOVEL;
+		else if (layer_type == "VNovel") {
+			layer_type_object = story::Graphic::LAYER_CHAT;
 		}
-		else if (scene_type == "Title") {
-			scene_type_object = SCENE_TITLE;
+		else if (layer_type == "Title") {
+			layer_type_object = story::Graphic::LAYER_TITLE;
 		}
 		else {
-			LOG_ERR("Undefined scene type [%s]", scene_type.c_str());
+			LOG_ERR("Undefined scene type [%s]", layer_type.c_str());
 			continue;
 		}
 
-		sceneDesc = loadSceneDesc(document, scene_name, scene_type_object);
+		sceneDesc = loadSceneDesc(document, scene_name, layer_type_object);
 		if (nullptr == sceneDesc) {
 			LOG_ERR("Failed to create Scene descriptor");
 			continue;

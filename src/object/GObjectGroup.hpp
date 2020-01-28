@@ -24,7 +24,7 @@ public:
 
 	/* Primitive */
 
-}
+};
 
 } /* namespace Graphic */
 } /* namespace story */

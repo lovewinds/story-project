@@ -3,7 +3,10 @@
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
 
-#include "scene/EScene.hpp"
+#include "graphic/layer/Layer.hpp"
+
+namespace story {
+namespace Graphic {
 
 Layer::Layer()
 	: sprite_map(_sprite_map)
@@ -136,3 +139,6 @@ void Layer::update(Uint32 currentTime, Uint32 accumulator)
 		it.second->update(currentTime, accumulator);
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

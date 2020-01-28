@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "scene/Layer.hpp"
+#include "graphic/layer/Layer.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
@@ -13,27 +13,14 @@
 #include "object/animation/EAnimation.hpp"
 #include "object/animation/EGridMoveAnimation.hpp"
 
-/* TODO: Inherit serializable class */
-/*
- * This class stores only resource information for actual allocation.
- * All of these ~~Info classes are stored in ResourceManager.
- * When scene is changed, SceneManager allocates actual Scene instance
- * with this SceneInfo instance on ResourceManager.
- */
+namespace story {
+namespace Graphic {
 
-/**
- * Scene
- *
- * This class indicates specific scene on screen.
- *  - It should handle creation of resources to show.
- *  - It should own textures to show.
- *  - It should perform render and update.
- */
-class EMapScene : public Layer
+class MapLayer : public Layer
 {
 public:
-	EMapScene(std::string name);
-	virtual ~EMapScene();
+	MapLayer(std::string name);
+	virtual ~MapLayer();
 
 	/* Primitive Scene actions */
 	virtual void handleEvent(SDL_Event e);
@@ -62,3 +49,6 @@ protected:
 	//std::vector<std::list<std::shared_ptr<story::Graphic::Object>>> _vertical_obj_list;
 	//std::map<std::string, std::shared_ptr<story::Graphic::Object>> _object_map;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

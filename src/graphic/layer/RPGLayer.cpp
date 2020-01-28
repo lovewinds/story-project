@@ -8,12 +8,15 @@
 #include "texture/ESprite.hpp"
 #include "object/animation/EGridMoveAnimation.hpp"
 
-#include "scene/ERPGScene.hpp"
+#include "graphic/layer/RPGLayer.hpp"
 
-ERPGScene::ERPGScene(std::string name)
+namespace story {
+namespace Graphic {
+
+RPGLayer::RPGLayer(std::string name)
  : Layer(name)
 {
-	LOG_INFO("ERPGScene[%s] created", name.c_str());
+	LOG_INFO("RPGLayer[%s] created", name.c_str());
 #if 0
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
@@ -46,15 +49,15 @@ ERPGScene::ERPGScene(std::string name)
 #endif
 }
 
-ERPGScene::~ERPGScene()
+RPGLayer::~RPGLayer()
 {
 	gridMap.reset();
 
-	LOG_INFO("ERPGScene[%s] removed", name.c_str());
+	LOG_INFO("RPGLayer[%s] removed", name.c_str());
 }
 
 /* Store Image and Sprite to render position based */
-bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool RPGLayer::addObject(std::shared_ptr<story::Graphic::Object> object)
 {
 	double _x = 0.0;
 	double _y = 0.0;
@@ -82,7 +85,7 @@ bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 
 	if (object->isControllable()) {
 		object->setPositionCallback(
-			std::bind(&ERPGScene::objectPositionCallback, this,
+			std::bind(&RPGLayer::objectPositionCallback, this,
 				std::placeholders::_1, std::placeholders::_2));
 	}
 
@@ -95,7 +98,7 @@ bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 	return true;
 }
 
-void ERPGScene::setMap(std::shared_ptr<EGridMapTexture> map)
+void RPGLayer::setMap(std::shared_ptr<EGridMapTexture> map)
 {
 	//std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
 	auto result = _raw_texture_map.emplace("GridMap", map);
@@ -106,12 +109,12 @@ void ERPGScene::setMap(std::shared_ptr<EGridMapTexture> map)
 	gridMap = map;
 }
 
-void ERPGScene::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+void RPGLayer::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
 {
 	gridDesc = desc;
 }
 
-void ERPGScene::testAnimation(AnimationState state)
+void RPGLayer::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
 	//for (auto& it : _sprite_map)
@@ -140,7 +143,7 @@ void ERPGScene::testAnimation(AnimationState state)
 	}
 }
 
-void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
+void RPGLayer::handleDirectonFactor(float axis_x, float axis_y)
 {
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
@@ -228,7 +231,7 @@ void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 
 /* TODO: Logic should be changed to register clickable position
    for each object */
-bool ERPGScene::testRotate(int x, int y)
+bool RPGLayer::testRotate(int x, int y)
 {
 	bool event_consume = false;
 
@@ -257,7 +260,7 @@ bool ERPGScene::testRotate(int x, int y)
 	return false;
 }
 
-bool ERPGScene::checkGridMoveable(int x, int y)
+bool RPGLayer::checkGridMoveable(int x, int y)
 {
 	bool res = false;
 
@@ -271,7 +274,7 @@ bool ERPGScene::checkGridMoveable(int x, int y)
 	return res;
 }
 
-void ERPGScene::objectPositionCallback(double x, double y)
+void RPGLayer::objectPositionCallback(double x, double y)
 {
 	float ax = 0.0f, ay = 0.0f;
 
@@ -363,7 +366,7 @@ void ERPGScene::objectPositionCallback(double x, double y)
 	}
 }
 
-void ERPGScene::handleEvent(SDL_Event e)
+void RPGLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -510,7 +513,7 @@ void ERPGScene::handleEvent(SDL_Event e)
 	}
 }
 
-void ERPGScene::render()
+void RPGLayer::render()
 {
 	if (gridMap)
 		gridMap->render(0, 0, 0);
@@ -541,7 +544,7 @@ void ERPGScene::render()
 	}
 }
 
-void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
+void RPGLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;
@@ -569,3 +572,6 @@ void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
 	if (gridMap)
 		gridMap->update(currentTime, accumulator);
 }
+
+} /* namespace Graphic */
+} /* namespace story */

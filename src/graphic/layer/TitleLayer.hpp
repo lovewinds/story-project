@@ -3,24 +3,20 @@
 #include <string>
 #include <SDL.h>
 
-#include "scene/EScene.hpp"
+#include "graphic/layer/Layer.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "object/animation/EAnimation.hpp"
 
-/* Scene
- *
- * This class indicates specific scene on screen.
- *  - It should handle creation of resources to show.
- *  - It should own textures to show.
- *  - It should perform render and update.
- */
-class ETitleScene : public Layer
+namespace story {
+namespace Graphic {
+
+class TitleLayer : public Layer
 {
 public:
-	ETitleScene(std::string name);
-	virtual ~ETitleScene();
+	TitleLayer(std::string name);
+	virtual ~TitleLayer();
 
 	/* Primitive Scene actions */
 	virtual void handleEvent(SDL_Event e);
@@ -34,3 +30,6 @@ protected:
 	void sampleMenuState(std::string id);
 	bool checkMenuClicked(int x, int y);
 };
+
+} /* namespace Graphic */
+} /* namespace story */
