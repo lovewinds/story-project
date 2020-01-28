@@ -10,8 +10,8 @@
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EGridMapTexture.hpp"
-#include "object/animation/EAnimation.hpp"
-#include "object/animation/EGridMoveAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+#include "graphic/animation/EGridMoveAnimation.hpp"
 
 namespace story {
 namespace Graphic {

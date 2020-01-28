@@ -1,6 +1,9 @@
 #pragma once
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 class ERotateAndMoveAnimation : public EAnimation
 {
@@ -25,3 +28,6 @@ protected:
 	bool reverse = false;
 	RotateDirection direction;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

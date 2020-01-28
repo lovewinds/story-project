@@ -10,7 +10,7 @@
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
 #include "texture/EFigure.hpp"
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
 
 namespace story {
 namespace Graphic {

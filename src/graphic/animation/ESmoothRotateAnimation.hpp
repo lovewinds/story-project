@@ -1,6 +1,9 @@
 #pragma once
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 class ESmoothRotateAnimation : public EAnimation
 {
@@ -18,3 +21,6 @@ protected:
 
 	RotateDirection direction;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

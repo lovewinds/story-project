@@ -1,6 +1,9 @@
 #pragma once
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 class ESmoothStepAnimation : public EAnimation
 {
@@ -21,3 +24,6 @@ protected:
 	int end_y = 0;
 	int transition_msec = 1000;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

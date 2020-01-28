@@ -6,8 +6,8 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
-#include "object/GraphicObject.hpp"
 
+#include "graphic/GraphicObject.hpp"
 #include "graphic/layer/RPGLayer.hpp"
 #include "graphic/layer/MapLayer.hpp"
 #include "graphic/layer/ChatLayer.hpp"

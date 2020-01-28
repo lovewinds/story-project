@@ -1,7 +1,10 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/animation/EAccelAnimation.hpp"
+#include "graphic/animation/EAccelAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 EAccelAnimation::EAccelAnimation()
 {
@@ -53,3 +56,6 @@ void EAccelAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		stop();
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

@@ -1,6 +1,9 @@
 #pragma once
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 class EGridMoveAnimation : public EAnimation
 {
@@ -24,3 +27,6 @@ protected:
 	float curr_dir_factor_x = 0.0f;
 	float curr_dir_factor_y = 0.0f;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

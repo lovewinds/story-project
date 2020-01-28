@@ -6,7 +6,7 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
-#include "object/animation/EGridMoveAnimation.hpp"
+#include "graphic/animation/EGridMoveAnimation.hpp"
 
 #include "graphic/layer/MapLayer.hpp"
 

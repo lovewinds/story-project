@@ -3,15 +3,13 @@
 #include <iostream>
 #include <memory>
 
-//#include "texture/GraphicObject.hpp"
+//#include "graphic/GraphicObject.hpp"
+
+namespace story {
+namespace Graphic {
 
 /* Avoid circular reference */
-//class EDrawable;
-namespace story {
-	namespace Graphic {
-		class Object;
-	}
-}
+class Object;
 
 enum AnimationRepeatType
 {
@@ -71,3 +69,6 @@ protected:
 	double a_y;
 	double a_angle;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

@@ -7,8 +7,8 @@
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
-#include "object/GraphicObject.hpp"
-#include "object/animation/EAccelAnimation.hpp"
+#include "graphic/GraphicObject.hpp"
+#include "graphic/animation/EAccelAnimation.hpp"
 
 #include "graphic/layer/ChatLayer.hpp"
 

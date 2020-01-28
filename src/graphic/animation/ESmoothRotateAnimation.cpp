@@ -1,7 +1,10 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/animation/ESmoothRotateAnimation.hpp"
+#include "graphic/animation/ESmoothRotateAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 ESmoothRotateAnimation::ESmoothRotateAnimation()
 {
@@ -67,3 +70,6 @@ for (i = 0; i < N; i++) {
 		state = ANI_STOP;
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

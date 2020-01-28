@@ -1,6 +1,9 @@
 #pragma once
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 class EAccelAnimation : public EAnimation
 {
@@ -18,3 +21,6 @@ protected:
 	double velo = 1.0;
 	Uint32 prevTime = 0;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

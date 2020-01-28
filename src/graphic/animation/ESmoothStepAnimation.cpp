@@ -1,7 +1,10 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/animation/ESmoothStepAnimation.hpp"
+#include "graphic/animation/ESmoothStepAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 ESmoothStepAnimation::ESmoothStepAnimation()
 {
@@ -99,3 +102,6 @@ for (i = 0; i < N; i++) {
 		state = ANI_STOP;
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

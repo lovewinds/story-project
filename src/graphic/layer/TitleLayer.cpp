@@ -9,8 +9,8 @@
 #include "texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
-#include "object/GraphicObject.hpp"
-#include "object/animation/EAccelAnimation.hpp"
+#include "graphic/GraphicObject.hpp"
+#include "graphic/animation/EAccelAnimation.hpp"
 
 #include "graphic/layer/TitleLayer.hpp"
 

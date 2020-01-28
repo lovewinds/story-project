@@ -5,7 +5,7 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "object/GraphicObject.hpp"
+#include "graphic/GraphicObject.hpp"
 
 #include "graphic/layer/DbgOverlayLayer.hpp"
 

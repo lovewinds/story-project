@@ -1,7 +1,10 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/animation/ERotateAndMoveAnimation.hpp"
+#include "graphic/animation/ERotateAndMoveAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 ERotateAndMoveAnimation::ERotateAndMoveAnimation()
 {
@@ -88,3 +91,6 @@ void ERotateAndMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 			direction = ROTATE_CLOCKWISE;
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

@@ -1,8 +1,11 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/GraphicObject.hpp"
-#include "object/animation/EAnimation.hpp"
+#include "graphic/GraphicObject.hpp"
+#include "graphic/animation/EAnimation.hpp"
+
+namespace story {
+namespace Graphic {
 
 EAnimation::EAnimation() :
 a_x(0), a_y(0), a_angle(0)
@@ -127,3 +130,6 @@ void EAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	a_x = a_y;
 	prevTime = delta;
 }
+
+} /* namespace Graphic */
+} /* namespace story */

@@ -3,10 +3,13 @@
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "object/animation/EGridMoveAnimation.hpp"
+#include "graphic/animation/EGridMoveAnimation.hpp"
 
 #define TEST_VELO	(16.0f)
 #define GRID_SIZE	(32.0f)
+
+namespace story {
+namespace Graphic {
 
 EGridMoveAnimation::EGridMoveAnimation()
 {
@@ -198,3 +201,6 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	}
 }
 #endif
+
+} /* namespace Graphic */
+} /* namespace story */
