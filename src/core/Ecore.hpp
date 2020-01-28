@@ -9,9 +9,17 @@
 #include "util/PythonScript.hpp"
 #include "util/SDLWrap.hpp"
 
-class EScreenManager;
-class EResourceManager;
-class EResourceFactory;
+namespace story {
+namespace Resource {
+	class EResourceManager;
+	class EResourceFactory;
+}
+}
+
+namespace story {
+namespace Core {
+
+class ScreenManager;
 
 enum CustomEvent {
 	CUSTOM_EVENT_SCENE_CHANGE = 0,
@@ -42,9 +50,9 @@ public:
 	/* Provide current FPS */
 	double GetFPS();
 
-	EResourceManager& getResourceManager();
-	EResourceFactory& getResourceFactory();
-	EScreenManager& getScreenManager();
+	story::Resource::EResourceManager& getResourceManager();
+	story::Resource::EResourceFactory& getResourceFactory();
+	story::Core::ScreenManager& getScreenManager();
 
 	/* Utility functions */
 	static const char* getBasePath();
@@ -108,9 +116,12 @@ private:
 	/* Manager classes:
 	 * Handle these as a pointer type for obvious resource deallocation.
 	 */
-	EResourceManager* resManager;
-	EResourceFactory* resFactory;
-	EScreenManager* screenManager;
+	story::Resource::EResourceManager* resManager;
+	story::Resource::EResourceFactory* resFactory;
+	story::Core::ScreenManager* screenManager;
 
 	static std::string getParentPath(std::string path, std::string::size_type level);
 };
+
+} /* namespace Core */
+} /* namespace story */

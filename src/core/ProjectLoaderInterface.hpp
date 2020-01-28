@@ -2,7 +2,7 @@
 
 #include <string>
 
-class EResourceManager;
+class story::Resource::EResourceManager;
 
 namespace story {
 namespace Core {
@@ -10,7 +10,7 @@ namespace Core {
 class ProjectLoaderInterface
 {
 public:
-	ProjectLoaderInterface(EResourceManager* manager) {
+	ProjectLoaderInterface(story::Resource::EResourceManager* manager) {
 		this->resManager = manager;
 	}
 	virtual ~ProjectLoaderInterface(){ }
@@ -19,7 +19,7 @@ public:
 	virtual bool loadProject(std::string& res_path) = 0;
 
 protected:
-	EResourceManager	*resManager;
+	story::Resource::EResourceManager	*resManager;
 };
 
 } /* namespace Core */

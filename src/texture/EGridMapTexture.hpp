@@ -6,7 +6,7 @@
 
 #include "EDrawable.hpp"
 
-class EImageResource;
+class story::Resource::EImageResource;
 
 class EGridMapTexture : public EDrawable
 {
@@ -33,10 +33,10 @@ protected:
 	unsigned int hTileCount;
 	unsigned int levels;
 
-    std::string name;
+	std::string name;
 	std::string base_image;
 
-    std::vector< std::vector< std::vector<unsigned short> > > tileMap;
+	std::vector< std::vector< std::vector<unsigned short> > > tileMap;
 
-	std::shared_ptr<EImageResource>	tile_image;
+	std::shared_ptr<story::Resource::EImageResource>	tile_image;
 };

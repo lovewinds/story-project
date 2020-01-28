@@ -1,7 +1,7 @@
 #include "util/PythonScript.hpp"
 #include "util/LogHelper.hpp"
 #include "util/IPCHelper.hpp"
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 
 
 
@@ -172,14 +172,14 @@ void PythonScript::initialize()
 		//wpath = path;
 		for (auto script_path : path_list) {
 			//appendPath(script_path);
-			if (Ecore::checkPlatform(std::string("Windows")))
+			if (story::Core::Ecore::checkPlatform(std::string("Windows")))
 				wpath.append(L";");
 			else
 				wpath.append(L":");
 			wpath.append(script_path);
 			LOG_DBG("   AppendPath: [%ls]", script_path.c_str());
 		}
-        Ecore::checkPathContents();
+        story::Core::Ecore::checkPathContents();
         Py_SetPath(wpath.c_str());
 
 		/* Export internal modules */

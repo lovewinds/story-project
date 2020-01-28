@@ -1,7 +1,7 @@
 #include <SDL.h>
 //#include <SDL2_gfxPrimitives.h>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/EFigure.hpp"
 
@@ -66,19 +66,19 @@ void EFigure::update(Uint32 currentTime, Uint32 accumulator)
 
 void EFigure::render(int delta_x, int delta_y, double delta_angle)
 {
-	SDL_Renderer *renderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *renderer = story::Core::Ecore::getInstance()->getRenderer();
 	if (renderer == NULL)
 		return;
 
-	int width = Ecore::getScreenWidth();
-	int height = Ecore::getScreenHeight();
+	int width = story::Core::Ecore::getScreenWidth();
+	int height = story::Core::Ecore::getScreenHeight();
 
 #if 0
-	if (Ecore::isHighDPI() == true) {
-		auto n_x = p_x * Ecore::getDisplayScale();
-		auto n_y = p_y * Ecore::getDisplayScale();
-		auto n_width = (p_x + mWidth) * Ecore::getDisplayScale();
-		auto n_height = (p_y + mHeight) * Ecore::getDisplayScale();
+	if (story::Core::Ecore::isHighDPI() == true) {
+		auto n_x = p_x * story::Core::Ecore::getDisplayScale();
+		auto n_y = p_y * story::Core::Ecore::getDisplayScale();
+		auto n_width = (p_x + mWidth) * story::Core::Ecore::getDisplayScale();
+		auto n_height = (p_y + mHeight) * story::Core::Ecore::getDisplayScale();
 		boxRGBA(renderer, n_x, n_y, n_width, n_height,
 			color.r, color.g, color.b, 0xAA );
 	} else {

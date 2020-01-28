@@ -1,6 +1,6 @@
 #include <SDL.h>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/SDLWrap.hpp"
 #include "util/LogHelper.hpp"
 
@@ -23,7 +23,7 @@ SDLSurfaceWrap::SDLSurfaceWrap(SDL_Surface *_surf)
 SDLSurfaceWrap::SDLSurfaceWrap(std::string path)
 : surface(nullptr)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 
 	if (path.empty()) {
 		LOG_ERR("Invalid image path !");
@@ -68,7 +68,7 @@ SDLSurfaceWrap::SDLSurfaceWrap(std::string text,
 
 SDLSurfaceWrap::SDLSurfaceWrap(std::vector<std::vector<short> > map)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 	Uint32 rmask, gmask, bmask, amask;
 	/* TODO: Below size should be taken from arg */
 	const int TILE_SIZE = 32;
@@ -118,7 +118,7 @@ SDL_Surface* SDLSurfaceWrap::getSurface()
 ///////////////////////////////////////////////////////////////////////////////
 bool SDLTextureWrap::createFromSurface(SDL_Surface *surface)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 
 	if (!surface)
 		return false;
@@ -186,7 +186,7 @@ SDLTextureWrap::SDLTextureWrap(std::vector<std::vector<short> > map)
 		if (createFromSurface(surf->getSurface()))
 		{
 			/* Set rendering target */
-			SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+			SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 			SDL_SetRenderTarget(gRenderer, texture);
 
 			

@@ -1,15 +1,18 @@
-#include "EScreenManager.hpp"
+#include "ScreenManager.hpp"
 
-#include "Ecore.hpp"
-#include "SceneManager.hpp"
+#include "core/Ecore.hpp"
+#include "core/SceneManager.hpp"
 #include "util/LogHelper.hpp"
 
-EScreenManager::EScreenManager()
+namespace story {
+namespace Core {
+
+ScreenManager::ScreenManager()
 {
 	sceneManager = new SceneManager();
 }
 
-EScreenManager::~EScreenManager()
+ScreenManager::~ScreenManager()
 {
 	if (sceneManager) {
 		delete sceneManager;
@@ -17,12 +20,12 @@ EScreenManager::~EScreenManager()
 	}
 }
 
-void EScreenManager::initDebugScene()
+void ScreenManager::initDebugScene()
 {
 	sceneManager->initDebugScene();
 }
 
-bool EScreenManager::playScene(std::string scene_name)
+bool ScreenManager::playScene(std::string scene_name)
 {
 	bool success = true;
 
@@ -40,19 +43,19 @@ bool EScreenManager::playScene(std::string scene_name)
 	return success;
 }
 
-void EScreenManager::render()
+void ScreenManager::render()
 {
 	/* Render through sceneManager */
 	sceneManager->render();
 }
 
-void EScreenManager::update(Uint32 currentTime, Uint32 accumulator)
+void ScreenManager::update(Uint32 currentTime, Uint32 accumulator)
 {
 	/* Update through sceneManager */
 	sceneManager->update(currentTime, accumulator);
 }
 
-void EScreenManager::handleEvent(SDL_Event e)
+void ScreenManager::handleEvent(SDL_Event e)
 {
 	if (e.type == SDL_MOUSEBUTTONDOWN
 		|| e.type == SDL_KEYDOWN || e.type == SDL_TEXTINPUT	/* Key pressed */
@@ -86,3 +89,6 @@ void EScreenManager::handleEvent(SDL_Event e)
 	}
 #endif
 }
+
+} /* namespace Core */
+} /* namespace story */

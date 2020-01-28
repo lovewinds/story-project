@@ -2,7 +2,7 @@
 #pragma execution_character_set("utf-8")
 #endif
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "EScreenManager.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
@@ -41,7 +41,7 @@ void TitleLayer::initMenuItem()
 	/* Menu list items */
 	for (int i = 0; i < 3; i++) {
 		int item_x = 50;
-		int item_y = Ecore::getScreenHeight() - 180 + (50 * i);
+		int item_y = story::Core::Ecore::getScreenHeight() - 180 + (50 * i);
 		listBGColor.r = listBGColor.g = listBGColor.b = 0x30 + (0xA * i);
 
 		SDL_snprintf(str_id, 32, "menu_%d", i + 1);
@@ -70,7 +70,7 @@ void TitleLayer::initMenuItem()
 	std::shared_ptr<story::Graphic::Object> title_obj(new story::Graphic::Object());
 
 	title_obj->setName("title_string");
-	title_obj->movePositionTo(Ecore::getScreenWidth()-200, 100);
+	title_obj->movePositionTo(story::Core::Ecore::getScreenWidth()-200, 100);
 	title_obj->addText(txt);
 	addObject(title_obj);
 
@@ -78,9 +78,9 @@ void TitleLayer::initMenuItem()
 
 /* Create dynamic animations */
 /* Should be moved into ObjectFactory */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
-	int s_width = Ecore::getScreenWidth();
-	int s_height = Ecore::getScreenHeight();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+	int s_width = story::Core::Ecore::getScreenWidth();
+	int s_height = story::Core::Ecore::getScreenHeight();
 
 	for (int i = 0; i < 64; i++) {
 		std::shared_ptr<EImageTexture> imgTexture = nullptr;
@@ -179,7 +179,7 @@ bool TitleLayer::checkMenuClicked(int x, int y)
 				/* WARNING : DO NOT call playScene inside of another scene logic */
 				std::string s("sample_rpg");
 				LOG_DBG("Request to play scene [%s]", s.c_str());
-				Ecore::requestSceneChange(s);
+				story::Core::Ecore::requestSceneChange(s);
 			}
 		}
 	}

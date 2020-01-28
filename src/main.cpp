@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 
 int main(int argc, char* argv[])
 {
-	Ecore* core = Ecore::getInstance();
+	story::Core::Ecore* core = story::Core::Ecore::getInstance();
 
 	core->Start();
 
-	Ecore::releaseInstance();
+	story::Core::Ecore::releaseInstance();
 
 	return 0;
 }

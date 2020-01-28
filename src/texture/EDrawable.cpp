@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "texture/EDrawable.hpp"
 #include "util/LogHelper.hpp"
 
@@ -82,7 +82,7 @@ void EDrawable::dealloc()
 void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
 	bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 
 	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
@@ -94,13 +94,13 @@ void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
 		renderQuad.h = clip->h;
 	}
 
-	if (Ecore::isHighDPI() == true)
+	if (story::Core::Ecore::isHighDPI() == true)
 	{
-		renderQuad.x *= Ecore::getDisplayScale();
-		renderQuad.y *= Ecore::getDisplayScale();
+		renderQuad.x *= story::Core::Ecore::getDisplayScale();
+		renderQuad.y *= story::Core::Ecore::getDisplayScale();
 		if (auto_size_by_dpi) {
-			renderQuad.w *= Ecore::getDisplayScale();
-			renderQuad.h *= Ecore::getDisplayScale();
+			renderQuad.w *= story::Core::Ecore::getDisplayScale();
+			renderQuad.h *= story::Core::Ecore::getDisplayScale();
 		}
 	}
 
@@ -112,7 +112,7 @@ void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
 	double ratio_w, double ratio_h, double angle,
 	bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {
-	SDL_Renderer *gRenderer = Ecore::getInstance()->getRenderer();
+	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
 
 	/* Set rendering space and render to screen */
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
@@ -126,13 +126,13 @@ void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
 	renderQuad.w = (int)(renderQuad.w * ratio_w);
 	renderQuad.h = (int)(renderQuad.h * ratio_h);
 
-	if (Ecore::isHighDPI() == true)
+	if (story::Core::Ecore::isHighDPI() == true)
 	{
-		renderQuad.x *= Ecore::getDisplayScale();
-		renderQuad.y *= Ecore::getDisplayScale();
+		renderQuad.x *= story::Core::Ecore::getDisplayScale();
+		renderQuad.y *= story::Core::Ecore::getDisplayScale();
 		if (auto_size_by_dpi) {
-			renderQuad.w *= Ecore::getDisplayScale();
-			renderQuad.h *= Ecore::getDisplayScale();
+			renderQuad.w *= story::Core::Ecore::getDisplayScale();
+			renderQuad.h *= story::Core::Ecore::getDisplayScale();
 		}
 	}
 

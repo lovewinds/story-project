@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 
 #include "graphic/animation/EAccelAnimation.hpp"
@@ -17,7 +17,7 @@ EAccelAnimation::~EAccelAnimation()
 
 void EAccelAnimation::start()
 {
-	startTime = Ecore::getAppTicks();
+	startTime = story::Core::Ecore::getAppTicks();
 	state = ANI_START;
 
 	velo = 10.0;

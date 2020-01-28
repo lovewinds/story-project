@@ -2,7 +2,7 @@
 #include <sstream>
 #include <limits>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
@@ -468,8 +468,8 @@ void MapLayer::handleEvent(SDL_Event e)
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		int x = 0, y = 0;
 
-		x = Ecore::getScreenWidth() * te->x;
-		y = Ecore::getScreenHeight() * te->y;
+		x = story::Core::Ecore::getScreenWidth() * te->x;
+		y = story::Core::Ecore::getScreenHeight() * te->y;
 
 		/* TODO: event consumer should be handle more efficient way */
 		bool consumed = testRotate(x, y);

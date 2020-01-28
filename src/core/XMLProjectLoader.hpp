@@ -5,7 +5,11 @@
 #include <pugixml.hpp>
 #include "core/ProjectLoaderInterface.hpp"
 
-class EResourceManager;
+namespace story {
+namespace Resource {
+	class EResourceManager;
+}
+}
 
 namespace story {
 namespace Core {
@@ -13,7 +17,7 @@ namespace Core {
 class XMLResourceLoader : public ProjectLoaderInterface
 {
 public:
-	XMLResourceLoader(EResourceManager* mgr);
+	XMLResourceLoader(story::Resource::EResourceManager* mgr);
 	virtual ~XMLResourceLoader();
 
 	/* Load all resources information from resource archive */

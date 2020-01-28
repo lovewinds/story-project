@@ -1,8 +1,11 @@
-#include "SceneManager.hpp"
+#include "core/SceneManager.hpp"
 
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
+
+namespace story {
+namespace Core {
 
 SceneManager::SceneManager()
 {
@@ -23,7 +26,7 @@ SceneManager::~SceneManager()
 bool SceneManager::playScene(std::string scene_name)
 {
 	std::shared_ptr<story::Graphic::Layer> scene;
-	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+	story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	if (nullptr == currentScene) {
 		scene = resFactory.createScene(scene_name);
@@ -46,7 +49,7 @@ bool SceneManager::playScene(std::string scene_name)
 void SceneManager::stopCurrentScene()
 {
 	if (currentScene) {
-		EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+		story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 
 		currentScene = nullptr;
 		resMgr.updateImageResourceCache();
@@ -67,7 +70,7 @@ void SceneManager::startCurrentScene()
 
 void SceneManager::initDebugScene()
 {
-	EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+	story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 
 	LOG_DBG("Create debug overlay scene");
 	debug_overlay = resMgr.createScene(story::Graphic::LAYER_DEBUG, "debug");
@@ -103,14 +106,14 @@ void SceneManager::handleEvent(SDL_Event e)
 			break;
 		case SDLK_BACKQUOTE:
 			if (overlayState) {
-				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 				overlayState = false;
 				overlay = nullptr;
 				resMgr.updateImageResourceCache();
 			}
 			else {
 				overlayState = true;
-				EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+				story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 				std::string sname = "vnovel";
 
 				overlay = resFactory.createScene(sname);
@@ -132,14 +135,14 @@ void SceneManager::handleEvent(SDL_Event e)
 
 		if (te->x >= 0.3 && te-> x <= 0.6 && te->y >= 0.7) {
 			if (overlayState) {
-				EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+				story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
 				overlayState = false;
 				overlay = nullptr;
 				resMgr.updateImageResourceCache();
 			}
 			else {
 				overlayState = true;
-				EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+				story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 				std::string sname = "vnovel";
 				
 				overlay = resFactory.createScene(sname);
@@ -330,3 +333,6 @@ void SceneManager::temp_moveCharacter(double dx, double dy)
 {
 //	sprite->movePositionBy(dx, dy);
 }
+
+} /* namespace Core */
+} /* namespace story */

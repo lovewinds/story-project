@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 
 TEST(EcoreTest, First) {
-	Ecore* core = Ecore::getInstance();
-	Ecore* invalid = nullptr;
+	story::Core::Ecore* core = story::Core::Ecore::getInstance();
+	story::Core::Ecore* invalid = nullptr;
 
 	EXPECT_NE(core, nullptr);
 	EXPECT_NE(invalid, nullptr);
 
-	Ecore::releaseInstance();
+	story::Core::Ecore::releaseInstance();
 }

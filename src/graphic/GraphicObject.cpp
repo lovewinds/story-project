@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/ESmoothStepAnimation.hpp"

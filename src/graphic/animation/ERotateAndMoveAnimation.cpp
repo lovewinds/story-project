@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 
 #include "graphic/animation/ERotateAndMoveAnimation.hpp"
@@ -78,7 +78,7 @@ void ERotateAndMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 		LOG_DBG("Reverse !");
 		//EAnimation::stop();
 		a_angle = 0.0f;
-		startTime = Ecore::getAppTicks();
+		startTime = story::Core::Ecore::getAppTicks();
 		//state = ANI_STOP;
 		if (reverse)
 			reverse = false;

@@ -4,8 +4,8 @@
 #include <SDL_syswm.h>
 #include <SDL_keyboard.h>
 
-#include "Ecore.hpp"
-#include "EScreenManager.hpp"
+#include "core/Ecore.hpp"
+#include "core/ScreenManager.hpp"
 #include "texture/EDrawable.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
@@ -13,6 +13,9 @@
 #include "util/LogHelper.hpp"
 #include "util/JsonHelper.hpp"
 #include "util/XmlHelper.hpp"
+
+namespace story {
+namespace Core {
 
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 540;
@@ -222,9 +225,9 @@ void Ecore::Start()
 		initialized = true;
 	}
 
-	screenManager = new EScreenManager();
-	resManager = new EResourceManager();
-	resFactory = new EResourceFactory();
+	screenManager = new story::Core::ScreenManager();
+	resManager = new story::Resource::EResourceManager();
+	resFactory = new story::Resource::EResourceFactory();
 
 	/* Load game resources */
 	if (loadProject() == false)
@@ -405,17 +408,17 @@ double Ecore::GetFPS()
 	return d_fps;
 }
 
-EResourceManager& Ecore::getResourceManager()
+story::Resource::EResourceManager& Ecore::getResourceManager()
 {
 	return *resManager;
 }
 
-EResourceFactory& Ecore::getResourceFactory()
+story::Resource::EResourceFactory& Ecore::getResourceFactory()
 {
 	return *resFactory;
 }
 
-EScreenManager& Ecore::getScreenManager()
+story::Core::ScreenManager& Ecore::getScreenManager()
 {
 	return *screenManager;
 }
@@ -937,3 +940,6 @@ void Ecore::handleSceneChange(std::string scene_name)
 		LOG_ERR("Failed to play scene [%s] !", scene_name.c_str());
 	}
 }
+
+} /* namespace Core */
+} /* namespace story */

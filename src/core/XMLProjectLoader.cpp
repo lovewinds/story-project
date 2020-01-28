@@ -2,17 +2,19 @@
 #include <sstream>
 #include <pugixml.hpp>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "graphic/descriptors/SceneDescripor.hpp"
 #include "graphic/descriptors/SubLayerDescriptor.hpp"
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
+#include "resource/ESpriteType.hpp"
+#include "resource/EResourceManager.hpp"
 
 namespace story {
 namespace Core {
 
-XMLResourceLoader::XMLResourceLoader(EResourceManager* mgr)
+XMLResourceLoader::XMLResourceLoader(story::Resource::EResourceManager* mgr)
 	: ProjectLoaderInterface(mgr)
 {
 }
@@ -50,7 +52,9 @@ void XMLResourceLoader::loadSprites(pugi::xml_document &document) {
 			continue;
 		}
 
-		std::shared_ptr<ESpriteType> spriteType(new ESpriteType(name, source));
+		std::shared_ptr<story::Resource::ESpriteType> spriteType(
+			new story::Resource::ESpriteType(name, source)
+		);
 		bool res = spriteType->setCellInfo(_width, _height);
 		if (false == res) {
 			LOG_ERR("Failed to initiate SpriteType");

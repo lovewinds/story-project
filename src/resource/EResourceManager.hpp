@@ -13,7 +13,12 @@
 #include "texture/ESprite.hpp"
 #include "util/SDLWrap.hpp"
 
-class EResourceLoaderInterface;
+namespace story {
+namespace Core {
+	class ProjectLoaderInterface;
+	class XMLProjectLoader;
+}
+}
 
 namespace story {
 namespace Resource {
@@ -91,7 +96,7 @@ protected:
 	_createSpriteFromTypeDesc(std::string spriteID,
 			std::shared_ptr<ESpriteType> spriteType);
 
-	EResourceLoaderInterface *loader;
+	story::Core::ProjectLoaderInterface *loader;
 
 	/* Store sprite info here for caching */
 	std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;

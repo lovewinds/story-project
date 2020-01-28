@@ -2,8 +2,11 @@
 #include <list>
 #include <string>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "graphic/layer/Layer.hpp"
+
+namespace story {
+namespace Core {
 
 enum TextureType {
 	TEXTURE_TYPE_FONT,
@@ -53,3 +56,6 @@ private:
 
 	void propagateEvent(SDL_Event e);
 };
+
+} /* namespace Core */
+} /* namespace story */

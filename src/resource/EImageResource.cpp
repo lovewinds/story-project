@@ -1,6 +1,6 @@
 #include <SDL_image.h>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
@@ -13,7 +13,7 @@ EImageResource::EImageResource(
 		unsigned int width, unsigned int height)
 {
 	this->name = name;
-	this->path = Ecore::getResourcePath(path);
+	this->path = story::Core::Ecore::getResourcePath(path);
 	this->width = width;
 	this->height = height;
 
@@ -53,7 +53,7 @@ unsigned int EImageResource::getHeight() const
 std::shared_ptr<SDLTextureWrap> EImageResource::getTexture()
 {
 	if (texture == nullptr) {
-		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+		EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 
 		LOG_ERR("Texture is not exists. create one");
 		texture = resManager.allocateTexture(path);
@@ -71,7 +71,7 @@ void EImageResource::releaseTexture()
 	texture.reset();
 	texture = nullptr;
 
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	resManager.releaseTexture(path);
 }
 

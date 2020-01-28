@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 
 #include "graphic/GraphicObject.hpp"
@@ -37,7 +37,7 @@ double EAnimation::getAngle()
 
 void EAnimation::start()
 {
-    prevTime = startTime = Ecore::getAppTicks();
+    prevTime = startTime = story::Core::Ecore::getAppTicks();
     state = ANI_START;
 }
 
@@ -61,13 +61,13 @@ void EAnimation::sync()
 
 void EAnimation::pause()
 {
-    elapsedTime = Ecore::getAppTicks() - startTime;
+    elapsedTime = story::Core::Ecore::getAppTicks() - startTime;
     state = ANI_PAUSE;
 }
 
 void EAnimation::resume()
 {
-    startTime = Ecore::getAppTicks() - elapsedTime;
+    startTime = story::Core::Ecore::getAppTicks() - elapsedTime;
     state = ANI_START;
 }
 

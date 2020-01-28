@@ -3,16 +3,19 @@
 #include <string>
 #include <SDL.h>
 
+namespace story {
+namespace Core {
+
 class SceneManager;
 
-class EScreenManager
+class ScreenManager
 {
 public:
-	EScreenManager();
-	~EScreenManager();
+	ScreenManager();
+	~ScreenManager();
 
 	/* Prohibit copy constructor */
-	EScreenManager(EScreenManager& self) = delete;
+	ScreenManager(ScreenManager& self) = delete;
 
 	bool playScene(std::string scene_name);
 	void initDebugScene();
@@ -25,3 +28,6 @@ public:
 private:
 	SceneManager* sceneManager;
 };
+
+} /* namespace Core */
+} /* namespace story */

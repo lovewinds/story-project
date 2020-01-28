@@ -3,10 +3,10 @@
 #include <string>
 #include <fstream>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
+#include "core/XMLProjectLoader.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/XMLResourceLoader.hpp"
 
 #include "graphic/layer/RPGLayer.hpp"
 #include "graphic/layer/MapLayer.hpp"
@@ -14,10 +14,13 @@
 #include "graphic/layer/DbgOverlayLayer.hpp"
 #include "graphic/layer/TitleLayer.hpp"
 
+namespace story {
+namespace Resource {
+
 EResourceManager::EResourceManager()
 {
 	/* TODO: Get specific loader from factory class */
-	loader = new XMLResourceLoader(this);
+	loader = new story::Core::XMLProjectLoader(this);
 	SDL_assert(loader);
 }
 
@@ -38,14 +41,14 @@ EResourceManager::~EResourceManager()
 
 bool EResourceManager::loadProject(std::string res_file)
 {
-	std::string path = Ecore::getResourcePath(res_file);
+	std::string path = story::Core::Ecore::getResourcePath(res_file);
 	if (path.empty()) {
 		LOG_ERR("Empty resource file path !");
 		return false;
 	}
 	LOG_DBG("Load resource file [%s]", path.c_str());
 
-	if (Ecore::checkPlatform("iOS")) {
+	if (story::Core::Ecore::checkPlatform("iOS")) {
 		std::ifstream f;
 		f.open(path);
 		if (false == f.is_open()) {
@@ -332,7 +335,7 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 
 std::shared_ptr<SDLFontWrap> EResourceManager::getFont(std::string family, int size)
 {
-	std::shared_ptr<SDLFontWrap> font = Ecore::loadFont(family, size);
+	std::shared_ptr<SDLFontWrap> font = story::Core::Ecore::loadFont(family, size);
 
 	/* TODO: Caching */
 	return font;
@@ -342,3 +345,6 @@ void EResourceManager::releaseFont(std::shared_ptr<SDLFontWrap>& font)
 {
 	/* TODO: Unref cached font */
 }
+
+} /* namespace Resource */
+} /* namespace story */

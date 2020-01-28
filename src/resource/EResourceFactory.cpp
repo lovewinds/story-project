@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
@@ -34,7 +34,7 @@ EResourceFactory::createScene(std::string scene_name)
 	std::shared_ptr<story::Graphic::Layer> scene = nullptr;
 
 	/* Search scene desc */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	std::shared_ptr<story::Graphic::ESceneDesc> sceneDesc = resManager.getSceneDesc(scene_name);
 	if (nullptr == sceneDesc) {
 		LOG_ERR("Failed to find scene descriptor");
@@ -113,10 +113,10 @@ EResourceFactory::createScene(std::string scene_name)
 				}
 
 				if (imageDesc->getHorizontalAlign() == story::Graphic::IMAGE_ALIGN_RIGHT) {
-					px = (Ecore::getScreenWidth() - (int)width) - px;
+					px = (story::Core::Ecore::getScreenWidth() - (int)width) - px;
 				}
 				if (imageDesc->getVerticalAlign() == story::Graphic::IMAGE_ALIGN_BOTTOM) {
-					py = (Ecore::getScreenHeight() - (int)height) + py;
+					py = (story::Core::Ecore::getScreenHeight() - (int)height) + py;
 				}
 
 				object->movePositionTo(px, py);
@@ -164,7 +164,7 @@ std::shared_ptr<EImageTexture>
 EResourceFactory::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
 	/* Search image desc */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	std::shared_ptr<EImageTexture> image = nullptr;
 
 	if (nullptr == imageDesc)
@@ -186,7 +186,7 @@ void EResourceFactory::removeImageTexture(std::string name)
 std::shared_ptr<ESprite>
 EResourceFactory::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	std::shared_ptr<ESprite> sprite = nullptr;
 
 	if (nullptr == spriteDesc)
@@ -212,7 +212,7 @@ EResourceFactory::createTextTexture(std::string text,
 {
 	/* If not provided, create a default one */
 	if (nullptr == font) {
-		EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+		EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 
 		font = resManager.getFont("NanumGothic", 28);
 		if (nullptr == font) {

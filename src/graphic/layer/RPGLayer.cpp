@@ -2,7 +2,7 @@
 #include <sstream>
 #include <limits>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "texture/ESprite.hpp"
@@ -18,7 +18,7 @@ RPGLayer::RPGLayer(std::string name)
 {
 	LOG_INFO("RPGLayer[%s] created", name.c_str());
 #if 0
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
 	std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
@@ -31,7 +31,7 @@ RPGLayer::RPGLayer(std::string name)
 
 #if 0
 	/* Create base map textures */
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	/* Create sprite by manually for test */
 
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
@@ -498,8 +498,8 @@ void RPGLayer::handleEvent(SDL_Event e)
 		SDL_TouchFingerEvent *te = &e.tfinger;
 		int x = 0, y = 0;
 
-		x = Ecore::getScreenWidth() * te->x;
-		y = Ecore::getScreenHeight() * te->y;
+		x = story::Core::Ecore::getScreenWidth() * te->x;
+		y = story::Core::Ecore::getScreenHeight() * te->y;
 
 		/* TODO: event consumer should be handle more efficient way */
 		bool consumed = testRotate(x, y);

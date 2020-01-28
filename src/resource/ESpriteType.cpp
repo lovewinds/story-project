@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
 #include "util/LogHelper.hpp"
 
@@ -23,7 +23,7 @@ ESpriteType::ESpriteType(std::string name, std::string base_image)
 ESpriteType::~ESpriteType()
 {
 	/* TODO: SpriteInfo should notice its release to resource manager */
-	//EResourceManager &resManager = Ecore::getInstance()->getResourceManager();
+	//EResourceManager &resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	//resManager.releaseTexture();
 
 	LOG_INFO("ESpriteType[%s] removed", name.c_str());
@@ -41,7 +41,7 @@ std::string ESpriteType::getBaseImage()
 
 bool ESpriteType::setCellInfo(unsigned int cell_width, unsigned int cell_height)
 {
-	EResourceManager &resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager &resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	std::shared_ptr<EImageResource> res = resManager.getImageResource(base_image);
 	if (res) {
 		this->base_width = res->getWidth();

@@ -2,7 +2,7 @@
 #pragma execution_character_set("utf-8")
 #endif
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
@@ -29,8 +29,8 @@ ChatLayer::ChatLayer(std::string name)
 	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
 
 	std::shared_ptr<EFigure> dr(new EFigure(
-		10, Ecore::getScreenHeight() / 3 * 2,
-		Ecore::getScreenWidth() - 20, (Ecore::getScreenHeight() / 3) - 10,
+		10, story::Core::Ecore::getScreenHeight() / 3 * 2,
+		story::Core::Ecore::getScreenWidth() - 20, (story::Core::Ecore::getScreenHeight() / 3) - 10,
 		boxBGColor));
 	auto result = _drawable_map.emplace("Talkbox", dr);
 	if (!result.second) {
@@ -41,7 +41,7 @@ ChatLayer::ChatLayer(std::string name)
 	std::shared_ptr<ETextTexture> txt(
 		new ETextTexture("안녕?", textColor, bgColor));
 	object->setName("Message");
-	object->movePositionTo(20, (Ecore::getScreenHeight() / 3 * 2) + 10);
+	object->movePositionTo(20, (story::Core::Ecore::getScreenHeight() / 3 * 2) + 10);
 	object->addText(txt);
 
 	addObject(object);

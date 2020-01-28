@@ -2,7 +2,7 @@
 #pragma execution_character_set("utf-8")
 #endif
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
@@ -17,7 +17,7 @@ DbgOverlayLayer::DbgOverlayLayer(std::string name)
 {
 	LOG_INFO("DbgOverlayLayer[%s] created", name.c_str());
 
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
 	std::shared_ptr<ETextTexture> tt(new ETextTexture("FPS: 0.0", textColor, bgColor, 20));
@@ -76,7 +76,7 @@ void DbgOverlayLayer::update(Uint32 currentTime, Uint32 accumulator)
 	static char str[256] = { 0, };
 
 	/* Update Text */
-	double d_fps = Ecore::getInstance()->GetFPS();
+	double d_fps = story::Core::Ecore::getInstance()->GetFPS();
 	SDL_snprintf(str, 256, "FPS: %0.2f", d_fps);
 
 	for (auto& it : _sprite_map)

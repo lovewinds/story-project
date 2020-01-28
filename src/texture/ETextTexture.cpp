@@ -1,6 +1,6 @@
 #include <SDL_ttf.h>
 
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
 #include "texture/ETextTexture.hpp"
@@ -25,13 +25,15 @@ ETextTexture::~ETextTexture()
 
 void ETextTexture::_createTexture(int size)
 {
-	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	story::Resource::EResourceFactory& resFactory =
+		story::Core::Ecore::getInstance()->getResourceFactory();
+	story::Resource::EResourceManager& resManager =
+		story::Core::Ecore::getInstance()->getResourceManager();
 
-	if (Ecore::isHighDPI() == true) {
-		size *= Ecore::getDisplayScale();
+	if (story::Core::Ecore::isHighDPI() == true) {
+		size *= story::Core::Ecore::getDisplayScale();
 		wasHighDPI = true;
-		prevScale = Ecore::getDisplayScale();
+		prevScale = story::Core::Ecore::getDisplayScale();
 	}
 
 	font = resManager.getFont("NanumBarunpenR", size);
@@ -65,12 +67,12 @@ void ETextTexture::_removeTexture()
 
 void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
-	if (Ecore::isHighDPI() != wasHighDPI) {
-		wasHighDPI = Ecore::isHighDPI();
+	if (story::Core::Ecore::isHighDPI() != wasHighDPI) {
+		wasHighDPI = story::Core::Ecore::isHighDPI();
 		_createTexture(size);
 	}
-	else if (Ecore::getDisplayScale() != prevScale) {
-		prevScale = Ecore::getDisplayScale();
+	else if (story::Core::Ecore::getDisplayScale() != prevScale) {
+		prevScale = story::Core::Ecore::getDisplayScale();
 		_createTexture(size);
 	}
 }

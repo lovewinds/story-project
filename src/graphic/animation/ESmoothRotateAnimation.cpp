@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 
 #include "graphic/animation/ESmoothRotateAnimation.hpp"

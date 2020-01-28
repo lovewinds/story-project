@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 #include "util/LogHelper.hpp"
@@ -63,7 +63,7 @@ void ESprite::setIndex(unsigned int index)
 
 void ESprite::_createTexture()
 {
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 	if (base_image_name.empty()) {
 		LOG_ERR("base_image_name is empty !");
 		return;

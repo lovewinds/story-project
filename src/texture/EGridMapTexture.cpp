@@ -1,4 +1,4 @@
-#include "Ecore.hpp"
+#include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
@@ -48,7 +48,8 @@ EGridMapTexture::~EGridMapTexture()
 
 void EGridMapTexture::_createTexture()
 {
-	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	story::Resource::EResourceManager& resManager =
+		story::Core::Ecore::getInstance()->getResourceManager();
 	if (base_image.empty()) {
 		LOG_ERR("base_image is empty !");
 		return;
@@ -82,7 +83,7 @@ void EGridMapTexture::update(Uint32 currentTime, Uint32 accumulator)
 
 void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 {
-	SDL_Window* window = Ecore::getInstance()->getWindow();
+	SDL_Window* window = story::Core::Ecore::getInstance()->getWindow();
 	SDL_Rect rect = { 0, };
     const unsigned int base_width = 240;
     const unsigned int base_height = 280;
