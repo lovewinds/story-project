@@ -6,6 +6,9 @@
 #include "texture/ETextTexture.hpp"
 #include "util/LogHelper.hpp"
 
+namespace story {
+namespace Graphic {
+
 ETextTexture::ETextTexture(std::string text,
 		SDL_Color textColor, SDL_Color bgColor, int size)
  : EDrawable()
@@ -103,3 +106,6 @@ void ETextTexture::render(int delta_x, int delta_y, double delta_angle)
 		texture_render(x, y, NULL, delta_angle, false);
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

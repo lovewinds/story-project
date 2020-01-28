@@ -5,8 +5,11 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "EDrawable.hpp"
+#include "texture/EDrawable.hpp"
 #include "util/SDLWrap.hpp"
+
+namespace story {
+namespace Graphic {
 
 class ETextTexture : public EDrawable
 {
@@ -36,3 +39,6 @@ protected:
 	float prevScale= 1.0f;
 	std::shared_ptr<SDLFontWrap> font;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

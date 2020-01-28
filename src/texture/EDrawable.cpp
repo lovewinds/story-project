@@ -2,6 +2,9 @@
 #include "texture/EDrawable.hpp"
 #include "util/LogHelper.hpp"
 
+namespace story {
+namespace Graphic {
+
 EDrawable::EDrawable() :
 p_x(0), p_y(0)
 {
@@ -139,3 +142,6 @@ void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
 	/* Render to screen */
 	SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }
+
+} /* namespace Graphic */
+} /* namespace story */

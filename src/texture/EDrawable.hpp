@@ -5,6 +5,9 @@
 
 #include "util/SDLWrap.hpp"
 
+namespace story {
+namespace Graphic {
+
 class EDrawable
 {
 public:
@@ -63,3 +66,6 @@ protected:
 		SDL_Point* center = NULL,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 };
+
+} /* namespace Graphic */
+} /* namespace story */

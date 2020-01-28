@@ -2,7 +2,10 @@
 
 #include <SDL.h>
 
-#include "EDrawable.hpp"
+#include "texture/EDrawable.hpp"
+
+namespace story {
+namespace Graphic {
 
 class EFigure : public EDrawable
 {
@@ -29,3 +32,6 @@ protected:
 	int alpha;
 	SDL_Color color;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

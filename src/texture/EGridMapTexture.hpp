@@ -4,9 +4,16 @@
 #include <cmath>
 #include <vector>
 
-#include "EDrawable.hpp"
+#include "texture/EDrawable.hpp"
 
-class story::Resource::EImageResource;
+namespace story {
+namespace Resource {
+	class EImageResource;
+}
+}
+
+namespace story {
+namespace Graphic {
 
 class EGridMapTexture : public EDrawable
 {
@@ -40,3 +47,6 @@ protected:
 
 	std::shared_ptr<story::Resource::EImageResource>	tile_image;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

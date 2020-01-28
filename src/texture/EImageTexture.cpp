@@ -5,6 +5,9 @@
 
 #include "texture/EImageTexture.hpp"
 
+namespace story {
+namespace Graphic {
+
 /* Screen dimension constants */
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -126,3 +129,6 @@ std::string EImageTexture::getName()
 {
 	return name;
 }
+
+} /* namespace Graphic */
+} /* namespace story */

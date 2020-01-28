@@ -41,7 +41,7 @@ public:
 /*
  * Image texture Functions
  */
-	std::shared_ptr<EImageTexture>
+	std::shared_ptr<story::Graphic::EImageTexture>
 	createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc);
 
 	void removeImageTexture(std::string name);
@@ -49,7 +49,7 @@ public:
 /*
  * Sprite Functions
  */
-	std::shared_ptr<ESprite>
+	std::shared_ptr<story::Graphic::ESprite>
 	createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc);
 
 	void removeSprite(std::string name);

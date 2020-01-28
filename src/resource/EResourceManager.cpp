@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "core/Ecore.hpp"
+#include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
@@ -68,7 +69,8 @@ bool EResourceManager::loadProject(std::string res_file)
 	return loader->loadProject(path);
 }
 
-bool EResourceManager::addSceneDesc(std::string name, std::shared_ptr<story::Graphic::ESceneDesc> desc)
+bool EResourceManager::addSceneDesc(std::string name,
+	std::shared_ptr<story::Graphic::ESceneDesc> desc)
 {
 	auto result = scene_desc_map.emplace(name, desc);
 	if (!result.second) {
@@ -220,18 +222,20 @@ EResourceManager::getSpriteType(std::string type_name)
 	return found;
 }
 
-std::shared_ptr<ESprite>
+std::shared_ptr<story::Graphic::ESprite>
 EResourceManager::_createSpriteFromTypeDesc(std::string spriteID,
 		std::shared_ptr<ESpriteType> spriteType)
 {
 	if (spriteID.empty() || (nullptr == spriteType) )
 		return nullptr;
 
-	std::shared_ptr<ESprite> sprite(new ESprite(spriteID, spriteType));
+	std::shared_ptr<story::Graphic::ESprite> sprite(
+		new story::Graphic::ESprite(spriteID, spriteType)
+	);
 	return sprite;
 }
 
-std::shared_ptr<ESprite>
+std::shared_ptr<story::Graphic::ESprite>
 EResourceManager::createSprite(std::string type, std::string name)
 {
 	LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
@@ -246,8 +250,9 @@ EResourceManager::createSprite(std::string type, std::string name)
 	}
 
 	/* Create sprite from descriptor */
-	std::shared_ptr<ESpriteType> spriteType = t->second;
-	std::shared_ptr<ESprite> sprite = _createSpriteFromTypeDesc(name, spriteType);
+	std::shared_ptr<story::Resource::ESpriteType> spriteType = t->second;
+	std::shared_ptr<story::Graphic::ESprite> sprite =
+		_createSpriteFromTypeDesc(name, spriteType);
 	if (!sprite) {
 		LOG_ERR("Failed to allocate sprite! [Type:%s]", spriteType->getName().c_str());
 		return nullptr;
@@ -257,7 +262,8 @@ EResourceManager::createSprite(std::string type, std::string name)
 }
 
 std::shared_ptr<EImageResource>
-EResourceManager::createImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
+EResourceManager::createImageResource(std::string name, std::string path,
+		unsigned int width, unsigned int height)
 {
 	LOG_DBG("Trying to create image resource [%s]", name.c_str());
 	std::shared_ptr<EImageResource> imgInfo(new EImageResource(name, path, width, height));
@@ -322,10 +328,12 @@ void EResourceManager::updateImageResourceCache()
 	}
 }
 
-std::shared_ptr<EImageTexture>
+std::shared_ptr<story::Graphic::EImageTexture>
 EResourceManager::createImageTexture(std::string name, std::string base_image)
 {
-	std::shared_ptr<EImageTexture> imgTexture(new EImageTexture(name, base_image));
+	std::shared_ptr<story::Graphic::EImageTexture> imgTexture(
+		new story::Graphic::EImageTexture(name, base_image)
+	);
 	if (!imgTexture) {
 		LOG_ERR("Failed to create Image texture !!");
 		return nullptr;

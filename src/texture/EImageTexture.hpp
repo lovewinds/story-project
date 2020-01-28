@@ -3,10 +3,16 @@
 #include <string>
 #include <cmath>
 
-#include "EDrawable.hpp"
+#include "texture/EDrawable.hpp"
 
-class EImageResource;
+namespace story {
+namespace Resource {
+	class EImageResource;
+}
+}
 
+namespace story {
+namespace Graphic {
 class EImageTexture : public EDrawable
 {
 public:
@@ -44,5 +50,8 @@ protected:
 	std::string name;
 	std::string base_image;
 
-	std::shared_ptr<EImageResource>	image;
+	std::shared_ptr<story::Resource::EImageResource>	image;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

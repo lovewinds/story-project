@@ -5,6 +5,9 @@
 #include "util/LogHelper.hpp"
 #include "texture/EFigure.hpp"
 
+namespace story {
+namespace Graphic {
+
 EFigure::EFigure(int x, int y, int width, int height, SDL_Color color)
 {
 	/* Initialize */
@@ -106,3 +109,6 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 #endif
 #endif
 }
+
+} /* namespace Graphic */
+} /* namespace story */

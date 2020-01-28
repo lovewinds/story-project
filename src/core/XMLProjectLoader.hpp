@@ -3,7 +3,9 @@
 #include <string>
 
 #include <pugixml.hpp>
+
 #include "core/ProjectLoaderInterface.hpp"
+#include "graphic/descriptors/SceneDescripor.hpp"
 
 namespace story {
 namespace Resource {
@@ -14,11 +16,11 @@ namespace Resource {
 namespace story {
 namespace Core {
 
-class XMLResourceLoader : public ProjectLoaderInterface
+class XMLProjectLoader : public ProjectLoaderInterface
 {
 public:
-	XMLResourceLoader(story::Resource::EResourceManager* mgr);
-	virtual ~XMLResourceLoader();
+	XMLProjectLoader(story::Resource::EResourceManager* mgr);
+	virtual ~XMLProjectLoader();
 
 	/* Load all resources information from resource archive */
 	virtual bool loadProject(std::string& res_path);

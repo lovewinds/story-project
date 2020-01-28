@@ -5,12 +5,16 @@
 
 #include "texture/ESprite.hpp"
 
+namespace story {
+namespace Graphic {
+
 /* Adjust the position on Y axis to remove mismatching with grid map */
 /* TODO: Should be handled more dynamic way */
 #define GRID_SIZE	(32.0f)
 
-ESprite::ESprite(std::string _name, std::shared_ptr<ESpriteType> spriteType) :
-	EDrawable()
+ESprite::ESprite(std::string _name,
+		std::shared_ptr<story::Resource::ESpriteType> spriteType)
+: EDrawable()
 {
 	sprite_index = 0;
 	sprite_change = 1;
@@ -63,7 +67,8 @@ void ESprite::setIndex(unsigned int index)
 
 void ESprite::_createTexture()
 {
-	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+	story::Resource::EResourceManager& resManager =
+		story::Core::Ecore::getInstance()->getResourceManager();
 	if (base_image_name.empty()) {
 		LOG_ERR("base_image_name is empty !");
 		return;
@@ -124,3 +129,6 @@ void ESprite::render(int delta_x, int delta_y, double delta_angle)
 		);
 	}
 }
+
+} /* namespace Graphic */
+} /* namespace story */

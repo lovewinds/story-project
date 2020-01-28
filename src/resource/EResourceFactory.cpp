@@ -54,7 +54,7 @@ EResourceFactory::createScene(std::string scene_name)
 		for (auto& sprite_it : layer->sprite_list)
 		{
 			std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc = sprite_it;
-			std::shared_ptr<ESprite> sprite;
+			std::shared_ptr<story::Graphic::ESprite> sprite;
 			std::shared_ptr<story::Graphic::Object> object
 				(new story::Graphic::Object());
 			LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
@@ -75,7 +75,7 @@ EResourceFactory::createScene(std::string scene_name)
 		for (auto& image_it : layer->image_list)
 		{
 			std::shared_ptr<story::Graphic::EImageDesc> imageDesc = image_it;
-			std::shared_ptr<EImageTexture> image;
+			std::shared_ptr<story::Graphic::EImageTexture> image;
 			std::shared_ptr<story::Graphic::Object> object
 				(new story::Graphic::Object());
 			LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
@@ -137,7 +137,9 @@ EResourceFactory::createScene(std::string scene_name)
 			/* RECOMMEND: Do not use dynamic_cast */
 			story::Graphic::RPGLayer* rpg_scene = dynamic_cast<story::Graphic::RPGLayer*>(scene.get());
 			story::Graphic::MapLayer* map_scene = dynamic_cast<story::Graphic::MapLayer*>(scene.get());
-			std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc));
+			std::shared_ptr<story::Graphic::EGridMapTexture> map(
+				new story::Graphic::EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc)
+			);
 			if (rpg_scene) {
 				rpg_scene->setMap(map);
 				rpg_scene->setGridDescriptor(gridDesc);
@@ -160,12 +162,12 @@ void EResourceFactory::removeScene(std::string scene_name)
 /*
 * Image texture Functions
 */
-std::shared_ptr<EImageTexture>
+std::shared_ptr<story::Graphic::EImageTexture>
 EResourceFactory::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
 	/* Search image desc */
 	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<EImageTexture> image = nullptr;
+	std::shared_ptr<story::Graphic::EImageTexture> image = nullptr;
 
 	if (nullptr == imageDesc)
 		return nullptr;
@@ -183,11 +185,11 @@ void EResourceFactory::removeImageTexture(std::string name)
 /*
 * Sprite Functions
 */
-std::shared_ptr<ESprite>
+std::shared_ptr<story::Graphic::ESprite>
 EResourceFactory::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
 	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
-	std::shared_ptr<ESprite> sprite = nullptr;
+	std::shared_ptr<story::Graphic::ESprite> sprite = nullptr;
 
 	if (nullptr == spriteDesc)
 		return nullptr;

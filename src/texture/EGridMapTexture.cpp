@@ -8,6 +8,9 @@
 #define T1	16
 #define T2	327
 
+namespace story {
+namespace Graphic {
+
 EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
 	std::shared_ptr<story::Graphic::EGridDesc> desc) : EDrawable()
 {
@@ -148,3 +151,6 @@ std::string EGridMapTexture::getName()
 {
 	return name;
 }
+
+} /* namespace Graphic */
+} /* namespace story */

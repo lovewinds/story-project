@@ -3,7 +3,7 @@
 #endif
 
 #include "core/Ecore.hpp"
-#include "EScreenManager.hpp"
+#include "core/ScreenManager.hpp"
 #include "util/LogHelper.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EFigure.hpp"
@@ -78,7 +78,8 @@ void TitleLayer::initMenuItem()
 
 /* Create dynamic animations */
 /* Should be moved into ObjectFactory */
-	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+	story::Resource::EResourceManager& resManager =
+		story::Core::Ecore::getInstance()->getResourceManager();
 	int s_width = story::Core::Ecore::getScreenWidth();
 	int s_height = story::Core::Ecore::getScreenHeight();
 

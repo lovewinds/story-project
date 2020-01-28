@@ -4,7 +4,8 @@
 #include <memory>
 #include <map>
 
-#include "object/animation/EAnimation.hpp"
+#include "graphic/GraphicObject.hpp"
+#include "graphic/animation/EAnimation.hpp"
 #include "texture/EDrawable.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
@@ -13,7 +14,7 @@
 namespace story {
 namespace Graphic {
 
-class ObjectGroup : public Object
+class ObjectGroup : public story::Graphic::Object
 {
 public:
 	ObjectGroup();

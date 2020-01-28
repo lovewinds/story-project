@@ -2,7 +2,11 @@
 
 #include <string>
 
-class story::Resource::EResourceManager;
+namespace story {
+namespace Resource {
+	class EResourceManager;
+}
+}
 
 namespace story {
 namespace Core {

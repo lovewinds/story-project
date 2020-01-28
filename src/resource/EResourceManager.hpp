@@ -39,13 +39,16 @@ public:
  * SceneDesc Functions
  */
 	/* Create scene descriptor with given parameters */
-	bool addSceneDesc(std::string name, std::shared_ptr<story::Graphic::ESceneDesc> desc);
+	bool addSceneDesc(std::string name,
+		std::shared_ptr<story::Graphic::ESceneDesc> desc);
 
-	std::shared_ptr<story::Graphic::ESceneDesc> getSceneDesc(std::string name);
+	std::shared_ptr<story::Graphic::ESceneDesc>
+	getSceneDesc(std::string name);
 
 	/* Create scene with name
 	 * (for some debug purpose) */
-	std::shared_ptr<story::Graphic::Layer> createScene(story::Graphic::LayerType type, std::string scene_name);
+	std::shared_ptr<story::Graphic::Layer>
+	createScene(story::Graphic::LayerType type, std::string scene_name);
 
 /*
  * Image Resource Functions
@@ -55,7 +58,8 @@ public:
 	 * uses 'path' to load real image file.
 	 */
 	std::shared_ptr<EImageResource>
-	createImageResource(std::string name, std::string path, unsigned int width, unsigned int height);
+	createImageResource(std::string name, std::string path,
+		unsigned int width, unsigned int height);
 
 	/* Returns shared_ptr of ImageResource instance allocated */
 	std::shared_ptr<EImageResource>
@@ -63,19 +67,19 @@ public:
 
 	void updateImageResourceCache();
 
-	std::shared_ptr<EImageTexture>
+	std::shared_ptr<story::Graphic::EImageTexture>
 	createImageTexture(std::string name, std::string base_image);
 
 /*
  * Sprite Functions
  */
 	/* Create Sprite type template */
-	bool createSpriteType(std::shared_ptr<ESpriteType>);
+	bool createSpriteType(std::shared_ptr<story::Resource::ESpriteType>);
 
-	std::shared_ptr<ESpriteType>
+	std::shared_ptr<story::Resource::ESpriteType>
 	getSpriteType(std::string type_name);
 
-	std::shared_ptr<ESprite>
+	std::shared_ptr<story::Graphic::ESprite>
 	createSprite(std::string type, std::string name);
 
 /*
@@ -92,7 +96,7 @@ public:
 
 protected:
 	/* Allocate sprite with related image resource into memory */
-	std::shared_ptr<ESprite>
+	std::shared_ptr<story::Graphic::ESprite>
 	_createSpriteFromTypeDesc(std::string spriteID,
 			std::shared_ptr<ESpriteType> spriteType);
 

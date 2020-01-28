@@ -14,17 +14,17 @@
 namespace story {
 namespace Core {
 
-XMLResourceLoader::XMLResourceLoader(story::Resource::EResourceManager* mgr)
+XMLProjectLoader::XMLProjectLoader(story::Resource::EResourceManager* mgr)
 	: ProjectLoaderInterface(mgr)
 {
 }
 
-XMLResourceLoader::~XMLResourceLoader()
+XMLProjectLoader::~XMLProjectLoader()
 {
 	/* Release all resources */
 }
 
-void XMLResourceLoader::loadSprites(pugi::xml_document &document) {
+void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
 	std::stringstream s;
 	/* Load SpriteType Templete */
 	//"/SceneRoot/Scene/Resources/Sprites/Sprite/Index[text()<5]/..");
@@ -72,7 +72,7 @@ void XMLResourceLoader::loadSprites(pugi::xml_document &document) {
 	}
 }
 
-void XMLResourceLoader::loadCommonResources(pugi::xml_document &document) {
+void XMLProjectLoader::loadCommonResources(pugi::xml_document &document) {
 	std::stringstream s;
 	/* Load Global image resources */
 	s.str(std::string());
@@ -102,7 +102,7 @@ void XMLResourceLoader::loadCommonResources(pugi::xml_document &document) {
 }
 
 std::shared_ptr<story::Graphic::ESceneDesc>
-XMLResourceLoader::loadSceneDesc(
+XMLProjectLoader::loadSceneDesc(
 		pugi::xml_document &document,
 		std::string scene_name, story::Graphic::LayerType layer_type) {
 
@@ -303,7 +303,7 @@ XMLResourceLoader::loadSceneDesc(
 	return scene_desc;
 }
 
-void XMLResourceLoader::loadScenes(pugi::xml_document &document) {
+void XMLProjectLoader::loadScenes(pugi::xml_document &document) {
 	/* Create Scene descriptor */
 	//pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene[@name='main']");
 	pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene");
@@ -343,7 +343,7 @@ void XMLResourceLoader::loadScenes(pugi::xml_document &document) {
 	} /* Scene loop */
 }
 
-bool XMLResourceLoader::loadProject(std::string& res_path)
+bool XMLProjectLoader::loadProject(std::string& res_path)
 {
 	bool result = true;
 	pugi::xml_document doc;

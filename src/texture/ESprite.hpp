@@ -4,15 +4,22 @@
 #include <memory>
 #include <vector>
 
-#include "EDrawable.hpp"
+#include "texture/EDrawable.hpp"
 #include "resource/ESpriteType.hpp"
 
-class EImageResource;
+namespace story {
+namespace Resource {
+	class EImageResource;
+}
+}
+
+namespace story {
+namespace Graphic {
 
 class ESprite : public EDrawable
 {
 public:
-	ESprite(std::string name, std::shared_ptr<ESpriteType> spriteType);
+	ESprite(std::string name, std::shared_ptr<story::Resource::ESpriteType> spriteType);
 	~ESprite();
 
 	std::string getName();
@@ -40,5 +47,8 @@ protected:
 
 	Uint32 prevTime;
 
-	std::shared_ptr<EImageResource>	sprite_base;
+	std::shared_ptr<story::Resource::EImageResource> sprite_base;
 };
+
+} /* namespace Graphic */
+} /* namespace story */
