@@ -4,7 +4,7 @@
 
 namespace story {
 namespace Resource {
-	class EResourceManager;
+  class EResourceManager;
 }
 }
 
@@ -14,16 +14,16 @@ namespace Core {
 class ProjectLoaderInterface
 {
 public:
-	ProjectLoaderInterface(story::Resource::EResourceManager* manager) {
-		this->resManager = manager;
-	}
-	virtual ~ProjectLoaderInterface(){ }
+  ProjectLoaderInterface(story::Resource::EResourceManager* manager) {
+    this->resManager = manager;
+  }
+  virtual ~ProjectLoaderInterface(){ }
 
-	/* Load all resources information from resource archive */
-	virtual bool loadProject(std::string& res_path) = 0;
+  /* Load all resources information from resource archive */
+  virtual bool loadProject(std::string& res_path) = 0;
 
 protected:
-	story::Resource::EResourceManager	*resManager;
+  story::Resource::EResourceManager *resManager;
 };
 
 } /* namespace Core */

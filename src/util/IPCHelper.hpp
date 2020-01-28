@@ -10,31 +10,31 @@
 class IPCServer
 {
 public:
-	IPCServer();
+  IPCServer();
 
-	void *CreateIPC();
-	void DestroyIPC();
+  void *CreateIPC();
+  void DestroyIPC();
 
-	unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
-	unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+  unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+  unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
 
 private:
-	zmq::context_t context;
-	zmq::socket_t socket_server;
+  zmq::context_t context;
+  zmq::socket_t socket_server;
 };
 
 class IPCClient
 {
 public:
-	IPCClient();
+  IPCClient();
 
-	void *OpenIPC();
-	void CloseIPC();
+  void *OpenIPC();
+  void CloseIPC();
 
-	unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
-	unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
+  unsigned long SendIPC(void *handle, const void* pData, size_t tDataSize);
+  unsigned long RecvIPC(void *handle, void* pData, size_t tDataSize);
 
 private:
-	zmq::context_t context;
-	zmq::socket_t socket_client;
+  zmq::context_t context;
+  zmq::socket_t socket_client;
 };

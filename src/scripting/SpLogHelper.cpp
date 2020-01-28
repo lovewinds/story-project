@@ -6,9 +6,9 @@
 
 SpLog::SpLog()
 {
-//	unsigned long err_code;
+//  unsigned long err_code;
 
-	//Log::init();
+  //Log::init();
 }
 
 SpLog::~SpLog()
@@ -18,16 +18,16 @@ SpLog::~SpLog()
 
 void SpLog::dbg()
 {
-//	LOGF(PY_LOG, "Python debug Message !!!");
+//  LOGF(PY_LOG, "Python debug Message !!!");
 }
 
 void SpLog::connect()
 {
-//	std::string test("test");
+//  std::string test("test");
 //  IPCClient::OpenIPC();
 }
 
 void SpLog::send()
 {
-    //IPCClient::SendIPC(NULL, NULL, 0);
+//  IPCClient::SendIPC(NULL, NULL, 0);
 }

@@ -22,45 +22,45 @@ namespace Resource {
 class EResourceFactory
 {
 public:
-	EResourceFactory();
-	~EResourceFactory();
+  EResourceFactory();
+  ~EResourceFactory();
 
-	/* Prohibit copy constructor */
-	EResourceFactory(EResourceFactory& self) = delete;
+  /* Prohibit copy constructor */
+  EResourceFactory(EResourceFactory& self) = delete;
 
 /*
  * Scene Functions
  */
-	/* Create scene from stored scene descriptor */
-	std::shared_ptr<story::Graphic::Layer> createScene(std::string scene_name);
+  /* Create scene from stored scene descriptor */
+  std::shared_ptr<story::Graphic::Layer> createScene(std::string scene_name);
 
-	/* Remove and de-allocate specific scene
-	 * and related resource(i.e. sprites) from memory */
-	void removeScene(std::string scene_name);
+  /* Remove and de-allocate specific scene
+   * and related resource(i.e. sprites) from memory */
+  void removeScene(std::string scene_name);
 
 /*
  * Image texture Functions
  */
-	std::shared_ptr<story::Graphic::EImageTexture>
-	createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc);
+  std::shared_ptr<story::Graphic::EImageTexture>
+  createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc);
 
-	void removeImageTexture(std::string name);
+  void removeImageTexture(std::string name);
 
 /*
  * Sprite Functions
  */
-	std::shared_ptr<story::Graphic::ESprite>
-	createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc);
+  std::shared_ptr<story::Graphic::ESprite>
+  createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc);
 
-	void removeSprite(std::string name);
+  void removeSprite(std::string name);
 
 /**
  * Low - layer functions
  */
-	std::shared_ptr<SDLTextureWrap>
-	createTextTexture(std::string text,
-			SDL_Color textColor, SDL_Color bgColor,
-			std::shared_ptr<SDLFontWrap> font = nullptr);
+  std::shared_ptr<SDLTextureWrap>
+  createTextTexture(std::string text,
+      SDL_Color textColor, SDL_Color bgColor,
+      std::shared_ptr<SDLFontWrap> font = nullptr);
 
 };
 

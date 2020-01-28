@@ -11,22 +11,22 @@ class SceneManager;
 class ScreenManager
 {
 public:
-	ScreenManager();
-	~ScreenManager();
+  ScreenManager();
+  ~ScreenManager();
 
-	/* Prohibit copy constructor */
-	ScreenManager(ScreenManager& self) = delete;
+  /* Prohibit copy constructor */
+  ScreenManager(ScreenManager& self) = delete;
 
-	bool playScene(std::string scene_name);
-	void initDebugScene();
+  bool playScene(std::string scene_name);
+  void initDebugScene();
 
-	/* Primitive functions */
-	void render();
-	void update(Uint32 currentTime, Uint32 accumulator);
-	void handleEvent(SDL_Event e);
+  /* Primitive functions */
+  void render();
+  void update(Uint32 currentTime, Uint32 accumulator);
+  void handleEvent(SDL_Event e);
 
 private:
-	SceneManager* sceneManager;
+  SceneManager* sceneManager;
 };
 
 } /* namespace Core */

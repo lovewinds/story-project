@@ -17,13 +17,13 @@ namespace Graphic {
 class ObjectGroup : public story::Graphic::Object
 {
 public:
-	ObjectGroup();
-	virtual ~ObjectGroup();
+  ObjectGroup();
+  virtual ~ObjectGroup();
 
-	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
-	virtual void render();
+  virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
+  virtual void render();
 
-	/* Primitive */
+  /* Primitive */
 
 };
 

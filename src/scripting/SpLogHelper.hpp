@@ -3,13 +3,13 @@
 class SpLog
 {
 public:
-	SpLog();
-	~SpLog();
+  SpLog();
+  ~SpLog();
 
-	void dbg();
-	void connect();
-	void send();
+  void dbg();
+  void connect();
+  void send();
 
 // private:
-	// void *ipc;
+  // void *ipc;
 };

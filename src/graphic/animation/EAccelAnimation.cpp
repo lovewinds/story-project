@@ -8,7 +8,7 @@ namespace Graphic {
 
 EAccelAnimation::EAccelAnimation()
 {
-	decrease = false;
+  decrease = false;
 }
 
 EAccelAnimation::~EAccelAnimation()
@@ -17,44 +17,44 @@ EAccelAnimation::~EAccelAnimation()
 
 void EAccelAnimation::start()
 {
-	startTime = story::Core::Ecore::getAppTicks();
-	state = ANI_START;
+  startTime = story::Core::Ecore::getAppTicks();
+  state = ANI_START;
 
-	velo = 10.0;
-	accel = 0.0;
-	prevTime = 0;
-	decrease = false;
+  velo = 10.0;
+  accel = 0.0;
+  prevTime = 0;
+  decrease = false;
 }
 
 void EAccelAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
-	Uint32 compensatedTime = currentTime + accumulator;
-	Uint32 atomicTime = (compensatedTime - startTime);
-	Uint32 delta = atomicTime - prevTime;
-	double dt = delta * 0.001;
+  Uint32 compensatedTime = currentTime + accumulator;
+  Uint32 atomicTime = (compensatedTime - startTime);
+  Uint32 delta = atomicTime - prevTime;
+  double dt = delta * 0.001;
 
-	if (atomicTime > 300) {
-		decrease = true;
-		accel = -0.25;
-	}
+  if (atomicTime > 300) {
+    decrease = true;
+    accel = -0.25;
+  }
 
-	if (ANI_START != state)	return;
+  if (ANI_START != state) return;
 
-	prevTime = delta;
+  prevTime = delta;
 
-	if (decrease) {
-		velo += accel * dt;
-	}
+  if (decrease) {
+    velo += accel * dt;
+  }
 
-	/* Move position */
-	a_x += velo * dt;
+  /* Move position */
+  a_x += velo * dt;
 
-	/* End animation */
-	if (velo <= 0.0) {
-		velo = 0.0;
-		accel = 0.0;
-		stop();
-	}
+  /* End animation */
+  if (velo <= 0.0) {
+    velo = 0.0;
+    accel = 0.0;
+    stop();
+  }
 }
 
 } /* namespace Graphic */

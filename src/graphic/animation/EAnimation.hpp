@@ -13,61 +13,61 @@ class Object;
 
 enum AnimationRepeatType
 {
-	ANI_NO_REPEAT,
-	ANI_REPEAT
+  ANI_NO_REPEAT,
+  ANI_REPEAT
 };
 
 enum AnimationState
 {
-	ANI_NONE,
-	ANI_STOP,
-	ANI_START,
-	ANI_PAUSE,
-	ANI_RESUME,
+  ANI_NONE,
+  ANI_STOP,
+  ANI_START,
+  ANI_PAUSE,
+  ANI_RESUME,
 };
 
 enum RotateDirection {
-	ROTATE_CLOCKWISE,
-	ROTATE_ANTICLOCKWISE
+  ROTATE_CLOCKWISE,
+  ROTATE_ANTICLOCKWISE
 };
 
 class EAnimation
 {
 public:
-	EAnimation();
-	virtual ~EAnimation();
+  EAnimation();
+  virtual ~EAnimation();
 
-	virtual void start();
-	virtual void stop();
-    virtual void pause();
-    virtual void resume();
-	virtual void sync();
+  virtual void start();
+  virtual void stop();
+  virtual void pause();
+  virtual void resume();
+  virtual void sync();
 
-    double getX();
-    double getY();
-	double getAngle();
-	AnimationState getState();
+  double getX();
+  double getY();
+  double getAngle();
+  AnimationState getState();
 
-	void setCaller(std::weak_ptr<story::Graphic::Object> caller);
+  void setCaller(std::weak_ptr<story::Graphic::Object> caller);
 
-    virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
+  virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
 protected:
-    Uint32 startTime = 0;
-    Uint32 elapsedTime = 0;
-    Uint32 prevTime = 0;
-    AnimationState state;
+  Uint32 startTime = 0;
+  Uint32 elapsedTime = 0;
+  Uint32 prevTime = 0;
+  AnimationState state;
 
-	/* This model only supports one callback at one time. */
-	/* TODO: Use callback list */
-	//std::weak_ptr<story::Graphic::Object> caller;
+  /* This model only supports one callback at one time. */
+  /* TODO: Use callback list */
+  //std::weak_ptr<story::Graphic::Object> caller;
 
-	std::weak_ptr<story::Graphic::Object> caller;
+  std::weak_ptr<story::Graphic::Object> caller;
 
-	/* Position */
-	double a_x;
-	double a_y;
-	double a_angle;
+  /* Position */
+  double a_x;
+  double a_y;
+  double a_angle;
 };
 
 } /* namespace Graphic */

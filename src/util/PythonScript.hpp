@@ -10,21 +10,21 @@
 class PythonScript
 {
 public:
-	PythonScript();
-	~PythonScript();
+  PythonScript();
+  ~PythonScript();
 
-	static void preparePath(std::string path);
-	static void initialize();
-	static void finalize();
+  static void preparePath(std::string path);
+  static void initialize();
+  static void finalize();
 
-	static std::string runString(std::string cmd);
+  static std::string runString(std::string cmd);
 
 private:
-	static std::vector<std::wstring> path_list;
-	static PythonScript *instance;
+  static std::vector<std::wstring> path_list;
+  static PythonScript *instance;
 
-	static bool state_ipc;
+  static bool state_ipc;
 
-	static std::thread thread_python;
-	static std::thread thread_ipc;
+  static std::thread thread_python;
+  static std::thread thread_ipc;
 };

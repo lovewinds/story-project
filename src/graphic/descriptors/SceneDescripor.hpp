@@ -9,11 +9,11 @@ namespace Graphic {
 
 enum LayerType
 {
-	LAYER_RPG = 0,
-	LAYER_CHAT,
-	LAYER_DEBUG,
-	LAYER_TITLE,
-	LAYER_MAP
+  LAYER_RPG = 0,
+  LAYER_CHAT,
+  LAYER_DEBUG,
+  LAYER_TITLE,
+  LAYER_MAP
 };
 
 /**
@@ -27,28 +27,28 @@ enum LayerType
 class ESceneDesc
 {
 public:
-    ESceneDesc(std::string name, LayerType type) :
-        layer_list(_layer_list)
-    {
-        this->name = name;
-        this->type = type;
-    }
+  ESceneDesc(std::string name, LayerType type) :
+      layer_list(_layer_list)
+  {
+    this->name = name;
+    this->type = type;
+  }
 
-    void appendLayerDesc(std::shared_ptr<SubLayerDesc> layer) {
-        if (nullptr != layer) _layer_list.push_back(layer);
-    }
+  void appendLayerDesc(std::shared_ptr<SubLayerDesc> layer) {
+    if (nullptr != layer) _layer_list.push_back(layer);
+  }
 
-    std::string getName() { return name; }
-    LayerType getType() { return type; }
+  std::string getName() { return name; }
+  LayerType getType() { return type; }
 
-    const std::vector<std::shared_ptr<SubLayerDesc>>& layer_list;
+  const std::vector<std::shared_ptr<SubLayerDesc>>& layer_list;
 
 protected:
-    ESceneDesc();
+  ESceneDesc();
 
-    std::string name;
-    LayerType type;
-    std::vector<std::shared_ptr<SubLayerDesc>> _layer_list;
+  std::string name;
+  LayerType type;
+  std::vector<std::shared_ptr<SubLayerDesc>> _layer_list;
 };
 
 } /* namespace Graphic */

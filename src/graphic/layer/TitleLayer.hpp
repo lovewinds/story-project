@@ -15,20 +15,20 @@ namespace Graphic {
 class TitleLayer : public Layer
 {
 public:
-	TitleLayer(std::string name);
-	virtual ~TitleLayer();
+  TitleLayer(std::string name);
+  virtual ~TitleLayer();
 
-	/* Primitive Scene actions */
-	virtual void handleEvent(SDL_Event e);
-	virtual void render();
-	virtual void update(Uint32 currentTime, Uint32 accumulator);
+  /* Primitive Scene actions */
+  virtual void handleEvent(SDL_Event e);
+  virtual void render();
+  virtual void update(Uint32 currentTime, Uint32 accumulator);
 
 protected:
-	int menu_index = 0;
+  int menu_index = 0;
 
-	void initMenuItem();
-	void sampleMenuState(std::string id);
-	bool checkMenuClicked(int x, int y);
+  void initMenuItem();
+  void sampleMenuState(std::string id);
+  bool checkMenuClicked(int x, int y);
 };
 
 } /* namespace Graphic */

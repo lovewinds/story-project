@@ -15,13 +15,13 @@ namespace Graphic {
 class DbgOverlayLayer : public Layer
 {
 public:
-	DbgOverlayLayer(std::string name);
-	virtual ~DbgOverlayLayer();
+  DbgOverlayLayer(std::string name);
+  virtual ~DbgOverlayLayer();
 
-	/* Primitive Scene actions */
-	virtual void handleEvent(SDL_Event e);
-	virtual void render();
-	virtual void update(Uint32 currentTime, Uint32 accumulator);
+  /* Primitive Scene actions */
+  virtual void handleEvent(SDL_Event e);
+  virtual void render();
+  virtual void update(Uint32 currentTime, Uint32 accumulator);
 };
 
 } /* namespace Graphic */

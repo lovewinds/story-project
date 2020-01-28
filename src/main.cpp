@@ -3,11 +3,11 @@
 
 int main(int argc, char* argv[])
 {
-	story::Core::Ecore* core = story::Core::Ecore::getInstance();
+  story::Core::Ecore* core = story::Core::Ecore::getInstance();
 
-	core->Start();
+  core->Start();
 
-	story::Core::Ecore::releaseInstance();
+  story::Core::Ecore::releaseInstance();
 
-	return 0;
+  return 0;
 }

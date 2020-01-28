@@ -19,37 +19,37 @@ namespace Resource {
 class ESpriteType
 {
 public:
-	ESpriteType(std::string name, std::string base_image);
-	virtual ~ESpriteType();
+  ESpriteType(std::string name, std::string base_image);
+  virtual ~ESpriteType();
 
-	bool setCellInfo(unsigned int cell_width, unsigned int cell_height);
+  bool setCellInfo(unsigned int cell_width, unsigned int cell_height);
 
-	/* Store sprite cell information to create */
-	bool appendSpriteCell(unsigned int index);
+  /* Store sprite cell information to create */
+  bool appendSpriteCell(unsigned int index);
 
-	//bool allocateSprite(int startIndex, int endIndex);
-	//bool allocateSprite(std::vector<int> indexList);
+  //bool allocateSprite(int startIndex, int endIndex);
+  //bool allocateSprite(std::vector<int> indexList);
 
-	std::string getName();
-	std::string getBaseImage();
-	unsigned int getWidth() const;
-	unsigned int getHeight() const;
+  std::string getName();
+  std::string getBaseImage();
+  unsigned int getWidth() const;
+  unsigned int getHeight() const;
 
-	const std::vector<SDL_Rect>& cells;
+  const std::vector<SDL_Rect>& cells;
 
 protected:
-	std::string name;
-	std::string base_image;
+  std::string name;
+  std::string base_image;
 
-	std::vector<SDL_Rect>	_cell;
+  std::vector<SDL_Rect> _cell;
 
-	/* Width and Height of each cell */
-	unsigned int cell_width;
-	unsigned int cell_height;
+  /* Width and Height of each cell */
+  unsigned int cell_width;
+  unsigned int cell_height;
 
-	/* Width and Height of base image */
-	unsigned int base_width;
-	unsigned int base_height;
+  /* Width and Height of base image */
+  unsigned int base_width;
+  unsigned int base_height;
 };
 
 } /* namespace Resource */

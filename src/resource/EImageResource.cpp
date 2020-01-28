@@ -9,70 +9,70 @@ namespace story {
 namespace Resource {
 
 EImageResource::EImageResource(
-		std::string name, std::string path,
-		unsigned int width, unsigned int height)
+    std::string name, std::string path,
+    unsigned int width, unsigned int height)
 {
-	this->name = name;
-	this->path = story::Core::Ecore::getResourcePath(path);
-	this->width = width;
-	this->height = height;
+  this->name = name;
+  this->path = story::Core::Ecore::getResourcePath(path);
+  this->width = width;
+  this->height = height;
 
-	LOG_INFO("EImageResource[%s] created", this->name.c_str());
-	LOG_INFO("      path : [%s]", this->path.c_str());
+  LOG_INFO("EImageResource[%s] created", this->name.c_str());
+  LOG_INFO("      path : [%s]", this->path.c_str());
 
-	/* TODO: Don't allocate on creation */
-	//allocate();
+  /* TODO: Don't allocate on creation */
+  //allocate();
 }
 
 EImageResource::~EImageResource()
 {
-	releaseTexture();
-	LOG_INFO("EImageResource[%s] removed", name.c_str());
+  releaseTexture();
+  LOG_INFO("EImageResource[%s] removed", name.c_str());
 }
 
 std::string EImageResource::getName() const
 {
-	return name;
+  return name;
 }
 
 std::string EImageResource::getPath() const
 {
-	return path;
+  return path;
 }
 
 unsigned int EImageResource::getWidth() const
 {
-	return width;
+  return width;
 }
 
 unsigned int EImageResource::getHeight() const
 {
-	return height;
+  return height;
 }
 
 std::shared_ptr<SDLTextureWrap> EImageResource::getTexture()
 {
-	if (texture == nullptr) {
-		EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+  if (texture == nullptr) {
+    EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 
-		LOG_ERR("Texture is not exists. create one");
-		texture = resManager.allocateTexture(path);
-		if (!texture) {
-			LOG_ERR("Failed to allocate resource [%s]", getPath().c_str());
-			return nullptr;
-		}
-	}
+    LOG_ERR("Texture is not exists. create one");
+    texture = resManager.allocateTexture(path);
+    if (!texture) {
+      LOG_ERR("Failed to allocate resource [%s]", getPath().c_str());
+      return nullptr;
+    }
+  }
 
-	return texture;
+  return texture;
 }
 
 void EImageResource::releaseTexture()
 {
-	texture.reset();
-	texture = nullptr;
+  texture.reset();
+  texture = nullptr;
 
-	EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
-	resManager.releaseTexture(path);
+  EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+  resManager.releaseTexture(path);
 }
 
 } /* namespace Resource */
