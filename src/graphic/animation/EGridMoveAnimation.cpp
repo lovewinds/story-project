@@ -52,9 +52,8 @@ void EGridMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 	/* Bug fix for iOS */
 	Uint32 atomicTime = (prevTime==0) ? 0 : (
 		(compensatedTime > prevTime) ? (compensatedTime - prevTime) : (prevTime - compensatedTime));
-	Uint32 delta = atomicTime - prevTime;
+	// Uint32 delta = atomicTime - prevTime;
 	double dt = atomicTime * 0.01;
-	double accu = 0.0;
 	bool checkFinished = false;
 
 	if (ANI_START != state)	return;

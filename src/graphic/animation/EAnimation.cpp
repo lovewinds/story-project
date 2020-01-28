@@ -84,15 +84,12 @@ void EAnimation::setCaller(std::weak_ptr<story::Graphic::Object> clr)
 
 void EAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
-    static double dir = 1.0f;
-	static unsigned int count = 0;
 	static double accel = 0.026;
 	static double velo = 1.0;
 
 	Uint32 compensatedTime = currentTime;
 	Uint32 atomicTime = (compensatedTime - startTime);
 	Uint32 delta = atomicTime - prevTime;
-	static double prev_y = 0;
 
 	if (atomicTime == 0) {
 		velo = 1.0;

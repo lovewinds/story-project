@@ -82,9 +82,6 @@ void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
 
 void ETextTexture::setText(const std::string& text)
 {
-	static SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
-	static SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-
 	if (message.compare(text) != 0)
 	{
 		//LOG_INFO("****** Update String! [%s -> %s]", message.c_str(), text.c_str());

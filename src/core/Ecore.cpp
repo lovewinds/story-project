@@ -64,7 +64,7 @@ gRenderer(NULL)
 		custom_event_id[i] = SDL_RegisterEvents(1);
 	}
 
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 Ecore::~Ecore()

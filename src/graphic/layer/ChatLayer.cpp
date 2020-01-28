@@ -107,7 +107,6 @@ void ChatLayer::testAnimation(AnimationState state)
 void ChatLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
-	bool ret = false;
 	if (e.type == SDL_KEYDOWN) {
 		LOG_INFO("Pressed [%d]", e.key.keysym.sym);
 		switch (e.key.keysym.sym) {

@@ -84,7 +84,6 @@ void SceneManager::handleEvent(SDL_Event e)
 	/* Handler inter-scene events */
 	bool ret = false;
 	std::string default_scene("main");
-	static int ax = 0, ay = 0;
 
 	if (e.type == SDL_KEYDOWN) {
 		//LOG_INFO("Event : [%x] / Pressed [%d]", e.type, e.key.keysym.sym);

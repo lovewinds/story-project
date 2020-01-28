@@ -127,8 +127,6 @@ XMLProjectLoader::loadSceneDesc(
 		);
 
 		/* Layer contents */
-		int idx = 0;
-
 		s.str(std::string());
 		s.clear();
 		s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer[@name='" << layer_name << "']/*";

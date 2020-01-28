@@ -40,10 +40,10 @@ public:
     void setHeightRatio(double height) {
         this->height_ratio = height;
     }
-    void setHorizontalAlign(EImageHorizontalAlign align) {
+    void setHorizontalAlign(EImageHorizontalAlign h_align) {
         this->h_align = h_align;
     }
-    void setVerticalAlign(EImageVerticalAlign align) {
+    void setVerticalAlign(EImageVerticalAlign v_align) {
         this->v_align = v_align;
     }
 

@@ -41,10 +41,6 @@ void ERotateAndMoveAnimation::setTransition(int milliseconds)
 void ERotateAndMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
 {
 	Uint32 compensatedTime = currentTime + accumulator;
-
-	/* Bug fix for iOS */
-	Uint32 atomicTime = (prevTime==0) ? 0 : (
-		(compensatedTime > prevTime) ? (compensatedTime - prevTime) : (prevTime - compensatedTime));
 	Uint32 elapsed = compensatedTime - startTime;
 	bool checkFinished = false;
 	float v;

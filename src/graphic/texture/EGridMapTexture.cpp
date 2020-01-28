@@ -86,7 +86,6 @@ void EGridMapTexture::update(Uint32 currentTime, Uint32 accumulator)
 
 void EGridMapTexture::render(int delta_x, int delta_y, double delta_angle)
 {
-	SDL_Window* window = story::Core::Ecore::getInstance()->getWindow();
 	SDL_Rect rect = { 0, };
     const unsigned int base_width = 240;
     const unsigned int base_height = 280;

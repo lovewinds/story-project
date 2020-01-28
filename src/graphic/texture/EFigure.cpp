@@ -73,8 +73,8 @@ void EFigure::render(int delta_x, int delta_y, double delta_angle)
 	if (renderer == NULL)
 		return;
 
-	int width = story::Core::Ecore::getScreenWidth();
-	int height = story::Core::Ecore::getScreenHeight();
+	// int width = story::Core::Ecore::getScreenWidth();
+	// int height = story::Core::Ecore::getScreenHeight();
 
 #if 0
 	if (story::Core::Ecore::isHighDPI() == true) {

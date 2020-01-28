@@ -1,0 +1,11 @@
+--- src/g3log/g3log.hpp	2018-03-31 11:50:35.000000000 +0900
++++ src/g3log/g3log.hpp.new	2020-01-28 17:49:21.000000000 +0900
+@@ -209,7 +209,7 @@
+ :      Width trick:    10
+ :      A string  \endverbatim */
+ #define LOGF(level, printf_like_message, ...)                 \
+-   if(!g3::logLevel(level)){ } else INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
++   if(g3::logLevel(level))  INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
+ 
+ // Conditional log printf syntax
+ #define LOGF_IF(level,boolean_expression, printf_like_message, ...) \

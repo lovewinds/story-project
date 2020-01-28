@@ -10,6 +10,6 @@ public:
 	void connect();
 	void send();
 
-private:
-	void *ipc;
+// private:
+	// void *ipc;
 };

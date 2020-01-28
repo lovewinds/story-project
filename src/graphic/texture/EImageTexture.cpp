@@ -8,14 +8,10 @@
 namespace story {
 namespace Graphic {
 
-/* Screen dimension constants */
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-
 EImageTexture::EImageTexture(std::string name, std::string base_image) :
 	EDrawable(),
-	m_degrees(0.0),
-	wRatio(1.0), hRatio(1.0)
+	wRatio(1.0), hRatio(1.0),
+	m_degrees(0.0)
 {
 	radian = 0;
 	animating = false;

@@ -23,8 +23,6 @@ SDLSurfaceWrap::SDLSurfaceWrap(SDL_Surface *_surf)
 SDLSurfaceWrap::SDLSurfaceWrap(std::string path)
 : surface(nullptr)
 {
-	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
-
 	if (path.empty()) {
 		LOG_ERR("Invalid image path !");
 		return;
@@ -68,8 +66,6 @@ SDLSurfaceWrap::SDLSurfaceWrap(std::string text,
 
 SDLSurfaceWrap::SDLSurfaceWrap(std::vector<std::vector<short> > map)
 {
-	SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
-	Uint32 rmask, gmask, bmask, amask;
 	/* TODO: Below size should be taken from arg */
 	const int TILE_SIZE = 32;
 	int width = 8 * TILE_SIZE;

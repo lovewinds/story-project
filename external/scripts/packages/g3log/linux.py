@@ -72,4 +72,10 @@ class g3logLinuxBuilder(PlatformBuilder):
         )
         self.env.run_command(cmd, module_name=self.config['name'])
 
+        cmd = "python {}/patch.py {}/g3log-1.3.2-remove_warnings.patch".format(
+            self.env.working_path,
+            self.env.patch_path
+        )
+        self.env.run_command(cmd, module_name=self.config['name'])
+
         self.tag_log("Patched")

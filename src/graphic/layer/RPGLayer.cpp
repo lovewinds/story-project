@@ -369,7 +369,6 @@ void RPGLayer::objectPositionCallback(double x, double y)
 void RPGLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
-	bool ret = false;
 	if (e.type == SDL_KEYDOWN) {
 		switch (e.key.keysym.sym) {
 		case SDLK_9:
@@ -506,10 +505,10 @@ void RPGLayer::handleEvent(SDL_Event e)
 		if (consumed)
 			return;
 	} else if (e.type == SDL_FINGERUP) {
-        SDL_TouchFingerEvent *te = &e.tfinger;
+		// SDL_TouchFingerEvent *te = &e.tfinger;
 
 		/* Clear move direction */
-        handleDirectonFactor(0.0f, 0.0f);
+		handleDirectonFactor(0.0f, 0.0f);
 	}
 }
 

@@ -85,8 +85,8 @@ EResourceFactory::createScene(std::string scene_name)
 			if (nullptr == image) {
 				LOG_ERR("Failed to create Image !");
 			} else {
-				auto h_align = imageDesc->getHorizontalAlign();
-				auto v_align = imageDesc->getVerticalAlign();
+				// auto h_align = imageDesc->getHorizontalAlign();
+				// auto v_align = imageDesc->getVerticalAlign();
 				int px = imageDesc->getX();
 				int py = imageDesc->getY();
 				double width = 0.0f;

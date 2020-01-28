@@ -130,7 +130,7 @@ void TitleLayer::sampleMenuState(std::string id)
 	for (auto& it : _object_map)
 	{
 		auto& object = it.second;
-		int obj_x = object->getPositionX();
+		// int obj_x = object->getPositionX();
 		int obj_y = object->getPositionY();
 
 		if (object->getName().find("menu_") != std::string::npos)
@@ -190,7 +190,6 @@ bool TitleLayer::checkMenuClicked(int x, int y)
 void TitleLayer::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
-	bool ret = false;
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
 		LOG_INFO("Clicked [%03d, %03d]", e.button.x, e.button.y);
 
