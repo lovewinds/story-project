@@ -3,11 +3,14 @@
 #include <string>
 
 #include <pugixml.hpp>
-#include "resource/EResourceLoaderInterface.hpp"
+#include "core/ProjectLoaderInterface.hpp"
 
 class EResourceManager;
 
-class XMLResourceLoader : public EResourceLoaderInterface
+namespace story {
+namespace Core {
+
+class XMLResourceLoader : public ProjectLoaderInterface
 {
 public:
 	XMLResourceLoader(EResourceManager* mgr);
@@ -25,3 +28,6 @@ private:
 		pugi::xml_document &document,
 		std::string scene_name, story::Graphic::LayerType scene_type);
 };
+
+} /* namespace Core */
+} /* namespace story */

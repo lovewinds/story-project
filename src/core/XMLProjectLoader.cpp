@@ -4,12 +4,16 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
+#include "graphic/descriptors/SceneDescripor.hpp"
 #include "graphic/descriptors/SubLayerDescriptor.hpp"
-#include "resource/EResourceManager.hpp"
-#include "resource/XMLResourceLoader.hpp"
+#include "core/ProjectLoaderInterface.hpp"
+#include "core/XMLProjectLoader.hpp"
+
+namespace story {
+namespace Core {
 
 XMLResourceLoader::XMLResourceLoader(EResourceManager* mgr)
-	: EResourceLoaderInterface(mgr)
+	: ProjectLoaderInterface(mgr)
 {
 }
 
@@ -356,3 +360,6 @@ bool XMLResourceLoader::loadProject(std::string& res_path)
 
 	return result;
 }
+
+} /* namespace Core */
+} /* namespace story */
