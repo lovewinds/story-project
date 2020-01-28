@@ -15,7 +15,7 @@
 #include "scene/ETitleScene.hpp"
 
 ETitleScene::ETitleScene(std::string name)
- : EScene(name)
+ : Layer(name)
 {
 	LOG_INFO("ETitleScene[%s] created", name.c_str());
 

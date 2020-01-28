@@ -22,7 +22,7 @@ ESceneManager::~ESceneManager()
 
 bool ESceneManager::playScene(std::string scene_name)
 {
-	std::shared_ptr<EScene> scene;
+	std::shared_ptr<Layer> scene;
 	EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
 
 	if (nullptr == currentScene) {

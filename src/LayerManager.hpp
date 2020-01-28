@@ -42,9 +42,9 @@ public:
 	void initDebugScene();
 
 private:
-	std::shared_ptr<EScene> currentScene;
-	std::shared_ptr<EScene> overlay;
-	std::shared_ptr<EScene> debug_overlay;
+	std::shared_ptr<Layer> currentScene;
+	std::shared_ptr<Layer> overlay;
+	std::shared_ptr<Layer> debug_overlay;
 
 	bool overlayState;
 

@@ -5,7 +5,7 @@
 
 #include "scene/EScene.hpp"
 
-EScene::EScene()
+Layer::Layer()
 	: sprite_map(_sprite_map)
 {
 	LOG_INFO("Superclass");
@@ -13,16 +13,16 @@ EScene::EScene()
 	isActivated = true;
 }
 
-EScene::EScene(std::string name)
+Layer::Layer(std::string name)
 : sprite_map(_sprite_map)
 {
-	LOG_INFO("EScene[%s] created", name.c_str());
+	LOG_INFO("Layer[%s] created", name.c_str());
 	this->name = name;
 
 	isActivated = true;
 }
 
-EScene::~EScene()
+Layer::~Layer()
 {
 	_sprite_map.clear();
 	_text_texture_map.clear();
@@ -30,15 +30,15 @@ EScene::~EScene()
 
 	isActivated = false;
 
-	LOG_INFO("EScene[%s] removed", name.c_str());
+	LOG_INFO("Layer[%s] removed", name.c_str());
 }
 
-std::string EScene::getName()
+std::string Layer::getName()
 {
 	return name;
 }
 
-bool EScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool Layer::addObject(std::shared_ptr<story::Graphic::Object> object)
 {
 	auto result = _object_map.emplace(object->getName(), object);
 	if (!result.second) {
@@ -52,7 +52,7 @@ bool EScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 /**
  * Store sprites already allocated.
  */
-bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
+bool Layer::addSprite(std::shared_ptr<ESprite> sprite)
 {
 	auto result = _sprite_map.emplace(sprite->getName(), sprite);
 	if (!result.second) {
@@ -62,7 +62,7 @@ bool EScene::addSprite(std::shared_ptr<ESprite> sprite)
 	return true;
 }
 
-bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
+bool Layer::addImage(std::shared_ptr<EImageTexture> imgTexture)
 {
 	auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
 	if (!result.second) {
@@ -73,17 +73,17 @@ bool EScene::addImage(std::shared_ptr<EImageTexture> imgTexture)
 }
 #endif
 
-void EScene::setActiveState(bool active)
+void Layer::setActiveState(bool active)
 {
 	isActivated = active;
 }
 
-void EScene::handleEvent(SDL_Event e)
+void Layer::handleEvent(SDL_Event e)
 {
 	
 }
 
-void EScene::render()
+void Layer::render()
 {
 	for (auto &it : _img_texture_map)
 	{
@@ -111,7 +111,7 @@ void EScene::render()
 	}
 }
 
-void EScene::update(Uint32 currentTime, Uint32 accumulator)
+void Layer::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;

@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "scene/EScene.hpp"
+#include "scene/Layer.hpp"
 #include "texture/ESprite.hpp"
 #include "texture/EImageTexture.hpp"
 #include "texture/ETextTexture.hpp"
@@ -29,11 +29,11 @@
  *  - It should own textures to show.
  *  - It should perform render and update.
  */
-class EMapScene : public EScene
+class ERPGScene : public Layer
 {
 public:
-	EMapScene(std::string name);
-	virtual ~EMapScene();
+	ERPGScene(std::string name);
+	virtual ~ERPGScene();
 
 	/* Primitive Scene actions */
 	virtual void handleEvent(SDL_Event e);

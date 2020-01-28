@@ -10,7 +10,7 @@
 #include "scene/EDbgOverlayScene.hpp"
 
 EDbgOverlayScene::EDbgOverlayScene(std::string name)
- : EScene(name)
+ : Layer(name)
 {
 	LOG_INFO("EDbgOverlayScene[%s] created", name.c_str());
 

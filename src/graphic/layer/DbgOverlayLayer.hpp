@@ -24,7 +24,7 @@
 *  - It should own textures to show.
 *  - It should perform render and update.
 */
-class EDbgOverlayScene : public EScene
+class EDbgOverlayScene : public Layer
 {
 public:
 	EDbgOverlayScene(std::string name);

@@ -16,7 +16,7 @@
  *  - It should own textures to show.
  *  - It should perform render and update.
  */
-class ETitleScene : public EScene
+class ETitleScene : public Layer
 {
 public:
 	ETitleScene(std::string name);

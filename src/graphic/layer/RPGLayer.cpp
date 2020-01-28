@@ -8,23 +8,53 @@
 #include "texture/ESprite.hpp"
 #include "object/animation/EGridMoveAnimation.hpp"
 
-#include "scene/EMapScene.hpp"
+#include "scene/ERPGScene.hpp"
 
-EMapScene::EMapScene(std::string name)
- : EScene(name)
+ERPGScene::ERPGScene(std::string name)
+ : Layer(name)
 {
-	LOG_INFO("EMapScene[%s] created", name.c_str());
+	LOG_INFO("ERPGScene[%s] created", name.c_str());
+#if 0
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
+	SDL_Color bgColor = { 0x0, 0x0, 0x0 };
+	std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
+	tt->movePositionTo(10, 100);
+	auto result = _text_texture_map.emplace("test string", tt);
+	if (!result.second) {
+		LOG_ERR("Failed to insert text set !");
+	}
+#endif
+
+#if 0
+	/* Create base map textures */
+	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+	/* Create sprite by manually for test */
+
+	std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+	std::shared_ptr<ESprite> sprite;
+
+	sprite = resManager.createSprite("char_girl", "movingChar");
+	object->setName(sprite->getName());
+	object->movePositionTo(10, 10);
+	object->addSprite(sprite);
+	
+	auto ins = _object_map.emplace("movingChar", object);
+	if (!ins.second) {
+		LOG_ERR("Failed to insert object map!");
+	}
+#endif
 }
 
-EMapScene::~EMapScene()
+ERPGScene::~ERPGScene()
 {
 	gridMap.reset();
 
-	LOG_INFO("EMapScene[%s] removed", name.c_str());
+	LOG_INFO("ERPGScene[%s] removed", name.c_str());
 }
 
 /* Store Image and Sprite to render position based */
-bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool ERPGScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 {
 	double _x = 0.0;
 	double _y = 0.0;
@@ -52,7 +82,7 @@ bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 
 	if (object->isControllable()) {
 		object->setPositionCallback(
-			std::bind(&EMapScene::objectPositionCallback, this,
+			std::bind(&ERPGScene::objectPositionCallback, this,
 				std::placeholders::_1, std::placeholders::_2));
 	}
 
@@ -65,7 +95,7 @@ bool EMapScene::addObject(std::shared_ptr<story::Graphic::Object> object)
 	return true;
 }
 
-void EMapScene::setMap(std::shared_ptr<EGridMapTexture> map)
+void ERPGScene::setMap(std::shared_ptr<EGridMapTexture> map)
 {
 	//std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
 	auto result = _raw_texture_map.emplace("GridMap", map);
@@ -76,12 +106,12 @@ void EMapScene::setMap(std::shared_ptr<EGridMapTexture> map)
 	gridMap = map;
 }
 
-void EMapScene::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+void ERPGScene::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
 {
 	gridDesc = desc;
 }
 
-void EMapScene::testAnimation(AnimationState state)
+void ERPGScene::testAnimation(AnimationState state)
 {
 	std::shared_ptr<EAnimation> ani;
 	//for (auto& it : _sprite_map)
@@ -110,7 +140,7 @@ void EMapScene::testAnimation(AnimationState state)
 	}
 }
 
-void EMapScene::handleDirectonFactor(float axis_x, float axis_y)
+void ERPGScene::handleDirectonFactor(float axis_x, float axis_y)
 {
 	std::shared_ptr<EAnimation> ani;
 	EGridMoveAnimation* grid = nullptr;
@@ -198,7 +228,7 @@ void EMapScene::handleDirectonFactor(float axis_x, float axis_y)
 
 /* TODO: Logic should be changed to register clickable position
    for each object */
-bool EMapScene::testRotate(int x, int y)
+bool ERPGScene::testRotate(int x, int y)
 {
 	bool event_consume = false;
 
@@ -227,7 +257,7 @@ bool EMapScene::testRotate(int x, int y)
 	return false;
 }
 
-bool EMapScene::checkGridMoveable(int x, int y)
+bool ERPGScene::checkGridMoveable(int x, int y)
 {
 	bool res = false;
 
@@ -241,7 +271,7 @@ bool EMapScene::checkGridMoveable(int x, int y)
 	return res;
 }
 
-void EMapScene::objectPositionCallback(double x, double y)
+void ERPGScene::objectPositionCallback(double x, double y)
 {
 	float ax = 0.0f, ay = 0.0f;
 
@@ -333,7 +363,7 @@ void EMapScene::objectPositionCallback(double x, double y)
 	}
 }
 
-void EMapScene::handleEvent(SDL_Event e)
+void ERPGScene::handleEvent(SDL_Event e)
 {
 	/* Handler events for Scene instance */
 	bool ret = false;
@@ -480,7 +510,7 @@ void EMapScene::handleEvent(SDL_Event e)
 	}
 }
 
-void EMapScene::render()
+void ERPGScene::render()
 {
 	if (gridMap)
 		gridMap->render(0, 0, 0);
@@ -511,7 +541,7 @@ void EMapScene::render()
 	}
 }
 
-void EMapScene::update(Uint32 currentTime, Uint32 accumulator)
+void ERPGScene::update(Uint32 currentTime, Uint32 accumulator)
 {
 	if (false == isActivated)
 		return;

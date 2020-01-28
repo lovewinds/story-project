@@ -90,28 +90,28 @@ std::shared_ptr<ESceneDesc> EResourceManager::getSceneDesc(std::string name)
 	return result;
 }
 
-std::shared_ptr<EScene> EResourceManager::createScene(ESceneType type, std::string scene_name)
+std::shared_ptr<Layer> EResourceManager::createScene(ESceneType type, std::string scene_name)
 {
 	LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
-	//std::shared_ptr<EScene> scene(new EScene(scene_name));
-	std::shared_ptr<EScene> scene;
+	//std::shared_ptr<Layer> scene(new Layer(scene_name));
+	std::shared_ptr<Layer> scene;
 
 	switch (type)
 	{
 	case SCENE_RPG:
-		scene = std::shared_ptr<EScene>(new ERPGScene(scene_name));
+		scene = std::shared_ptr<Layer>(new ERPGScene(scene_name));
 		break;
 	case SCENE_VISUAL_NOVEL:
-		scene = std::shared_ptr<EScene>(new EVisualNovelScene(scene_name));
+		scene = std::shared_ptr<Layer>(new EVisualNovelScene(scene_name));
 		break;
 	case SCENE_DEBUG:
-		scene = std::shared_ptr<EScene>(new EDbgOverlayScene(scene_name));
+		scene = std::shared_ptr<Layer>(new EDbgOverlayScene(scene_name));
 		break;
 	case SCENE_TITLE:
-		scene = std::shared_ptr<EScene>(new ETitleScene(scene_name));
+		scene = std::shared_ptr<Layer>(new ETitleScene(scene_name));
 		break;
 	case SCENE_MAP:
-		scene = std::shared_ptr<EScene>(new EMapScene(scene_name));
+		scene = std::shared_ptr<Layer>(new EMapScene(scene_name));
 		break;
 	default:
 		/* TODO: If new scene type added, should be created here */

@@ -28,7 +28,7 @@ public:
  * Scene Functions
  */
 	/* Create scene from stored scene descriptor */
-	std::shared_ptr<EScene> createScene(std::string scene_name);
+	std::shared_ptr<Layer> createScene(std::string scene_name);
 
 	/* Remove and de-allocate specific scene
 	 * and related resource(i.e. sprites) from memory */

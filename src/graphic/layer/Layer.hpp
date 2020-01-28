@@ -12,18 +12,21 @@
 #include "object/GraphicObject.hpp"
 #include "object/animation/EAnimation.hpp"
 
+namespace story {
+namespace Graphic {
+
 /**
- * Scene
+ * Layer
  *
- * This class indicates specific scene on screen.
+ * This class indicates specific graphic layer on screen.
  *  - It should own textures to show.
  *  - It should perform render and update.
  */
-class EScene
+class Layer
 {
 public:
-	EScene(std::string name);
-	virtual ~EScene();
+	Layer(std::string name);
+	virtual ~Layer();
 
 	/* Primitive Scene actions */
 	virtual void handleEvent(SDL_Event e);
@@ -45,7 +48,7 @@ public:
 	const std::map<std::string, std::shared_ptr<ESprite>>& sprite_map;
 
 protected:
-	EScene();
+	Layer();
 	std::string name;
 
 	/* TODO: Scene is activated, so it perform update and render */
@@ -71,3 +74,6 @@ protected:
 
 	std::map<std::string, std::shared_ptr<story::Graphic::Object>> _object_map;
 };
+
+} /* namespace Graphic */
+} /* namespace story */

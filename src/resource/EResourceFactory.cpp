@@ -25,9 +25,9 @@ EResourceFactory::~EResourceFactory()
 /*
  * Scene Functions
  */
-std::shared_ptr<EScene> EResourceFactory::createScene(std::string scene_name)
+std::shared_ptr<Layer> EResourceFactory::createScene(std::string scene_name)
 {
-	std::shared_ptr<EScene> scene = nullptr;
+	std::shared_ptr<Layer> scene = nullptr;
 
 	/* Search scene desc */
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();

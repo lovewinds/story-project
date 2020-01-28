@@ -13,7 +13,7 @@
 #include "scene/EVisualNovelScene.hpp"
 
 EVisualNovelScene::EVisualNovelScene(std::string name)
- : EScene(name)
+ : Layer(name)
 {
 	LOG_INFO("EVisualNovelScene[%s] created", name.c_str());
 

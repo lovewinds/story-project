@@ -36,7 +36,7 @@ public:
 
 	/* Create scene with name
 	 * (for some debug purpose) */
-	std::shared_ptr<EScene> createScene(ESceneType type, std::string scene_name);
+	std::shared_ptr<Layer> createScene(ESceneType type, std::string scene_name);
 
 /*
  * Image Resource Functions

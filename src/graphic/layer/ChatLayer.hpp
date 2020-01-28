@@ -26,7 +26,7 @@
 *  - It should own textures to show.
 *  - It should perform render and update.
 */
-class EVisualNovelScene : public EScene
+class EVisualNovelScene : public Layer
 {
 public:
 	EVisualNovelScene(std::string name);
