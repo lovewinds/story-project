@@ -3,7 +3,7 @@
 #include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
-#include "texture/ETextTexture.hpp"
+#include "graphic/texture/ETextTexture.hpp"
 #include "util/LogHelper.hpp"
 
 namespace story {

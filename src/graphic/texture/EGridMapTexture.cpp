@@ -3,7 +3,7 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
-#include "texture/EGridMapTexture.hpp"
+#include "graphic/texture/EGridMapTexture.hpp"
 
 #define T1	16
 #define T2	327

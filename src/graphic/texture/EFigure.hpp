@@ -2,7 +2,7 @@
 
 #include <SDL.h>
 
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 
 namespace story {
 namespace Graphic {

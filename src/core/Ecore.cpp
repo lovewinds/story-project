@@ -6,7 +6,7 @@
 
 #include "core/Ecore.hpp"
 #include "core/ScreenManager.hpp"
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/EResourceFactory.hpp"
 

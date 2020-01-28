@@ -3,7 +3,7 @@
 #include "resource/EImageResource.hpp"
 #include "util/LogHelper.hpp"
 
-#include "texture/ESprite.hpp"
+#include "graphic/texture/ESprite.hpp"
 
 namespace story {
 namespace Graphic {

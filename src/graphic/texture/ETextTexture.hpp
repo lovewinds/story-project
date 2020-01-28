@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 #include "util/SDLWrap.hpp"
 
 namespace story {

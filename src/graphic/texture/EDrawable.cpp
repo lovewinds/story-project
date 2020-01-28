@@ -1,5 +1,5 @@
 #include "core/Ecore.hpp"
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 #include "util/LogHelper.hpp"
 
 namespace story {

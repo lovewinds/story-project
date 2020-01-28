@@ -10,7 +10,7 @@
 #include "graphic/descriptors/SpriteDescriptor.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
-#include "texture/ESprite.hpp"
+#include "graphic/texture/ESprite.hpp"
 #include "util/SDLWrap.hpp"
 
 namespace story {

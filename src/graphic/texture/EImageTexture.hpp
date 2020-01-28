@@ -2,9 +2,8 @@
 
 #include <string>
 #include <cmath>
-#include <vector>
 
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 
 namespace story {
 namespace Resource {
@@ -14,38 +13,44 @@ namespace Resource {
 
 namespace story {
 namespace Graphic {
-
-class EGridMapTexture : public EDrawable
+class EImageTexture : public EDrawable
 {
 public:
 	/* Initializes variables */
-	EGridMapTexture(std::string name, std::string base_image,
-			std::shared_ptr<story::Graphic::EGridDesc> desc);
-	~EGridMapTexture();
+	EImageTexture(std::string name, std::string base_image);
+
+	/* Deallocates memory */
+	~EImageTexture();
 
 	virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
+	//virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
 	virtual void render(int delta_x, int delta_y, double delta_angle);
 
 	/* Gets image dimensions */
 	int getWidth();
 	int getHeight();
-	void setPos(int x, int y);
+	void setWidth(double width, bool ratio = false);
+	void setHeight(double height, bool ratio = false);
 	std::string getName();
 
 protected:
 	void _createTexture();
 	void _removeTexture();
 
-	unsigned int wTileCount;
-	unsigned int hTileCount;
-	unsigned int levels;
+	int radian;
+	double wRatio;
+	double hRatio;
+
+	/* Angle of rotation */
+	double m_degrees;
+
+	/* animation */
+	bool animating;
 
 	std::string name;
 	std::string base_image;
 
-	std::vector< std::vector< std::vector<unsigned short> > > tileMap;
-
-	std::shared_ptr<story::Resource::EImageResource>	tile_image;
+	std::shared_ptr<story::Resource::EImageResource>	image;
 };
 
 } /* namespace Graphic */

@@ -4,8 +4,8 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/ESprite.hpp"
-#include "texture/EFigure.hpp"
+#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"

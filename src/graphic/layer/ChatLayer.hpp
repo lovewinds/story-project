@@ -6,9 +6,9 @@
 
 #include "util/SDLWrap.hpp"
 #include "graphic/layer/Layer.hpp"
-#include "texture/ESprite.hpp"
-#include "texture/EImageTexture.hpp"
-#include "texture/ETextTexture.hpp"
+#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/EImageTexture.hpp"
+#include "graphic/texture/ETextTexture.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {

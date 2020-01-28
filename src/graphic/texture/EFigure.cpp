@@ -3,7 +3,7 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "texture/EFigure.hpp"
+#include "graphic/texture/EFigure.hpp"
 
 namespace story {
 namespace Graphic {

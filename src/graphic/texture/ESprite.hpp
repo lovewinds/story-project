@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "texture/EDrawable.hpp"
+#include "graphic/texture/EDrawable.hpp"
 #include "resource/ESpriteType.hpp"
 
 namespace story {

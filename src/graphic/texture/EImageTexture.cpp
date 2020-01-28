@@ -3,7 +3,7 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
-#include "texture/EImageTexture.hpp"
+#include "graphic/texture/EImageTexture.hpp"
 
 namespace story {
 namespace Graphic {
