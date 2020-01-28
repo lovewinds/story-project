@@ -319,7 +319,7 @@ void XMLProjectLoader::loadScenes(pugi::xml_document &document) {
 		else if (layer_type == "Map") {
 			layer_type_object = story::Graphic::LAYER_MAP;
 		}
-		else if (layer_type == "VNovel") {
+		else if (layer_type == "Chat") {
 			layer_type_object = story::Graphic::LAYER_CHAT;
 		}
 		else if (layer_type == "Title") {

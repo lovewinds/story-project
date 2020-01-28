@@ -113,7 +113,7 @@ void SceneManager::handleEvent(SDL_Event e)
 			else {
 				overlayState = true;
 				story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
-				std::string sname = "vnovel";
+				std::string sname = "chat";
 
 				overlay = resFactory.createScene(sname);
 				LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
@@ -142,7 +142,7 @@ void SceneManager::handleEvent(SDL_Event e)
 			else {
 				overlayState = true;
 				story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
-				std::string sname = "vnovel";
+				std::string sname = "chat";
 				
 				overlay = resFactory.createScene(sname);
 				LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());

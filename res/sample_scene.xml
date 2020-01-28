@@ -136,7 +136,7 @@
 			</TileMap>
 		</Layer>
 	</Scene>
-	<Scene name="vnovel" type="VNovel">
+	<Scene name="CharacterChat" type="Chat">
 		<Layer name="talk" depth="1">
 			<Image name="char" source="Standing" halign="right" valign="bottom"
 						x="0" y="120" width="50%" height="50%"/>
