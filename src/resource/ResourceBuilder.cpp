@@ -5,7 +5,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EResourceFactory.hpp"
+#include "resource/ResourceBuilder.hpp"
 
 #include "graphic/GraphicObject.hpp"
 #include "graphic/layer/RPGLayer.hpp"
@@ -16,20 +16,20 @@
 namespace story {
 namespace Resource {
 
-EResourceFactory::EResourceFactory()
+ResourceBuilder::ResourceBuilder()
 {
 }
 
-EResourceFactory::~EResourceFactory()
+ResourceBuilder::~ResourceBuilder()
 {
-  LOG_DBG("Bye ResourceFactory !");
+  LOG_DBG("Bye ResourceBuilder !");
 }
 
 /*
  * Scene Functions
  */
 std::shared_ptr<story::Graphic::Layer>
-EResourceFactory::createScene(std::string scene_name)
+ResourceBuilder::createScene(std::string scene_name)
 {
   std::shared_ptr<story::Graphic::Layer> scene = nullptr;
 
@@ -154,7 +154,7 @@ EResourceFactory::createScene(std::string scene_name)
   return scene;
 }
 
-void EResourceFactory::removeScene(std::string scene_name)
+void ResourceBuilder::removeScene(std::string scene_name)
 {
   /* TODO: Notify removal to resource manager to handle ref count */
 }
@@ -163,7 +163,7 @@ void EResourceFactory::removeScene(std::string scene_name)
 * Image texture Functions
 */
 std::shared_ptr<story::Graphic::EImageTexture>
-EResourceFactory::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
+ResourceBuilder::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
   /* Search image desc */
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
@@ -177,7 +177,7 @@ EResourceFactory::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc>
   return image;
 }
 
-void EResourceFactory::removeImageTexture(std::string name)
+void ResourceBuilder::removeImageTexture(std::string name)
 {
 
 }
@@ -186,7 +186,7 @@ void EResourceFactory::removeImageTexture(std::string name)
 * Sprite Functions
 */
 std::shared_ptr<story::Graphic::ESprite>
-EResourceFactory::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
+ResourceBuilder::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   std::shared_ptr<story::Graphic::ESprite> sprite = nullptr;
@@ -199,7 +199,7 @@ EResourceFactory::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spri
   return sprite;
 }
 
-void EResourceFactory::removeSprite(std::string name)
+void ResourceBuilder::removeSprite(std::string name)
 {
 
 }
@@ -208,7 +208,7 @@ void EResourceFactory::removeSprite(std::string name)
  * Low layer functions
  */
 std::shared_ptr<SDLTextureWrap>
-EResourceFactory::createTextTexture(std::string text,
+ResourceBuilder::createTextTexture(std::string text,
     SDL_Color textColor, SDL_Color bgColor,
     std::shared_ptr<SDLFontWrap> font)
 {

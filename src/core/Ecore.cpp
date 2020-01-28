@@ -8,7 +8,7 @@
 #include "core/ScreenManager.hpp"
 #include "graphic/texture/EDrawable.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EResourceFactory.hpp"
+#include "resource/ResourceBuilder.hpp"
 
 #include "util/LogHelper.hpp"
 #include "util/JsonHelper.hpp"
@@ -227,7 +227,7 @@ void Ecore::Start()
 
   screenManager = new story::Core::ScreenManager();
   resManager = new story::Resource::EResourceManager();
-  resFactory = new story::Resource::EResourceFactory();
+  resBuilder = new story::Resource::ResourceBuilder();
 
   /* Load game resources */
   if (loadProject() == false)
@@ -413,9 +413,9 @@ story::Resource::EResourceManager& Ecore::getResourceManager()
   return *resManager;
 }
 
-story::Resource::EResourceFactory& Ecore::getResourceFactory()
+story::Resource::ResourceBuilder& Ecore::getResourceBuilder()
 {
-  return *resFactory;
+  return *resBuilder;
 }
 
 story::Core::ScreenManager& Ecore::getScreenManager()

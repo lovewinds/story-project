@@ -19,14 +19,14 @@ class EResourceLoaderInterface;
 namespace story {
 namespace Resource {
 
-class EResourceFactory
+class ResourceBuilder
 {
 public:
-  EResourceFactory();
-  ~EResourceFactory();
+  ResourceBuilder();
+  ~ResourceBuilder();
 
   /* Prohibit copy constructor */
-  EResourceFactory(EResourceFactory& self) = delete;
+  ResourceBuilder(ResourceBuilder& self) = delete;
 
 /*
  * Scene Functions

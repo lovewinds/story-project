@@ -8,7 +8,7 @@
 #include "graphic/texture/ESprite.hpp"
 #include "graphic/texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EResourceFactory.hpp"
+#include "resource/ResourceBuilder.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 

@@ -2,7 +2,7 @@
 
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/EResourceFactory.hpp"
+#include "resource/ResourceBuilder.hpp"
 
 namespace story {
 namespace Core {
@@ -26,10 +26,10 @@ SceneManager::~SceneManager()
 bool SceneManager::playScene(std::string scene_name)
 {
   std::shared_ptr<story::Graphic::Layer> scene;
-  story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+  story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
 
   if (nullptr == currentScene) {
-    scene = resFactory.createScene(scene_name);
+    scene = resBuilder.createScene(scene_name);
     LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
     currentScene = scene;
@@ -37,7 +37,7 @@ bool SceneManager::playScene(std::string scene_name)
     LOG_ERR("Scene [%s] is now playing", currentScene->getName().c_str());
 
     stopCurrentScene();
-    scene = resFactory.createScene(scene_name);
+    scene = resBuilder.createScene(scene_name);
     LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
     currentScene = scene;
@@ -112,10 +112,10 @@ void SceneManager::handleEvent(SDL_Event e)
       }
       else {
         overlayState = true;
-        story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+        story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
         std::string sname = "chat";
 
-        overlay = resFactory.createScene(sname);
+        overlay = resBuilder.createScene(sname);
         LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
       }
 
@@ -141,10 +141,10 @@ void SceneManager::handleEvent(SDL_Event e)
       }
       else {
         overlayState = true;
-        story::Resource::EResourceFactory& resFactory = Ecore::getInstance()->getResourceFactory();
+        story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
         std::string sname = "chat";
         
-        overlay = resFactory.createScene(sname);
+        overlay = resBuilder.createScene(sname);
         LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
       }
     }

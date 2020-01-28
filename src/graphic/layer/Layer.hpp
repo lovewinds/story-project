@@ -35,7 +35,7 @@ public:
 
   std::string getName();
 
-  /* Should handle creation of resources with ResourceFactory */
+  /* Should handle creation of resources with ResourceBuilder */
   virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
 
   /* Resource manager allocates image resource */
