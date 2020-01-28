@@ -16,6 +16,9 @@
 
 class EResourceLoaderInterface;
 
+namespace story {
+namespace Resource {
+
 class EResourceFactory
 {
 public:
@@ -60,3 +63,6 @@ public:
 			std::shared_ptr<SDLFontWrap> font = nullptr);
 
 };
+
+} /* namespace Resource */
+} /* namespace story */

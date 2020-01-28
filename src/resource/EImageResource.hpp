@@ -3,13 +3,9 @@
 #include <string>
 #include "util/SDLWrap.hpp"
 
-/* TODO: Inherit serializable class */
-/*
- * This class stores only resource information for actual allocation.
- * All of these ~~Info classes are stored in ResourceManager.
- * When scene is changed, SceneManager allocates actual Scene instance
- * with this ~~Info instance on ResourceManager.
- */
+namespace story {
+namespace Resource {
+
 class EImageResource
 {
 public:
@@ -31,3 +27,6 @@ protected:
 	unsigned int height;
 	std::shared_ptr<SDLTextureWrap>	texture;
 };
+
+} /* namespace Resource */
+} /* namespace story */

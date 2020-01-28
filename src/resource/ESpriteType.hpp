@@ -6,6 +6,9 @@
 
 #include "util/SDLWrap.hpp"
 
+namespace story {
+namespace Resource {
+
 /* TODO: Inherit serializable class */
 /*
  * This class stores only resource information for actual allocation.
@@ -48,3 +51,6 @@ protected:
 	unsigned int base_width;
 	unsigned int base_height;
 };
+
+} /* namespace Resource */
+} /* namespace story */

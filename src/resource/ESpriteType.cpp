@@ -4,6 +4,9 @@
 
 #include "resource/ESpriteType.hpp"
 
+namespace story {
+namespace Resource {
+
 ESpriteType::ESpriteType(std::string name, std::string base_image)
 : cells(_cell)
 {
@@ -84,3 +87,6 @@ bool ESpriteType::appendSpriteCell(unsigned int index)
 
 	return true;
 }
+
+} /* namespace Resource */
+} /* namespace story */

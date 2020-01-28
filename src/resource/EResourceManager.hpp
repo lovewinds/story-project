@@ -15,6 +15,9 @@
 
 class EResourceLoaderInterface;
 
+namespace story {
+namespace Resource {
+
 class EResourceManager
 {
 public:
@@ -99,3 +102,6 @@ protected:
 	 * unordered_map can be more effecient for this case */
 	std::unordered_map<std::string, std::shared_ptr<EImageResource>> image_map;
 };
+
+} /* namespace Resource */
+} /* namespace story */

@@ -13,6 +13,9 @@
 #include "graphic/layer/ChatLayer.hpp"
 #include "graphic/layer/DbgOverlayLayer.hpp"
 
+namespace story {
+namespace Resource {
+
 EResourceFactory::EResourceFactory()
 {
 }
@@ -225,3 +228,6 @@ EResourceFactory::createTextTexture(std::string text,
 	LOG_DBG("[ResFactory] texture [%p]", &texture);
 	return texture;
 }
+
+} /* namespace Resource */
+} /* namespace story */

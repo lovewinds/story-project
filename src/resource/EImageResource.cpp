@@ -5,7 +5,12 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
-EImageResource::EImageResource(std::string name, std::string path, unsigned int width, unsigned int height)
+namespace story {
+namespace Resource {
+
+EImageResource::EImageResource(
+		std::string name, std::string path,
+		unsigned int width, unsigned int height)
 {
 	this->name = name;
 	this->path = Ecore::getResourcePath(path);
@@ -69,3 +74,6 @@ void EImageResource::releaseTexture()
 	EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 	resManager.releaseTexture(path);
 }
+
+} /* namespace Resource */
+} /* namespace story */
