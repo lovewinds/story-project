@@ -4,7 +4,7 @@
 
 #include "Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "graphic/ESceneDesc.hpp"
+#include "graphic/descriptors/SubLayerDescriptor.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/XMLResourceLoader.hpp"
 
@@ -113,8 +113,10 @@ XMLResourceLoader::loadSceneDesc(
 		pugi::xpath_node layer_node = *layer_it;
 		std::string layer_name(layer_node.node().attribute("name").value());
 
-		/* Create Layer descriptor */
-		std::shared_ptr<story::Graphic::ESceneLayerDesc> layerDesc(new story::Graphic::ESceneLayerDesc(layer_name));
+		/* Create SubLayer descriptor */
+		std::shared_ptr<story::Graphic::SubLayerDesc> layerDesc(
+			new story::Graphic::SubLayerDesc(layer_name)
+		);
 
 		/* Layer contents */
 		int idx = 0;

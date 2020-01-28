@@ -7,8 +7,9 @@
 
 #include <SDL.h>
 
-#include "graphic/ESceneDesc.hpp"
 #include "graphic/layer/Layer.hpp"
+#include "graphic/descriptors/ImageDescriptor.hpp"
+#include "graphic/descriptors/SpriteDescriptor.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"

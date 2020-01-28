@@ -6,7 +6,8 @@
 #include <memory>
 
 #include "graphic/layer/Layer.hpp"
-#include "graphic/ESceneDesc.hpp"
+#include "graphic/descriptors/SceneDescripor.hpp"
+#include "graphic/descriptors/SpriteDescriptor.hpp"
 #include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "texture/ESprite.hpp"

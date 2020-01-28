@@ -44,7 +44,7 @@ EResourceFactory::createScene(std::string scene_name)
 	/* For each layer */
 	for (auto& layer_iter : sceneDesc->layer_list)
 	{
-		std::shared_ptr<story::Graphic::ESceneLayerDesc> layer = layer_iter;
+		std::shared_ptr<story::Graphic::SubLayerDesc> layer = layer_iter;
 		LOG_DBG("  Scene Layer  [%s]", layer->getName().c_str());
 
 		/* Create sprites from sprite descriptor */
