@@ -35,7 +35,9 @@ public:
   int getHeight();
 
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0) = 0;
-  virtual void render(int delta_x, int delta_y, double delta_angle) = 0;
+  virtual void render(
+    int base_x, int base_y,
+    int delta_x, int delta_y, double delta_angle) = 0;
 
 protected:
   /* The actual SDL texture */

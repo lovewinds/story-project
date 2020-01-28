@@ -124,83 +124,18 @@ void MapLayer::handleDirectonFactor(float axis_x, float axis_y)
       auto& object = it.second;
       float obj_ax = axis_x;
       float obj_ay = axis_y;
-      double x = object->getPositionX() / 32.0f;
-      double y = object->getPositionY() / 32.0f;
 
       /* Check obstacle */
-      if (0.0f < obj_ax) {
-        /* Check right position */
-        if (false == checkGridMoveable(int(x+1), int(y))) {
-          obj_ax = 0.0f;
-        }
-      }
-      if (obj_ax < 0.0f) {
-        /* Check left position */
-        if (false == checkGridMoveable(int(x-1), int(y))) {
-          obj_ax = 0.0f;
-        }
-      }
-      if (0.0f < obj_ay) {
-        /* Check down position */
-        if (false == checkGridMoveable(int(x), int(y+1))) {
-          obj_ay = 0.0f;
-        }
-      }
-      if (obj_ay < 0.0f) {
-        /* Check up position */
-        if (false == checkGridMoveable(int(x), int(y-1))) {
-          obj_ay = 0.0f;
-        }
-      }
 
       /* Set factor */
-      switch (object->getAnimationState())
-      {
-      case ANI_NONE:
-        if (obj_ax == 0.0f && obj_ay == 0.0f) {
-          /* Ignore unexpected input on scene startup */
-          break;
-        }
-        //LOG_DBG("Start animation. [%f / %f]", obj_ax, obj_ay);
-        ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
-        ani->setCaller(object);
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-        grid->setAxisFactor(obj_ax, obj_ay);
-
-        object->setAnimation(ani);
-        object->startAnimation();
-      break;
-      case ANI_START:
-        /* Already in progress, Just update axis factor */
-        ani = object->getAnimation();
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-        if (grid) {
-          grid->setAxisFactor(obj_ax, obj_ay);
-        }
-      break;
-      default:
-        /* Already in progress */
-        if ((std::isnan(obj_ax) || obj_ax == 0.0f) &&
-          (std::isnan(obj_ay) || obj_ay == 0.0f))
-        {
-          /* Prevent character blocking state */
-          return;
-        }
-
-        ani = object->getAnimation();
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
-        if (grid) {
-          grid->setAxisFactor(obj_ax, obj_ay);
-        }
-        object->startAnimation();
-      break;
-      }
+      object->setMovement(obj_ax, obj_ay);
     }
   }
 }
 
-/* TODO: Logic should be changed to register clickable position
-    for each object */
+// TODO:
+//   Logic should be changed to register clickable position
+//   for each object
 bool MapLayer::testRotate(int x, int y)
 {
   bool event_consume = false;
@@ -272,25 +207,25 @@ void MapLayer::objectPositionCallback(double x, double y)
         if (0.0f < ax) {
           /* Check right position */
           if (false == checkGridMoveable(int(x+1), int(y))) {
-            handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+            handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
           }
         }
         if (ax < 0.0f) {
           /* Check left position */
           if (false == checkGridMoveable(int(x-1), int(y))) {
-            handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+            handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
           }
         }
         if (0.0f < ay) {
           /* Check down position */
           if (false == checkGridMoveable(int(x), int(y+1))) {
-            handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+            handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
           }
         }
         if (ay < 0.0f) {
           /* Check up position */
           if (false == checkGridMoveable(int(x), int(y-1))) {
-            handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+            handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
           }
         }
       }
@@ -341,60 +276,48 @@ void MapLayer::handleEvent(SDL_Event e)
   /* Handler events for Scene instance */
   if (e.type == SDL_KEYDOWN) {
     switch (e.key.keysym.sym) {
-    case SDLK_9:
-      testAnimation(ANI_START);
-      break;
-    case SDLK_0:
-      testAnimation(ANI_STOP);
-      break;
-    case SDLK_MINUS:
-      testAnimation(ANI_PAUSE);
-      break;
-    case SDLK_EQUALS:
-      testAnimation(ANI_RESUME);
-      break;
 #ifdef PLATFORM_IOS
     /* iCade Support */
     case SDLK_w:
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), -1.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), -1.0f);
       break;
     case SDLK_x:
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 1.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 1.0f);
       break;
     case SDLK_a:
-      handleDirectonFactor(-1.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(-1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_d:
-      handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_e:
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
     break;
     case SDLK_z:
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
     break;
     case SDLK_q:
-      handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
     break;
     case SDLK_c:
-      handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
     break;
 #endif
     case SDLK_UP:
-      //LOG_INFO("Move : UP");
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), -1.0f);
+      LOG_INFO("Move : UP");
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), -1.0f);
       break;
     case SDLK_DOWN:
-      //LOG_INFO("Move : DOWN");
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 1.0f);
+      LOG_INFO("Move : DOWN");
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 1.0f);
       break;
     case SDLK_LEFT:
-      //LOG_INFO("Move : LEFT");
-      handleDirectonFactor(-1.0f, std::numeric_limits<float>::quiet_NaN());
+      LOG_INFO("Move : LEFT");
+      handleDirectonFactor(-1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_RIGHT:
-      //LOG_INFO("Move : RIGHT");
-      handleDirectonFactor(1.0f, std::numeric_limits<float>::quiet_NaN());
+      LOG_INFO("Move : RIGHT");
+      handleDirectonFactor(1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_SPACE:
       LOG_INFO("Animation test");
@@ -415,19 +338,19 @@ void MapLayer::handleEvent(SDL_Event e)
     switch (e.key.keysym.sym) {
     case SDLK_UP:
       //LOG_INFO("Key released : [UP]");
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
     break;
     case SDLK_DOWN:
       //LOG_INFO("Key released : [DOWN]");
-      handleDirectonFactor(std::numeric_limits<float>::quiet_NaN(), 0.0f);
+      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
     break;
     case SDLK_LEFT:
       //LOG_INFO("Key released : [LEFT]");
-      handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
     break;
     case SDLK_RIGHT:
       //LOG_INFO("Key released : [RIGHT]");
-      handleDirectonFactor(0.0f, std::numeric_limits<float>::quiet_NaN());
+      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
     break;
     default: break;
     }
@@ -485,26 +408,26 @@ void MapLayer::handleEvent(SDL_Event e)
 void MapLayer::render()
 {
   if (gridMap)
-    gridMap->render(0, 0, 0);
+    gridMap->render(0, 0, 0, 0, 0.0);
 
   for (auto &it : _img_texture_map)
   {
-    it.second->render(0, 0, 0);
+    it.second->render(0, 0, 0, 0, 0.0);
   }
 
   for (auto& it : _sprite_map)
   {
-    it.second->render(0, 0, 0);
+    it.second->render(0, 0, 0, 0, 0.0);
   }
 
   for (auto& it : _text_texture_map)
   {
-    it.second->render(0, 0, 0);
+    it.second->render(0, 0, 0, 0, 0.0);
   }
 
   for (auto& it : _drawable_map)
   {
-    it.second->render(0, 0, 0);
+    it.second->render(0, 0, 0, 0, 0.0);
   }
 
   for (auto& it : _object_map)

@@ -111,7 +111,9 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
   }
 }
 
-void ESprite::render(int delta_x, int delta_y, double delta_angle)
+void ESprite::render(
+    int base_x, int base_y,
+    int delta_x, int delta_y, double delta_angle)
 {
   double ani_x = 0, ani_y = 0;
 
@@ -122,8 +124,8 @@ void ESprite::render(int delta_x, int delta_y, double delta_angle)
   //texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
   if (mTexture) {
     texture_render(
-      (int)(p_x + ani_x),
-      (int)(p_y + ani_y - (mHeight - GRID_SIZE)),
+      (int)(p_x + ani_x + base_x),
+      (int)(p_y + ani_y + base_y - (mHeight - GRID_SIZE)),
       &gSpriteClips[sprite_index],
       delta_angle
     );

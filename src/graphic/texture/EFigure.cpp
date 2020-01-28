@@ -67,7 +67,9 @@ void EFigure::update(Uint32 currentTime, Uint32 accumulator)
   prevTime = delta;
 }
 
-void EFigure::render(int delta_x, int delta_y, double delta_angle)
+void EFigure::render(
+    int base_x, int base_y,
+    int delta_x, int delta_y, double delta_angle)
 {
   SDL_Renderer *renderer = story::Core::Ecore::getInstance()->getRenderer();
   if (renderer == NULL)

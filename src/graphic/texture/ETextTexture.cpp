@@ -90,7 +90,9 @@ void ETextTexture::setText(const std::string& text)
   }
 }
 
-void ETextTexture::render(int delta_x, int delta_y, double delta_angle)
+void ETextTexture::render(
+    int base_x, int base_y,
+    int delta_x, int delta_y, double delta_angle)
 {
   int x, y;
   x = (int)(p_x) + delta_x;

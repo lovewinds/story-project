@@ -31,6 +31,7 @@ public:
   void movePositionBy(double delta_x, double delta_y);
   int getWidth();
   int getHeight();
+  void setMovement(double x, double y);
 
   /* Animation */
   void setAnimation(std::shared_ptr<EAnimation> animation);
@@ -85,6 +86,12 @@ protected:
   /* Position */
   double p_x;
   double p_y;
+  Uint32 movement_start_time;
+  Uint32 movement_prev_time;
+  double movement_state_x;
+  double movement_state_y;
+  double movement_x;
+  double movement_y;
 
   int width;
   int height;
@@ -99,6 +106,9 @@ protected:
 
   /* Callback */
   PositionCallback callback;
+
+  /* Internal Functions */
+  void calculateMovement(Uint32 currentTime, Uint32 accumulator);
 };
 
 } /* namespace Graphic */

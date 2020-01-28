@@ -65,7 +65,9 @@ void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 }
 
-void EImageTexture::render(int delta_x, int delta_y, double delta_angle)
+void EImageTexture::render(
+    int base_x, int base_y,
+    int delta_x, int delta_y, double delta_angle)
 {
   SDL_Window* window = story::Core::Ecore::getInstance()->getWindow();
   int width = 0, height = 0;

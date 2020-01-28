@@ -11,7 +11,11 @@ namespace story {
 namespace Graphic {
 
 Object::Object() :
-p_x(0), p_y(0)
+p_x(0), p_y(0),
+movement_start_time(0.0), movement_prev_time(0.0),
+movement_state_x(0.0), movement_state_y(0.0),
+movement_x(0.0), movement_y(0.0),
+width(0), height(0)
 {
   /* Initialize */
   visible = true;
@@ -25,6 +29,30 @@ p_x(0), p_y(0)
 
 Object::~Object()
 {
+}
+
+void Object::setMovement(double x, double y)
+{
+  LOG_INFO("  Set Movement :: [%f x %f]", x, y);
+  LOG_INFO("         state :: [%f x %f]", movement_state_x, movement_state_y);
+
+  if (0.0 == movement_state_x && 0.0 == movement_state_y)
+  {
+    if ((0.0 != x && std::isnan(x) == false) ||
+        (0.0 != y && std::isnan(y) == false))
+    {
+      movement_start_time = Core::Ecore::getAppTicks();
+      LOG_INFO("  Set start time :: %u", movement_start_time);
+    }
+  }
+
+  if (std::isnan(x) == false) movement_state_x = x;
+  if (std::isnan(y) == false) movement_state_y = y;
+  // Check if stopped state
+  if (0.0 == movement_state_x && 0.0 == movement_state_x) {
+    movement_start_time = 0.0;
+    LOG_INFO("    RESET time :: %u", movement_start_time);
+  }
 }
 
 void Object::movePositionTo(double x, double y)
@@ -368,6 +396,52 @@ void Object::syncAnimationCallback(double ani_x, double ani_y)
     callback(p_x / 32.0f, p_y / 32.0f);
 }
 
+void Object::calculateMovement(Uint32 currentTime, Uint32 accumulator)
+{
+  static double accel_x = 0.026, accel_y = 0.026;
+  static double velo_x = 0.01, velo_y = 0.01;
+
+  double movement_x = 0.0;
+  double movement_y;
+  Uint32 compensatedTime = currentTime;
+  Uint32 atomicTime = (compensatedTime - movement_start_time);
+  Uint32 delta = atomicTime - movement_prev_time;
+
+  if (atomicTime < 10) {
+    velo_x = 1.0;
+    velo_y = 1.0;
+    accel_x = 0.0;
+    accel_y = 0.0;
+  } else {
+    velo_x = 0.01;
+    velo_y = 0.01;
+    accel_x = 0.0;
+    accel_y = 0.0;
+  }
+
+  if (0.0 == movement_state_x) {
+    accel_x = -0.026;
+    velo_x = accel_x * atomicTime;
+    if (velo_x < 0.0) velo_x = 0.0;
+  }
+  if (0.0 == movement_state_y) {
+    accel_y = -0.026;
+    velo_y = accel_y * atomicTime;
+    if (velo_y < 0.0) velo_y = 0.0;
+  }
+
+  //prev_y = movement_y + velo * ((atomicTime > 375) ? 375 : atomicTime);
+  // movement_y = velo * ((atomicTime > 375) ? 375 : atomicTime);
+  movement_x = velo_x * atomicTime;
+  movement_y = velo_y * atomicTime;
+  movement_prev_time = delta;
+
+  // Move actual object
+  p_x += movement_x;
+  p_y += movement_y;
+  LOG_DBG("    Movement :: [%f x %f]", p_x, p_y);
+}
+
 void Object::setPositionCallback(PositionCallback cb)
 {
   callback = std::move(cb);
@@ -394,6 +468,9 @@ void Object::update(Uint32 currentTime, Uint32 accumulator)
   if (animation) {
     animation->update(currentTime, accumulator);
   }
+
+  if (0.0 != movement_state_x || 0.0 != movement_state_y)
+    calculateMovement(currentTime, accumulator);
 }
 
 void Object::render()
@@ -410,17 +487,17 @@ void Object::render()
 
   for (auto &it : _img_texture_map)
   {
-    it.second->render(ani_x, ani_y, ani_rotate);
+    it.second->render(p_x, p_y, ani_x, ani_y, ani_rotate);
   }
 
   for (auto& it : _sprite_map)
   {
-    it.second->render(ani_x, ani_y, ani_rotate);
+    it.second->render(p_x, p_y, ani_x, ani_y, ani_rotate);
   }
 
   for (auto& it : _text_texture_map)
   {
-    it.second->render(ani_x, ani_y, ani_rotate);
+    it.second->render(p_x, p_y, ani_x, ani_y, ani_rotate);
   }
 
 }
