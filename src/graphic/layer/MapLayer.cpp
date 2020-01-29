@@ -304,19 +304,19 @@ void MapLayer::handleEvent(SDL_Event e)
     break;
 #endif
     case SDLK_UP:
-      LOG_INFO("Move : UP");
+      // LOG_INFO("Move : UP");
       handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), -1.0f);
       break;
     case SDLK_DOWN:
-      LOG_INFO("Move : DOWN");
+      // LOG_INFO("Move : DOWN");
       handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 1.0f);
       break;
     case SDLK_LEFT:
-      LOG_INFO("Move : LEFT");
+      // LOG_INFO("Move : LEFT");
       handleDirectonFactor(-1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_RIGHT:
-      LOG_INFO("Move : RIGHT");
+      // LOG_INFO("Move : RIGHT");
       handleDirectonFactor(1.0f, std::numeric_limits<double>::quiet_NaN());
       break;
     case SDLK_SPACE:

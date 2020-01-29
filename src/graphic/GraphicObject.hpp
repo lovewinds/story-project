@@ -84,14 +84,18 @@ protected:
   std::shared_ptr<EAnimation> animation;
 
   /* Position */
+  static const double DEFAULT_ACCEL;
+  static const double DEFAULT_VELO;
   double p_x;
   double p_y;
   Uint32 movement_start_time;
   Uint32 movement_prev_time;
   double movement_state_x;
   double movement_state_y;
-  double movement_x;
-  double movement_y;
+  double movement_accel_x;
+  double movement_accel_y;
+  double movement_velo_x;
+  double movement_velo_y;
 
   int width;
   int height;
