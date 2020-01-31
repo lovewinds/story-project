@@ -45,14 +45,14 @@ void Object::setMovement(double x, double y)
   LOG_INFO("  Set Movement :: [%0.1f x %0.1f]", x, y);
   LOG_INFO("         state :: [%0.1f x %0.1f]", movement_state_x, movement_state_y);
 
-  if (std::isnan(movement_state_x) && std::isnan(movement_state_y))
-  {
-    if ((0.0 != x && std::isnan(x) == false) ||
-        (0.0 != y && std::isnan(y) == false))
-    {
-      movement_prev_time = movement_start_time = Core::Ecore::getAppTicks();
-      LOG_ERR("  Set start time :: %u", movement_start_time);
-    }
+  // Ignore simple touching
+  if (std::isnan(movement_state_x) && std::isnan(movement_state_y) &&
+      0.0 == x && 0.0 == y)
+    return;
+
+  if (0.0 == movement_start_time) {
+    movement_prev_time = movement_start_time = Core::Ecore::getAppTicks();
+    LOG_INFO("  Set start time :: %u", movement_start_time);
   }
 
   // State :: nan -> 1.0 -> 0.0 -> nan
@@ -61,10 +61,8 @@ void Object::setMovement(double x, double y)
   if (std::isnan(x) == false) {
     movement_state_x = x;
     // Start
-    if (movement_state_x > 0.0)
-      movement_velo_x = DEFAULT_VELO;
-    else if (movement_state_x < 0.0)
-      movement_velo_x = -1.0 * DEFAULT_VELO;
+    if (movement_state_x != 0.0)
+      movement_velo_x = movement_state_x * DEFAULT_VELO;
     else {
       // Stop
       movement_accel_x = DEFAULT_ACCEL;
@@ -73,19 +71,12 @@ void Object::setMovement(double x, double y)
   if (std::isnan(y) == false) {
     movement_state_y = y;
     // Start
-    if (movement_state_y > 0.0)
-      movement_velo_y = DEFAULT_VELO;
-    else if (movement_state_y < 0.0)
-      movement_velo_y = -1.0 * DEFAULT_VELO;
+    if (movement_state_y != 0.0)
+      movement_velo_y = movement_state_y * DEFAULT_VELO;
     else {
       // Stop
       movement_accel_y = DEFAULT_ACCEL;
     }
-  }
-  // Check if stopped state
-  if (0.0 == movement_state_x && 0.0 == movement_state_y) {
-    movement_start_time = 0.0;
-    LOG_ERR("    RESET time :: %u", movement_start_time);
   }
 }
 
@@ -480,6 +471,12 @@ void Object::calculateMovement(Uint32 currentTime, Uint32 accumulator)
       p_x, p_y,
       movement_velo_x, movement_velo_y,
       movement_accel_x, movement_accel_y);
+  if (0.0 == movement_velo_x && 0.0 == movement_velo_y) {
+    movement_start_time = 0.0;
+    LOG_INFO("    RESET time :: %u [%0.2f %0.2f]",
+      movement_start_time,
+      movement_state_x, movement_state_y);
+  }
 }
 
 void Object::setPositionCallback(PositionCallback cb)

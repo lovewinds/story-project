@@ -53,12 +53,6 @@ bool MapLayer::addObject(std::shared_ptr<story::Graphic::Object> object)
   position_str = stringStream.str();
   LOG_DBG("POS [%s]", position_str.c_str());
 
-  if (object->isControllable()) {
-    object->setPositionCallback(
-      std::bind(&MapLayer::objectPositionCallback, this,
-        std::placeholders::_1, std::placeholders::_2));
-  }
-
   /* Convert into actual position from grid position */
   auto result = _object_map.emplace(position_str, object);
   if (!result.second) {
@@ -273,36 +267,11 @@ void MapLayer::objectPositionCallback(double x, double y)
 
 void MapLayer::handleEvent(SDL_Event e)
 {
+  static double touch_start_x = 0.0;
+  static double touch_start_y = 0.0;
   /* Handler events for Scene instance */
   if (e.type == SDL_KEYDOWN) {
     switch (e.key.keysym.sym) {
-#ifdef PLATFORM_IOS
-    /* iCade Support */
-    case SDLK_w:
-      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), -1.0f);
-      break;
-    case SDLK_x:
-      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 1.0f);
-      break;
-    case SDLK_a:
-      handleDirectonFactor(-1.0f, std::numeric_limits<double>::quiet_NaN());
-      break;
-    case SDLK_d:
-      handleDirectonFactor(1.0f, std::numeric_limits<double>::quiet_NaN());
-      break;
-    case SDLK_e:
-      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
-    break;
-    case SDLK_z:
-      handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), 0.0f);
-    break;
-    case SDLK_q:
-      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
-    break;
-    case SDLK_c:
-      handleDirectonFactor(0.0f, std::numeric_limits<double>::quiet_NaN());
-    break;
-#endif
     case SDLK_UP:
       // LOG_INFO("Move : UP");
       handleDirectonFactor(std::numeric_limits<double>::quiet_NaN(), -1.0f);
@@ -318,19 +287,6 @@ void MapLayer::handleEvent(SDL_Event e)
     case SDLK_RIGHT:
       // LOG_INFO("Move : RIGHT");
       handleDirectonFactor(1.0f, std::numeric_limits<double>::quiet_NaN());
-      break;
-    case SDLK_SPACE:
-      LOG_INFO("Animation test");
-      std::shared_ptr<story::Graphic::Object> found;
-      auto search = _object_map.find("movingChar");
-      if (search != _object_map.end()) {
-        found = search->second;
-        if (found->getAnimationState() != ANI_START)
-          found->changeState(found);
-        LOG_DBG("Finished");
-      } else {
-        LOG_ERR("Object was not found !");
-      }
       break;
     }
   }
@@ -374,27 +330,43 @@ void MapLayer::handleEvent(SDL_Event e)
     SDL_TouchFingerEvent *te = &e.tfinger;
     int ax = te->dx * 1000;
     int ay = te->dy * 1000;
-
-    if (ax <= -10) {
-      handleDirectonFactor(-1.0f, 0.0f);
-    } else if (10 <= ax) {
-      handleDirectonFactor(1.0f, 0.0f);
+    double px = story::Core::Ecore::getScreenWidth() * te->x;
+    double py = story::Core::Ecore::getScreenHeight() * te->y;
+      
+    double dx = px - touch_start_x;
+    double dy = py - touch_start_y;
+    double rx = 0.0;
+    double ry = 0.0;
+    if (abs(dx) > abs(dy)) {
+      rx = (dx < 0.0) ? -1.0 : 1.0;
+      ry = abs(dy) / abs(dx) * ((dy < 0.0) ? -1.0 : 1.0);
+    } else {
+      rx = abs(dx) / abs(dy) * ((dx < 0.0) ? -1.0 : 1.0);
+      ry = (dy < 0.0) ? -1.0 : 1.0;
     }
 
-    if (ay <= -10) {
-      handleDirectonFactor(0.0f, -1.0f);
-    } else if (10 <= ay) {
-      handleDirectonFactor(0.0f, 1.0f);
-    }
+    LOG_INFO("[%0.3f / %0.3f] :: [%0.3f / %0.3f]",
+        dx, dy,
+        rx, ry);
+    handleDirectonFactor(rx, ry);
+    // if (ax <= -10) {
+    //   handleDirectonFactor(-1.0f, 0.0f);
+    // } else if (10 <= ax) {
+    //   handleDirectonFactor(1.0f, 0.0f);
+    // }
+
+    // if (ay <= -10) {
+    //   handleDirectonFactor(0.0f, -1.0f);
+    // } else if (10 <= ay) {
+    //   handleDirectonFactor(0.0f, 1.0f);
+    // }
   } else if (e.type == SDL_FINGERDOWN) {
     SDL_TouchFingerEvent *te = &e.tfinger;
-    int x = 0, y = 0;
-
-    x = story::Core::Ecore::getScreenWidth() * te->x;
-    y = story::Core::Ecore::getScreenHeight() * te->y;
+    touch_start_x = story::Core::Ecore::getScreenWidth() * te->x;
+    touch_start_y = story::Core::Ecore::getScreenHeight() * te->y;
 
     /* TODO: event consumer should be handle more efficient way */
-    bool consumed = testRotate(x, y);
+    bool consumed = testRotate(touch_start_x, touch_start_y);
     if (consumed)
       return;
   } else if (e.type == SDL_FINGERUP) {
