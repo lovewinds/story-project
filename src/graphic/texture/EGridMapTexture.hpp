@@ -32,6 +32,7 @@ public:
   int getWidth();
   int getHeight();
   void setPos(int x, int y);
+  void setTileSize(unsigned int width, unsigned int height);
   std::string getName();
 
 protected:
@@ -40,6 +41,8 @@ protected:
 
   unsigned int wTileCount;
   unsigned int hTileCount;
+  unsigned int tile_width;
+  unsigned int tile_height;
   unsigned int levels;
 
   std::string name;

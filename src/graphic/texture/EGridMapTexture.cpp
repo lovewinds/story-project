@@ -5,9 +5,6 @@
 
 #include "graphic/texture/EGridMapTexture.hpp"
 
-#define T1  16
-#define T2  327
-
 namespace story {
 namespace Graphic {
 
@@ -89,12 +86,8 @@ void EGridMapTexture::render(
     int delta_x, int delta_y, double delta_angle)
 {
   SDL_Rect rect = { 0, };
-  const unsigned int base_width = 240;
-  const unsigned int base_height = 280;
-  const unsigned int cell_width = 40;
-  const unsigned int cell_height = 40;
-  unsigned int row_count = (unsigned int)(base_width / cell_width);
-  unsigned int col_count = (unsigned int)(base_height / cell_height);
+  unsigned int row_count = (unsigned int)(mWidth / tile_width);
+  unsigned int col_count = (unsigned int)(mHeight / tile_height);
   unsigned int tile = 0;
 
   if (row_count == 0 || col_count == 0) {
@@ -120,12 +113,12 @@ void EGridMapTexture::render(
           unsigned int tx = (unsigned int)(tile % row_count);
           unsigned int ty = (unsigned int)(tile / row_count);
 
-          rect.x = cell_width * tx;
-          rect.y = cell_height * ty;
-          rect.w = cell_width;
-          rect.h = cell_height;
+          rect.x = tile_width * tx;
+          rect.y = tile_height * ty;
+          rect.w = tile_width;
+          rect.h = tile_height;
 
-          texture_render((int)(x*cell_width), (int)(y*cell_height), &rect, 0.0, true);
+          texture_render((int)(x*tile_width), (int)(y*tile_height), &rect, 0.0, true);
         }
       }
     }
@@ -140,6 +133,12 @@ int EGridMapTexture::getWidth()
 int EGridMapTexture::getHeight()
 {
   return mHeight;
+}
+
+void EGridMapTexture::setTileSize(unsigned int width, unsigned int height)
+{
+  tile_width = width;
+  tile_height = height;
 }
 
 void EGridMapTexture::setPos(int x, int y)

@@ -140,6 +140,7 @@ ResourceBuilder::createScene(std::string scene_name)
       std::shared_ptr<story::Graphic::EGridMapTexture> map(
         new story::Graphic::EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc)
       );
+      map->setTileSize(gridDesc->getGridWidth(), gridDesc->getGridHeight());
       if (rpg_scene) {
         rpg_scene->setMap(map);
         rpg_scene->setGridDescriptor(gridDesc);
