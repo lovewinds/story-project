@@ -42,9 +42,6 @@ Object::~Object()
 
 void Object::setMovement(double x, double y)
 {
-  LOG_INFO("  Set Movement :: [%0.1f x %0.1f]", x, y);
-  LOG_INFO("         state :: [%0.1f x %0.1f]", movement_state_x, movement_state_y);
-
   // Ignore simple touching
   if (std::isnan(movement_state_x) && std::isnan(movement_state_y) &&
       0.0 == x && 0.0 == y)
@@ -52,7 +49,6 @@ void Object::setMovement(double x, double y)
 
   if (0.0 == movement_start_time) {
     movement_prev_time = movement_start_time = Core::Ecore::getAppTicks();
-    LOG_INFO("  Set start time :: %u", movement_start_time);
   }
 
   // State :: nan -> 1.0 -> 0.0 -> nan
@@ -466,16 +462,16 @@ void Object::calculateMovement(Uint32 currentTime, Uint32 accumulator)
   // Move actual object
   p_x += movement_x;
   p_y += movement_y;
-  LOG_DBG("  [Delta %04d] POS :: [%0.2f, %0.2f] || v [%0.4f %0.4f] || a [%0.4f %0.f]",
-      deltaTime,
-      p_x, p_y,
-      movement_velo_x, movement_velo_y,
-      movement_accel_x, movement_accel_y);
+  // LOG_DBG("  [Delta %04d] POS :: [%0.2f, %0.2f] || v [%0.4f %0.4f] || a [%0.4f %0.f]",
+  //     deltaTime,
+  //     p_x, p_y,
+  //     movement_velo_x, movement_velo_y,
+  //     movement_accel_x, movement_accel_y);
   if (0.0 == movement_velo_x && 0.0 == movement_velo_y) {
     movement_start_time = 0.0;
-    LOG_INFO("    RESET time :: %u [%0.2f %0.2f]",
-      movement_start_time,
-      movement_state_x, movement_state_y);
+    // LOG_INFO("    RESET time :: %u [%0.2f %0.2f]",
+    //   movement_start_time,
+    //   movement_state_x, movement_state_y);
   }
 }
 
