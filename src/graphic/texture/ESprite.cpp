@@ -124,8 +124,8 @@ void ESprite::render(
   //texture_render_resize(100, 100, &gSpriteClips[sprite_index], 4);
   if (mTexture) {
     texture_render(
-      (int)(p_x + ani_x + base_x),
-      (int)(p_y + ani_y + base_y - (mHeight - GRID_SIZE)),
+      (int)(base_x + p_x + ani_x),
+      (int)(base_y + p_y + ani_y - (mHeight - GRID_SIZE)),
       &gSpriteClips[sprite_index],
       delta_angle
     );

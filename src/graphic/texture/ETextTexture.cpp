@@ -95,8 +95,8 @@ void ETextTexture::render(
     int delta_x, int delta_y, double delta_angle)
 {
   int x, y;
-  x = (int)(p_x) + delta_x;
-  y = (int)(p_y) + delta_y;
+  x = base_x + (int)(p_x) + delta_x;
+  y = base_y + (int)(p_y) + delta_y;
   //texture_render(SCREEN_WIDTH - textTexture.getWidth() - 10, 10);
   if (mTexture) {
     //LOG_INFO("Text render [%s] (%d,%d)", message.c_str(), (int)p_x, (int)p_y);

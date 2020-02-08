@@ -88,10 +88,15 @@ void EImageTexture::render(
     //texture_render((int)p_x, (int)p_y, &rect);
     if (wRatio != 1.0 || hRatio != 1.0)
       texture_render_resize(
-        (int)(p_x + ani_x), (int)(p_y + ani_y),
+        (int)(base_x + p_x + ani_x),
+        (int)(base_y + p_y + ani_y),
         &rect, wRatio, hRatio, delta_angle);
     else
-      texture_render((int)(p_x + ani_x), (int)(p_y + ani_y), &rect, delta_angle);
+      texture_render(
+        (int)(base_x + p_x + ani_x),
+        (int)(base_y + p_y + ani_y),
+        &rect, delta_angle
+      );
   }
   else
     LOG_ERR("Texture not exist !");

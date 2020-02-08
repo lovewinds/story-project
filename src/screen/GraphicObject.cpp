@@ -78,15 +78,15 @@ void Object::setMovement(double x, double y)
 
 void Object::movePositionTo(double x, double y)
 {
-  for (auto &it : _sprite_map)
-  {
-    it.second->movePositionTo(x, y);
-  }
+  // for (auto &it : _sprite_map)
+  // {
+  //   it.second->movePositionTo(x, y);
+  // }
 
-  for (auto &it : _img_texture_map)
-  {
-    it.second->movePositionTo(x, y);
-  }
+  // for (auto &it : _img_texture_map)
+  // {
+  //   it.second->movePositionTo(x, y);
+  // }
 
   p_x = x;
   p_y = y;
@@ -94,15 +94,15 @@ void Object::movePositionTo(double x, double y)
 
 void Object::movePositionBy(double delta_x, double delta_y)
 {
-  for (auto &it : _sprite_map)
-  {
-    it.second->movePositionBy(delta_x, delta_y);
-  }
+  // for (auto &it : _sprite_map)
+  // {
+  //   it.second->movePositionBy(delta_x, delta_y);
+  // }
 
-  for (auto &it : _img_texture_map)
-  {
-    it.second->movePositionBy(delta_x, delta_y);
-  }
+  // for (auto &it : _img_texture_map)
+  // {
+  //   it.second->movePositionBy(delta_x, delta_y);
+  // }
 
   p_x += delta_x;
   p_y += delta_y;
@@ -166,8 +166,6 @@ void Object::addSprite(std::shared_ptr<Graphic::ESprite> sprite)
     return;
   }
 
-  sprite->movePositionTo(p_x, p_y);
-
   /* TODO: support multiple drawbles */
   width = sprite->getWidth();
   height = sprite->getHeight();
@@ -181,8 +179,6 @@ void Object::addImage(std::shared_ptr<Graphic::EImageTexture> image)
     return;
   }
 
-  image->movePositionTo(p_x, p_y);
-
   /* TODO: support multiple drawbles */
   width = image->getWidth();
   height = image->getHeight();
@@ -195,8 +191,6 @@ void Object::addText(std::shared_ptr<Graphic::ETextTexture> text)
     LOG_ERR("Failed to insert text map!");
     return;
   }
-
-  text->movePositionTo(p_x, p_y);
 
   /* TODO: support multiple drawbles */
   width = text->getWidth();
