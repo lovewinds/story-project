@@ -12,7 +12,7 @@
 #include "graphic/texture/ETextTexture.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 class Object
 {
@@ -34,9 +34,9 @@ public:
   void setMovement(double x, double y);
 
   /* Animation */
-  void setAnimation(std::shared_ptr<EAnimation> animation);
-  std::shared_ptr<EAnimation> getAnimation();
-  AnimationState getAnimationState();
+  void setAnimation(std::shared_ptr<Graphic::EAnimation> animation);
+  std::shared_ptr<Graphic::EAnimation> getAnimation();
+  Graphic::AnimationState getAnimationState();
   virtual void startAnimation();
   virtual void stopAnimation();
   virtual void pauseAnimation();
@@ -44,14 +44,14 @@ public:
   virtual void finishedAnimationCallback(double delta_x, double delta_y);
   virtual void syncAnimationCallback(double delta_x, double delta_y);
 
-  virtual void animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
+  virtual void animatedMoveTo(std::weak_ptr<Object> self,
       int x, int y, int transition_msec);
-  virtual void animatedMoveRotateTo(std::weak_ptr<story::Graphic::Object> self,
+  virtual void animatedMoveRotateTo(std::weak_ptr<Object> self,
       int dest_x, int dest_y, int transition_msec);
 
   /* State */
-  void changeState(std::weak_ptr<story::Graphic::Object> self);
-  void changeRotateState(std::weak_ptr<story::Graphic::Object> self);
+  void changeState(std::weak_ptr<Object> self);
+  void changeRotateState(std::weak_ptr<Object> self);
 
   /* Event callback */
   typedef std::function<void(double x, double y)> PositionCallback;
@@ -63,9 +63,9 @@ public:
   void setVisible(bool visible);
   void setTransparent(int percent);
 
-  void addSprite(std::shared_ptr<ESprite> sprite);
-  void addImage(std::shared_ptr<EImageTexture> image);
-  void addText(std::shared_ptr<ETextTexture> text);
+  void addSprite(std::shared_ptr<Graphic::ESprite> sprite);
+  void addImage(std::shared_ptr<Graphic::EImageTexture> image);
+  void addText(std::shared_ptr<Graphic::ETextTexture> text);
   void updateText(std::string text);
   void removeContentAll();
 
@@ -76,12 +76,12 @@ public:
 protected:
   std::string name;
 
-  std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
-  std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
-  std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::ESprite>> _sprite_map;
+  std::map<std::string, std::shared_ptr<Graphic::EImageTexture>> _img_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::ETextTexture>> _text_texture_map;
 
   /* Animation */
-  std::shared_ptr<EAnimation> animation;
+  std::shared_ptr<Graphic::EAnimation> animation;
 
   /* Position */
   static const double DEFAULT_ACCEL;

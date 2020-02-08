@@ -34,7 +34,7 @@ RPGLayer::RPGLayer(std::string name)
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   /* Create sprite by manually for test */
 
-  std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+  std::shared_ptr<story::Screen::Object> object(new story::Screen::Object());
   std::shared_ptr<ESprite> sprite;
 
   sprite = resManager.createSprite("char_girl", "movingChar");
@@ -57,7 +57,7 @@ RPGLayer::~RPGLayer()
 }
 
 /* Store Image and Sprite to render position based */
-bool RPGLayer::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool RPGLayer::addObject(std::shared_ptr<story::Screen::Object> object)
 {
   double _x = 0.0;
   double _y = 0.0;
@@ -238,7 +238,7 @@ bool RPGLayer::testRotate(int x, int y)
   //for (auto& it : _sprite_map)
   for (auto& it : _object_map)
   {
-    std::shared_ptr<story::Graphic::Object> object = it.second;
+    std::shared_ptr<story::Screen::Object> object = it.second;
     if (nullptr == object) continue;
 
     int obj_x = object->getPositionX();
@@ -428,7 +428,7 @@ void RPGLayer::handleEvent(SDL_Event e)
       break;
     case SDLK_SPACE:
       LOG_INFO("Animation test");
-      std::shared_ptr<story::Graphic::Object> found;
+      std::shared_ptr<story::Screen::Object> found;
       auto search = _object_map.find("movingChar");
       if (search != _object_map.end()) {
         found = search->second;
@@ -468,7 +468,7 @@ void RPGLayer::handleEvent(SDL_Event e)
       return;
 
     /* Move to clicked position */
-    std::shared_ptr<story::Graphic::Object> found;
+    std::shared_ptr<story::Screen::Object> found;
     auto search = _object_map.find("movingChar");
     if (search != _object_map.end()) {
       found = search->second;

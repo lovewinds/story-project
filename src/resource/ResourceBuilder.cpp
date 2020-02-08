@@ -7,7 +7,7 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/ResourceBuilder.hpp"
 
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 #include "graphic/layer/RPGLayer.hpp"
 #include "graphic/layer/MapLayer.hpp"
 #include "graphic/layer/ChatLayer.hpp"
@@ -55,8 +55,8 @@ ResourceBuilder::createScene(std::string scene_name)
     {
       std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc = sprite_it;
       std::shared_ptr<story::Graphic::ESprite> sprite;
-      std::shared_ptr<story::Graphic::Object> object
-        (new story::Graphic::Object());
+      std::shared_ptr<story::Screen::Object> object
+        (new story::Screen::Object());
       LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
 
       /* TODO: Creation should be performed with ObjectFactory */
@@ -76,8 +76,8 @@ ResourceBuilder::createScene(std::string scene_name)
     {
       std::shared_ptr<story::Graphic::EImageDesc> imageDesc = image_it;
       std::shared_ptr<story::Graphic::EImageTexture> image;
-      std::shared_ptr<story::Graphic::Object> object
-        (new story::Graphic::Object());
+      std::shared_ptr<story::Screen::Object> object
+        (new story::Screen::Object());
       LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
 
       object->setName(imageDesc->getName());

@@ -1,6 +1,6 @@
 #include "core/Ecore.hpp"
 
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 #include "graphic/animation/ESmoothStepAnimation.hpp"
 #include "graphic/animation/ESmoothRotateAnimation.hpp"
 #include "graphic/animation/ERotateAndMoveAnimation.hpp"
@@ -8,7 +8,7 @@
 #include "util/LogHelper.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 const double Object::DEFAULT_ACCEL = 0.026;
 const double Object::DEFAULT_VELO = 0.2;
@@ -158,7 +158,7 @@ bool Object::isControllable()
   return controllable;
 }
 
-void Object::addSprite(std::shared_ptr<ESprite> sprite)
+void Object::addSprite(std::shared_ptr<Graphic::ESprite> sprite)
 {
   auto result = _sprite_map.emplace(sprite->getName(), sprite);
   if (!result.second) {
@@ -173,7 +173,7 @@ void Object::addSprite(std::shared_ptr<ESprite> sprite)
   height = sprite->getHeight();
 }
 
-void Object::addImage(std::shared_ptr<EImageTexture> image)
+void Object::addImage(std::shared_ptr<Graphic::EImageTexture> image)
 {
   auto result = _img_texture_map.emplace(image->getName(), image);
   if (!result.second) {
@@ -188,7 +188,7 @@ void Object::addImage(std::shared_ptr<EImageTexture> image)
   height = image->getHeight();
 }
 
-void Object::addText(std::shared_ptr<ETextTexture> text)
+void Object::addText(std::shared_ptr<Graphic::ETextTexture> text)
 {
   auto result = _text_texture_map.emplace("text", text);
   if (!result.second) {
@@ -217,92 +217,92 @@ void Object::removeContentAll()
   _text_texture_map.clear();
 }
 
-void Object::setAnimation(std::shared_ptr<EAnimation> animation)
+void Object::setAnimation(std::shared_ptr<Graphic::EAnimation> animation)
 {
   this->animation = animation;
 }
 
-std::shared_ptr<EAnimation> Object::getAnimation()
+std::shared_ptr<Graphic::EAnimation> Object::getAnimation()
 {
   return animation;
 }
 
-void Object::animatedMoveTo(std::weak_ptr<story::Graphic::Object> self,
+void Object::animatedMoveTo(std::weak_ptr<story::Screen::Object> self,
     int dest_x, int dest_y, int transition_msec)
 {
   /* Create animation */
-  ESmoothStepAnimation *ani = new ESmoothStepAnimation();
+  Graphic::ESmoothStepAnimation *ani = new Graphic::ESmoothStepAnimation();
   ani->setCaller(self);
   ani->setStartPosition(0, 0);
   ani->setEndPosition(dest_x - p_x, dest_y - p_y);
   ani->setTransition(transition_msec);
 
-  this->setAnimation(std::shared_ptr<EAnimation>(ani));
+  this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
   this->startAnimation();
 }
 
-void Object::animatedMoveRotateTo(std::weak_ptr<story::Graphic::Object> self,
+void Object::animatedMoveRotateTo(std::weak_ptr<story::Screen::Object> self,
     int dest_x, int dest_y, int transition_msec)
 {
   int i = 0;
   /* Create animation */
-  ERotateAndMoveAnimation *ani = new ERotateAndMoveAnimation();
+  Graphic::ERotateAndMoveAnimation *ani = new Graphic::ERotateAndMoveAnimation();
   ani->setCaller(self);
   ani->setStartPosition(0, 0);
   ani->setEndPosition(dest_x - p_x, dest_y - p_y);
   ani->setTransition(transition_msec);
   i = rand() % 2;
   if (i == 0)
-    ani->setRotateDirection(ROTATE_CLOCKWISE);
+    ani->setRotateDirection(Graphic::ROTATE_CLOCKWISE);
   else
-    ani->setRotateDirection(ROTATE_ANTICLOCKWISE);
+    ani->setRotateDirection(Graphic::ROTATE_ANTICLOCKWISE);
 
-  this->setAnimation(std::shared_ptr<EAnimation>(ani));
+  this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
   this->startAnimation();
 }
 
-void Object::changeState(std::weak_ptr<story::Graphic::Object> self)
+void Object::changeState(std::weak_ptr<story::Screen::Object> self)
 {
   /* Initial state */
   if (this->state_value == 0) {
     /* Create animation */
-    ESmoothStepAnimation *ani = new ESmoothStepAnimation();
+    Graphic::ESmoothStepAnimation *ani = new Graphic::ESmoothStepAnimation();
     ani->setCaller(self);
     ani->setStartPosition(10, 0);
     ani->setEndPosition(100, 0);
     ani->setTransition(1000);
 
-    this->setAnimation(std::shared_ptr<EAnimation>(ani));
+    this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
     this->startAnimation();
 
     this->state_value = 1;
   } else {
     /* Create animation */
-    ESmoothStepAnimation *ani = new ESmoothStepAnimation();
+    Graphic::ESmoothStepAnimation *ani = new Graphic::ESmoothStepAnimation();
     ani->setCaller(self);
     ani->setStartPosition(10, 0);
     ani->setEndPosition(100, 0);
     ani->setTransition(1000);
 
-    this->setAnimation(std::shared_ptr<EAnimation>(ani));
+    this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
     this->startAnimation();
 
     this->state_value = 0;
   }
 }
 
-void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
+void Object::changeRotateState(std::weak_ptr<story::Screen::Object> self)
 {
   /* Initial state */
   switch(this->rotate_state_value) {
   case 0: {
     /* Create animation */
-    ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
+    Graphic::ESmoothRotateAnimation *ani = new Graphic::ESmoothRotateAnimation();
     ani->setCaller(self);
-    ani->setRotateDirection(ROTATE_CLOCKWISE);
+    ani->setRotateDirection(Graphic::ROTATE_CLOCKWISE);
     ani->setTransition(1000);
 
-    this->setAnimation(std::shared_ptr<EAnimation>(ani));
+    this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
     this->startAnimation();
 
     this->rotate_state_value = 1;
@@ -310,12 +310,12 @@ void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
   break;
   case 1: {
     /* Create animation */
-    ESmoothRotateAnimation *ani = new ESmoothRotateAnimation();
+    Graphic::ESmoothRotateAnimation *ani = new Graphic::ESmoothRotateAnimation();
     ani->setCaller(self);
-    ani->setRotateDirection(ROTATE_ANTICLOCKWISE);
+    ani->setRotateDirection(Graphic::ROTATE_ANTICLOCKWISE);
     ani->setTransition(1000);
 
-    this->setAnimation(std::shared_ptr<EAnimation>(ani));
+    this->setAnimation(std::shared_ptr<Graphic::EAnimation>(ani));
     this->startAnimation();
 
     this->rotate_state_value = 0;
@@ -327,10 +327,10 @@ void Object::changeRotateState(std::weak_ptr<story::Graphic::Object> self)
   }
 }
 
-AnimationState Object::getAnimationState()
+Graphic::AnimationState Object::getAnimationState()
 {
   if (nullptr == animation)
-    return ANI_NONE;
+    return Graphic::ANI_NONE;
 
   return animation->getState();
 }

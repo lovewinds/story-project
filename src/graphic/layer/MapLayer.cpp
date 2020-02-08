@@ -27,7 +27,7 @@ MapLayer::~MapLayer()
 }
 
 /* Store Image and Sprite to render position based */
-bool MapLayer::addObject(std::shared_ptr<story::Graphic::Object> object)
+bool MapLayer::addObject(std::shared_ptr<story::Screen::Object> object)
 {
   double _x = 0.0;
   double _y = 0.0;
@@ -137,7 +137,7 @@ bool MapLayer::testRotate(int x, int y)
   //for (auto& it : _sprite_map)
   for (auto& it : _object_map)
   {
-    std::shared_ptr<story::Graphic::Object> object = it.second;
+    std::shared_ptr<story::Screen::Object> object = it.second;
     if (nullptr == object) continue;
 
     int obj_x = object->getPositionX();
@@ -317,7 +317,7 @@ void MapLayer::handleEvent(SDL_Event e)
       return;
 
     /* Move to clicked position */
-    std::shared_ptr<story::Graphic::Object> found;
+    std::shared_ptr<story::Screen::Object> found;
     auto search = _object_map.find("movingChar");
     if (search != _object_map.end()) {
       found = search->second;

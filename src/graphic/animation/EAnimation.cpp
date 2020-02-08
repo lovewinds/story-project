@@ -1,7 +1,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
@@ -46,14 +46,14 @@ void EAnimation::stop()
   startTime = 0;
   state = ANI_STOP;
 
-  std::shared_ptr<story::Graphic::Object> t = caller.lock();
+  std::shared_ptr<story::Screen::Object> t = caller.lock();
   if (t)
     t->finishedAnimationCallback(a_x, a_y);
 }
 
 void EAnimation::sync()
 {
-  std::shared_ptr<story::Graphic::Object> t = caller.lock();
+  std::shared_ptr<story::Screen::Object> t = caller.lock();
   if (t)
     t->syncAnimationCallback(a_x, a_y);
 }
@@ -76,7 +76,7 @@ AnimationState EAnimation::getState()
   return state;
 }
 
-void EAnimation::setCaller(std::weak_ptr<story::Graphic::Object> clr)
+void EAnimation::setCaller(std::weak_ptr<story::Screen::Object> clr)
 {
   /* Store weak_ptr to avoid circular reference */
   caller = clr;

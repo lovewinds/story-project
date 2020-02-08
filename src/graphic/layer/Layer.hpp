@@ -9,7 +9,7 @@
 #include "graphic/texture/EImageTexture.hpp"
 #include "graphic/texture/ETextTexture.hpp"
 #include "graphic/texture/EFigure.hpp"
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
@@ -36,7 +36,7 @@ public:
   std::string getName();
 
   /* Should handle creation of resources with ResourceBuilder */
-  virtual bool addObject(std::shared_ptr<story::Graphic::Object> object);
+  virtual bool addObject(std::shared_ptr<story::Screen::Object> object);
 
   /* Resource manager allocates image resource */
   //std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
@@ -72,7 +72,7 @@ protected:
   /* Not classified textures */
   std::map<std::string, std::shared_ptr<EDrawable>> _raw_texture_map;
 
-  std::map<std::string, std::shared_ptr<story::Graphic::Object>> _object_map;
+  std::map<std::string, std::shared_ptr<story::Screen::Object>> _object_map;
 };
 
 } /* namespace Graphic */

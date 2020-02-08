@@ -7,7 +7,7 @@
 #include "graphic/texture/ESprite.hpp"
 #include "graphic/texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 
 #include "graphic/layer/ChatLayer.hpp"
@@ -26,7 +26,7 @@ ChatLayer::ChatLayer(std::string name)
   SDL_Color textColor = { 0x00, 0x00, 0x00 };
   SDL_Color bgColor = { 0xFF, 0xFF, 0xFF };
   SDL_Color boxBGColor = { 0xE3, 0xE3, 0xB4 };
-  std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+  std::shared_ptr<story::Screen::Object> object(new story::Screen::Object());
 
   std::shared_ptr<EFigure> dr(new EFigure(
     10, story::Core::Ecore::getScreenHeight() / 3 * 2,

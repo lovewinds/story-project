@@ -5,7 +5,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "graphic/GraphicObject.hpp"
+#include "screen/GraphicObject.hpp"
 
 #include "graphic/layer/DbgOverlayLayer.hpp"
 
@@ -20,7 +20,7 @@ DbgOverlayLayer::DbgOverlayLayer(std::string name)
   SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
   SDL_Color bgColor = { 0x0, 0x0, 0x0 };
   std::shared_ptr<ETextTexture> tt(new ETextTexture("FPS: 0.0", textColor, bgColor, 20));
-  std::shared_ptr<story::Graphic::Object> object(new story::Graphic::Object());
+  std::shared_ptr<story::Screen::Object> object(new story::Screen::Object());
 
   object->setName("FPS");
   object->movePositionTo(20, 60);
