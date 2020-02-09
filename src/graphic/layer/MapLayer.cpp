@@ -38,10 +38,6 @@ bool MapLayer::addObject(std::shared_ptr<story::Screen::Object> object)
   LOG_DBG("Check object position [%3d, %3d]",
     (int)object->getPositionX(), (int)object->getPositionY());
 
-  _x = object->getPositionX() * 32.0;
-  _y = object->getPositionY() * 32.0;
-  object->movePositionTo(_x, _y);
-
   /* Make position based string
    *    YYYYXXXX
    */

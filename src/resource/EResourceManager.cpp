@@ -33,8 +33,6 @@ EResourceManager::~EResourceManager()
   }
 
   scene_desc_map.clear();
-  sprite_types.clear();
-
   image_map.clear();
 
   LOG_DBG("Bye ResourceManager !");
@@ -194,67 +192,54 @@ void EResourceManager::releaseTexture(std::string path)
 #endif
 }
 
-bool EResourceManager::createSpriteType(std::shared_ptr<ESpriteType> spriteType)
+bool EResourceManager::createSpriteDesc(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
 {
-  if (!spriteType)
+  if (!spriteDesc)
     return false;
 
-  auto inserted = sprite_types.emplace(spriteType->getName(), spriteType);
+  auto inserted = sprite_desc_dict.emplace(spriteDesc->getName(), spriteDesc);
   if (!inserted.second) {
-    LOG_ERR("Failed to insert sprite type map!");
+    LOG_ERR("Failed to insert sprite descriptor map!");
     return false;
   }
 
   return true;
 }
 
-std::shared_ptr<ESpriteType>
-EResourceManager::getSpriteType(std::string type_name)
+std::shared_ptr<Graphic::ESpriteDesc>
+EResourceManager::getSpriteDesc(std::string type_name)
 {
-  std::shared_ptr<ESpriteType> found = nullptr;
-  auto spriteType = sprite_types.find(type_name);
+  std::shared_ptr<Graphic::ESpriteDesc> found = nullptr;
+  auto spriteDesc = sprite_desc_dict.find(type_name);
 
-  if (spriteType != sprite_types.end()) {
+  if (spriteDesc != sprite_desc_dict.end()) {
     /* Found */
-    found = spriteType->second;
+    found = spriteDesc->second;
   }
 
   return found;
 }
 
 std::shared_ptr<story::Graphic::ESprite>
-EResourceManager::_createSpriteFromTypeDesc(std::string spriteID,
-    std::shared_ptr<ESpriteType> spriteType)
-{
-  if (spriteID.empty() || (nullptr == spriteType) )
-    return nullptr;
-
-  std::shared_ptr<story::Graphic::ESprite> sprite(
-    new story::Graphic::ESprite(spriteID, spriteType)
-  );
-  return sprite;
-}
-
-std::shared_ptr<story::Graphic::ESprite>
-EResourceManager::createSprite(std::string type, std::string name)
+EResourceManager::createSprite(std::string name, std::string type)
 {
   LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
 
   /* Find sprite template type */
-
-  //std::pair<std::map<std::string, std::shared_ptr<ESpriteType>>::iterator, bool> result;
-  auto t = sprite_types.find(type);
-  if (t == sprite_types.end()) {
-    LOG_ERR("Sprite type [%s] is not defined.", type.c_str());
+  auto t = sprite_desc_dict.find(type);
+  if (t == sprite_desc_dict.end()) {
+    LOG_ERR("Sprite descriptor [%s] is not defined.", type.c_str());
     return nullptr;
   }
 
   /* Create sprite from descriptor */
-  std::shared_ptr<story::Resource::ESpriteType> spriteType = t->second;
-  std::shared_ptr<story::Graphic::ESprite> sprite =
-    _createSpriteFromTypeDesc(name, spriteType);
-  if (!sprite) {
-    LOG_ERR("Failed to allocate sprite! [Type:%s]", spriteType->getName().c_str());
+  std::shared_ptr<Graphic::ESpriteDesc> spriteDesc = t->second;
+  std::shared_ptr<story::Graphic::ESprite> sprite(
+    new story::Graphic::ESprite(name)
+  );
+
+  if (false == sprite->initialize(spriteDesc)) {
+    LOG_ERR("Failed to initialize sprite! [Type:%s]", spriteDesc->getName().c_str());
     return nullptr;
   }
 

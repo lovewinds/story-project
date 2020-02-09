@@ -8,7 +8,6 @@
 #include "graphic/layer/Layer.hpp"
 #include "graphic/descriptors/SceneDescripor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
-#include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "graphic/texture/ESprite.hpp"
 #include "util/SDLWrap.hpp"
@@ -73,11 +72,10 @@ public:
 /*
  * Sprite Functions
  */
-  /* Create Sprite type template */
-  bool createSpriteType(std::shared_ptr<story::Resource::ESpriteType>);
+  bool createSpriteDesc(std::shared_ptr<Graphic::ESpriteDesc>);
 
-  std::shared_ptr<story::Resource::ESpriteType>
-  getSpriteType(std::string type_name);
+  std::shared_ptr<Graphic::ESpriteDesc>
+  getSpriteDesc(std::string desc_name);
 
   std::shared_ptr<story::Graphic::ESprite>
   createSprite(std::string type, std::string name);
@@ -95,15 +93,10 @@ public:
   void releaseFont(std::shared_ptr<SDLFontWrap>& font);
 
 protected:
-  /* Allocate sprite with related image resource into memory */
-  std::shared_ptr<story::Graphic::ESprite>
-  _createSpriteFromTypeDesc(std::string spriteID,
-      std::shared_ptr<ESpriteType> spriteType);
-
   story::Core::ProjectLoaderInterface *loader;
 
   /* Store sprite info here for caching */
-  std::map<std::string, std::shared_ptr<ESpriteType>> sprite_types;
+  std::map<std::string, std::shared_ptr<Graphic::ESpriteDesc>> sprite_desc_dict;
 
   std::map<std::string, std::shared_ptr<story::Graphic::ESceneDesc>> scene_desc_map;
 

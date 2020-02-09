@@ -10,7 +10,6 @@
 #include "graphic/layer/Layer.hpp"
 #include "graphic/descriptors/ImageDescriptor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
-#include "resource/ESpriteType.hpp"
 #include "resource/EImageResource.hpp"
 #include "graphic/texture/ESprite.hpp"
 
@@ -50,7 +49,8 @@ public:
  * Sprite Functions
  */
   std::shared_ptr<story::Graphic::ESprite>
-  createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc);
+  createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc
+  );
 
   void removeSprite(std::string name);
 

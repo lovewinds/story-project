@@ -57,7 +57,10 @@ ResourceBuilder::createScene(std::string scene_name)
       std::shared_ptr<story::Graphic::ESprite> sprite;
       std::shared_ptr<story::Screen::Object> object
         (new story::Screen::Object());
-      LOG_DBG("    Sprite [%s]", spriteDesc->getName().c_str());
+      LOG_DBG("    Sprite [%s] (%03d, %03d)",
+        spriteDesc->getName().c_str(),
+        spriteDesc->getX(), spriteDesc->getY()
+      );
 
       /* TODO: Creation should be performed with ObjectFactory */
       sprite = createSprite(spriteDesc);
@@ -195,7 +198,10 @@ ResourceBuilder::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> sprit
   if (nullptr == spriteDesc)
     return nullptr;
 
-  sprite = resManager.createSprite(spriteDesc->getType(), spriteDesc->getName());
+  sprite = resManager.createSprite(
+    spriteDesc->getObjectName(),
+    spriteDesc->getName()
+  );
 
   return sprite;
 }

@@ -8,7 +8,6 @@
 #include "graphic/descriptors/SubLayerDescriptor.hpp"
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
-#include "resource/ESpriteType.hpp"
 #include "resource/EResourceManager.hpp"
 
 namespace story {
@@ -30,10 +29,10 @@ void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
   //"/SceneRoot/Scene/Resources/Sprites/Sprite/Index[text()<5]/..");
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/GlobalResources/SpriteTypeGroup/SpriteType";
+  s << "/SceneRoot/GlobalResources/SpriteResourceGroup/SpriteResource";
   std::string sprite_path = s.str();
   pugi::xpath_node_set spr = document.select_nodes(sprite_path.c_str());
-  LOG_INFO("[%lu] SpriteTypes:", spr.size());
+  LOG_INFO("[%lu] Sprite Resources:", spr.size());
   for (pugi::xpath_node_set::const_iterator it = spr.begin(); it != spr.end(); ++it) {
     pugi::xpath_node node = *it;
     std::string name(node.node().attribute("name").value());
@@ -52,23 +51,21 @@ void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
       continue;
     }
 
-    std::shared_ptr<story::Resource::ESpriteType> spriteType(
-      new story::Resource::ESpriteType(name, source)
+    std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc(
+      new story::Graphic::ESpriteDesc(name, source)
     );
-    bool res = spriteType->setCellInfo(_width, _height);
-    if (false == res) {
-      LOG_ERR("Failed to initiate SpriteType");
-      continue;
-    }
+    spriteDesc->setWidth(_width);
+    spriteDesc->setHeight(_height);
+
     for (pugi::xml_node idx : node.node().children())
     {
       std::string idxNumber(idx.text().get());
       if (idxNumber.empty()) continue;
       int val = atoi(idxNumber.c_str());
       LOG_DBG("   Index : %s", idxNumber.c_str());
-      spriteType->appendSpriteCell(val);
+      spriteDesc->appendSpriteCellIndex(val);
     }
-    resManager->createSpriteType(spriteType);
+    resManager->createSpriteDesc(spriteDesc);
   }
 }
 
@@ -192,10 +189,16 @@ XMLProjectLoader::loadSceneDesc(
         std::string itm_ctrl(node.node().attribute("controllable").value());
         LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
           itm_name.c_str(), itm_source.c_str(), p_x, p_y);
-        std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc(
-          new story::Graphic::ESpriteDesc(itm_name, itm_source, p_x, p_y)
-        );
+        std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc
+          = resManager->getSpriteDesc(itm_source);
+        if (nullptr == spriteDesc) {
+          LOG_ERR("Failed to get valid sprite descriptor! [%s]", itm_source.c_str());
+          continue;
+        }
 
+        spriteDesc->setX(p_x);
+        spriteDesc->setY(p_y);
+        spriteDesc->setObjectName(itm_name);
         if (itm_ctrl.empty() == false) {
           if (itm_ctrl.compare("true") == 0 || itm_ctrl.compare("1") == 0) {
             spriteDesc->setControllable(true);

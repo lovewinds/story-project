@@ -24,8 +24,8 @@
 			<ImageResource path="ic_rect.png" name="icon_rectangle"
 					type="background" width="128" height="128"/>
 		</ImageResourceGroup>
-		<SpriteTypeGroup>
-			<SpriteType source="Character" name="char_girl" width="32" height="48">
+		<SpriteResourceGroup>
+			<SpriteResource name="char_girl" source="Character" width="32" height="48">
 				<Index linear="start">1</Index>
 				<Index>2</Index>
 				<Index>3</Index>
@@ -38,14 +38,14 @@
 				<Index>10</Index>
 				<Index>11</Index>
 				<Index linear="end">12</Index>
-			</SpriteType>
-			<SpriteType source="Gom" name="sleeping_gom" width="64" height="64">
+			</SpriteResource>
+			<SpriteResource name="sleeping_gom" source="Gom" width="64" height="64">
 				<Index linear="start">1</Index>
 				<Index>2</Index>
 				<Index>3</Index>
 				<Index linear="end">4</Index>
-			</SpriteType>
-		</SpriteTypeGroup>
+			</SpriteResource>
+		</SpriteResourceGroup>
 	</GlobalResources>
 	<Scene name="sample_rpg" type="Map">
 		<Layer name="base" depth="1">
@@ -56,9 +56,9 @@
 			<Sprite name="g3" source="sleeping_gom" x="8" y="1" />
 			<Sprite name="g4" source="sleeping_gom" x="8" y="4" />
 			-->
-			<Sprite name="g5" source="sleeping_gom" x="8" y="6" />
+			<Sprite name="g5" source="sleeping_gom" x="300" y="150" />
 			<!--Sprite name="c2" source="char_girl" x="32" y="256" /-->
-			<Sprite name="c1" source="char_girl" x="0" y="10" controllable="true"/>
+			<Sprite name="c1" source="char_girl" x="100" y="280" controllable="true"/>
 		</Layer>
 		<Layer name="map" depth="0">
 			<TileMap width="32" height="32" levels="3" source="MapTile">
