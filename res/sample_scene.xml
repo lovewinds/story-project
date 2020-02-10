@@ -50,12 +50,10 @@
 	<Scene name="sample_rpg" type="Map">
 		<Layer name="base" depth="1">
 			<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
-			<!--
-			<Sprite name="g1" source="sleeping_gom" x="4" y="1" />
-			<Sprite name="g2" source="sleeping_gom" x="4" y="4" />
-			<Sprite name="g3" source="sleeping_gom" x="8" y="1" />
-			<Sprite name="g4" source="sleeping_gom" x="8" y="4" />
-			-->
+			<Sprite name="g1" source="sleeping_gom" x="380" y="170" />
+			<Sprite name="g2" source="sleeping_gom" x="200" y="400" />
+			<Sprite name="g3" source="sleeping_gom" x="40" y="100" />
+			<Sprite name="g4" source="sleeping_gom" x="80" y="400" />
 			<Sprite name="g5" source="sleeping_gom" x="300" y="150" />
 			<!--Sprite name="c2" source="char_girl" x="32" y="256" /-->
 			<Sprite name="c1" source="char_girl" x="100" y="280" controllable="true"/>
