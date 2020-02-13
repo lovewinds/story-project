@@ -9,6 +9,7 @@
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "resource/EResourceManager.hpp"
+#include "resource/description/ObjectDescription.hpp"
 
 namespace story {
 namespace Core {
@@ -150,6 +151,15 @@ XMLProjectLoader::loadSceneDesc(
       int p_levels = 0;
       bool width_percent = false;
       bool height_percent = false;
+      // Create Object descriptor
+      std::shared_ptr<Resource::ObjectDescription> dsc(
+        new Resource::ObjectDescription()
+      );
+      for (pugi::xml_attribute attr: node.node().attributes())
+      {
+        dsc->add(attr.name(), attr.value());
+      }
+      layerDesc->appendObjectDesc(dsc);
       try {
         if (itm_h_align.empty())
           itm_h_align = std::string("left");
