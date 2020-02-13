@@ -109,7 +109,7 @@ void EGridMapTexture::render(
       for (int x = 0; x < wTileCount; x++) {
         for (int l = 1; l < levels; l++) {
           tile = (unsigned int)tileMap[y][x][l];
-          if (tile == 9999) continue;
+          if (tile == 999) continue;
           unsigned int tx = (unsigned int)(tile % row_count);
           unsigned int ty = (unsigned int)(tile / row_count);
 

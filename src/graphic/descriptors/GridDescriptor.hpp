@@ -31,7 +31,7 @@ public:
       for(int row = 0; row < height; row++) {
         gridArray[col][row] = new unsigned short[levels];
         for (int ll = 0; ll < levels; ll++) {
-          gridArray[col][row][ll] = 9999;
+          gridArray[col][row][ll] = 999;
         }
       }
     }
@@ -57,7 +57,7 @@ public:
     }
   }
   unsigned short getGridValue(int level, int x, int y) {
-    unsigned short res = 9999;
+    unsigned short res = 999;
     if (0 <= x && x < width) {
       if (0 <= y && y < height) {
         if (0 <= level && level < levels) {
