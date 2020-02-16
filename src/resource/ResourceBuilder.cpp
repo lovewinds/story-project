@@ -51,6 +51,16 @@ ResourceBuilder::createScene(std::string scene_name)
     LOG_DBG("  Scene Layer  [%s]", layer->getName().c_str());
 
     /* Create sprites from sprite descriptor */
+    for (auto& obj_desc : layer->obj_array)
+    {
+      std::shared_ptr<Resource::ObjectDescription> object = obj_desc;
+      LOG_DBG("    Object descriptor [%s] (%03d, %03d)",
+        object->get("name").c_str(),
+        object->getInt("x"), object->getInt("y")
+      );
+    }
+
+    /* Create sprites from sprite descriptor */
     for (auto& sprite_it : layer->sprite_list)
     {
       std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc = sprite_it;

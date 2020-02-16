@@ -20,6 +20,16 @@ public:
   std::string get(std::string key) {
     return property[key];
   }
+  int getInt(std::string key) {
+    int ret = 0;
+    try {
+      ret = std::stoi(property[key].c_str());
+    }
+    catch (std::exception e) {
+      ret = 0;
+    }
+    return ret;
+  }
 
 protected:
   std::string name;
