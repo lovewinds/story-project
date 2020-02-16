@@ -48,7 +48,7 @@ void EImageTexture::_createTexture()
   if (mHeight == 0)
     mHeight = image->getHeight();
 
-  LOG_DBG("Created. original image size [%d x %d]", mWidth, mHeight);
+  // LOG_DBG("Created. original image size [%d x %d]", mWidth, mHeight);
 
   /* Get shared texture from Resource Manager */
   mTexture = image->getTexture();

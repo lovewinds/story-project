@@ -77,7 +77,7 @@ unsigned long IPCServer::RecvIPC(void * hPipe, void* pData, size_t tDataSize)
 
   try {
     auto len = socket_server.recv(&request, ZMQ_NOBLOCK);
-    LOG_DBG("Received Hello !");
+    // LOG_DBG("Received Hello !");
 
     if (len > 0) {
       LOG_DBG("Sending Hello ...");

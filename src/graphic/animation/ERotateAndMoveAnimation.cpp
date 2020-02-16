@@ -71,7 +71,7 @@ void ERotateAndMoveAnimation::update(Uint32 currentTime, Uint32 accumulator)
   }
 
   if (checkFinished) {
-    LOG_DBG("Reverse !");
+    // LOG_DBG("Reverse !");
     //EAnimation::stop();
     a_angle = 0.0f;
     startTime = story::Core::Ecore::getAppTicks();

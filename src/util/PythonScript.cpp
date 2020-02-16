@@ -341,9 +341,9 @@ static void thread_loop_ipc(bool& running_state)
 
   // with blocking manner
   while(running_state) {
-    LOG_DBG("Waiting for data receiving");
+    // LOG_DBG("Waiting for data receiving");
     ret = ipc_server.RecvIPC(handle, pData, tDataSize);
-    LOG_DBG("Received data [%lu]", ret);
+    // LOG_DBG("Received data [%lu]", ret);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }

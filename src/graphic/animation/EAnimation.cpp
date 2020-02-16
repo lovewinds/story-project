@@ -17,7 +17,7 @@ a_x(0), a_y(0), a_angle(0)
 
 EAnimation::~EAnimation()
 {
-  LOG_ERR("Removed animation");
+  // LOG_ERR("Removed animation");
 }
 
 double EAnimation::getX()

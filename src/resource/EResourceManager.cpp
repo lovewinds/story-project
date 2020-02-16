@@ -266,7 +266,7 @@ EResourceManager::createImageResource(std::string name, std::string path,
   } else {
     LOG_ERR("Failed to insert image resource map !");
   }
-#if 1
+#if 0
   LOG_INFO("Current Image resources:");
   for(auto& it : image_map)
   {
