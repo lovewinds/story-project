@@ -159,6 +159,7 @@ XMLProjectLoader::loadSceneDesc(
       {
         dsc->add(attr.name(), attr.value());
       }
+      dsc->add("tag_type", itm_node);
       layerDesc->appendObjectDesc(dsc);
       try {
         if (itm_h_align.empty())
