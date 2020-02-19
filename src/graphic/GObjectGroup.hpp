@@ -4,7 +4,7 @@
 #include <memory>
 #include <map>
 
-#include "screen/GraphicObject.hpp"
+#include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAnimation.hpp"
 #include "graphic/texture/EDrawable.hpp"
 #include "graphic/texture/ESprite.hpp"
@@ -12,9 +12,9 @@
 #include "graphic/texture/ETextTexture.hpp"
 
 namespace story {
-namespace Screen {
+namespace Graphic {
 
-class ObjectGroup : public story::Screen::Object
+class ObjectGroup : public story::Graphic::Object
 {
 public:
   ObjectGroup();

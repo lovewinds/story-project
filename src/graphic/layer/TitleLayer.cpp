@@ -9,7 +9,7 @@
 #include "graphic/texture/EFigure.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/ResourceBuilder.hpp"
-#include "screen/GraphicObject.hpp"
+#include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 
 #include "graphic/layer/TitleLayer.hpp"
@@ -57,7 +57,7 @@ void TitleLayer::initMenuItem()
     std::shared_ptr<ETextTexture> txt(
       new ETextTexture(str_text, textColor, bgColor));
 
-    std::shared_ptr<story::Screen::Object> object(new story::Screen::Object());
+    std::shared_ptr<Graphic::Object> object(new Graphic::Object());
     object->setName(str_id);
     object->movePositionTo(item_x, item_y);
     object->addText(txt);
@@ -67,7 +67,7 @@ void TitleLayer::initMenuItem()
 /* Title text */
   std::shared_ptr<ETextTexture> txt(
       new ETextTexture("Story", textColor, bgColor, 58));
-  std::shared_ptr<story::Screen::Object> title_obj(new story::Screen::Object());
+  std::shared_ptr<Graphic::Object> title_obj(new Graphic::Object());
 
   title_obj->setName("title_string");
   title_obj->movePositionTo(story::Core::Ecore::getScreenWidth()-200, 100);
@@ -85,8 +85,8 @@ void TitleLayer::initMenuItem()
 
   for (int i = 0; i < 64; i++) {
     std::shared_ptr<EImageTexture> imgTexture = nullptr;
-    std::shared_ptr<story::Screen::Object> object
-          (new story::Screen::Object());
+    std::shared_ptr<Graphic::Object> object
+          (new Graphic::Object());
     int obj_x = rand() % s_width;
     int obj_y = rand() % s_height;
     int dest_y = 0;
@@ -156,7 +156,7 @@ bool TitleLayer::checkMenuClicked(int x, int y)
 {
   for (auto& it : _object_map)
   {
-    std::shared_ptr<story::Screen::Object> object = it.second;
+    std::shared_ptr<Graphic::Object> object = it.second;
     if (nullptr == object) continue;
 
     int obj_x = object->getPositionX();

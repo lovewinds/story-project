@@ -1,6 +1,6 @@
 #include "core/Ecore.hpp"
 
-#include "screen/GraphicObject.hpp"
+#include "graphic/GraphicObject.hpp"
 #include "graphic/animation/ESmoothStepAnimation.hpp"
 #include "graphic/animation/ESmoothRotateAnimation.hpp"
 #include "graphic/animation/ERotateAndMoveAnimation.hpp"
@@ -8,7 +8,7 @@
 #include "util/LogHelper.hpp"
 
 namespace story {
-namespace Screen {
+namespace Graphic {
 
 const double Object::DEFAULT_ACCEL = 0.026;
 const double Object::DEFAULT_VELO = 0.2;
@@ -221,7 +221,7 @@ std::shared_ptr<Graphic::EAnimation> Object::getAnimation()
   return animation;
 }
 
-void Object::animatedMoveTo(std::weak_ptr<story::Screen::Object> self,
+void Object::animatedMoveTo(std::weak_ptr<Graphic::Object> self,
     int dest_x, int dest_y, int transition_msec)
 {
   /* Create animation */
@@ -235,7 +235,7 @@ void Object::animatedMoveTo(std::weak_ptr<story::Screen::Object> self,
   this->startAnimation();
 }
 
-void Object::animatedMoveRotateTo(std::weak_ptr<story::Screen::Object> self,
+void Object::animatedMoveRotateTo(std::weak_ptr<Graphic::Object> self,
     int dest_x, int dest_y, int transition_msec)
 {
   int i = 0;
@@ -255,7 +255,7 @@ void Object::animatedMoveRotateTo(std::weak_ptr<story::Screen::Object> self,
   this->startAnimation();
 }
 
-void Object::changeState(std::weak_ptr<story::Screen::Object> self)
+void Object::changeState(std::weak_ptr<Graphic::Object> self)
 {
   /* Initial state */
   if (this->state_value == 0) {
@@ -285,7 +285,7 @@ void Object::changeState(std::weak_ptr<story::Screen::Object> self)
   }
 }
 
-void Object::changeRotateState(std::weak_ptr<story::Screen::Object> self)
+void Object::changeRotateState(std::weak_ptr<Graphic::Object> self)
 {
   /* Initial state */
   switch(this->rotate_state_value) {

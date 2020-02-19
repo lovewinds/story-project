@@ -4,14 +4,10 @@
 #include <memory>
 
 namespace story {
-  namespace Screen {
-    /* Avoid circular reference */
-    class Object;
-  }
-}
-
-namespace story {
 namespace Graphic {
+
+/* Avoid circular reference */
+class Object;
 
 enum AnimationRepeatType
 {
@@ -50,7 +46,7 @@ public:
   double getAngle();
   AnimationState getState();
 
-  void setCaller(std::weak_ptr<story::Screen::Object> caller);
+  void setCaller(std::weak_ptr<Graphic::Object> caller);
 
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
 
@@ -62,9 +58,9 @@ protected:
 
   /* This model only supports one callback at one time. */
   /* TODO: Use callback list */
-  //std::weak_ptr<story::Screen::Object> caller;
+  //std::weak_ptr<story::Graphic::Object> caller;
 
-  std::weak_ptr<story::Screen::Object> caller;
+  std::weak_ptr<story::Graphic::Object> caller;
 
   /* Position */
   double a_x;

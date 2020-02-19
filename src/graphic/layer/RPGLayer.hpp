@@ -27,7 +27,7 @@ public:
   virtual void render();
   virtual void update(Uint32 currentTime, Uint32 accumulator);
 
-  virtual bool addObject(std::shared_ptr<story::Screen::Object> object);
+  virtual bool addObject(std::shared_ptr<Graphic::Object> object);
 
   virtual void setMap(std::shared_ptr<EGridMapTexture> map);
   virtual void setGridDescriptor(std::shared_ptr<EGridDesc> desc);
@@ -46,8 +46,8 @@ protected:
   std::shared_ptr<EGridDesc> gridDesc;
 
   /* Grid-based object list for rendering */
-  //std::vector<std::list<std::shared_ptr<story::Screen::Object>>> _vertical_obj_list;
-  //std::map<std::string, std::shared_ptr<story::Screen::Object>> _object_map;
+  //std::vector<std::list<std::shared_ptr<Graphic::Object>>> _vertical_obj_list;
+  //std::map<std::string, std::shared_ptr<Graphic::Object>> _object_map;
 };
 
 } /* namespace Graphic */

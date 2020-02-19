@@ -41,7 +41,7 @@ std::string Layer::getName()
   return name;
 }
 
-bool Layer::addObject(std::shared_ptr<story::Screen::Object> object)
+bool Layer::addObject(std::shared_ptr<Graphic::Object> object)
 {
   auto result = _object_map.emplace(object->getName(), object);
   if (!result.second) {

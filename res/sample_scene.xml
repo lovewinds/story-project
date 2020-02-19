@@ -45,7 +45,7 @@
 				<Index>3</Index>
 				<Index linear="end">4</Index>
 			</SpriteTexture>
-		</SpriteTextureGroup>
+		</ExtendedTextureGroup>
 	</GlobalResources>
 	<Scene name="sample_rpg" type="Map">
 		<Layer name="base" depth="1">

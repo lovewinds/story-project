@@ -12,7 +12,7 @@
 #include "graphic/texture/ETextTexture.hpp"
 
 namespace story {
-namespace Screen {
+namespace Graphic {
 
 class Object
 {
