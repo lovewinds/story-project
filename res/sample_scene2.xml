@@ -1,43 +1,42 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
-	<GlobalResources type="global"></GlobalResources>
-	<Scene name="main" class="Template_RPG">
-		<Resources>
-			<Images>
-				<Image src="bg-black.png" name="Background"
-					 type="background" width="636" height="475" />
-				<Image src="grid-base.png" name="Character"
-					 type="sprite" width="128" height="192" />
-			</Images>
-			<Sprites>
-				<Sprite source="Character" name="loading_circle" width="32" height="48">
-					<Index linear="start">1</Index>
-					<Index>2</Index>
-					<Index>3</Index>
-					<Index>4</Index>
-					<Index>5</Index>
-					<Index>6</Index>
-					<Index>7</Index>
-					<Index>8</Index>
-					<Index>9</Index>
-					<Index>10</Index>
-					<Index>11</Index>
-					<Index linear="end">12</Index>
-				</Sprite>
-			</Sprites>
-		</Resources>
+	<GlobalResources type="global">
+		<ResourceGroup>
+			<ImageResource path="bg-black.png" name="Background"
+						type="background" width="636" height="475" />
+			<ImageResource path="grid-base.png" name="Character"
+						type="sprite" width="128" height="192" />
+		</ResourceGroup>
+		<ExtendedTextureGroup>
+			<SpriteTexture name="loading_circle" source="Character" width="32" height="48">
+				<Index linear="start">1</Index>
+				<Index>2</Index>
+				<Index>3</Index>
+				<Index>4</Index>
+				<Index>5</Index>
+				<Index>6</Index>
+				<Index>7</Index>
+				<Index>8</Index>
+				<Index>9</Index>
+				<Index>10</Index>
+				<Index>11</Index>
+				<Index linear="end">12</Index>
+			</SpriteTexture>
+		</ExtendedTextureGroup>
+	</GlobalResources>
+	<Scene name="main" type="Map">
 		<Layer name="base">
-			<Image type="Background" name="bg" x="0" y="0" />
-			<Sprite type="loading_circle" name="c1" x="0" y="0" />
-			<Sprite type="loading_circle" name="c2" x="50" y="0" />
-			<Sprite type="loading_circle" name="c3" x="100" y="0" />
-			<Sprite type="loading_circle" name="c4" x="150" y="0" />
-			<Sprite type="loading_circle" name="c5" x="200" y="0" />
-			<Sprite type="loading_circle" name="c6" x="0" y="50" />
-			<Sprite type="loading_circle" name="c7" x="50" y="50" />
-			<Sprite type="loading_circle" name="c8" x="100" y="50" />
-			<Sprite type="loading_circle" name="c9" x="150" y="50" />
-			<Sprite type="loading_circle" name="c10" x="200" y="50" />
+			<Image name="bg" source="Background" x="0" y="0" />
+			<Sprite name="c01" source="loading_circle" x="0" y="0" />
+			<Sprite name="c02" source="loading_circle" x="50" y="0" />
+			<Sprite name="c03" source="loading_circle" x="100" y="0" />
+			<Sprite name="c04" source="loading_circle" x="150" y="0" />
+			<Sprite name="c05" source="loading_circle" x="200" y="0" />
+			<Sprite name="c06" source="loading_circle" x="0" y="50" />
+			<Sprite name="c07" source="loading_circle" x="50" y="50" />
+			<Sprite name="c08" source="loading_circle" x="100" y="50" />
+			<Sprite name="c09" source="loading_circle" x="150" y="50" />
+			<Sprite name="c10" source="loading_circle" x="200" y="50" />
 		</Layer>
 	</Scene>
 </SceneRoot>

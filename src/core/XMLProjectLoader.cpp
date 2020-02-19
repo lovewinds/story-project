@@ -27,10 +27,9 @@ XMLProjectLoader::~XMLProjectLoader()
 void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
   std::stringstream s;
   /* Load SpriteType Templete */
-  //"/SceneRoot/Scene/Resources/Sprites/Sprite/Index[text()<5]/..");
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/GlobalResources/SpriteResourceGroup/SpriteResource";
+  s << "/SceneRoot/GlobalResources/ExtendedTextureGroup/SpriteTexture";
   std::string sprite_path = s.str();
   pugi::xpath_node_set spr = document.select_nodes(sprite_path.c_str());
   LOG_INFO("[%lu] Sprite Resources:", spr.size());
@@ -75,7 +74,7 @@ void XMLProjectLoader::loadCommonResources(pugi::xml_document &document) {
   /* Load Global image resources */
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/GlobalResources/ImageResourceGroup/ImageResource";
+  s << "/SceneRoot/GlobalResources/ResourceGroup/ImageResource";
   std::string img_path = s.str();
   pugi::xpath_node_set sel = document.select_nodes(img_path.c_str());
   for (pugi::xpath_node_set::const_iterator it = sel.begin(); it != sel.end(); ++it) {

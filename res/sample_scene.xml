@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <SceneRoot name="Sample Scene">
 	<GlobalResources type="global">
-		<ImageResourceGroup>
+		<ResourceGroup>
 			<ImageResource path="japanvillage.jpg" name="Background"
 					type="background" width="636" height="475"/>
 			<ImageResource path="LostGarden_Grid_BasicTile.png" name="LostGarden_Tile"
@@ -23,9 +23,9 @@
 					type="background" width="128" height="128"/>
 			<ImageResource path="ic_rect.png" name="icon_rectangle"
 					type="background" width="128" height="128"/>
-		</ImageResourceGroup>
-		<SpriteResourceGroup>
-			<SpriteResource name="char_girl" source="Character" width="32" height="48">
+		</ResourceGroup>
+		<ExtendedTextureGroup>
+			<SpriteTexture name="char_girl" source="Character" width="32" height="48">
 				<Index linear="start">1</Index>
 				<Index>2</Index>
 				<Index>3</Index>
@@ -38,14 +38,14 @@
 				<Index>10</Index>
 				<Index>11</Index>
 				<Index linear="end">12</Index>
-			</SpriteResource>
-			<SpriteResource name="sleeping_gom" source="Gom" width="64" height="64">
+			</SpriteTexture>
+			<SpriteTexture name="sleeping_gom" source="Gom" width="64" height="64">
 				<Index linear="start">1</Index>
 				<Index>2</Index>
 				<Index>3</Index>
 				<Index linear="end">4</Index>
-			</SpriteResource>
-		</SpriteResourceGroup>
+			</SpriteTexture>
+		</SpriteTextureGroup>
 	</GlobalResources>
 	<Scene name="sample_rpg" type="Map">
 		<Layer name="base" depth="1">
