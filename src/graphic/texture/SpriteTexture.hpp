@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
 
 namespace story {
@@ -16,11 +16,11 @@ namespace Resource {
 namespace story {
 namespace Graphic {
 
-class ESprite : public EDrawable
+class SpriteTexture : public Texture
 {
 public:
-  ESprite(std::string name);
-  ~ESprite();
+  SpriteTexture(std::string name);
+  ~SpriteTexture();
 
   bool initialize(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc);
 
@@ -38,7 +38,7 @@ public:
     int delta_x, int delta_y, double delta_angle);
 
 protected:
-  ESprite();
+  SpriteTexture();
   bool _setCellInfo(unsigned int cell_width, unsigned int cell_height);
   bool _appendSpriteCell(unsigned int index);
 

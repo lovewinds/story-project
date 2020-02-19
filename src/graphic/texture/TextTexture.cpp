@@ -3,15 +3,15 @@
 #include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/ResourceBuilder.hpp"
-#include "graphic/texture/ETextTexture.hpp"
+#include "graphic/texture/TextTexture.hpp"
 #include "util/LogHelper.hpp"
 
 namespace story {
 namespace Graphic {
 
-ETextTexture::ETextTexture(std::string text,
+TextTexture::TextTexture(std::string text,
     SDL_Color textColor, SDL_Color bgColor, int size)
- : EDrawable()
+ : Texture()
 {
   this->message = text;
   this->bgColor = bgColor;
@@ -21,12 +21,12 @@ ETextTexture::ETextTexture(std::string text,
   _createTexture(size);
 }
 
-ETextTexture::~ETextTexture()
+TextTexture::~TextTexture()
 {
   _removeTexture();
 }
 
-void ETextTexture::_createTexture(int size)
+void TextTexture::_createTexture(int size)
 {
   story::Resource::ResourceBuilder& resBuilder =
     story::Core::Ecore::getInstance()->getResourceBuilder();
@@ -62,13 +62,13 @@ void ETextTexture::_createTexture(int size)
   mHeight = mTexture->getHeight();
 }
 
-void ETextTexture::_removeTexture()
+void TextTexture::_removeTexture()
 {
   if (mTexture)
     mTexture.reset();
 }
 
-void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
+void TextTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
   if (story::Core::Ecore::isHighDPI() != wasHighDPI) {
     wasHighDPI = story::Core::Ecore::isHighDPI();
@@ -80,7 +80,7 @@ void ETextTexture::update(Uint32 currentTime, Uint32 accumulator)
   }
 }
 
-void ETextTexture::setText(const std::string& text)
+void TextTexture::setText(const std::string& text)
 {
   if (message.compare(text) != 0)
   {
@@ -90,7 +90,7 @@ void ETextTexture::setText(const std::string& text)
   }
 }
 
-void ETextTexture::render(
+void TextTexture::render(
     int base_x, int base_y,
     int delta_x, int delta_y, double delta_angle)
 {

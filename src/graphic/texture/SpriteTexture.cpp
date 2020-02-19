@@ -3,13 +3,13 @@
 #include "resource/EImageResource.hpp"
 #include "util/LogHelper.hpp"
 
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 
 namespace story {
 namespace Graphic {
 
-ESprite::ESprite(std::string _name)
-: EDrawable()
+SpriteTexture::SpriteTexture(std::string _name)
+: Texture()
 {
   sprite_index = 0;
   sprite_change = 1;
@@ -19,13 +19,13 @@ ESprite::ESprite(std::string _name)
   name = _name;
 }
 
-ESprite::~ESprite()
+SpriteTexture::~SpriteTexture()
 {
   _removeTexture();
   sprite_clips.clear();
 }
 
-bool ESprite::initialize(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
+bool SpriteTexture::initialize(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
 {
   /* TODO: This logic should be moved proper location */
   /* No blending */
@@ -60,7 +60,7 @@ bool ESprite::initialize(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
   return true;
 }
 
-bool ESprite::_setCellInfo(unsigned int cell_width, unsigned int cell_height)
+bool SpriteTexture::_setCellInfo(unsigned int cell_width, unsigned int cell_height)
 {
   Resource::EResourceManager &resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
@@ -86,7 +86,7 @@ bool ESprite::_setCellInfo(unsigned int cell_width, unsigned int cell_height)
 }
 
 /* Store sprite cell information to create */
-bool ESprite::_appendSpriteCell(unsigned int index)
+bool SpriteTexture::_appendSpriteCell(unsigned int index)
 {
   // wid 4
   // cel 1
@@ -114,12 +114,12 @@ bool ESprite::_appendSpriteCell(unsigned int index)
   return true;
 }
 
-std::string ESprite::getName()
+std::string SpriteTexture::getName()
 {
   return name;
 }
 
-void ESprite::setIndex(unsigned int index)
+void SpriteTexture::setIndex(unsigned int index)
 {
   if (index < sprite_clips.size()) {
     sprite_index = index;
@@ -127,7 +127,7 @@ void ESprite::setIndex(unsigned int index)
   }
 }
 
-void ESprite::_createTexture()
+void SpriteTexture::_createTexture()
 {
   story::Resource::EResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
@@ -150,13 +150,13 @@ void ESprite::_createTexture()
   mTexture = sprite_base->getTexture();
 }
 
-void ESprite::_removeTexture()
+void SpriteTexture::_removeTexture()
 {
   mTexture.reset();
   sprite_base->releaseTexture();
 }
 
-void ESprite::update(Uint32 currentTime, Uint32 accumulator)
+void SpriteTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
   int tick = 100;
 
@@ -173,7 +173,7 @@ void ESprite::update(Uint32 currentTime, Uint32 accumulator)
   }
 }
 
-void ESprite::render(
+void SpriteTexture::render(
     int base_x, int base_y,
     int delta_x, int delta_y, double delta_angle)
 {

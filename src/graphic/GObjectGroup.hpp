@@ -6,10 +6,10 @@
 
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAnimation.hpp"
-#include "graphic/texture/EDrawable.hpp"
-#include "graphic/texture/ESprite.hpp"
-#include "graphic/texture/EImageTexture.hpp"
-#include "graphic/texture/ETextTexture.hpp"
+#include "graphic/texture/Texture.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
+#include "graphic/texture/ImageTexture.hpp"
+#include "graphic/texture/TextTexture.hpp"
 
 namespace story {
 namespace Graphic {

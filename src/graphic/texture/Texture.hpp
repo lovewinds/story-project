@@ -8,11 +8,11 @@
 namespace story {
 namespace Graphic {
 
-class EDrawable
+class Texture
 {
 public:
-  EDrawable();
-  virtual ~EDrawable();
+  Texture();
+  virtual ~Texture();
 
   /* Deallocates texture */
   virtual void dealloc();

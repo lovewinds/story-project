@@ -220,7 +220,7 @@ EResourceManager::getSpriteDesc(std::string type_name)
   return found;
 }
 
-std::shared_ptr<story::Graphic::ESprite>
+std::shared_ptr<story::Graphic::SpriteTexture>
 EResourceManager::createSprite(std::string name, std::string type)
 {
   LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
@@ -234,8 +234,8 @@ EResourceManager::createSprite(std::string name, std::string type)
 
   /* Create sprite from descriptor */
   std::shared_ptr<Graphic::ESpriteDesc> spriteDesc = t->second;
-  std::shared_ptr<story::Graphic::ESprite> sprite(
-    new story::Graphic::ESprite(name)
+  std::shared_ptr<story::Graphic::SpriteTexture> sprite(
+    new story::Graphic::SpriteTexture(name)
   );
 
   if (false == sprite->initialize(spriteDesc)) {
@@ -306,18 +306,18 @@ void EResourceManager::updateImageResourceCache()
     LOG_INFO("  ImageResource[%s]: [%lu]",
       it->first.c_str(), it->second.use_count());
 
-    /* Currently, ESprite and EImageTexture refer ImageResource.
+    /* Currently, SpriteTexture and ImageTexture refer ImageResource.
      * If there is NO reference, deallocate texture */
     if (it->second.unique())
       it->second->releaseTexture();
   }
 }
 
-std::shared_ptr<story::Graphic::EImageTexture>
+std::shared_ptr<story::Graphic::ImageTexture>
 EResourceManager::createImageTexture(std::string name, std::string base_image)
 {
-  std::shared_ptr<story::Graphic::EImageTexture> imgTexture(
-    new story::Graphic::EImageTexture(name, base_image)
+  std::shared_ptr<story::Graphic::ImageTexture> imgTexture(
+    new story::Graphic::ImageTexture(name, base_image)
   );
   if (!imgTexture) {
     LOG_ERR("Failed to create Image texture !!");

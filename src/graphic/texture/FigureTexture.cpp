@@ -3,12 +3,12 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "graphic/texture/EFigure.hpp"
+#include "graphic/texture/FigureTexture.hpp"
 
 namespace story {
 namespace Graphic {
 
-EFigure::EFigure(int x, int y, int width, int height, SDL_Color color)
+FigureTexture::FigureTexture(int x, int y, int width, int height, SDL_Color color)
 {
   /* Initialize */
   mTexture = nullptr;
@@ -25,12 +25,12 @@ EFigure::EFigure(int x, int y, int width, int height, SDL_Color color)
   mHeight = height;
 }
 
-EFigure::~EFigure()
+FigureTexture::~FigureTexture()
 {
 
 }
 
-void EFigure::update(Uint32 currentTime, Uint32 accumulator)
+void FigureTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
   static Uint32 prevTime = 0;
   const Uint32 animationTime = 1000;
@@ -67,7 +67,7 @@ void EFigure::update(Uint32 currentTime, Uint32 accumulator)
   prevTime = delta;
 }
 
-void EFigure::render(
+void FigureTexture::render(
     int base_x, int base_y,
     int delta_x, int delta_y, double delta_angle)
 {

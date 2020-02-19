@@ -2,18 +2,18 @@
 
 #include <SDL.h>
 
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 
 namespace story {
 namespace Graphic {
 
-class EFigure : public EDrawable
+class FigureTexture : public Texture
 {
 public:
-  EFigure(int x = 0, int y = 0, int width = 0, int height = 0,
+  FigureTexture(int x = 0, int y = 0, int width = 0, int height = 0,
       SDL_Color color = {0xFF, 0xFF, 0xFF});
 
-  virtual ~EFigure();
+  virtual ~FigureTexture();
 
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
   virtual void render(

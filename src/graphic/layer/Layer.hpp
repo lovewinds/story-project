@@ -5,10 +5,10 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "graphic/texture/ESprite.hpp"
-#include "graphic/texture/EImageTexture.hpp"
-#include "graphic/texture/ETextTexture.hpp"
-#include "graphic/texture/EFigure.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
+#include "graphic/texture/ImageTexture.hpp"
+#include "graphic/texture/TextTexture.hpp"
+#include "graphic/texture/FigureTexture.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
@@ -45,7 +45,7 @@ public:
   void setActiveState(bool active);
 
   /* Export read-only resources */
-  const std::map<std::string, std::shared_ptr<ESprite>>& sprite_map;
+  const std::map<std::string, std::shared_ptr<SpriteTexture>>& sprite_map;
 
 protected:
   Layer();
@@ -61,16 +61,16 @@ protected:
    *   - Also, shared_ptr need to be stored here also
    *     for increase ref count.
    */
-  std::map<std::string, std::shared_ptr<ESprite>> _sprite_map;
+  std::map<std::string, std::shared_ptr<SpriteTexture>> _sprite_map;
 
-  std::map<std::string, std::shared_ptr<EImageTexture>> _img_texture_map;
+  std::map<std::string, std::shared_ptr<ImageTexture>> _img_texture_map;
 
-  std::map<std::string, std::shared_ptr<ETextTexture>> _text_texture_map;
+  std::map<std::string, std::shared_ptr<TextTexture>> _text_texture_map;
 
-  std::map<std::string, std::shared_ptr<EFigure>> _drawable_map;
+  std::map<std::string, std::shared_ptr<FigureTexture>> _drawable_map;
 
   /* Not classified textures */
-  std::map<std::string, std::shared_ptr<EDrawable>> _raw_texture_map;
+  std::map<std::string, std::shared_ptr<Texture>> _raw_texture_map;
 
   std::map<std::string, std::shared_ptr<Graphic::Object>> _object_map;
 };

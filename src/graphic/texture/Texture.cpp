@@ -1,11 +1,11 @@
 #include "core/Ecore.hpp"
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 #include "util/LogHelper.hpp"
 
 namespace story {
 namespace Graphic {
 
-EDrawable::EDrawable() :
+Texture::Texture() :
 p_x(0), p_y(0)
 {
   /* Initialize */
@@ -14,62 +14,62 @@ p_x(0), p_y(0)
   mHeight = 0;
 }
 
-EDrawable::~EDrawable()
+Texture::~Texture()
 {
   dealloc();
 }
 
-void EDrawable::setBlendMode(SDL_BlendMode blending)
+void Texture::setBlendMode(SDL_BlendMode blending)
 {
   /* Set blending function */
   SDL_SetTextureBlendMode(mTexture->getTexture(), blending);
 }
 
-void EDrawable::setAlpha(Uint8 alpha)
+void Texture::setAlpha(Uint8 alpha)
 {
   /* Modulate texture alpha */
   SDL_SetTextureAlphaMod(mTexture->getTexture(), alpha);
 }
 
-void EDrawable::setColor(Uint8 red, Uint8 green, Uint8 blue)
+void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
   /* Modulate texture rgb */
   SDL_SetTextureColorMod(mTexture->getTexture(), red, green, blue);
 }
 
-void EDrawable::movePositionTo(double x, double y)
+void Texture::movePositionTo(double x, double y)
 {
   p_x = x;
   p_y = y;
 }
 
-void EDrawable::movePositionBy(double delta_x, double delta_y)
+void Texture::movePositionBy(double delta_x, double delta_y)
 {
   p_x += delta_x;
   p_y += delta_y;
 }
 
-double EDrawable::getPositionX()
+double Texture::getPositionX()
 {
   return p_x;
 }
 
-double EDrawable::getPositionY()
+double Texture::getPositionY()
 {
   return p_y;
 }
 
-int EDrawable::getWidth()
+int Texture::getWidth()
 {
   return mWidth;
 }
 
-int EDrawable::getHeight()
+int Texture::getHeight()
 {
   return mHeight;
 }
 
-void EDrawable::dealloc()
+void Texture::dealloc()
 {
   /* Free texture if it exists */
   if (mTexture)
@@ -82,7 +82,7 @@ void EDrawable::dealloc()
   }
 }
 
-void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
+void Texture::texture_render(int x, int y, SDL_Rect* clip, double angle,
   bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {
   SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
@@ -111,7 +111,7 @@ void EDrawable::texture_render(int x, int y, SDL_Rect* clip, double angle,
   SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
 }
 
-void EDrawable::texture_render_resize(int x, int y, SDL_Rect* clip,
+void Texture::texture_render_resize(int x, int y, SDL_Rect* clip,
   double ratio_w, double ratio_h, double angle,
   bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
 {

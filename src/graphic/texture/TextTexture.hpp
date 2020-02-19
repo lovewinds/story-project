@@ -5,17 +5,17 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 #include "util/SDLWrap.hpp"
 
 namespace story {
 namespace Graphic {
 
-class ETextTexture : public EDrawable
+class TextTexture : public Texture
 {
 public:
-  ETextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor, int size = 28);
-  virtual ~ETextTexture();
+  TextTexture(std::string text, SDL_Color textColor, SDL_Color bgColor, int size = 28);
+  virtual ~TextTexture();
 
   /* Update String */
   virtual void setText(const std::string& text);

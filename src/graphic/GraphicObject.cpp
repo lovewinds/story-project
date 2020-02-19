@@ -158,7 +158,7 @@ bool Object::isControllable()
   return controllable;
 }
 
-void Object::addSprite(std::shared_ptr<Graphic::ESprite> sprite)
+void Object::addSprite(std::shared_ptr<Graphic::SpriteTexture> sprite)
 {
   auto result = _sprite_map.emplace(sprite->getName(), sprite);
   if (!result.second) {
@@ -171,7 +171,7 @@ void Object::addSprite(std::shared_ptr<Graphic::ESprite> sprite)
   height = sprite->getHeight();
 }
 
-void Object::addImage(std::shared_ptr<Graphic::EImageTexture> image)
+void Object::addImage(std::shared_ptr<Graphic::ImageTexture> image)
 {
   auto result = _img_texture_map.emplace(image->getName(), image);
   if (!result.second) {
@@ -184,7 +184,7 @@ void Object::addImage(std::shared_ptr<Graphic::EImageTexture> image)
   height = image->getHeight();
 }
 
-void Object::addText(std::shared_ptr<Graphic::ETextTexture> text)
+void Object::addText(std::shared_ptr<Graphic::TextTexture> text)
 {
   auto result = _text_texture_map.emplace("text", text);
   if (!result.second) {

@@ -5,7 +5,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
 
 #include "graphic/layer/RPGLayer.hpp"
@@ -21,7 +21,7 @@ RPGLayer::RPGLayer(std::string name)
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
   SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-  std::shared_ptr<ETextTexture> tt(new ETextTexture("test", textColor, bgColor));
+  std::shared_ptr<TextTexture> tt(new TextTexture("test", textColor, bgColor));
   tt->movePositionTo(10, 100);
   auto result = _text_texture_map.emplace("test string", tt);
   if (!result.second) {
@@ -35,7 +35,7 @@ RPGLayer::RPGLayer(std::string name)
   /* Create sprite by manually for test */
 
   std::shared_ptr<Graphic::Object> object(new Graphic::Object());
-  std::shared_ptr<ESprite> sprite;
+  std::shared_ptr<SpriteTexture> sprite;
 
   sprite = resManager.createSprite("char_girl", "movingChar");
   object->setName(sprite->getName());
@@ -98,9 +98,9 @@ bool RPGLayer::addObject(std::shared_ptr<Graphic::Object> object)
   return true;
 }
 
-void RPGLayer::setMap(std::shared_ptr<EGridMapTexture> map)
+void RPGLayer::setMap(std::shared_ptr<GridMapTexture> map)
 {
-  //std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
+  //std::shared_ptr<GridMapTexture> map(new GridMapTexture("MyMap", "MapTile"));
   auto result = _raw_texture_map.emplace("GridMap", map);
   if (!result.second) {
     LOG_ERR("Failed to insert texture!");

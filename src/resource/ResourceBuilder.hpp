@@ -11,7 +11,7 @@
 #include "graphic/descriptors/ImageDescriptor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
 #include "resource/EImageResource.hpp"
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 
 class EResourceLoaderInterface;
 
@@ -40,7 +40,7 @@ public:
 /*
  * Image texture Functions
  */
-  std::shared_ptr<story::Graphic::EImageTexture>
+  std::shared_ptr<story::Graphic::ImageTexture>
   createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc);
 
   void removeImageTexture(std::string name);
@@ -48,7 +48,7 @@ public:
 /*
  * Sprite Functions
  */
-  std::shared_ptr<story::Graphic::ESprite>
+  std::shared_ptr<story::Graphic::SpriteTexture>
   createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc
   );
 

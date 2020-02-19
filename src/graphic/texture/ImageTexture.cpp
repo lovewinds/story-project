@@ -3,13 +3,13 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
-#include "graphic/texture/EImageTexture.hpp"
+#include "graphic/texture/ImageTexture.hpp"
 
 namespace story {
 namespace Graphic {
 
-EImageTexture::EImageTexture(std::string name, std::string base_image) :
-  EDrawable(),
+ImageTexture::ImageTexture(std::string name, std::string base_image) :
+  Texture(),
   wRatio(1.0), hRatio(1.0),
   m_degrees(0.0)
 {
@@ -22,13 +22,13 @@ EImageTexture::EImageTexture(std::string name, std::string base_image) :
   _createTexture();
 }
 
-EImageTexture::~EImageTexture()
+ImageTexture::~ImageTexture()
 {
   /* Deallocate */
   _removeTexture();
 }
 
-void EImageTexture::_createTexture()
+void ImageTexture::_createTexture()
 {
   story::Resource::EResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
@@ -54,18 +54,18 @@ void EImageTexture::_createTexture()
   mTexture = image->getTexture();
 }
 
-void EImageTexture::_removeTexture()
+void ImageTexture::_removeTexture()
 {
   mTexture.reset();
   if (nullptr != image)
     image->releaseTexture();
 }
 
-void EImageTexture::update(Uint32 currentTime, Uint32 accumulator)
+void ImageTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 }
 
-void EImageTexture::render(
+void ImageTexture::render(
     int base_x, int base_y,
     int delta_x, int delta_y, double delta_angle)
 {
@@ -102,17 +102,17 @@ void EImageTexture::render(
     LOG_ERR("Texture not exist !");
 }
 
-int EImageTexture::getWidth()
+int ImageTexture::getWidth()
 {
   return mWidth;
 }
 
-int EImageTexture::getHeight()
+int ImageTexture::getHeight()
 {
   return mHeight;
 }
 
-void EImageTexture::setWidth(double width, bool ratio)
+void ImageTexture::setWidth(double width, bool ratio)
 {
   if (ratio)
     wRatio = width / 100.0;
@@ -120,7 +120,7 @@ void EImageTexture::setWidth(double width, bool ratio)
     mWidth = width;
 }
 
-void EImageTexture::setHeight(double height, bool ratio)
+void ImageTexture::setHeight(double height, bool ratio)
 {
   if (ratio)
     hRatio = height / 100.0;
@@ -128,7 +128,7 @@ void EImageTexture::setHeight(double height, bool ratio)
     mHeight = height;
 }
 
-std::string EImageTexture::getName()
+std::string ImageTexture::getName()
 {
   return name;
 }

@@ -5,7 +5,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
 
 #include "graphic/layer/MapLayer.hpp"
@@ -58,9 +58,9 @@ bool MapLayer::addObject(std::shared_ptr<Graphic::Object> object)
   return true;
 }
 
-void MapLayer::setMap(std::shared_ptr<EGridMapTexture> map)
+void MapLayer::setMap(std::shared_ptr<GridMapTexture> map)
 {
-  //std::shared_ptr<EGridMapTexture> map(new EGridMapTexture("MyMap", "MapTile"));
+  //std::shared_ptr<GridMapTexture> map(new GridMapTexture("MyMap", "MapTile"));
   auto result = _raw_texture_map.emplace("GridMap", map);
   if (!result.second) {
     LOG_ERR("Failed to insert texture!");

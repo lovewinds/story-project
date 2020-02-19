@@ -3,13 +3,13 @@
 #include "resource/EResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
-#include "graphic/texture/EGridMapTexture.hpp"
+#include "graphic/texture/GridMapTexture.hpp"
 
 namespace story {
 namespace Graphic {
 
-EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
-  std::shared_ptr<story::Graphic::EGridDesc> desc) : EDrawable()
+GridMapTexture::GridMapTexture(std::string name, std::string base_image,
+  std::shared_ptr<story::Graphic::EGridDesc> desc) : Texture()
 {
   this->name = name;
   this->base_image = base_image;
@@ -40,13 +40,13 @@ EGridMapTexture::EGridMapTexture(std::string name, std::string base_image,
   _createTexture();
 }
 
-EGridMapTexture::~EGridMapTexture()
+GridMapTexture::~GridMapTexture()
 {
   /* Deallocate */
   _removeTexture();
 }
 
-void EGridMapTexture::_createTexture()
+void GridMapTexture::_createTexture()
 {
   story::Resource::EResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
@@ -70,18 +70,18 @@ void EGridMapTexture::_createTexture()
   mTexture = tile_image->getTexture();
 }
 
-void EGridMapTexture::_removeTexture()
+void GridMapTexture::_removeTexture()
 {
   mTexture.reset();
   if (nullptr != tile_image)
     tile_image->releaseTexture();
 }
 
-void EGridMapTexture::update(Uint32 currentTime, Uint32 accumulator)
+void GridMapTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
 }
 
-void EGridMapTexture::render(
+void GridMapTexture::render(
     int base_x, int base_y,
     int delta_x, int delta_y, double delta_angle)
 {
@@ -125,29 +125,29 @@ void EGridMapTexture::render(
   }
 }
 
-int EGridMapTexture::getWidth()
+int GridMapTexture::getWidth()
 {
   return mWidth;
 }
 
-int EGridMapTexture::getHeight()
+int GridMapTexture::getHeight()
 {
   return mHeight;
 }
 
-void EGridMapTexture::setTileSize(unsigned int width, unsigned int height)
+void GridMapTexture::setTileSize(unsigned int width, unsigned int height)
 {
   tile_width = width;
   tile_height = height;
 }
 
-void EGridMapTexture::setPos(int x, int y)
+void GridMapTexture::setPos(int x, int y)
 {
   p_x = x;
   p_y = y;
 }
 
-std::string EGridMapTexture::getName()
+std::string GridMapTexture::getName()
 {
   return name;
 }

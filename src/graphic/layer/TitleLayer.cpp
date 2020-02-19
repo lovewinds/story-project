@@ -5,8 +5,8 @@
 #include "core/Ecore.hpp"
 #include "core/ScreenManager.hpp"
 #include "util/LogHelper.hpp"
-#include "graphic/texture/ESprite.hpp"
-#include "graphic/texture/EFigure.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
+#include "graphic/texture/FigureTexture.hpp"
 #include "resource/EResourceManager.hpp"
 #include "resource/ResourceBuilder.hpp"
 #include "graphic/GraphicObject.hpp"
@@ -46,7 +46,7 @@ void TitleLayer::initMenuItem()
 
     SDL_snprintf(str_id, 32, "menu_%d", i + 1);
 
-    std::shared_ptr<EFigure> dr(new EFigure(item_x, item_y, 100, 40, listBGColor));
+    std::shared_ptr<FigureTexture> dr(new FigureTexture(item_x, item_y, 100, 40, listBGColor));
     auto result = _drawable_map.emplace(str_id, dr);
     if (!result.second) {
       LOG_ERR("Failed to insert Drawable !");
@@ -54,8 +54,8 @@ void TitleLayer::initMenuItem()
 
     /* TODO: UTF-8 char should not be used directly. */
     SDL_snprintf(str_text, 32, "메뉴 %d", i + 1);
-    std::shared_ptr<ETextTexture> txt(
-      new ETextTexture(str_text, textColor, bgColor));
+    std::shared_ptr<TextTexture> txt(
+      new TextTexture(str_text, textColor, bgColor));
 
     std::shared_ptr<Graphic::Object> object(new Graphic::Object());
     object->setName(str_id);
@@ -65,8 +65,8 @@ void TitleLayer::initMenuItem()
   }
 
 /* Title text */
-  std::shared_ptr<ETextTexture> txt(
-      new ETextTexture("Story", textColor, bgColor, 58));
+  std::shared_ptr<TextTexture> txt(
+      new TextTexture("Story", textColor, bgColor, 58));
   std::shared_ptr<Graphic::Object> title_obj(new Graphic::Object());
 
   title_obj->setName("title_string");
@@ -84,7 +84,7 @@ void TitleLayer::initMenuItem()
   int s_height = story::Core::Ecore::getScreenHeight();
 
   for (int i = 0; i < 64; i++) {
-    std::shared_ptr<EImageTexture> imgTexture = nullptr;
+    std::shared_ptr<ImageTexture> imgTexture = nullptr;
     std::shared_ptr<Graphic::Object> object
           (new Graphic::Object());
     int obj_x = rand() % s_width;

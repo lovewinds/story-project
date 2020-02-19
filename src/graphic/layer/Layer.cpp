@@ -1,7 +1,7 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 
 #include "graphic/layer/Layer.hpp"
 
@@ -55,7 +55,7 @@ bool Layer::addObject(std::shared_ptr<Graphic::Object> object)
 /**
  * Store sprites already allocated.
  */
-bool Layer::addSprite(std::shared_ptr<ESprite> sprite)
+bool Layer::addSprite(std::shared_ptr<SpriteTexture> sprite)
 {
   auto result = _sprite_map.emplace(sprite->getName(), sprite);
   if (!result.second) {
@@ -65,7 +65,7 @@ bool Layer::addSprite(std::shared_ptr<ESprite> sprite)
   return true;
 }
 
-bool Layer::addImage(std::shared_ptr<EImageTexture> imgTexture)
+bool Layer::addImage(std::shared_ptr<ImageTexture> imgTexture)
 {
   auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
   if (!result.second) {

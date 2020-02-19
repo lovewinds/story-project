@@ -9,7 +9,7 @@
 #include "graphic/descriptors/SceneDescripor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
 #include "resource/EImageResource.hpp"
-#include "graphic/texture/ESprite.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
 #include "util/SDLWrap.hpp"
 
 namespace story {
@@ -66,7 +66,7 @@ public:
 
   void updateImageResourceCache();
 
-  std::shared_ptr<story::Graphic::EImageTexture>
+  std::shared_ptr<story::Graphic::ImageTexture>
   createImageTexture(std::string name, std::string base_image);
 
 /*
@@ -77,7 +77,7 @@ public:
   std::shared_ptr<Graphic::ESpriteDesc>
   getSpriteDesc(std::string desc_name);
 
-  std::shared_ptr<story::Graphic::ESprite>
+  std::shared_ptr<story::Graphic::SpriteTexture>
   createSprite(std::string type, std::string name);
 
 /*

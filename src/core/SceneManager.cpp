@@ -288,10 +288,10 @@ void SceneManager::propagateEvent(SDL_Event e)
 {
 #if 0
   /* TODO: This logic should be executed in animation actor */
-  //std::list<EDrawable*>::iterator iter = textureList.begin();
-  std::list<EFigure*>::iterator iter = textureList.begin();
+  //std::list<Texture*>::iterator iter = textureList.begin();
+  std::list<FigureTexture*>::iterator iter = textureList.begin();
   while (iter != textureList.end()) {
-    EFigure* texture = *iter;
+    FigureTexture* texture = *iter;
     //texture->animateStart(Ecore::getAppTicks());
     iter++;
   }

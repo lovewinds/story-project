@@ -4,8 +4,8 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "graphic/texture/ESprite.hpp"
-#include "graphic/texture/EFigure.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
+#include "graphic/texture/FigureTexture.hpp"
 #include "resource/EResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
@@ -28,7 +28,7 @@ ChatLayer::ChatLayer(std::string name)
   SDL_Color boxBGColor = { 0xE3, 0xE3, 0xB4 };
   std::shared_ptr<Graphic::Object> object(new Graphic::Object());
 
-  std::shared_ptr<EFigure> dr(new EFigure(
+  std::shared_ptr<FigureTexture> dr(new FigureTexture(
     10, story::Core::Ecore::getScreenHeight() / 3 * 2,
     story::Core::Ecore::getScreenWidth() - 20, (story::Core::Ecore::getScreenHeight() / 3) - 10,
     boxBGColor));
@@ -38,8 +38,8 @@ ChatLayer::ChatLayer(std::string name)
   }
 
   /* TODO: UTF-8 char should not be used directly. */
-  std::shared_ptr<ETextTexture> txt(
-    new ETextTexture("안녕?", textColor, bgColor));
+  std::shared_ptr<TextTexture> txt(
+    new TextTexture("안녕?", textColor, bgColor));
   object->setName("Message");
   object->movePositionTo(20, (story::Core::Ecore::getScreenHeight() / 3 * 2) + 10);
   object->addText(txt);

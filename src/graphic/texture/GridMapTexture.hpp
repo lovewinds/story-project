@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 
 namespace story {
 namespace Resource {
@@ -15,13 +15,13 @@ namespace Resource {
 namespace story {
 namespace Graphic {
 
-class EGridMapTexture : public EDrawable
+class GridMapTexture : public Texture
 {
 public:
   /* Initializes variables */
-  EGridMapTexture(std::string name, std::string base_image,
+  GridMapTexture(std::string name, std::string base_image,
       std::shared_ptr<story::Graphic::EGridDesc> desc);
-  ~EGridMapTexture();
+  ~GridMapTexture();
 
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
   virtual void render(

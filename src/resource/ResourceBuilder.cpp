@@ -65,7 +65,7 @@ ResourceBuilder::createScene(std::string scene_name)
     for (auto& sprite_it : layer->sprite_list)
     {
       std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc = sprite_it;
-      std::shared_ptr<story::Graphic::ESprite> sprite;
+      std::shared_ptr<story::Graphic::SpriteTexture> sprite;
       std::shared_ptr<Graphic::Object> object
         (new story::Graphic::Object());
       LOG_DBG("    Sprite [%s] (%03d, %03d)",
@@ -89,7 +89,7 @@ ResourceBuilder::createScene(std::string scene_name)
     for (auto& image_it : layer->image_list)
     {
       std::shared_ptr<story::Graphic::EImageDesc> imageDesc = image_it;
-      std::shared_ptr<story::Graphic::EImageTexture> image;
+      std::shared_ptr<story::Graphic::ImageTexture> image;
       std::shared_ptr<story::Graphic::Object> object
         (new story::Graphic::Object());
       LOG_DBG("    Image [%s]", imageDesc->getName().c_str());
@@ -151,8 +151,8 @@ ResourceBuilder::createScene(std::string scene_name)
       /* RECOMMEND: Do not use dynamic_cast */
       story::Graphic::RPGLayer* rpg_scene = dynamic_cast<story::Graphic::RPGLayer*>(scene.get());
       story::Graphic::MapLayer* map_scene = dynamic_cast<story::Graphic::MapLayer*>(scene.get());
-      std::shared_ptr<story::Graphic::EGridMapTexture> map(
-        new story::Graphic::EGridMapTexture("MyMap", base_tile_image.c_str(), gridDesc)
+      std::shared_ptr<story::Graphic::GridMapTexture> map(
+        new story::Graphic::GridMapTexture("MyMap", base_tile_image.c_str(), gridDesc)
       );
       map->setTileSize(gridDesc->getGridWidth(), gridDesc->getGridHeight());
       if (rpg_scene) {
@@ -177,12 +177,12 @@ void ResourceBuilder::removeScene(std::string scene_name)
 /*
 * Image texture Functions
 */
-std::shared_ptr<story::Graphic::EImageTexture>
+std::shared_ptr<story::Graphic::ImageTexture>
 ResourceBuilder::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
   /* Search image desc */
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
-  std::shared_ptr<story::Graphic::EImageTexture> image = nullptr;
+  std::shared_ptr<story::Graphic::ImageTexture> image = nullptr;
 
   if (nullptr == imageDesc)
     return nullptr;
@@ -200,11 +200,11 @@ void ResourceBuilder::removeImageTexture(std::string name)
 /*
 * Sprite Functions
 */
-std::shared_ptr<story::Graphic::ESprite>
+std::shared_ptr<story::Graphic::SpriteTexture>
 ResourceBuilder::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
   EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
-  std::shared_ptr<story::Graphic::ESprite> sprite = nullptr;
+  std::shared_ptr<story::Graphic::SpriteTexture> sprite = nullptr;
 
   if (nullptr == spriteDesc)
     return nullptr;

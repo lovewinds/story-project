@@ -6,10 +6,10 @@
 #include <functional>
 
 #include "graphic/animation/EAnimation.hpp"
-#include "graphic/texture/EDrawable.hpp"
-#include "graphic/texture/ESprite.hpp"
-#include "graphic/texture/EImageTexture.hpp"
-#include "graphic/texture/ETextTexture.hpp"
+#include "graphic/texture/Texture.hpp"
+#include "graphic/texture/SpriteTexture.hpp"
+#include "graphic/texture/ImageTexture.hpp"
+#include "graphic/texture/TextTexture.hpp"
 
 namespace story {
 namespace Graphic {
@@ -63,9 +63,9 @@ public:
   void setVisible(bool visible);
   void setTransparent(int percent);
 
-  void addSprite(std::shared_ptr<Graphic::ESprite> sprite);
-  void addImage(std::shared_ptr<Graphic::EImageTexture> image);
-  void addText(std::shared_ptr<Graphic::ETextTexture> text);
+  void addSprite(std::shared_ptr<Graphic::SpriteTexture> sprite);
+  void addImage(std::shared_ptr<Graphic::ImageTexture> image);
+  void addText(std::shared_ptr<Graphic::TextTexture> text);
   void updateText(std::string text);
   void removeContentAll();
 
@@ -76,9 +76,9 @@ public:
 protected:
   std::string name;
 
-  std::map<std::string, std::shared_ptr<Graphic::ESprite>> _sprite_map;
-  std::map<std::string, std::shared_ptr<Graphic::EImageTexture>> _img_texture_map;
-  std::map<std::string, std::shared_ptr<Graphic::ETextTexture>> _text_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::SpriteTexture>> _sprite_map;
+  std::map<std::string, std::shared_ptr<Graphic::ImageTexture>> _img_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::TextTexture>> _text_texture_map;
 
   /* Animation */
   std::shared_ptr<Graphic::EAnimation> animation;

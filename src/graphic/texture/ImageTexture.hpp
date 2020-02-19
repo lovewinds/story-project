@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 
-#include "graphic/texture/EDrawable.hpp"
+#include "graphic/texture/Texture.hpp"
 
 namespace story {
 namespace Resource {
@@ -13,14 +13,14 @@ namespace Resource {
 
 namespace story {
 namespace Graphic {
-class EImageTexture : public EDrawable
+class ImageTexture : public Texture
 {
 public:
   /* Initializes variables */
-  EImageTexture(std::string name, std::string base_image);
+  ImageTexture(std::string name, std::string base_image);
 
   /* Deallocates memory */
-  ~EImageTexture();
+  ~ImageTexture();
 
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
   //virtual void paint(Uint32 currentTime, Uint32 accumulator = 0);
