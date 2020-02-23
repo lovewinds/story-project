@@ -250,21 +250,16 @@ std::shared_ptr<EImageResource>
 EResourceManager::createImageResource(std::string name, std::string path,
     unsigned int width, unsigned int height)
 {
-  LOG_DBG("Trying to create image resource [%s]", name.c_str());
   std::shared_ptr<EImageResource> imgInfo(new EImageResource(name, path, width, height));
-
-  if (!imgInfo) {
+  if (nullptr == imgInfo) {
     LOG_ERR("Failed to create Image Resource info!!");
     return nullptr;
   }
 
   //std::pair<std::map<std::string, std::shared_ptr<ESceneInfo>>::iterator, bool> result;
   auto map_result = image_map.emplace(name, imgInfo);
-
-  if (map_result.second) {
-    LOG_INFO("Created Image resource info !");
-  } else {
-    LOG_ERR("Failed to insert image resource map !");
+  if (false == map_result.second) {
+    LOG_ERR("Resource created, but failed to insert image resource map!");
   }
 #if 0
   LOG_INFO("Current Image resources:");

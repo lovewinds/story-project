@@ -260,11 +260,11 @@ XMLProjectLoader::loadSceneDesc(
           if (false == level_layer.empty())
             level = std::stoi(level_layer);
 
-          LOG_DBG("Grid Layer [%s] (L %02d)", map_layer_name.c_str(), level);
+          // LOG_DBG("Grid Layer [%s] (L %02d)", map_layer_name.c_str(), level);
           for (auto raw_array : map_layer.children())
           {
             std::string pcdata(raw_array.text().get());
-            LOG_DBG("   raw : %s", pcdata.c_str());
+            // LOG_DBG("   raw : %s", pcdata.c_str());
 
             /* TODO: Current logic sets each character into grid */
             std::vector<std::string> row_elems;

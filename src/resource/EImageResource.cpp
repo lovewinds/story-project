@@ -17,8 +17,8 @@ EImageResource::EImageResource(
   this->width = width;
   this->height = height;
 
-  LOG_INFO("EImageResource[%s] created", this->name.c_str());
-  LOG_INFO("      path : [%s]", this->path.c_str());
+  LOG_DBG("EImageResource[%s] created", this->name.c_str());
+  LOG_DBG("      path : [%s]", this->path.c_str());
 
   /* TODO: Don't allocate on creation */
   //allocate();
@@ -27,7 +27,7 @@ EImageResource::EImageResource(
 EImageResource::~EImageResource()
 {
   releaseTexture();
-  LOG_INFO("EImageResource[%s] removed", name.c_str());
+  LOG_ERR("EImageResource[%s] removed", name.c_str());
 }
 
 std::string EImageResource::getName() const
