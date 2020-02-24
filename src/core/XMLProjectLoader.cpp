@@ -9,7 +9,7 @@
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/description/ObjectDescription.hpp"
+#include "resource/ProjectItem.hpp"
 
 namespace story {
 namespace Core {
@@ -151,8 +151,8 @@ XMLProjectLoader::loadSceneDesc(
       bool width_percent = false;
       bool height_percent = false;
       // Create Object descriptor
-      std::shared_ptr<Resource::ObjectDescription> dsc(
-        new Resource::ObjectDescription()
+      std::shared_ptr<Resource::ProjectItem> dsc(
+        new Resource::ProjectItem()
       );
       for (pugi::xml_attribute attr: node.node().attributes())
       {

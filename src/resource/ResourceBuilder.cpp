@@ -53,7 +53,7 @@ ResourceBuilder::createScene(std::string scene_name)
     /* Create sprites from sprite descriptor */
     for (auto& obj_desc : layer->obj_array)
     {
-      std::shared_ptr<Resource::ObjectDescription> object = obj_desc;
+      std::shared_ptr<Resource::ProjectItem> object = obj_desc;
       LOG_DBG("    Object descriptor [%s]::[%s] (%03d, %03d)",
         object->get("name").c_str(),
         object->get("tag_type").c_str(),

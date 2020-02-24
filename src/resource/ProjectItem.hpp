@@ -6,10 +6,10 @@
 namespace story {
 namespace Resource {
 
-class ObjectDescription
+class ProjectItem
 {
 public:
-  ObjectDescription() {}
+  ProjectItem() {}
 
   void add(std::string key, std::string value) {
     property.insert(std::make_pair(key, value));
