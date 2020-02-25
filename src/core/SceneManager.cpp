@@ -2,7 +2,6 @@
 
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/ResourceBuilder.hpp"
 
 namespace story {
 namespace Core {
@@ -25,11 +24,11 @@ SceneManager::~SceneManager()
 
 bool SceneManager::playScene(std::string scene_name)
 {
-  std::shared_ptr<story::Graphic::Layer> scene;
-  story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
+  std::shared_ptr<Graphic::Layer> scene;
+  Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
   if (nullptr == currentScene) {
-    scene = resBuilder.createScene(scene_name);
+    scene = resManager.createScene(scene_name);
     LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
     currentScene = scene;
@@ -37,7 +36,7 @@ bool SceneManager::playScene(std::string scene_name)
     LOG_ERR("Scene [%s] is now playing", currentScene->getName().c_str());
 
     stopCurrentScene();
-    scene = resBuilder.createScene(scene_name);
+    scene = resManager.createScene(scene_name);
     LOG_INFO("   Play scene [%s] / %p", scene_name.c_str(), scene.get());
 
     currentScene = scene;
@@ -49,10 +48,10 @@ bool SceneManager::playScene(std::string scene_name)
 void SceneManager::stopCurrentScene()
 {
   if (currentScene) {
-    story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+    Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
     currentScene = nullptr;
-    resMgr.updateImageResourceCache();
+    resManager.updateImageResourceCache();
   }
 }
 
@@ -70,10 +69,10 @@ void SceneManager::startCurrentScene()
 
 void SceneManager::initDebugScene()
 {
-  story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+  story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
   LOG_DBG("Create debug overlay scene");
-  debug_overlay = resMgr.createScene(story::Graphic::LAYER_DEBUG, "debug");
+  debug_overlay = resManager.createScene(story::Graphic::LAYER_DEBUG, "debug");
   if (nullptr == debug_overlay) {
     LOG_ERR("Failed to create debug scene !");
   }
@@ -105,17 +104,17 @@ void SceneManager::handleEvent(SDL_Event e)
       break;
     case SDLK_BACKQUOTE:
       if (overlayState) {
-        story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         overlayState = false;
         overlay = nullptr;
-        resMgr.updateImageResourceCache();
+        resManager.updateImageResourceCache();
       }
       else {
         overlayState = true;
-        story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
+        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         std::string sname = "chat";
 
-        overlay = resBuilder.createScene(sname);
+        overlay = resManager.createScene(sname);
         LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
       }
 
@@ -134,17 +133,17 @@ void SceneManager::handleEvent(SDL_Event e)
 
     if (te->x >= 0.3 && te-> x <= 0.6 && te->y >= 0.7) {
       if (overlayState) {
-        story::Resource::EResourceManager& resMgr = Ecore::getInstance()->getResourceManager();
+        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         overlayState = false;
         overlay = nullptr;
-        resMgr.updateImageResourceCache();
+        resManager.updateImageResourceCache();
       }
       else {
         overlayState = true;
-        story::Resource::ResourceBuilder& resBuilder = Ecore::getInstance()->getResourceBuilder();
+        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         std::string sname = "chat";
         
-        overlay = resBuilder.createScene(sname);
+        overlay = resManager.createScene(sname);
         LOG_INFO("   Overlay scene [%s] / %p", sname.c_str(), overlay.get());
       }
     }

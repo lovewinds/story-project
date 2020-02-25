@@ -8,7 +8,6 @@
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/FigureTexture.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/ResourceBuilder.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 

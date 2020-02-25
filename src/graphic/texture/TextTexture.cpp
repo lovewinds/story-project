@@ -2,7 +2,6 @@
 
 #include "core/Ecore.hpp"
 #include "resource/EResourceManager.hpp"
-#include "resource/ResourceBuilder.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "util/LogHelper.hpp"
 
@@ -28,8 +27,6 @@ TextTexture::~TextTexture()
 
 void TextTexture::_createTexture(int size)
 {
-  story::Resource::ResourceBuilder& resBuilder =
-    story::Core::Ecore::getInstance()->getResourceBuilder();
   story::Resource::EResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
 
@@ -51,7 +48,7 @@ void TextTexture::_createTexture(int size)
   }
   LOG_DBG("Create a new text texture [%s(%d)]", "NanumBarunpenR", size);
 
-  mTexture = resBuilder.createTextTexture(message, textColor, bgColor, font);
+  mTexture = resManager.createTextTexture(message, textColor, bgColor, font);
   //LOG_ERR("[Text] texture [%p]", &mTexture);
   if (!mTexture) {
     LOG_ERR("Failed to allocate text texture!");

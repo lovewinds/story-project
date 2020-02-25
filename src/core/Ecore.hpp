@@ -12,7 +12,6 @@
 namespace story {
 namespace Resource {
   class EResourceManager;
-  class ResourceBuilder;
 }
 }
 
@@ -51,7 +50,6 @@ public:
   double GetFPS();
 
   story::Resource::EResourceManager& getResourceManager();
-  story::Resource::ResourceBuilder& getResourceBuilder();
   story::Core::ScreenManager& getScreenManager();
 
   /* Utility functions */
@@ -117,7 +115,6 @@ private:
    * Handle these as a pointer type for obvious resource deallocation.
    */
   story::Resource::EResourceManager* resManager;
-  story::Resource::ResourceBuilder* resBuilder;
   story::Core::ScreenManager* screenManager;
 
   static std::string getParentPath(std::string path, std::string::size_type level);

@@ -62,7 +62,6 @@ void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
       std::string idxNumber(idx.text().get());
       if (idxNumber.empty()) continue;
       int val = atoi(idxNumber.c_str());
-      LOG_DBG("   Index : %s", idxNumber.c_str());
       spriteDesc->appendSpriteCellIndex(val);
     }
     resManager->createSpriteDesc(spriteDesc);
@@ -197,8 +196,6 @@ XMLProjectLoader::loadSceneDesc(
       if (itm_node.compare("Sprite") == 0) {
         /* Sprite descriptor */
         std::string itm_ctrl(node.node().attribute("controllable").value());
-        LOG_INFO("Create Sprite descriptor [%s](T:%s) into (%3d, %3d)",
-          itm_name.c_str(), itm_source.c_str(), p_x, p_y);
         std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc
           = resManager->getSpriteDesc(itm_source);
         if (nullptr == spriteDesc) {

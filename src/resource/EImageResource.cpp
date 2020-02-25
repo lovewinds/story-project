@@ -16,9 +16,7 @@ EImageResource::EImageResource(
   this->path = story::Core::Ecore::getResourcePath(path);
   this->width = width;
   this->height = height;
-
-  LOG_DBG("EImageResource[%s] created", this->name.c_str());
-  LOG_DBG("      path : [%s]", this->path.c_str());
+  LOG_DBG("EImageResource[%16s] :: %s", this->name.c_str(), this->path.c_str());
 
   /* TODO: Don't allocate on creation */
   //allocate();
