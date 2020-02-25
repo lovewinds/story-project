@@ -5,16 +5,16 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/ImageTexture.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-class ChatLayer : public Layer
+class ChatLayer : public ScreenLayer
 {
 public:
   ChatLayer(std::string name);
@@ -25,11 +25,11 @@ public:
   virtual void render();
   virtual void update(Uint32 currentTime, Uint32 accumulator);
 
-  void testAnimation(AnimationState state);
+  void testAnimation(Graphic::AnimationState state);
 
 protected:
 
 };
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */

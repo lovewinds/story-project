@@ -5,18 +5,19 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/ImageTexture.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "graphic/texture/GridMapTexture.hpp"
 #include "graphic/animation/EAnimation.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
+#include "graphic/descriptors/GridDescriptor.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-class RPGLayer : public Layer
+class RPGLayer : public ScreenLayer
 {
 public:
   RPGLayer(std::string name);
@@ -29,10 +30,10 @@ public:
 
   virtual bool addObject(std::shared_ptr<Graphic::Object> object);
 
-  virtual void setMap(std::shared_ptr<GridMapTexture> map);
-  virtual void setGridDescriptor(std::shared_ptr<EGridDesc> desc);
+  virtual void setMap(std::shared_ptr<Graphic::GridMapTexture> map);
+  virtual void setGridDescriptor(std::shared_ptr<Graphic::EGridDesc> desc);
 
-  void testAnimation(AnimationState state);
+  void testAnimation(Graphic::AnimationState state);
   bool testRotate(int x, int y);
 
   void handleDirectonFactor(float axis_x, float axis_y);
@@ -42,13 +43,13 @@ public:
   void objectPositionCallback(double x, double y);
 
 protected:
-  std::shared_ptr<GridMapTexture>  gridMap;
-  std::shared_ptr<EGridDesc> gridDesc;
+  std::shared_ptr<Graphic::GridMapTexture>  gridMap;
+  std::shared_ptr<Graphic::EGridDesc> gridDesc;
 
   /* Grid-based object list for rendering */
   //std::vector<std::list<std::shared_ptr<Graphic::Object>>> _vertical_obj_list;
   //std::map<std::string, std::shared_ptr<Graphic::Object>> _object_map;
 };
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */

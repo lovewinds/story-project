@@ -3,16 +3,16 @@
 #include <string>
 #include <SDL.h>
 
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/ImageTexture.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-class TitleLayer : public Layer
+class TitleLayer : public ScreenLayer
 {
 public:
   TitleLayer(std::string name);
@@ -31,5 +31,5 @@ protected:
   bool checkMenuClicked(int x, int y);
 };
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */

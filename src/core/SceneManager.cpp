@@ -24,7 +24,7 @@ SceneManager::~SceneManager()
 
 bool SceneManager::playScene(std::string scene_name)
 {
-  std::shared_ptr<Graphic::Layer> scene;
+  std::shared_ptr<Screen::ScreenLayer> scene;
   Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
   if (nullptr == currentScene) {

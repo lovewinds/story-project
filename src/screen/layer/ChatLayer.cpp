@@ -10,13 +10,13 @@
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 
-#include "graphic/layer/ChatLayer.hpp"
+#include "screen/layer/ChatLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 ChatLayer::ChatLayer(std::string name)
- : Layer(name)
+ : ScreenLayer(name)
 {
   LOG_INFO("ChatLayer[%s] created", name.c_str());
 
@@ -28,7 +28,7 @@ ChatLayer::ChatLayer(std::string name)
   SDL_Color boxBGColor = { 0xE3, 0xE3, 0xB4 };
   std::shared_ptr<Graphic::Object> object(new Graphic::Object());
 
-  std::shared_ptr<FigureTexture> dr(new FigureTexture(
+  std::shared_ptr<Graphic::FigureTexture> dr(new Graphic::FigureTexture(
     10, story::Core::Ecore::getScreenHeight() / 3 * 2,
     story::Core::Ecore::getScreenWidth() - 20, (story::Core::Ecore::getScreenHeight() / 3) - 10,
     boxBGColor));
@@ -38,8 +38,8 @@ ChatLayer::ChatLayer(std::string name)
   }
 
   /* TODO: UTF-8 char should not be used directly. */
-  std::shared_ptr<TextTexture> txt(
-    new TextTexture("안녕?", textColor, bgColor));
+  std::shared_ptr<Graphic::TextTexture> txt(
+    new Graphic::TextTexture("안녕?", textColor, bgColor));
   object->setName("Message");
   object->movePositionTo(20, (story::Core::Ecore::getScreenHeight() / 3 * 2) + 10);
   object->addText(txt);
@@ -52,27 +52,27 @@ ChatLayer::~ChatLayer()
   LOG_INFO("ChatLayer[%s] removed", name.c_str());
 }
 
-void ChatLayer::testAnimation(AnimationState state)
+void ChatLayer::testAnimation(Graphic::AnimationState state)
 {
-  std::shared_ptr<EAnimation> ani;
+  std::shared_ptr<Graphic::EAnimation> ani;
   //for (auto& it : _img_texture_map)
   for (auto& it : _object_map)
   {
     auto& object = it.second;
     switch (state) {
-    case ANI_STOP:
+    case Graphic::ANI_STOP:
       object->stopAnimation();
       break;
-    case ANI_START:
-      ani = std::shared_ptr<EAnimation>(new EAccelAnimation());
+    case Graphic::ANI_START:
+      ani = std::shared_ptr<Graphic::EAnimation>(new Graphic::EAccelAnimation());
       object->setAnimation(ani);
       object->startAnimation();
       /* Update position animation finished? */
       break;
-    case ANI_PAUSE:
+    case Graphic::ANI_PAUSE:
       object->pauseAnimation();
       break;
-    case ANI_RESUME:
+    case Graphic::ANI_RESUME:
       object->resumeAnimation();
       break;
     default:
@@ -112,19 +112,19 @@ void ChatLayer::handleEvent(SDL_Event e)
     switch (e.key.keysym.sym) {
     case SDLK_9:
       LOG_INFO("Play Animation");
-      testAnimation(ANI_START);
+      testAnimation(Graphic::ANI_START);
       break;
     case SDLK_0:
       LOG_INFO("Stop Animation");
-      testAnimation(ANI_STOP);
+      testAnimation(Graphic::ANI_STOP);
       break;
     case SDLK_MINUS:
       LOG_INFO("Pause Animation");
-      testAnimation(ANI_PAUSE);
+      testAnimation(Graphic::ANI_PAUSE);
       break;
     case SDLK_EQUALS:
       LOG_INFO("Resume Animation");
-      testAnimation(ANI_RESUME);
+      testAnimation(Graphic::ANI_RESUME);
       break;
     }
   }

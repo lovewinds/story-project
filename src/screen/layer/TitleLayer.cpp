@@ -11,13 +11,13 @@
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 
-#include "graphic/layer/TitleLayer.hpp"
+#include "screen/layer/TitleLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 TitleLayer::TitleLayer(std::string name)
- : Layer(name)
+ : ScreenLayer(name)
 {
   LOG_INFO("TitleLayer[%s] created", name.c_str());
 
@@ -45,7 +45,9 @@ void TitleLayer::initMenuItem()
 
     SDL_snprintf(str_id, 32, "menu_%d", i + 1);
 
-    std::shared_ptr<FigureTexture> dr(new FigureTexture(item_x, item_y, 100, 40, listBGColor));
+    std::shared_ptr<Graphic::FigureTexture> dr(
+      new Graphic::FigureTexture(item_x, item_y, 100, 40, listBGColor)
+    );
     auto result = _drawable_map.emplace(str_id, dr);
     if (!result.second) {
       LOG_ERR("Failed to insert Drawable !");
@@ -53,8 +55,9 @@ void TitleLayer::initMenuItem()
 
     /* TODO: UTF-8 char should not be used directly. */
     SDL_snprintf(str_text, 32, "메뉴 %d", i + 1);
-    std::shared_ptr<TextTexture> txt(
-      new TextTexture(str_text, textColor, bgColor));
+    std::shared_ptr<Graphic::TextTexture> txt(
+      new Graphic::TextTexture(str_text, textColor, bgColor)
+    );
 
     std::shared_ptr<Graphic::Object> object(new Graphic::Object());
     object->setName(str_id);
@@ -64,8 +67,9 @@ void TitleLayer::initMenuItem()
   }
 
 /* Title text */
-  std::shared_ptr<TextTexture> txt(
-      new TextTexture("Story", textColor, bgColor, 58));
+  std::shared_ptr<Graphic::TextTexture> txt(
+    new Graphic::TextTexture("Story", textColor, bgColor, 58)
+  );
   std::shared_ptr<Graphic::Object> title_obj(new Graphic::Object());
 
   title_obj->setName("title_string");
@@ -83,7 +87,7 @@ void TitleLayer::initMenuItem()
   int s_height = story::Core::Ecore::getScreenHeight();
 
   for (int i = 0; i < 64; i++) {
-    std::shared_ptr<ImageTexture> imgTexture = nullptr;
+    std::shared_ptr<Graphic::ImageTexture> imgTexture = nullptr;
     std::shared_ptr<Graphic::Object> object
           (new Graphic::Object());
     int obj_x = rand() % s_width;
@@ -168,7 +172,7 @@ bool TitleLayer::checkMenuClicked(int x, int y)
     {
       /* Only propagate for list items */
       if (object->getName().find("menu_") != std::string::npos) {
-        if (object->getAnimationState() != ANI_START) {
+        if (object->getAnimationState() != Graphic::ANI_START) {
           sampleMenuState(object->getName());
           return true;
         }
@@ -259,5 +263,5 @@ void TitleLayer::update(Uint32 currentTime, Uint32 accumulator)
 
 }
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */

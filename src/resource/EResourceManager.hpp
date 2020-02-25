@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 #include "graphic/descriptors/SceneDescripor.hpp"
 #include "graphic/descriptors/ImageDescriptor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
@@ -40,7 +40,7 @@ public:
  * Scene Functions
  */
   /* Create scene from stored scene descriptor */
-  std::shared_ptr<story::Graphic::Layer> createScene(std::string scene_name);
+  std::shared_ptr<Screen::ScreenLayer> createScene(std::string scene_name);
 
   /* Remove and de-allocate specific scene
    * and related resource(i.e. sprites) from memory */
@@ -84,7 +84,7 @@ public:
 
   /* Create scene with name
    * (for some debug purpose) */
-  std::shared_ptr<story::Graphic::Layer>
+  std::shared_ptr<Screen::ScreenLayer>
   createScene(story::Graphic::LayerType type, std::string scene_name);
 
 /*

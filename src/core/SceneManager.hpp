@@ -3,7 +3,7 @@
 #include <string>
 
 #include "core/Ecore.hpp"
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 
 namespace story {
 namespace Core {
@@ -45,9 +45,9 @@ public:
   void initDebugScene();
 
 private:
-  std::shared_ptr<story::Graphic::Layer> currentScene;
-  std::shared_ptr<story::Graphic::Layer> overlay;
-  std::shared_ptr<story::Graphic::Layer> debug_overlay;
+  std::shared_ptr<Screen::ScreenLayer> currentScene;
+  std::shared_ptr<Screen::ScreenLayer> overlay;
+  std::shared_ptr<Screen::ScreenLayer> debug_overlay;
 
   bool overlayState;
 

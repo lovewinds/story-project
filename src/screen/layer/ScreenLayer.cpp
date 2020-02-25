@@ -3,12 +3,12 @@
 #include "resource/EResourceManager.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-Layer::Layer()
+ScreenLayer::ScreenLayer()
   : sprite_map(_sprite_map)
 {
   LOG_INFO("Superclass");
@@ -16,7 +16,7 @@ Layer::Layer()
   isActivated = true;
 }
 
-Layer::Layer(std::string name)
+ScreenLayer::ScreenLayer(std::string name)
 : sprite_map(_sprite_map)
 {
   LOG_INFO("Layer[%s] created", name.c_str());
@@ -25,7 +25,7 @@ Layer::Layer(std::string name)
   isActivated = true;
 }
 
-Layer::~Layer()
+ScreenLayer::~ScreenLayer()
 {
   _sprite_map.clear();
   _text_texture_map.clear();
@@ -36,12 +36,12 @@ Layer::~Layer()
   LOG_INFO("Layer[%s] removed", name.c_str());
 }
 
-std::string Layer::getName()
+std::string ScreenLayer::getName()
 {
   return name;
 }
 
-bool Layer::addObject(std::shared_ptr<Graphic::Object> object)
+bool ScreenLayer::addObject(std::shared_ptr<Graphic::Object> object)
 {
   auto result = _object_map.emplace(object->getName(), object);
   if (!result.second) {
@@ -55,7 +55,7 @@ bool Layer::addObject(std::shared_ptr<Graphic::Object> object)
 /**
  * Store sprites already allocated.
  */
-bool Layer::addSprite(std::shared_ptr<SpriteTexture> sprite)
+bool ScreenLayer::addSprite(std::shared_ptr<SpriteTexture> sprite)
 {
   auto result = _sprite_map.emplace(sprite->getName(), sprite);
   if (!result.second) {
@@ -65,7 +65,7 @@ bool Layer::addSprite(std::shared_ptr<SpriteTexture> sprite)
   return true;
 }
 
-bool Layer::addImage(std::shared_ptr<ImageTexture> imgTexture)
+bool ScreenLayer::addImage(std::shared_ptr<ImageTexture> imgTexture)
 {
   auto result = _img_texture_map.emplace(imgTexture->getName(), imgTexture);
   if (!result.second) {
@@ -76,17 +76,17 @@ bool Layer::addImage(std::shared_ptr<ImageTexture> imgTexture)
 }
 #endif
 
-void Layer::setActiveState(bool active)
+void ScreenLayer::setActiveState(bool active)
 {
   isActivated = active;
 }
 
-void Layer::handleEvent(SDL_Event e)
+void ScreenLayer::handleEvent(SDL_Event e)
 {
   
 }
 
-void Layer::render()
+void ScreenLayer::render()
 {
   for (auto &it : _img_texture_map)
   {
@@ -114,7 +114,7 @@ void Layer::render()
   }
 }
 
-void Layer::update(Uint32 currentTime, Uint32 accumulator)
+void ScreenLayer::update(Uint32 currentTime, Uint32 accumulator)
 {
   if (false == isActivated)
     return;

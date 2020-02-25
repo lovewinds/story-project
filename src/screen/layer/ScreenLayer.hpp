@@ -13,20 +13,13 @@
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-/**
- * Layer
- *
- * This class indicates specific graphic layer on screen.
- *  - It should own textures to show.
- *  - It should perform render and update.
- */
-class Layer
+class ScreenLayer
 {
 public:
-  Layer(std::string name);
-  virtual ~Layer();
+  ScreenLayer(std::string name);
+  virtual ~ScreenLayer();
 
   /* Primitive Scene actions */
   virtual void handleEvent(SDL_Event e);
@@ -45,10 +38,10 @@ public:
   void setActiveState(bool active);
 
   /* Export read-only resources */
-  const std::map<std::string, std::shared_ptr<SpriteTexture>>& sprite_map;
+  const std::map<std::string, std::shared_ptr<Graphic::SpriteTexture>>& sprite_map;
 
 protected:
-  Layer();
+  ScreenLayer();
   std::string name;
 
   /* TODO: Scene is activated, so it perform update and render */
@@ -61,19 +54,19 @@ protected:
    *   - Also, shared_ptr need to be stored here also
    *     for increase ref count.
    */
-  std::map<std::string, std::shared_ptr<SpriteTexture>> _sprite_map;
+  std::map<std::string, std::shared_ptr<Graphic::SpriteTexture>> _sprite_map;
 
-  std::map<std::string, std::shared_ptr<ImageTexture>> _img_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::ImageTexture>> _img_texture_map;
 
-  std::map<std::string, std::shared_ptr<TextTexture>> _text_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::TextTexture>> _text_texture_map;
 
-  std::map<std::string, std::shared_ptr<FigureTexture>> _drawable_map;
+  std::map<std::string, std::shared_ptr<Graphic::FigureTexture>> _drawable_map;
 
   /* Not classified textures */
-  std::map<std::string, std::shared_ptr<Texture>> _raw_texture_map;
+  std::map<std::string, std::shared_ptr<Graphic::Texture>> _raw_texture_map;
 
   std::map<std::string, std::shared_ptr<Graphic::Object>> _object_map;
 };
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */

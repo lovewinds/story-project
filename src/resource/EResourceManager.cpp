@@ -9,11 +9,11 @@
 #include "util/LogHelper.hpp"
 #include "resource/EResourceManager.hpp"
 
-#include "graphic/layer/RPGLayer.hpp"
-#include "graphic/layer/MapLayer.hpp"
-#include "graphic/layer/ChatLayer.hpp"
-#include "graphic/layer/DbgOverlayLayer.hpp"
-#include "graphic/layer/TitleLayer.hpp"
+#include "screen/layer/RPGLayer.hpp"
+#include "screen/layer/MapLayer.hpp"
+#include "screen/layer/ChatLayer.hpp"
+#include "screen/layer/DbgOverlayLayer.hpp"
+#include "screen/layer/TitleLayer.hpp"
 
 namespace story {
 namespace Resource {
@@ -68,29 +68,29 @@ EResourceManager::getSceneDesc(std::string name)
   return result;
 }
 
-std::shared_ptr<story::Graphic::Layer>
+std::shared_ptr<Screen::ScreenLayer>
 EResourceManager::createScene(story::Graphic::LayerType type, std::string scene_name)
 {
   LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
   //std::shared_ptr<Layer> scene(new Layer(scene_name));
-  std::shared_ptr<story::Graphic::Layer> scene;
+  std::shared_ptr<Screen::ScreenLayer> scene;
 
   switch (type)
   {
   case story::Graphic::LAYER_RPG:
-    scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::RPGLayer(scene_name));
+    scene = std::shared_ptr<Screen::ScreenLayer>(new Screen::RPGLayer(scene_name));
     break;
   case story::Graphic::LAYER_CHAT:
-    scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::ChatLayer(scene_name));
+    scene = std::shared_ptr<Screen::ScreenLayer>(new Screen::ChatLayer(scene_name));
     break;
   case story::Graphic::LAYER_DEBUG:
-    scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::DbgOverlayLayer(scene_name));
+    scene = std::shared_ptr<Screen::ScreenLayer>(new Screen::DbgOverlayLayer(scene_name));
     break;
   case story::Graphic::LAYER_TITLE:
-    scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::TitleLayer(scene_name));
+    scene = std::shared_ptr<Screen::ScreenLayer>(new Screen::TitleLayer(scene_name));
     break;
   case story::Graphic::LAYER_MAP:
-    scene = std::shared_ptr<story::Graphic::Layer>(new story::Graphic::MapLayer(scene_name));
+    scene = std::shared_ptr<Screen::ScreenLayer>(new Screen::MapLayer(scene_name));
     break;
   default:
     /* TODO: If new scene type added, should be created here */
@@ -101,10 +101,10 @@ EResourceManager::createScene(story::Graphic::LayerType type, std::string scene_
   return scene;
 }
 
-std::shared_ptr<story::Graphic::Layer>
+std::shared_ptr<Screen::ScreenLayer>
 EResourceManager::createScene(std::string scene_name)
 {
-  std::shared_ptr<story::Graphic::Layer> scene = nullptr;
+  std::shared_ptr<Screen::ScreenLayer> scene = nullptr;
 
   /* Search scene desc */
   std::shared_ptr<story::Graphic::ESceneDesc> sceneDesc = getSceneDesc(scene_name);
@@ -221,8 +221,8 @@ EResourceManager::createScene(std::string scene_name)
       base_tile_image = gridDesc->getBaseImage();
 
       /* RECOMMEND: Do not use dynamic_cast */
-      story::Graphic::RPGLayer* rpg_scene = dynamic_cast<story::Graphic::RPGLayer*>(scene.get());
-      story::Graphic::MapLayer* map_scene = dynamic_cast<story::Graphic::MapLayer*>(scene.get());
+      Screen::RPGLayer* rpg_scene = dynamic_cast<Screen::RPGLayer*>(scene.get());
+      Screen::MapLayer* map_scene = dynamic_cast<Screen::MapLayer*>(scene.get());
       std::shared_ptr<story::Graphic::GridMapTexture> map(
         new story::Graphic::GridMapTexture("MyMap", base_tile_image.c_str(), gridDesc)
       );

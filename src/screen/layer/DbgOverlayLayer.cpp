@@ -7,19 +7,19 @@
 #include "resource/EResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 
-#include "graphic/layer/DbgOverlayLayer.hpp"
+#include "screen/layer/DbgOverlayLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 DbgOverlayLayer::DbgOverlayLayer(std::string name)
- : Layer(name)
+ : ScreenLayer(name)
 {
   LOG_INFO("DbgOverlayLayer[%s] created", name.c_str());
 
   SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
   SDL_Color bgColor = { 0x0, 0x0, 0x0 };
-  std::shared_ptr<TextTexture> tt(new TextTexture("FPS: 0.0", textColor, bgColor, 20));
+  std::shared_ptr<Graphic::TextTexture> tt(new Graphic::TextTexture("FPS: 0.0", textColor, bgColor, 20));
   std::shared_ptr<Graphic::Object> object(new Graphic::Object());
 
   object->setName("FPS");

@@ -8,13 +8,13 @@
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
 
-#include "graphic/layer/MapLayer.hpp"
+#include "screen/layer/MapLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 MapLayer::MapLayer(std::string name)
- : Layer(name)
+ : ScreenLayer(name)
 {
   LOG_INFO("MapLayer[%s] created", name.c_str());
 }
@@ -58,7 +58,7 @@ bool MapLayer::addObject(std::shared_ptr<Graphic::Object> object)
   return true;
 }
 
-void MapLayer::setMap(std::shared_ptr<GridMapTexture> map)
+void MapLayer::setMap(std::shared_ptr<Graphic::GridMapTexture> map)
 {
   //std::shared_ptr<GridMapTexture> map(new GridMapTexture("MyMap", "MapTile"));
   auto result = _raw_texture_map.emplace("GridMap", map);
@@ -69,32 +69,32 @@ void MapLayer::setMap(std::shared_ptr<GridMapTexture> map)
   gridMap = map;
 }
 
-void MapLayer::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+void MapLayer::setGridDescriptor(std::shared_ptr<Graphic::EGridDesc> desc)
 {
   gridDesc = desc;
 }
 
-void MapLayer::testAnimation(AnimationState state)
+void MapLayer::testAnimation(Graphic::AnimationState state)
 {
-  std::shared_ptr<EAnimation> ani;
+  std::shared_ptr<Graphic::EAnimation> ani;
   //for (auto& it : _sprite_map)
   for (auto& it : _object_map)
   {
     auto& object = it.second;
     switch (state) {
-    case ANI_STOP:
+    case Graphic::ANI_STOP:
       object->stopAnimation();
       break;
-    case ANI_START:
-      ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
+    case Graphic::ANI_START:
+      ani = std::shared_ptr<Graphic::EAnimation>(new Graphic::EGridMoveAnimation());
       object->setAnimation(ani);
       object->startAnimation();
       /* Update position animation finished? */
       break;
-    case ANI_PAUSE:
+    case Graphic::ANI_PAUSE:
       object->pauseAnimation();
       break;
-    case ANI_RESUME:
+    case Graphic::ANI_RESUME:
       object->resumeAnimation();
       break;
     default:
@@ -105,8 +105,8 @@ void MapLayer::testAnimation(AnimationState state)
 
 void MapLayer::handleDirectonFactor(float axis_x, float axis_y)
 {
-  std::shared_ptr<EAnimation> ani;
-  EGridMoveAnimation* grid = nullptr;
+  std::shared_ptr<Graphic::EAnimation> ani;
+  Graphic::EGridMoveAnimation* grid = nullptr;
 
   for (auto& it : _object_map)
   {
@@ -174,8 +174,8 @@ void MapLayer::objectPositionCallback(double x, double y)
   float ax = 0.0f, ay = 0.0f;
 
   /* TODO: Check obstacles */
-  std::shared_ptr<EAnimation> ani;
-  EGridMoveAnimation* grid = nullptr;
+  std::shared_ptr<Graphic::EAnimation> ani;
+  Graphic::EGridMoveAnimation* grid = nullptr;
 
   for (auto& it : _object_map)
   {
@@ -183,7 +183,7 @@ void MapLayer::objectPositionCallback(double x, double y)
       auto& object = it.second;
 
       ani = object->getAnimation();
-      grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+      grid = dynamic_cast<Graphic::EGridMoveAnimation*>(ani.get());
       if (nullptr == grid)
         continue;
 
@@ -317,7 +317,7 @@ void MapLayer::handleEvent(SDL_Event e)
     auto search = _object_map.find("movingChar");
     if (search != _object_map.end()) {
       found = search->second;
-      if (found->getAnimationState() != ANI_START)
+      if (found->getAnimationState() != Graphic::ANI_START)
         found->animatedMoveTo(found, e.button.x, e.button.y, 1000);
     } else {
       LOG_ERR("Object was not found !");

@@ -8,13 +8,13 @@
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
 
-#include "graphic/layer/RPGLayer.hpp"
+#include "screen/layer/RPGLayer.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
 RPGLayer::RPGLayer(std::string name)
- : Layer(name)
+ : ScreenLayer(name)
 {
   LOG_INFO("RPGLayer[%s] created", name.c_str());
 #if 0
@@ -98,7 +98,7 @@ bool RPGLayer::addObject(std::shared_ptr<Graphic::Object> object)
   return true;
 }
 
-void RPGLayer::setMap(std::shared_ptr<GridMapTexture> map)
+void RPGLayer::setMap(std::shared_ptr<Graphic::GridMapTexture> map)
 {
   //std::shared_ptr<GridMapTexture> map(new GridMapTexture("MyMap", "MapTile"));
   auto result = _raw_texture_map.emplace("GridMap", map);
@@ -109,32 +109,32 @@ void RPGLayer::setMap(std::shared_ptr<GridMapTexture> map)
   gridMap = map;
 }
 
-void RPGLayer::setGridDescriptor(std::shared_ptr<EGridDesc> desc)
+void RPGLayer::setGridDescriptor(std::shared_ptr<Graphic::EGridDesc> desc)
 {
   gridDesc = desc;
 }
 
-void RPGLayer::testAnimation(AnimationState state)
+void RPGLayer::testAnimation(Graphic::AnimationState state)
 {
-  std::shared_ptr<EAnimation> ani;
+  std::shared_ptr<Graphic::EAnimation> ani;
   //for (auto& it : _sprite_map)
   for (auto& it : _object_map)
   {
     auto& object = it.second;
     switch (state) {
-    case ANI_STOP:
+    case Graphic::ANI_STOP:
       object->stopAnimation();
       break;
-    case ANI_START:
-      ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
+    case Graphic::ANI_START:
+      ani = std::shared_ptr<Graphic::EAnimation>(new Graphic::EGridMoveAnimation());
       object->setAnimation(ani);
       object->startAnimation();
       /* Update position animation finished? */
       break;
-    case ANI_PAUSE:
+    case Graphic::ANI_PAUSE:
       object->pauseAnimation();
       break;
-    case ANI_RESUME:
+    case Graphic::ANI_RESUME:
       object->resumeAnimation();
       break;
     default:
@@ -145,8 +145,8 @@ void RPGLayer::testAnimation(AnimationState state)
 
 void RPGLayer::handleDirectonFactor(float axis_x, float axis_y)
 {
-  std::shared_ptr<EAnimation> ani;
-  EGridMoveAnimation* grid = nullptr;
+  std::shared_ptr<Graphic::EAnimation> ani;
+  Graphic::EGridMoveAnimation* grid = nullptr;
 
   for (auto& it : _object_map)
   {
@@ -186,24 +186,24 @@ void RPGLayer::handleDirectonFactor(float axis_x, float axis_y)
       /* Set factor */
       switch (object->getAnimationState())
       {
-      case ANI_NONE:
+      case Graphic::ANI_NONE:
         if (obj_ax == 0.0f && obj_ay == 0.0f) {
           /* Ignore unexpected input on scene startup */
           break;
         }
         //LOG_DBG("Start animation. [%f / %f]", obj_ax, obj_ay);
-        ani = std::shared_ptr<EAnimation>(new EGridMoveAnimation());
+        ani = std::shared_ptr<Graphic::EAnimation>(new Graphic::EGridMoveAnimation());
         ani->setCaller(object);
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+        grid = dynamic_cast<Graphic::EGridMoveAnimation*>(ani.get());
         grid->setAxisFactor(obj_ax, obj_ay);
 
         object->setAnimation(ani);
         object->startAnimation();
       break;
-      case ANI_START:
+      case Graphic::ANI_START:
         /* Already in progress, Just update axis factor */
         ani = object->getAnimation();
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+        grid = dynamic_cast<Graphic::EGridMoveAnimation*>(ani.get());
         if (grid) {
           grid->setAxisFactor(obj_ax, obj_ay);
         }
@@ -218,7 +218,7 @@ void RPGLayer::handleDirectonFactor(float axis_x, float axis_y)
         }
 
         ani = object->getAnimation();
-        grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+        grid = dynamic_cast<Graphic::EGridMoveAnimation*>(ani.get());
         if (grid) {
           grid->setAxisFactor(obj_ax, obj_ay);
         }
@@ -279,8 +279,8 @@ void RPGLayer::objectPositionCallback(double x, double y)
   float ax = 0.0f, ay = 0.0f;
 
   /* TODO: Check obstacles */
-  std::shared_ptr<EAnimation> ani;
-  EGridMoveAnimation* grid = nullptr;
+  std::shared_ptr<Graphic::EAnimation> ani;
+  Graphic::EGridMoveAnimation* grid = nullptr;
 
   for (auto& it : _object_map)
   {
@@ -288,7 +288,7 @@ void RPGLayer::objectPositionCallback(double x, double y)
       auto& object = it.second;
 
       ani = object->getAnimation();
-      grid = dynamic_cast<EGridMoveAnimation*>(ani.get());
+      grid = dynamic_cast<Graphic::EGridMoveAnimation*>(ani.get());
       if (nullptr == grid)
         continue;
 
@@ -372,16 +372,16 @@ void RPGLayer::handleEvent(SDL_Event e)
   if (e.type == SDL_KEYDOWN) {
     switch (e.key.keysym.sym) {
     case SDLK_9:
-      testAnimation(ANI_START);
+      testAnimation(Graphic::ANI_START);
       break;
     case SDLK_0:
-      testAnimation(ANI_STOP);
+      testAnimation(Graphic::ANI_STOP);
       break;
     case SDLK_MINUS:
-      testAnimation(ANI_PAUSE);
+      testAnimation(Graphic::ANI_PAUSE);
       break;
     case SDLK_EQUALS:
-      testAnimation(ANI_RESUME);
+      testAnimation(Graphic::ANI_RESUME);
       break;
 #ifdef PLATFORM_IOS
     /* iCade Support */
@@ -432,7 +432,7 @@ void RPGLayer::handleEvent(SDL_Event e)
       auto search = _object_map.find("movingChar");
       if (search != _object_map.end()) {
         found = search->second;
-        if (found->getAnimationState() != ANI_START)
+        if (found->getAnimationState() != Graphic::ANI_START)
           found->changeState(found);
         LOG_DBG("Finished");
       } else {
@@ -472,7 +472,7 @@ void RPGLayer::handleEvent(SDL_Event e)
     auto search = _object_map.find("movingChar");
     if (search != _object_map.end()) {
       found = search->second;
-      if (found->getAnimationState() != ANI_START)
+      if (found->getAnimationState() != Graphic::ANI_START)
         found->animatedMoveTo(found, e.button.x, e.button.y, 1000);
     } else {
       LOG_ERR("Object was not found !");

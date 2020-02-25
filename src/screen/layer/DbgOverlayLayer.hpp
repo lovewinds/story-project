@@ -3,16 +3,16 @@
 #include <string>
 
 #include "util/SDLWrap.hpp"
-#include "graphic/layer/Layer.hpp"
+#include "screen/layer/ScreenLayer.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/ImageTexture.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "graphic/animation/EAnimation.hpp"
 
 namespace story {
-namespace Graphic {
+namespace Screen {
 
-class DbgOverlayLayer : public Layer
+class DbgOverlayLayer : public ScreenLayer
 {
 public:
   DbgOverlayLayer(std::string name);
@@ -24,5 +24,5 @@ public:
   virtual void update(Uint32 currentTime, Uint32 accumulator);
 };
 
-} /* namespace Graphic */
+} /* namespace Screen */
 } /* namespace story */
