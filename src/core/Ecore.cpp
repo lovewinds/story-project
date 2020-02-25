@@ -7,7 +7,7 @@
 #include "core/Ecore.hpp"
 #include "core/ScreenManager.hpp"
 #include "graphic/texture/Texture.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 
 #include "util/LogHelper.hpp"
 #include "util/JsonHelper.hpp"
@@ -225,7 +225,7 @@ void Ecore::Start()
   }
 
   screenManager = new story::Core::ScreenManager();
-  resManager = new story::Resource::EResourceManager();
+  resManager = new story::Resource::ResourceManager();
 
   /* Load game resources */
   if (loadProject() == false)
@@ -406,7 +406,7 @@ double Ecore::GetFPS()
   return d_fps;
 }
 
-story::Resource::EResourceManager& Ecore::getResourceManager()
+story::Resource::ResourceManager& Ecore::getResourceManager()
 {
   return *resManager;
 }

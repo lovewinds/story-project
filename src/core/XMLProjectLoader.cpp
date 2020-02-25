@@ -8,13 +8,13 @@
 #include "graphic/descriptors/SubLayerDescriptor.hpp"
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "resource/ProjectItem.hpp"
 
 namespace story {
 namespace Core {
 
-XMLProjectLoader::XMLProjectLoader(story::Resource::EResourceManager* mgr)
+XMLProjectLoader::XMLProjectLoader(story::Resource::ResourceManager* mgr)
   : ProjectLoaderInterface(mgr)
 {
 }

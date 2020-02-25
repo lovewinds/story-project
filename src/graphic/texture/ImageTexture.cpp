@@ -1,6 +1,6 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
 #include "graphic/texture/ImageTexture.hpp"
@@ -30,7 +30,7 @@ ImageTexture::~ImageTexture()
 
 void ImageTexture::_createTexture()
 {
-  story::Resource::EResourceManager& resManager =
+  story::Resource::ResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
   if (base_image.empty()) {
     LOG_ERR("base_image is empty !");

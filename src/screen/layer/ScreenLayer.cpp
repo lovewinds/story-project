@@ -1,6 +1,6 @@
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 
 #include "screen/layer/ScreenLayer.hpp"

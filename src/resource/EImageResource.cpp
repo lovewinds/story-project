@@ -2,7 +2,7 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 
 namespace story {
@@ -51,7 +51,7 @@ unsigned int EImageResource::getHeight() const
 std::shared_ptr<SDLTextureWrap> EImageResource::getTexture()
 {
   if (texture == nullptr) {
-    EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+    ResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
 
     LOG_ERR("Texture is not exists. create one");
     texture = resManager.allocateTexture(path);
@@ -69,7 +69,7 @@ void EImageResource::releaseTexture()
   texture.reset();
   texture = nullptr;
 
-  EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+  ResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   resManager.releaseTexture(path);
 }
 

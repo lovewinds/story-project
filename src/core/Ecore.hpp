@@ -11,7 +11,7 @@
 
 namespace story {
 namespace Resource {
-  class EResourceManager;
+  class ResourceManager;
 }
 }
 
@@ -49,7 +49,7 @@ public:
   /* Provide current FPS */
   double GetFPS();
 
-  story::Resource::EResourceManager& getResourceManager();
+  story::Resource::ResourceManager& getResourceManager();
   story::Core::ScreenManager& getScreenManager();
 
   /* Utility functions */
@@ -114,7 +114,7 @@ private:
   /* Manager classes:
    * Handle these as a pointer type for obvious resource deallocation.
    */
-  story::Resource::EResourceManager* resManager;
+  story::Resource::ResourceManager* resManager;
   story::Core::ScreenManager* screenManager;
 
   static std::string getParentPath(std::string path, std::string::size_type level);

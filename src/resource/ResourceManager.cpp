@@ -7,7 +7,7 @@
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 
 #include "screen/layer/RPGLayer.hpp"
 #include "screen/layer/MapLayer.hpp"
@@ -18,14 +18,14 @@
 namespace story {
 namespace Resource {
 
-EResourceManager::EResourceManager()
+ResourceManager::ResourceManager()
 {
   /* TODO: Get specific loader from factory class */
   loader = new story::Core::XMLProjectLoader(this);
   SDL_assert(loader);
 }
 
-EResourceManager::~EResourceManager()
+ResourceManager::~ResourceManager()
 {
   if (loader) {
     delete loader;
@@ -41,7 +41,7 @@ EResourceManager::~EResourceManager()
 /***********************************
  * Scene Functions
  ***********************************/
-bool EResourceManager::addSceneDesc(std::string name,
+bool ResourceManager::addSceneDesc(std::string name,
   std::shared_ptr<story::Graphic::ESceneDesc> desc)
 {
   auto result = scene_desc_map.emplace(name, desc);
@@ -54,7 +54,7 @@ bool EResourceManager::addSceneDesc(std::string name,
 }
 
 std::shared_ptr<story::Graphic::ESceneDesc>
-EResourceManager::getSceneDesc(std::string name)
+ResourceManager::getSceneDesc(std::string name)
 {
   std::shared_ptr<story::Graphic::ESceneDesc> result = nullptr;
   auto sceneDesc = scene_desc_map.find(name);
@@ -69,7 +69,7 @@ EResourceManager::getSceneDesc(std::string name)
 }
 
 std::shared_ptr<Screen::ScreenLayer>
-EResourceManager::createScene(story::Graphic::LayerType type, std::string scene_name)
+ResourceManager::createScene(story::Graphic::LayerType type, std::string scene_name)
 {
   LOG_DBG("Trying to create scene [%s]", scene_name.c_str());
   //std::shared_ptr<Layer> scene(new Layer(scene_name));
@@ -102,7 +102,7 @@ EResourceManager::createScene(story::Graphic::LayerType type, std::string scene_
 }
 
 std::shared_ptr<Screen::ScreenLayer>
-EResourceManager::createScene(std::string scene_name)
+ResourceManager::createScene(std::string scene_name)
 {
   std::shared_ptr<Screen::ScreenLayer> scene = nullptr;
 
@@ -241,7 +241,7 @@ EResourceManager::createScene(std::string scene_name)
   return scene;
 }
 
-void EResourceManager::removeScene(std::string scene_name)
+void ResourceManager::removeScene(std::string scene_name)
 {
   /* TODO: Notify removal to resource manager to handle ref count */
 }
@@ -250,7 +250,7 @@ void EResourceManager::removeScene(std::string scene_name)
  * Image texture Functions
  ***********************************/
 std::shared_ptr<EImageResource>
-EResourceManager::createImageResource(std::string name, std::string path,
+ResourceManager::createImageResource(std::string name, std::string path,
     unsigned int width, unsigned int height)
 {
   std::shared_ptr<EImageResource> imgInfo(new EImageResource(name, path, width, height));
@@ -276,7 +276,7 @@ EResourceManager::createImageResource(std::string name, std::string path,
 }
 
 std::shared_ptr<EImageResource>
-EResourceManager::getImageResource(std::string resource_name)
+ResourceManager::getImageResource(std::string resource_name)
 {
   /* TDOO: Resolve key issue - use alias? path? */
   //std::weak_ptr<EImageResource> imgRes = image_map.find(resource_name);
@@ -294,7 +294,7 @@ EResourceManager::getImageResource(std::string resource_name)
   return found;
 }
 
-void EResourceManager::updateImageResourceCache()
+void ResourceManager::updateImageResourceCache()
 {
   LOG_DBG("Count of allocated image resources: [%lu]", image_map.size());
   if (image_map.empty())
@@ -312,7 +312,7 @@ void EResourceManager::updateImageResourceCache()
 }
 
 std::shared_ptr<story::Graphic::ImageTexture>
-EResourceManager::createImageTexture(std::string name, std::string base_image)
+ResourceManager::createImageTexture(std::string name, std::string base_image)
 {
   std::shared_ptr<story::Graphic::ImageTexture> imgTexture(
     new story::Graphic::ImageTexture(name, base_image)
@@ -325,7 +325,7 @@ EResourceManager::createImageTexture(std::string name, std::string base_image)
 }
 
 std::shared_ptr<story::Graphic::ImageTexture>
-EResourceManager::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
+ResourceManager::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc> imageDesc)
 {
   /* Search image desc */
   std::shared_ptr<story::Graphic::ImageTexture> image = nullptr;
@@ -338,7 +338,7 @@ EResourceManager::createImageTexture(std::shared_ptr<story::Graphic::EImageDesc>
   return image;
 }
 
-void EResourceManager::removeImageTexture(std::string name)
+void ResourceManager::removeImageTexture(std::string name)
 {
 
 }
@@ -346,7 +346,7 @@ void EResourceManager::removeImageTexture(std::string name)
 /***********************************
  * Sprite Functions
  ***********************************/
-bool EResourceManager::createSpriteDesc(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
+bool ResourceManager::createSpriteDesc(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
 {
   if (!spriteDesc)
     return false;
@@ -361,7 +361,7 @@ bool EResourceManager::createSpriteDesc(std::shared_ptr<Graphic::ESpriteDesc> sp
 }
 
 std::shared_ptr<Graphic::ESpriteDesc>
-EResourceManager::getSpriteDesc(std::string type_name)
+ResourceManager::getSpriteDesc(std::string type_name)
 {
   std::shared_ptr<Graphic::ESpriteDesc> found = nullptr;
   auto spriteDesc = sprite_desc_dict.find(type_name);
@@ -375,7 +375,7 @@ EResourceManager::getSpriteDesc(std::string type_name)
 }
 
 std::shared_ptr<story::Graphic::SpriteTexture>
-EResourceManager::createSprite(std::string name, std::string type)
+ResourceManager::createSprite(std::string name, std::string type)
 {
   LOG_DBG("Trying to create sprite type [%s] / name [%s]", type.c_str(), name.c_str());
 
@@ -401,7 +401,7 @@ EResourceManager::createSprite(std::string name, std::string type)
 }
 
 std::shared_ptr<story::Graphic::SpriteTexture>
-EResourceManager::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
+ResourceManager::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spriteDesc)
 {
   std::shared_ptr<story::Graphic::SpriteTexture> sprite = nullptr;
 
@@ -416,7 +416,7 @@ EResourceManager::createSprite(std::shared_ptr<story::Graphic::ESpriteDesc> spri
   return sprite;
 }
 
-void EResourceManager::removeSprite(std::string name)
+void ResourceManager::removeSprite(std::string name)
 {
 
 }
@@ -424,7 +424,7 @@ void EResourceManager::removeSprite(std::string name)
 /*
  * Low layer functions
  */
-std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string path)
+std::shared_ptr<SDLTextureWrap> ResourceManager::allocateTexture(std::string path)
 {
   std::shared_ptr<SDLTextureWrap> texture(new SDLTextureWrap(path));
 
@@ -469,7 +469,7 @@ std::shared_ptr<SDLTextureWrap> EResourceManager::allocateTexture(std::string pa
   return texture;
 }
 
-void EResourceManager::releaseTexture(std::string path)
+void ResourceManager::releaseTexture(std::string path)
 {
 #if 0
   LOG_ERR("  Count of texture map items [%lu]", _texture_map.size());
@@ -489,7 +489,7 @@ void EResourceManager::releaseTexture(std::string path)
 #endif
 }
 
-std::shared_ptr<SDLFontWrap> EResourceManager::getFont(std::string family, int size)
+std::shared_ptr<SDLFontWrap> ResourceManager::getFont(std::string family, int size)
 {
   std::shared_ptr<SDLFontWrap> font = story::Core::Ecore::loadFont(family, size);
 
@@ -497,13 +497,13 @@ std::shared_ptr<SDLFontWrap> EResourceManager::getFont(std::string family, int s
   return font;
 }
 
-void EResourceManager::releaseFont(std::shared_ptr<SDLFontWrap>& font)
+void ResourceManager::releaseFont(std::shared_ptr<SDLFontWrap>& font)
 {
   /* TODO: Unref cached font */
 }
 
 std::shared_ptr<SDLTextureWrap>
-EResourceManager::createTextTexture(std::string text,
+ResourceManager::createTextTexture(std::string text,
     SDL_Color textColor, SDL_Color bgColor,
     std::shared_ptr<SDLFontWrap> font)
 {
@@ -527,7 +527,7 @@ EResourceManager::createTextTexture(std::string text,
 /***********************************
  * Project
  ***********************************/
-bool EResourceManager::loadProject(std::string res_file)
+bool ResourceManager::loadProject(std::string res_file)
 {
   std::string path = story::Core::Ecore::getResourcePath(res_file);
   if (path.empty()) {

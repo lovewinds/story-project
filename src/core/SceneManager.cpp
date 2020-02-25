@@ -1,7 +1,7 @@
 #include "core/SceneManager.hpp"
 
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 
 namespace story {
 namespace Core {
@@ -25,7 +25,7 @@ SceneManager::~SceneManager()
 bool SceneManager::playScene(std::string scene_name)
 {
   std::shared_ptr<Screen::ScreenLayer> scene;
-  Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+  Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
   if (nullptr == currentScene) {
     scene = resManager.createScene(scene_name);
@@ -48,7 +48,7 @@ bool SceneManager::playScene(std::string scene_name)
 void SceneManager::stopCurrentScene()
 {
   if (currentScene) {
-    Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+    Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
     currentScene = nullptr;
     resManager.updateImageResourceCache();
@@ -69,7 +69,7 @@ void SceneManager::startCurrentScene()
 
 void SceneManager::initDebugScene()
 {
-  story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+  story::Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
 
   LOG_DBG("Create debug overlay scene");
   debug_overlay = resManager.createScene(story::Graphic::LAYER_DEBUG, "debug");
@@ -104,14 +104,14 @@ void SceneManager::handleEvent(SDL_Event e)
       break;
     case SDLK_BACKQUOTE:
       if (overlayState) {
-        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+        story::Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         overlayState = false;
         overlay = nullptr;
         resManager.updateImageResourceCache();
       }
       else {
         overlayState = true;
-        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+        story::Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         std::string sname = "chat";
 
         overlay = resManager.createScene(sname);
@@ -133,14 +133,14 @@ void SceneManager::handleEvent(SDL_Event e)
 
     if (te->x >= 0.3 && te-> x <= 0.6 && te->y >= 0.7) {
       if (overlayState) {
-        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+        story::Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         overlayState = false;
         overlay = nullptr;
         resManager.updateImageResourceCache();
       }
       else {
         overlayState = true;
-        story::Resource::EResourceManager& resManager = Ecore::getInstance()->getResourceManager();
+        story::Resource::ResourceManager& resManager = Ecore::getInstance()->getResourceManager();
         std::string sname = "chat";
         
         overlay = resManager.createScene(sname);

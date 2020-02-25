@@ -4,7 +4,7 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/animation/EGridMoveAnimation.hpp"
 
@@ -18,7 +18,7 @@ RPGLayer::RPGLayer(std::string name)
 {
   LOG_INFO("RPGLayer[%s] created", name.c_str());
 #if 0
-  EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+  ResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
   SDL_Color bgColor = { 0x0, 0x0, 0x0 };
   std::shared_ptr<TextTexture> tt(new TextTexture("test", textColor, bgColor));
@@ -31,7 +31,7 @@ RPGLayer::RPGLayer(std::string name)
 
 #if 0
   /* Create base map textures */
-  EResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
+  ResourceManager& resManager = story::Core::Ecore::getInstance()->getResourceManager();
   /* Create sprite by manually for test */
 
   std::shared_ptr<Graphic::Object> object(new Graphic::Object());

@@ -23,14 +23,14 @@ namespace Core {
 namespace story {
 namespace Resource {
 
-class EResourceManager
+class ResourceManager
 {
 public:
-  EResourceManager();
-  ~EResourceManager();
+  ResourceManager();
+  ~ResourceManager();
 
   /* Prohibit copy constructor */
-  EResourceManager(EResourceManager& self) = delete;
+  ResourceManager(ResourceManager& self) = delete;
 
   /* Load all resources information from resource archive */
   bool loadProject(std::string res_file);

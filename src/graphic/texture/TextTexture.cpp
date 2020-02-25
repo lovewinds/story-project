@@ -1,7 +1,7 @@
 #include <SDL_ttf.h>
 
 #include "core/Ecore.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/texture/TextTexture.hpp"
 #include "util/LogHelper.hpp"
 
@@ -27,7 +27,7 @@ TextTexture::~TextTexture()
 
 void TextTexture::_createTexture(int size)
 {
-  story::Resource::EResourceManager& resManager =
+  story::Resource::ResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
 
   if (story::Core::Ecore::isHighDPI() == true) {

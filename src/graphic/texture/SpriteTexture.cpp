@@ -1,5 +1,5 @@
 #include "core/Ecore.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "resource/EImageResource.hpp"
 #include "util/LogHelper.hpp"
 
@@ -62,7 +62,7 @@ bool SpriteTexture::initialize(std::shared_ptr<Graphic::ESpriteDesc> spriteDesc)
 
 bool SpriteTexture::_setCellInfo(unsigned int cell_width, unsigned int cell_height)
 {
-  Resource::EResourceManager &resManager =
+  Resource::ResourceManager &resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
   std::shared_ptr<Resource::EImageResource> res =
     resManager.getImageResource(source_image_name);
@@ -129,7 +129,7 @@ void SpriteTexture::setIndex(unsigned int index)
 
 void SpriteTexture::_createTexture()
 {
-  story::Resource::EResourceManager& resManager =
+  story::Resource::ResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
   if (source_image_name.empty()) {
     LOG_ERR("source_image_name is empty !");

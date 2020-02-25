@@ -7,7 +7,7 @@
 #include "util/LogHelper.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/FigureTexture.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 
@@ -81,7 +81,7 @@ void TitleLayer::initMenuItem()
 
 /* Create dynamic animations */
 /* Should be moved into ObjectFactory */
-  story::Resource::EResourceManager& resManager =
+  story::Resource::ResourceManager& resManager =
     story::Core::Ecore::getInstance()->getResourceManager();
   int s_width = story::Core::Ecore::getScreenWidth();
   int s_height = story::Core::Ecore::getScreenHeight();

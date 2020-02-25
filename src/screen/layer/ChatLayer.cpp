@@ -6,7 +6,7 @@
 #include "util/LogHelper.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/FigureTexture.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
 

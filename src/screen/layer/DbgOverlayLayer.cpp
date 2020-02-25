@@ -4,7 +4,7 @@
 
 #include "core/Ecore.hpp"
 #include "util/LogHelper.hpp"
-#include "resource/EResourceManager.hpp"
+#include "resource/ResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 
 #include "screen/layer/DbgOverlayLayer.hpp"

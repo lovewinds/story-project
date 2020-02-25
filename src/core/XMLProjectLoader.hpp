@@ -9,7 +9,7 @@
 
 namespace story {
 namespace Resource {
-  class EResourceManager;
+  class ResourceManager;
 }
 }
 
@@ -19,7 +19,7 @@ namespace Core {
 class XMLProjectLoader : public ProjectLoaderInterface
 {
 public:
-  XMLProjectLoader(story::Resource::EResourceManager* mgr);
+  XMLProjectLoader(story::Resource::ResourceManager* mgr);
   virtual ~XMLProjectLoader();
 
   /* Load all resources information from resource archive */
