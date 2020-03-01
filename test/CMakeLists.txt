@@ -69,7 +69,11 @@ IF(UNIX AND NOT WIN32)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${pkgs_LDFLAGS}
         ${LINK_G3LOG}
-        "-ldl -lgtest -lgtest_main -lstory-project -lpthread")
+        "-ldl -lpthread"
+        "-lm -lz -lbz2"
+        "-lgtest -lgtest_main"
+        "-lstory-project"
+    )
 ELSE(UNIX AND NOT WIN32)
     # Windows
     IF(USE_G3LOG)
@@ -117,6 +121,17 @@ ADD_CUSTOM_COMMAND(
         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
         "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
     COMMENT "Copy required dynamic libraries"
+)
+# Copy Python modules
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"
+    "${CMAKE_CURRENT_BINARY_DIR}/python37_modules_Lib.zip"
+    COPYONLY
+)
+CONFIGURE_FILE(
+    "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Tools.zip"
+    "${CMAKE_CURRENT_BINARY_DIR}/python37_modules_Tools.zip"
+    COPYONLY
 )
 
 ADD_DEPENDENCIES(${PROJECT_NAME} ${LIBNAME})

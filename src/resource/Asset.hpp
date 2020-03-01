@@ -41,6 +41,7 @@ public:
     return ret;
   }
 
+  // Node-handling functions
   void setParent(std::shared_ptr<Asset> parent) {
     this->parent = parent;
   }

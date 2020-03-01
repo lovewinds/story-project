@@ -20,7 +20,7 @@ namespace Core {
 const int SCREEN_WIDTH = 540;
 const int SCREEN_HEIGHT = 960;
 
-Ecore* Ecore::instance = NULL;
+Ecore* Ecore::instance = nullptr;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
 uint32_t Ecore::in_paused_ticks = 0;
 uint32_t Ecore::start_pause_tick = 0;
@@ -28,9 +28,11 @@ uint32_t Ecore::start_pause_tick = 0;
 bool Ecore::is_retina_display = false;
 float Ecore::display_scale = 1.0f;
 
-Ecore::Ecore() :
-gWindow(NULL),
-gRenderer(NULL)
+Ecore::Ecore()
+: gWindow(nullptr),
+  gRenderer(nullptr),
+  resManager(nullptr),
+  screenManager(nullptr)
 {
 #ifndef USE_SDL_LOG
   Log::init();
@@ -52,6 +54,7 @@ gRenderer(NULL)
   /* macOS */
   /* Linux */
   PythonScript::preparePath(makeBasePath("python37-dylib"));
+  PythonScript::preparePath(makeBasePath("../python37-dylib"));
   PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
   PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
 #endif
@@ -77,7 +80,7 @@ Ecore::~Ecore()
 
 Ecore* Ecore::getInstance()
 {
-  if (!instance) {
+  if (nullptr == instance) {
     instance = new Ecore();
   }
 
@@ -86,9 +89,9 @@ Ecore* Ecore::getInstance()
 
 void Ecore::releaseInstance()
 {
-  if (instance) {
+  if (nullptr != instance) {
     delete instance;
-    instance = NULL;
+    instance = nullptr;
   }
 }
 
@@ -430,7 +433,7 @@ void* Ecore::GetHwnd()
     return wmInfo.info.win.window;
   }
 #endif
-  return NULL;
+  return nullptr;
 }
 
 bool Ecore::init(void* hwnd)
@@ -461,7 +464,7 @@ bool Ecore::init(void* hwnd)
 
   /* Create window */
   LOG_ERR("HWND : [%p]", hwnd);
-  if (hwnd != NULL) {
+  if (hwnd != nullptr) {
 #if 1
     //SDL_Window* tmp = SDL_CreateWindow("", 0, 0, 1, 1, SDL_WINDOW_BORDERLESS);
     //char sBuf[64];
@@ -490,7 +493,7 @@ bool Ecore::init(void* hwnd)
       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
       SCREEN_WIDTH, SCREEN_HEIGHT, flags);
   }
-  if (gWindow == NULL) {
+  if (gWindow == nullptr) {
     LOG_ERR("Window could not be created! SDL Error: %s\n", SDL_GetError());
     return false;
   }
@@ -498,7 +501,7 @@ bool Ecore::init(void* hwnd)
   /* Create vsynced renderer for window */
   /* VSync: SDL_RENDERER_PRESENTVSYNC */
   gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-  if (gRenderer == NULL)
+  if (gRenderer == nullptr)
   {
     LOG_ERR("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
     success = false;
@@ -576,7 +579,7 @@ bool Ecore::init(void* hwnd)
 #ifdef PLATFORM_WINDOWS
   /* TODO: Should be check
     this app can be executed with internal window state on other platforms */
-  if (success && hwnd != NULL)
+  if (success && hwnd != nullptr)
     SetParent((HWND)GetHwnd(), (HWND)hwnd);
 #endif
 
@@ -587,17 +590,17 @@ std::shared_ptr<SDLFontWrap> Ecore::loadFont(std::string family, int size)
 {
   std::shared_ptr<SDLFontWrap> font = nullptr;
   char font_path[256] = { 0, };
-  TTF_Font *pFont = NULL;
+  TTF_Font *pFont = nullptr;
 
   /* Load Font */
   SDL_snprintf(font_path, 256, "../res/%s.ttf", family.c_str());
   pFont = TTF_OpenFont(font_path, size);
-  if (pFont == NULL)
+  if (pFont == nullptr)
   {
     /* Android can handle under /assets directory */
     SDL_snprintf(font_path, 256, "%s.ttf", family.c_str());
     pFont = TTF_OpenFont(font_path, size);
-    if (pFont == NULL) {
+    if (pFont == nullptr) {
       LOG_ERR("Failed to load font[%s]!", family.c_str());
       LOG_ERR("      SDL_ttf Error: %s", TTF_GetError());
       return nullptr;
@@ -651,21 +654,31 @@ void Ecore::deinit()
   LOG_DBG("Deinitialize Ecore");
 
   /* Release resources */
-  delete screenManager;
-  screenManager = NULL;
-  delete resManager;
-  resManager = NULL;
+  if (nullptr != screenManager) {
+    delete screenManager;
+    screenManager = nullptr;
+  }
+  if (nullptr != resManager) {
+    delete resManager;
+    resManager = nullptr;
+  }
 
   /* Destroy window */
-  SDL_DestroyRenderer(gRenderer);
-  SDL_DestroyWindow(gWindow);
-  gWindow = NULL;
-  gRenderer = NULL;
+  if (nullptr != gRenderer) {
+    SDL_DestroyRenderer(gRenderer);
+    gRenderer = nullptr;
+  }
+  if (nullptr != gWindow) {
+    SDL_DestroyWindow(gWindow);
+    gWindow = nullptr;
+  }
 
   /* Quit SDL subsystems */
   TTF_Quit();
   IMG_Quit();
   SDL_Quit();
+
+  Ecore::instance = nullptr;
 }
 
 SDL_Renderer* Ecore::getRenderer()
@@ -854,7 +867,7 @@ void Ecore::checkPathContents()
   struct dirent  *dir_entry;
 
   dir_info = opendir(getBasePath());
-  if (NULL != dir_info)
+  if (nullptr != dir_info)
   {
     LOG_INFO("%s", getBasePath());
     while((dir_entry = readdir(dir_info)))
@@ -868,7 +881,7 @@ void Ecore::checkPathContents()
   LOG_INFO(" ");
   std::string ppath = makeBasePath("python");
   dir_info = opendir(ppath.c_str());
-  if (NULL != dir_info)
+  if (nullptr != dir_info)
   {
       LOG_INFO("%s", getBasePath());
       while((dir_entry = readdir(dir_info)))

@@ -14,9 +14,9 @@ ScreenManager::ScreenManager()
 
 ScreenManager::~ScreenManager()
 {
-  if (sceneManager) {
+  if (nullptr != sceneManager) {
     delete sceneManager;
-    sceneManager = NULL;
+    sceneManager = nullptr;
   }
 }
 
