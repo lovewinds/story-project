@@ -8,7 +8,7 @@
 #include "graphic/descriptors/GridDescriptor.hpp"
 #include "graphic/descriptors/ImageDescriptor.hpp"
 #include "graphic/descriptors/SpriteDescriptor.hpp"
-#include "resource/ProjectItem.hpp"
+#include "resource/Asset.hpp"
 
 namespace story {
 namespace Graphic {

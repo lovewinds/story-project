@@ -35,7 +35,7 @@ public:
       ret = std::stoi(property[key].c_str());
     }
     catch (std::exception e) {
-      LOG_ERR("Invalid key [%s]", key);
+      LOG_ERR("Invalid key [%s]", key.c_str());
       ret = 0;
     }
     return ret;

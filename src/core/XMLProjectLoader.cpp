@@ -9,7 +9,7 @@
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "resource/ResourceManager.hpp"
-#include "resource/ProjectItem.hpp"
+#include "resource/Asset.hpp"
 
 namespace story {
 namespace Core {
@@ -151,7 +151,7 @@ XMLProjectLoader::loadSceneDesc(
       bool height_percent = false;
       // Create Object descriptor
       std::shared_ptr<Resource::Asset> dsc(
-        new Resource::Asset()
+        new Resource::Asset(itm_name, itm_node)
       );
       for (pugi::xml_attribute attr: node.node().attributes())
       {
