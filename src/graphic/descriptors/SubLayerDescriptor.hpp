@@ -39,7 +39,7 @@ public:
   void addGridDesc(std::shared_ptr<EGridDesc> grid_desc) {
     if (nullptr != grid_desc) _grid_list.push_back(grid_desc);
   }
-  void appendObjectDesc(std::shared_ptr<Resource::ProjectItem> obj_desc) {
+  void appendObjectDesc(std::shared_ptr<Resource::Asset> obj_desc) {
     if (nullptr != obj_desc) _obj_array.push_back(obj_desc);
   }
 
@@ -50,7 +50,7 @@ public:
   const std::vector<std::shared_ptr<ESpriteDesc>>& sprite_list;
   const std::vector<std::shared_ptr<EImageDesc>>& image_list;
   const std::vector<std::shared_ptr<EGridDesc>>& grid_list;
-  const std::vector<std::shared_ptr<Resource::ProjectItem>>& obj_array;
+  const std::vector<std::shared_ptr<Resource::Asset>>& obj_array;
 
 protected:
   std::string name;
@@ -58,7 +58,7 @@ protected:
   std::vector<std::shared_ptr<ESpriteDesc>> _sprite_list;
   std::vector<std::shared_ptr<EImageDesc>> _image_list;
   std::vector<std::shared_ptr<EGridDesc>> _grid_list;
-  std::vector<std::shared_ptr<Resource::ProjectItem>> _obj_array;
+  std::vector<std::shared_ptr<Resource::Asset>> _obj_array;
 };
 
 } /* namespace Graphic */

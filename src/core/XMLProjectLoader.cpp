@@ -150,8 +150,8 @@ XMLProjectLoader::loadSceneDesc(
       bool width_percent = false;
       bool height_percent = false;
       // Create Object descriptor
-      std::shared_ptr<Resource::ProjectItem> dsc(
-        new Resource::ProjectItem()
+      std::shared_ptr<Resource::Asset> dsc(
+        new Resource::Asset()
       );
       for (pugi::xml_attribute attr: node.node().attributes())
       {
