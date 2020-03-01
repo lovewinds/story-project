@@ -247,21 +247,17 @@ sys.stderr = catchOutErr\n\
       //Py_Finalize();
     }
 
-#if 1
-    thread_ipc = std::thread(thread_loop_ipc, std::ref(state_ipc));
-#endif
+    // thread_ipc = std::thread(thread_loop_ipc, std::ref(state_ipc));
   }
 }
 
 void PythonScript::finalize()
 {
-#if 1
-  LOG_INFO("Wait for IPC thread termination..");
-  state_ipc = false;
-  if (thread_ipc.joinable())
-    thread_ipc.join();
-  LOG_INFO("  Done");
-#endif
+  // LOG_INFO("Wait for IPC thread termination..");
+  // state_ipc = false;
+  // if (thread_ipc.joinable())
+  //   thread_ipc.join();
+  // LOG_INFO("  Done");
 
   if (nullptr != instance) {
     if (Py_IsInitialized())
