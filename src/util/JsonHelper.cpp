@@ -51,7 +51,7 @@ void readJson()
   std::cout << root["hasCar"] << " : " << root["age"] << std::endl << std::endl;
 
   const Json::Value items = root["items"];
-  for (int i = 0; i < items.size(); i++)
+  for (unsigned int i = 0; i < items.size(); i++)
   {
     std::cout << items[i].asString() << std::endl;
   }

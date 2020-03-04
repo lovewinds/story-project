@@ -158,7 +158,7 @@ void SpriteTexture::_removeTexture()
 
 void SpriteTexture::update(Uint32 currentTime, Uint32 accumulator)
 {
-  int tick = 100;
+  unsigned int tick = 100;
 
   if (sprite_clips.size() == 4)
     tick = 1000;

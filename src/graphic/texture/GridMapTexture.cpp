@@ -21,13 +21,13 @@ GridMapTexture::GridMapTexture(std::string name, std::string base_image,
   /* TODO: Load map info dynamically */
   std::vector< std::vector< std::vector<unsigned short> > > arr;
   arr.reserve(hTileCount);
-  for (int h = 0; h < hTileCount; h++) {
+  for (unsigned int h = 0; h < hTileCount; h++) {
     std::vector< std::vector<unsigned short> > row;
     row.reserve(wTileCount);
-    for (int w = 0; w < wTileCount; w++) {
+    for (unsigned int w = 0; w < wTileCount; w++) {
       std::vector<unsigned short> col;
       col.reserve(levels);
-      for (int l = 0; l < levels; l++) {
+      for (unsigned int l = 0; l < levels; l++) {
         unsigned short v = desc->getGridValue(l, w, h);
         col.push_back(v);
       }
@@ -105,9 +105,9 @@ void GridMapTexture::render(
    * It disables linear scaling :(
    */
   if (mTexture) {
-    for (int y = 0; y < hTileCount; y++) {
-      for (int x = 0; x < wTileCount; x++) {
-        for (int l = 1; l < levels; l++) {
+    for (unsigned int y = 0; y < hTileCount; y++) {
+      for (unsigned int x = 0; x < wTileCount; x++) {
+        for (unsigned int l = 1; l < levels; l++) {
           tile = (unsigned int)tileMap[y][x][l];
           if (tile == 999) continue;
           unsigned int tx = (unsigned int)(tile % row_count);

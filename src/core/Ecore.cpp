@@ -257,7 +257,7 @@ void Ecore::Start()
     Uint32 nextRenderTick = prevTime;
     Uint32 frameTime = 0;
     Uint32 prevCalculated = prevTime;
-    int loops = 0;
+    unsigned int loops = 0;
     int updated = 0;
     int rendered = 0;
     double alpha = 0.0;
@@ -916,7 +916,7 @@ void Ecore::requestSceneChange(std::string scene_name)
     return;
   }
 
-  if (custom_event_id[CUSTOM_EVENT_SCENE_CHANGE] != ((Uint32)-1)) {
+  if (custom_event_id[CUSTOM_EVENT_SCENE_CHANGE] != -1) {
     SDL_Event event;
     int ret = 0;
 

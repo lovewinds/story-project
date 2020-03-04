@@ -73,6 +73,9 @@ IF(UNIX AND NOT WIN32)
         "-lm -lz -lbz2"
         "-lgtest -lgtest_main"
         "-lstory-project"
+        # Reference again to resolve linking error
+        # https://stackoverflow.com/questions/19901934/libpthread-so-0-error-adding-symbols-dso-missing-from-command-line
+        "-lpthread"
     )
 ELSE(UNIX AND NOT WIN32)
     # Windows
