@@ -8,15 +8,15 @@
 std::vector<std::wstring> PythonScript::path_list;
 PythonScript* PythonScript::instance = nullptr;
 
-bool PythonScript::state_ipc = true;
-std::thread PythonScript::thread_python;
-std::thread PythonScript::thread_ipc;
-
-static void thread_loop_ipc(bool& running_state);
+// bool PythonScript::state_ipc = true;
+// std::thread PythonScript::thread_python;
+// std::thread PythonScript::thread_ipc;
+// static void thread_loop_ipc(bool& running_state);
 
 #define __PYTHON_AVAILABLE
 #ifdef __PYTHON_AVAILABLE
 #include <pybind11/pybind11.h>
+#include <pybind11/embed.h>
 #include <stdio.h>
 #include <stdlib.h>
 /* To remove python debug lib - not found error */
@@ -35,7 +35,7 @@ class hello
 public:
   hello(const std::string& country) { this->country = country; }
   std::string greet() const {
-    // LOGF(PY_LOG, "Hello from %s", country.c_str());
+    LOG_INFO("Hello from %s", country.c_str());
     return "Hello from " + country;
   }
 private:
@@ -48,67 +48,20 @@ std::string invite(const hello& w) {
 }
 
 namespace py = pybind11;
-PYBIND11_MODULE(story, m) {
-  py::class_<hello>(m, "hello")
-    .def(py::init<const std::string &>())
-    // Add a regular member function.
-    .def("greet", &hello::greet)
-    // Add invite() as a member of hello!
-    .def("invite", invite)
-    ;
+/**********************************************************************
+ * Module Start
+ **********************************************************************/
+PYBIND11_EMBEDDED_MODULE(pyemb_test, m) {
+    py::class_<hello>(m, "pyemb_test")
+      .def(py::init<std::string>())
+      .def_property_readonly("greet", &hello::greet)
+      .def("add", [](const hello& self, int i, int j) { return i + j; })
+      .def("invite", invite);
 }
 
-void PrintMyFunc() {
-  //PyObject *module = PyImport_ImportModule("scripts.story");
-  PyObject *module = PyImport_ImportModule("story");
-
-  if (module) {
-    PyObject *klass = PyObject_GetAttrString(module, "SpLog");
-    if (klass) {
-      //PyObject *instance = PyInstance_New(printHello, NULL, NULL);
-      PyObject *instance = PyObject_CallObject(klass, NULL);
-      if (instance) {
-        PyObject *r = PyObject_CallMethod(instance, "dbg", "()");
-
-        if (r == Py_None) {
-          LOG_DBG("None is returned.");
-          Py_XDECREF(r);
-        }
-        Py_XDECREF(instance);
-      }
-      Py_XDECREF(klass);
-    } else {
-      LOG_ERR("Object was not found");
-    }
-    Py_XDECREF(module);
-  } else {
-    LOG_ERR("Failed to import module");
-  }
-}
-
-int Multiply(int dx, int dy) {
-  PyObject *myfunc = PyImport_ImportModule("scripts._story");
-  int result = -1;
-
-  if (myfunc) {
-    PyObject *multiply = PyObject_GetAttrString(myfunc, "Multiply");
-    if (multiply && PyCallable_Check(multiply)) {
-      PyObject *r = PyObject_CallFunction(multiply, (char*)"ii", dx, dy);
-      if (r) {
-        result = (int)PyLong_AsLong(r);
-        Py_XDECREF(r);
-      }
-      Py_XDECREF(multiply);
-    } else {
-      LOG_ERR("Object was not found");
-    }
-    Py_XDECREF(myfunc);
-  } else {
-    LOG_ERR("Failed to import module");
-  }
-
-  return result;
-}
+/**********************************************************************
+ * Module End
+ **********************************************************************/
 
 void PythonScript::preparePath(std::string script_path)
 {
@@ -119,135 +72,35 @@ void PythonScript::preparePath(std::string script_path)
   }
 }
 
-/**********************************************************************
- * Module Start
- **********************************************************************/
-
-static int numargs=0;
-
-/* Return the number of arguments of the application command line */
-static PyObject*
-emb_numargs(PyObject *self, PyObject *args)
-{
-  if(!PyArg_ParseTuple(args, ":numargs"))
-    return NULL;
-  return PyLong_FromLong(numargs);
-}
-
-static PyMethodDef EmbMethods[] = {
-  {"numargs", emb_numargs, METH_VARARGS,
-    "Return the number of arguments received by the process."},
-  {NULL, NULL, 0, NULL}
-};
-
-static PyModuleDef EmbModule = {
-  PyModuleDef_HEAD_INIT, "emb", NULL, -1, EmbMethods,
-  NULL, NULL, NULL, NULL
-};
-
-static PyObject*
-PyInit_emb(void)
-{
-  return PyModule_Create(&EmbModule);
-}
-
-/**********************************************************************
- * Module End
- **********************************************************************/
 
 void PythonScript::initialize()
 {
-  //unsigned long err_code;
+  py::scoped_interpreter guard{};
 
-  if (nullptr == instance) {
-    instance = new PythonScript();
+  // Use only for custom defined exceptions
+  // py::register_exception_translator([](std::exception_ptr p) {
+  //   try {
+  //     if (p) std::rethrow_exception(p);
+  //   } catch (const pybind11::error_already_set &pe) {
+  //     LOG_ERR("PYTHON error :: %s", pe.what());
+  //     PyErr_SetString(PyExc_RuntimeError, pe.what());
+  //   }
+  // });
 
-    wchar_t *path;
-    std::wstring wpath;
+  try {
+    auto pyemb_test = py::module::import("pyemb_test");
+    auto obj = pyemb_test.attr("pyemb_test")("Korean");
+    auto message = obj.attr("greet").cast<std::string>();
+    LOG_ERR("From Python :: %s", message.c_str());
 
-    Py_SetProgramName(L"story");
+    auto val = obj.attr("add")(3, 7).cast<int>();
+    LOG_ERR("From Python :: %d", val);
 
-    /* Initialize module path */
-    //path = Py_GetPath();
-    //wpath = path;
-    for (auto script_path : path_list) {
-      //appendPath(script_path);
-      if (story::Core::Ecore::checkPlatform(std::string("Windows")))
-        wpath.append(L";");
-      else
-        wpath.append(L":");
-      wpath.append(script_path);
-      LOG_DBG("   AppendPath: [%ls]", script_path.c_str());
-    }
-    story::Core::Ecore::checkPathContents();
-    Py_SetPath(wpath.c_str());
-
-    /* Export internal modules */
-    numargs = 8;
-    PyImport_AppendInittab("emb", &PyInit_emb);
-    // PyImport_AppendInittab("helloModule", PyInit_helloModule);
-
-    Py_Initialize();
-    LOG_DBG("GetProgramName: %ls", Py_GetProgramName());
-
-    if (Py_IsInitialized()) {
-      //PySys_SetArgv(argc, argv);
-      PyObject *pModule = PyImport_AddModule("__main__");
-      
-      path = Py_GetPath();
-      LOG_DBG("GetPath: [%ls]", path);
-
-      std::string stdOutErr =
-"import sys\n\
-class CatchOutErr:\n\
-  def __init__(self):\n\
-    self.value = ''\n\
-  def write(self, txt):\n\
-    self.value += txt\n\
-catchOutErr = CatchOutErr()\n\
-sys.stdout = catchOutErr\n\
-sys.stderr = catchOutErr\n\
-"; //this is python code to redirect stdouts/stderr
-
-      PyRun_SimpleString(stdOutErr.c_str());
-
-      PyRun_SimpleString(
-        /*"from time import time, ctime\n"
-        "print('Today is', ctime(time()))\n"*/
-        "import sys\n"
-        "import emb\n"
-        /*"import story\n"
-        "print(sys.path)\n"
-        "story.SpLog()\n"*/
-        "print('Number of arguments', emb.numargs())\n"
-        "import helloModule\n"
-        "a = helloModule.hello('Korea')\n"
-        "a.invite()\n"
-        "a.invite2()\n"
-      );
-
-      PrintMyFunc();
-      LOG_DBG("10 * 15 = %d", Multiply(10, 15));
-      PyObject *catcher = PyObject_GetAttrString(pModule, "catchOutErr");
-
-      PyErr_Print();
-      PyObject *output = PyObject_GetAttrString(catcher, "value");
-
-      LOG_DBG("==============");
-      LOG_DBG("%s", PyUnicode_AsUTF8(PyObject_Repr(output)));
-      if (true) {
-        //LOGF(PY_LOG, "%s", PyUnicode_AsASCIIString(output));
-        LOG_DBG("===============");
-      } else {
-        LOG_ERR("Not an string !");
-      }
-      Py_DecRef(output);
-      Py_DecRef(catcher);
-
-      //Py_Finalize();
-    }
-
-    // thread_ipc = std::thread(thread_loop_ipc, std::ref(state_ipc));
+    message = obj.attr("invite")().cast<std::string>();
+    LOG_ERR("From Python :: %s", message.c_str());
+  }
+  catch(std::exception &e) {
+    LOG_ERR("PYTHON error :: %s", e.what());
   }
 }
 
@@ -258,12 +111,6 @@ void PythonScript::finalize()
   // if (thread_ipc.joinable())
   //   thread_ipc.join();
   // LOG_INFO("  Done");
-
-  if (nullptr != instance) {
-    if (Py_IsInitialized())
-      Py_Finalize();
-    instance = nullptr;
-  }
 }
 
 std::string PythonScript::runString(std::string cmd)
@@ -322,31 +169,31 @@ PythonScript::~PythonScript()
  * Threading 
  **********************************************************************/
 
-static void thread_loop_ipc(bool& running_state)
-{
-  IPCServer ipc_server;
-  void *handle = ipc_server.CreateIPC();
-  if (nullptr == handle) {
-    LOG_ERR("Failed to initialize IPC");
-    return;
-  }
+// static void thread_loop_ipc(bool& running_state)
+// {
+//   IPCServer ipc_server;
+//   void *handle = ipc_server.CreateIPC();
+//   if (nullptr == handle) {
+//     LOG_ERR("Failed to initialize IPC");
+//     return;
+//   }
 
-  char pData[1024] = {0,};
-  size_t tDataSize = 1023;
-  unsigned long ret;
+//   char pData[1024] = {0,};
+//   size_t tDataSize = 1023;
+//   unsigned long ret;
 
-  // with blocking manner
-  while(running_state) {
-    // LOG_DBG("Waiting for data receiving");
-    ret = ipc_server.RecvIPC(handle, pData, tDataSize);
-    // LOG_DBG("Received data [%lu]", ret);
+//   // with blocking manner
+//   while(running_state) {
+//     // LOG_DBG("Waiting for data receiving");
+//     ret = ipc_server.RecvIPC(handle, pData, tDataSize);
+//     // LOG_DBG("Received data [%lu]", ret);
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
+//     std::this_thread::sleep_for(std::chrono::seconds(1));
+//   }
 
-  // On terminate
-  ipc_server.DestroyIPC();
-}
+//   // On terminate
+//   ipc_server.DestroyIPC();
+// }
 
 /**********************************************************************
  * Threading end
