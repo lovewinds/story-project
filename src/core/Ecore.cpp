@@ -53,6 +53,8 @@ Ecore::Ecore()
 #else
   /* macOS */
   /* Linux */
+  PythonScript::preparePath(makeBasePath("../lib"));
+  PythonScript::preparePath(makeBasePath("../lib/python"));
   PythonScript::preparePath(makeBasePath("python37-dylib"));
   PythonScript::preparePath(makeBasePath("../python37-dylib"));
   PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
