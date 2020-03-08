@@ -24,6 +24,16 @@ XMLProjectLoader::~XMLProjectLoader()
   /* Release all resources */
 }
 
+void XMLProjectLoader::loadProjectObject(pugi::xml_document &document) {
+  /* Build a project tree from resource descritor */
+  pugi::xpath_node_set scene_sel = document.select_nodes("/Project/SceneRoot/Scene");
+  for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it)
+  {
+    // TODO : Implement
+
+  } /* Scene loop */
+}
+
 void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
   std::stringstream s;
   /* Load SpriteType Templete */

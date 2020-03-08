@@ -30,6 +30,10 @@ private:
   void loadCommonResources(pugi::xml_document &document);
   void loadScenes(pugi::xml_document &document);
 
+  void loadProjectObject(pugi::xml_document &document);
+  void loadProjectScene(pugi::xml_document &document);
+  void loadProjectSceneLayer(pugi::xml_document &document);
+
   std::shared_ptr<story::Graphic::ESceneDesc> loadSceneDesc(
     pugi::xml_document &document,
     std::string scene_name, story::Graphic::LayerType scene_type);
