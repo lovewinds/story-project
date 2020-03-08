@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<SceneRoot name="Sample Scene">
+<Project name="Sample project">
 	<GlobalResources type="global">
 		<ResourceGroup>
 			<ImageResource path="bg-black.png" name="Background"
@@ -24,19 +24,21 @@
 			</SpriteTexture>
 		</ExtendedTextureGroup>
 	</GlobalResources>
-	<Scene name="main" type="Map">
-		<Layer name="base">
-			<Image name="bg" source="Background" x="0" y="0" />
-			<Sprite name="c01" source="loading_circle" x="0" y="0" />
-			<Sprite name="c02" source="loading_circle" x="50" y="0" />
-			<Sprite name="c03" source="loading_circle" x="100" y="0" />
-			<Sprite name="c04" source="loading_circle" x="150" y="0" />
-			<Sprite name="c05" source="loading_circle" x="200" y="0" />
-			<Sprite name="c06" source="loading_circle" x="0" y="50" />
-			<Sprite name="c07" source="loading_circle" x="50" y="50" />
-			<Sprite name="c08" source="loading_circle" x="100" y="50" />
-			<Sprite name="c09" source="loading_circle" x="150" y="50" />
-			<Sprite name="c10" source="loading_circle" x="200" y="50" />
-		</Layer>
-	</Scene>
-</SceneRoot>
+	<SceneRoot name="Sample Scene">
+		<Scene name="main" type="Map">
+			<Layer name="base">
+				<Image name="bg" source="Background" x="0" y="0" />
+				<Sprite name="c01" source="loading_circle" x="0" y="0" />
+				<Sprite name="c02" source="loading_circle" x="50" y="0" />
+				<Sprite name="c03" source="loading_circle" x="100" y="0" />
+				<Sprite name="c04" source="loading_circle" x="150" y="0" />
+				<Sprite name="c05" source="loading_circle" x="200" y="0" />
+				<Sprite name="c06" source="loading_circle" x="0" y="50" />
+				<Sprite name="c07" source="loading_circle" x="50" y="50" />
+				<Sprite name="c08" source="loading_circle" x="100" y="50" />
+				<Sprite name="c09" source="loading_circle" x="150" y="50" />
+				<Sprite name="c10" source="loading_circle" x="200" y="50" />
+			</Layer>
+		</Scene>
+	</SceneRoot>
+</Project>

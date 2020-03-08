@@ -29,7 +29,7 @@ void XMLProjectLoader::loadSprites(pugi::xml_document &document) {
   /* Load SpriteType Templete */
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/GlobalResources/ExtendedTextureGroup/SpriteTexture";
+  s << "/Project/GlobalResources/ExtendedTextureGroup/SpriteTexture";
   std::string sprite_path = s.str();
   pugi::xpath_node_set spr = document.select_nodes(sprite_path.c_str());
   LOG_INFO("[%lu] Sprite Resources:", spr.size());
@@ -73,7 +73,7 @@ void XMLProjectLoader::loadCommonResources(pugi::xml_document &document) {
   /* Load Global image resources */
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/GlobalResources/ResourceGroup/ImageResource";
+  s << "/Project/GlobalResources/ResourceGroup/ImageResource";
   std::string img_path = s.str();
   pugi::xpath_node_set sel = document.select_nodes(img_path.c_str());
   for (pugi::xpath_node_set::const_iterator it = sel.begin(); it != sel.end(); ++it) {
@@ -109,7 +109,7 @@ XMLProjectLoader::loadSceneDesc(
   std::stringstream s;
   s.str(std::string());
   s.clear();
-  s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer";
+  s << "/Project/SceneRoot/Scene[@name='" << scene_name << "']/Layer";
   std::string layer_path = s.str();
   pugi::xpath_node_set layer_sel = document.select_nodes(layer_path.c_str());
   for (auto layer_it = layer_sel.begin(); layer_it != layer_sel.end(); ++layer_it) {
@@ -125,7 +125,7 @@ XMLProjectLoader::loadSceneDesc(
     /* Layer contents */
     s.str(std::string());
     s.clear();
-    s << "/SceneRoot/Scene[@name='" << scene_name << "']/Layer[@name='" << layer_name << "']/*";
+    s << "/Project/SceneRoot/Scene[@name='" << scene_name << "']/Layer[@name='" << layer_name << "']/*";
     std::string layer_item_path = s.str();
     pugi::xpath_node_set layer_items = document.select_nodes(layer_item_path.c_str());
     LOG_INFO("Layer[%s] has [%lu] items:",
@@ -313,8 +313,8 @@ XMLProjectLoader::loadSceneDesc(
 
 void XMLProjectLoader::loadScenes(pugi::xml_document &document) {
   /* Create Scene descriptor */
-  //pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene[@name='main']");
-  pugi::xpath_node_set scene_sel = document.select_nodes("/SceneRoot/Scene");
+  //pugi::xpath_node_set scene_sel = document.select_nodes("/Project/SceneRoot/Scene[@name='main']");
+  pugi::xpath_node_set scene_sel = document.select_nodes("/Project/SceneRoot/Scene");
   for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it) {
     std::shared_ptr<story::Graphic::ESceneDesc> sceneDesc = nullptr;
     story::Graphic::LayerType layer_type_object;

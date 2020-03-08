@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<SceneRoot name="Sample Scene">
+<Project name="Sample project">
 	<GlobalResources type="global">
 		<ResourceGroup>
 			<ImageResource path="japanvillage.jpg" name="Background"
@@ -47,20 +47,21 @@
 			</SpriteTexture>
 		</ExtendedTextureGroup>
 	</GlobalResources>
-	<Scene name="sample_rpg" type="Map">
-		<Layer name="base" depth="1">
-			<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
-			<Sprite name="g1" source="sleeping_gom" x="380" y="170" />
-			<Sprite name="g2" source="sleeping_gom" x="200" y="400" />
-			<Sprite name="g3" source="sleeping_gom" x="40" y="100" />
-			<Sprite name="g4" source="sleeping_gom" x="80" y="400" />
-			<Sprite name="g5" source="sleeping_gom" x="300" y="150" />
-			<!--Sprite name="c2" source="char_girl" x="32" y="256" /-->
-			<Sprite name="c1" source="char_girl" x="100" y="280" controllable="true"/>
-		</Layer>
-		<Layer name="map" depth="0">
-			<TileMap width="32" height="32" levels="3" source="MapTile">
-				<TileMapLayer name="background" level="1">
+	<SceneRoot name="sample scene">
+		<Scene name="sample_rpg" type="Map">
+			<Layer name="base" depth="1">
+				<!--Image name="bg" source="Background" x="0" y="0" width="100%" height="100%"/-->
+				<Sprite name="g1" source="sleeping_gom" x="380" y="170" />
+				<Sprite name="g2" source="sleeping_gom" x="200" y="400" />
+				<Sprite name="g3" source="sleeping_gom" x="40" y="100" />
+				<Sprite name="g4" source="sleeping_gom" x="80" y="400" />
+				<Sprite name="g5" source="sleeping_gom" x="300" y="150" />
+				<!--Sprite name="c2" source="char_girl" x="32" y="256" /-->
+				<Sprite name="c1" source="char_girl" x="100" y="280" controllable="true"/>
+			</Layer>
+			<Layer name="map" depth="0">
+				<TileMap width="32" height="32" levels="3" source="MapTile">
+					<TileMapLayer name="background" level="1">
 <![CDATA[
 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016
 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016
@@ -103,9 +104,8 @@
 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016
 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016 016
 ]]>
-				</TileMapLayer>
-
-				<TileMapLayer name="objects" level="2">
+					</TileMapLayer>
+					<TileMapLayer name="objects" level="2">
 <![CDATA[
 003 004 005 008 999 999 999 035 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999
 011 012 013 002 999 999 999 035 999 076 077 078 079 999 160 161 162 163 164 999 999 999 999 999
@@ -125,8 +125,8 @@
 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999
 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999 999
 ]]>
-				</TileMapLayer>
-				<TileMapLayer name="movable" level="0">
+					</TileMapLayer>
+					<TileMapLayer name="movable" level="0">
 <![CDATA[
 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
@@ -146,16 +146,17 @@
 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000
 ]]>
-				</TileMapLayer>
-			</TileMap>
-		</Layer>
-	</Scene>
-	<Scene name="CharacterChat" type="Chat">
-		<Layer name="talk" depth="1">
-			<Image name="char" source="Standing" halign="right" valign="bottom"
-						x="0" y="120" width="50%" height="50%"/>
-		</Layer>
-	</Scene>
-	<Scene name="main" type="Title">
-	</Scene>
-</SceneRoot>
+					</TileMapLayer>
+				</TileMap>
+			</Layer>
+		</Scene>
+		<Scene name="CharacterChat" type="Chat">
+			<Layer name="talk" depth="1">
+				<Image name="char" source="Standing" halign="right" valign="bottom"
+							x="0" y="120" width="50%" height="50%"/>
+			</Layer>
+		</Scene>
+		<Scene name="main" type="Title">
+		</Scene>
+	</SceneRoot>
+</Project>
