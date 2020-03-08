@@ -10,14 +10,14 @@
 namespace story {
 namespace Resource {
 
-/* Asset
+/* ProjectObject
  *
  * It has a definition to use raw resource(e.g. image : png, jpg, etc.) with a pre-defined way
  */
-class Asset
+class ProjectObject
 {
 public:
-  Asset(std::string name, std::string type)
+  ProjectObject(std::string name, std::string type)
   : name(name), type(type) {}
 
   void add(std::string key, std::string value) {
@@ -42,16 +42,16 @@ public:
   }
 
   // Node-handling functions
-  void setParent(std::shared_ptr<Asset> parent) {
+  void setParent(std::shared_ptr<ProjectObject> parent) {
     this->parent = parent;
   }
-  std::shared_ptr<Asset> getParent() const {
+  std::shared_ptr<ProjectObject> getParent() const {
     return parent;
   }
-  void appendChild(std::shared_ptr<Asset> child) {
+  void appendChild(std::shared_ptr<ProjectObject> child) {
     children.push_back(child);
   }
-  std::vector<std::shared_ptr<Asset>> getChildren() const {
+  std::vector<std::shared_ptr<ProjectObject>> getChildren() const {
     return children;
   }
 
@@ -60,8 +60,8 @@ protected:
   std::string type;
   std::map<std::string, std::string> property;
 
-  std::shared_ptr<Asset> parent;
-  std::vector<std::shared_ptr<Asset>> children;
+  std::shared_ptr<ProjectObject> parent;
+  std::vector<std::shared_ptr<ProjectObject>> children;
 };
 
 } /* namespace Resource */
