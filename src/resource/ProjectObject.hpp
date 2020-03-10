@@ -5,20 +5,20 @@
 #include <memory>
 #include <string>
 
-#include "util/LogHelper.hpp"
-
 namespace story {
 namespace Resource {
 
-/* ProjectObject
- *
- * It has a definition to use raw resource(e.g. image : png, jpg, etc.) with a pre-defined way
+/*
+ * ProjectObject
+ * 
+ * It has a definition to use raw resource(e.g. image : png, jpg, etc.)
+ * with a pre-defined way.
  */
 class ProjectObject
 {
 public:
-  ProjectObject(std::string name, std::string type)
-  : name(name), type(type) {}
+  ProjectObject(std::string type, std::string name): type(type), name(name) {}
+  ProjectObject(const ProjectObject &pt) = delete;
 
   void add(std::string key, std::string value) {
     property.insert(std::make_pair(key, value));
@@ -56,10 +56,11 @@ public:
   }
 
 protected:
-  std::string name;
   std::string type;
+  std::string name;
   std::map<std::string, std::string> property;
 
+  // Tree node variables
   std::shared_ptr<ProjectObject> parent;
   std::vector<std::shared_ptr<ProjectObject>> children;
 };
