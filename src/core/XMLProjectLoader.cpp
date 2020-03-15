@@ -9,7 +9,6 @@
 #include "core/ProjectLoaderInterface.hpp"
 #include "core/XMLProjectLoader.hpp"
 #include "resource/ResourceManager.hpp"
-#include "resource/ProjectObject.hpp"
 
 namespace story {
 namespace Core {
@@ -24,13 +23,48 @@ XMLProjectLoader::~XMLProjectLoader()
   /* Release all resources */
 }
 
+std::vector<std::shared_ptr<Resource::ProjectObject>>
+XMLProjectLoader::createSceneObject(pugi::xml_node &node)
+{
+  std::vector<std::shared_ptr<Resource::ProjectObject>> results;
+  for (auto children : node.children()) {
+    std::string _tag(node.name());
+    std::transform(_tag.begin(), _tag.end(), _tag.begin(), ::tolower);
+    if (_tag.compare("layer")) {
+      std::string _name(node.attribute("name").value());
+      std::string _depth(node.attribute("depth").value());
+
+      std::shared_ptr<Resource::ProjectObject> _layer(
+        new Resource::ProjectObject("layer", _name)
+      );
+      _layer->add("depth", _depth);
+
+      results.push_back(_layer);
+    }
+  }
+
+  return results;
+}
+
 void XMLProjectLoader::loadProjectObject(pugi::xml_document &document) {
   /* Build a project tree from resource descritor */
   pugi::xpath_node_set scene_sel = document.select_nodes("/Project/SceneRoot/Scene");
   for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it)
   {
-    // TODO : Implement
+    pugi::xpath_node node = *scene_it;
+    std::string _name(node.node().attribute("name").value());
+    std::string _type(node.node().attribute("type").value());
 
+    // Create scene
+    std::shared_ptr<Resource::ProjectObject> scene(
+      new Resource::ProjectObject("scene", _name)
+    );
+    scene->add("type", _type);
+
+    // Handle children node
+    pugi::xml_node _child = node.node();
+    auto _children = createSceneObject(_child);
+    scene->setChildren(_children);
   } /* Scene loop */
 }
 
@@ -374,6 +408,8 @@ bool XMLProjectLoader::loadProject(std::string& res_path)
     loadCommonResources(doc);
     loadSprites(doc);
     loadScenes(doc);
+
+    loadProjectObject(doc);
   }
   catch (const pugi::xpath_exception& e) {
     LOG_INFO("Scene creation failed: %s", e.what());

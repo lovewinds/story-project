@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "util/LogHelper.hpp"
 
 namespace story {
 namespace Resource {
@@ -50,6 +51,9 @@ public:
   }
   void appendChild(std::shared_ptr<ProjectObject> child) {
     children.push_back(child);
+  }
+  void setChildren(const std::vector<std::shared_ptr<ProjectObject>> children) {
+    this->children.assign(children.begin(), children.end());
   }
   std::vector<std::shared_ptr<ProjectObject>> getChildren() const {
     return children;

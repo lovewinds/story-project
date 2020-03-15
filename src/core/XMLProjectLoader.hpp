@@ -6,6 +6,7 @@
 
 #include "core/ProjectLoaderInterface.hpp"
 #include "graphic/descriptors/SceneDescripor.hpp"
+#include "resource/ProjectObject.hpp"
 
 namespace story {
 namespace Resource {
@@ -30,9 +31,13 @@ private:
   void loadCommonResources(pugi::xml_document &document);
   void loadScenes(pugi::xml_document &document);
 
-  void loadProjectObject(pugi::xml_document &document);
   void loadProjectScene(pugi::xml_document &document);
   void loadProjectSceneLayer(pugi::xml_document &document);
+
+  void loadProjectObject(pugi::xml_document &document);
+
+  std::vector<std::shared_ptr<Resource::ProjectObject>>
+  createSceneObject(pugi::xml_node &node);
 
   std::shared_ptr<story::Graphic::ESceneDesc> loadSceneDesc(
     pugi::xml_document &document,
