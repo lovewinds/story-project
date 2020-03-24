@@ -34,10 +34,8 @@ private:
   void loadProjectScene(pugi::xml_document &document);
   void loadProjectSceneLayer(pugi::xml_document &document);
 
-  void loadProjectObject(pugi::xml_document &document);
-
-  std::vector<std::shared_ptr<Resource::ProjectObject>>
-  createSceneObject(pugi::xml_node &node);
+  void loadProjectObjectTree(pugi::xml_document &document);
+  std::shared_ptr<Resource::ProjectObject> createProjectObject(pugi::xml_node &node);
 
   std::shared_ptr<story::Graphic::ESceneDesc> loadSceneDesc(
     pugi::xml_document &document,

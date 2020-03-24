@@ -23,30 +23,27 @@ XMLProjectLoader::~XMLProjectLoader()
   /* Release all resources */
 }
 
-std::vector<std::shared_ptr<Resource::ProjectObject>>
-XMLProjectLoader::createSceneObject(pugi::xml_node &node)
-{
-  std::vector<std::shared_ptr<Resource::ProjectObject>> results;
-  for (auto children : node.children()) {
-    std::string _tag(node.name());
-    std::transform(_tag.begin(), _tag.end(), _tag.begin(), ::tolower);
-    if (_tag.compare("layer")) {
-      std::string _name(node.attribute("name").value());
-      std::string _depth(node.attribute("depth").value());
+std::shared_ptr<Resource::ProjectObject>
+XMLProjectLoader::createProjectObject(pugi::xml_node &node) {
+  std::shared_ptr<Resource::ProjectObject> self(
+    new Resource::ProjectObject(node.name())
+  );
 
-      std::shared_ptr<Resource::ProjectObject> _layer(
-        new Resource::ProjectObject("layer", _name)
-      );
-      _layer->add("depth", _depth);
-
-      results.push_back(_layer);
-    }
+  // Initialize parent
+  for (auto attr : node.attributes()) {
+    self->add(attr.name(), attr.value());
   }
 
-  return results;
+  for (auto child : node.children()) {
+    std::shared_ptr<Resource::ProjectObject> child_object = createProjectObject(child);
+    child_object->setParent(self);
+    self->appendChild(child_object);
+  }
+
+  return self;
 }
 
-void XMLProjectLoader::loadProjectObject(pugi::xml_document &document) {
+void XMLProjectLoader::loadProjectObjectTree(pugi::xml_document &document) {
   /* Build a project tree from resource descritor */
   pugi::xpath_node_set scene_sel = document.select_nodes("/Project/SceneRoot/Scene");
   for (auto scene_it = scene_sel.begin(); scene_it != scene_sel.end(); ++scene_it)
@@ -55,16 +52,15 @@ void XMLProjectLoader::loadProjectObject(pugi::xml_document &document) {
     std::string _name(node.node().attribute("name").value());
     std::string _type(node.node().attribute("type").value());
 
-    // Create scene
-    std::shared_ptr<Resource::ProjectObject> scene(
-      new Resource::ProjectObject("scene", _name)
-    );
+    // Create scene & its own children
+    pugi::xml_node _child = node.node();
+    std::shared_ptr<Resource::ProjectObject> scene = createProjectObject(_child);
+    // (
+    //   new Resource::ProjectObject("scene")
+    // );
     scene->add("type", _type);
 
-    // Handle children node
-    pugi::xml_node _child = node.node();
-    auto _children = createSceneObject(_child);
-    scene->setChildren(_children);
+    scene->display();
   } /* Scene loop */
 }
 
@@ -193,16 +189,7 @@ XMLProjectLoader::loadSceneDesc(
       int p_levels = 0;
       bool width_percent = false;
       bool height_percent = false;
-      // Create Object descriptor
-      std::shared_ptr<Resource::ProjectObject> dsc(
-        new Resource::ProjectObject(itm_name, itm_node)
-      );
-      for (pugi::xml_attribute attr: node.node().attributes())
-      {
-        dsc->add(attr.name(), attr.value());
-      }
-      dsc->add("tag_type", itm_node);
-      layerDesc->appendObjectDesc(dsc);
+
       try {
         if (itm_h_align.empty())
           itm_h_align = std::string("left");
@@ -409,7 +396,7 @@ bool XMLProjectLoader::loadProject(std::string& res_path)
     loadSprites(doc);
     loadScenes(doc);
 
-    loadProjectObject(doc);
+    loadProjectObjectTree(doc);
   }
   catch (const pugi::xpath_exception& e) {
     LOG_INFO("Scene creation failed: %s", e.what());

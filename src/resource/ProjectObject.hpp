@@ -18,7 +18,8 @@ namespace Resource {
 class ProjectObject
 {
 public:
-  ProjectObject(std::string type, std::string name): type(type), name(name) {}
+  ProjectObject(std::string type)
+    : type(type), name(), property(), children() {}
   ProjectObject(const ProjectObject &pt) = delete;
 
   void add(std::string key, std::string value) {
@@ -53,10 +54,28 @@ public:
     children.push_back(child);
   }
   void setChildren(const std::vector<std::shared_ptr<ProjectObject>> children) {
-    this->children.assign(children.begin(), children.end());
+    children.assign(children.begin(), children.end());
   }
   std::vector<std::shared_ptr<ProjectObject>> getChildren() const {
     return children;
+  }
+
+  void display() {
+    LOG_DBG("[Object] %s [%s]", name.c_str(), type.c_str());
+    LOG_DBG("  Props ::");
+
+    auto it = property.begin();
+    // Iterate over the map using Iterator till end.
+    while (it != property.end()) {
+      LOG_DBG("    [%8s] [%s]", it->first.c_str(), it->second.c_str());
+      it++;
+    }
+
+    auto ch = children.begin();
+    while (ch != children.end()) {
+      ch->get()->display();
+      ch++;
+    }
   }
 
 protected:
