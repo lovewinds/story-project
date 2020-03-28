@@ -25,13 +25,22 @@ XMLProjectLoader::~XMLProjectLoader()
 
 std::shared_ptr<Resource::ProjectObject>
 XMLProjectLoader::createProjectObject(pugi::xml_node &node) {
+  std::string _node_name(node.name());
+  std::transform(_node_name.begin(), _node_name.end(), _node_name.begin(),
+    [](unsigned char c){ return std::tolower(c); });
   std::shared_ptr<Resource::ProjectObject> self(
-    new Resource::ProjectObject(node.name())
+    new Resource::ProjectObject(_node_name)
   );
 
   // Initialize parent
   for (auto attr : node.attributes()) {
-    self->add(attr.name(), attr.value());
+    std::string _name(attr.name());
+    std::string _val(attr.value());
+    std::transform(_name.begin(), _name.end(), _name.begin(),
+      [](unsigned char c){ return std::tolower(c); });
+    std::transform(_val.begin(), _val.end(), _val.begin(),
+      [](unsigned char c){ return std::tolower(c); });
+    self->add(_name, _val);
   }
 
   for (auto child : node.children()) {
@@ -51,13 +60,14 @@ void XMLProjectLoader::loadProjectObjectTree(pugi::xml_document &document) {
     pugi::xpath_node node = *scene_it;
     std::string _name(node.node().attribute("name").value());
     std::string _type(node.node().attribute("type").value());
+    std::transform(_name.begin(), _name.end(), _name.begin(),
+      [](unsigned char c){ return std::tolower(c); });
+    std::transform(_type.begin(), _type.end(), _type.begin(),
+      [](unsigned char c){ return std::tolower(c); });
 
     // Create scene & its own children
     pugi::xml_node _child = node.node();
     std::shared_ptr<Resource::ProjectObject> scene = createProjectObject(_child);
-    // (
-    //   new Resource::ProjectObject("scene")
-    // );
     scene->add("type", _type);
 
     scene->display();

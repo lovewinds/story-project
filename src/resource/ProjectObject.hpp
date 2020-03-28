@@ -54,7 +54,7 @@ public:
     children.push_back(child);
   }
   void setChildren(const std::vector<std::shared_ptr<ProjectObject>> children) {
-    children.assign(children.begin(), children.end());
+    this->children.assign(children.begin(), children.end());
   }
   std::vector<std::shared_ptr<ProjectObject>> getChildren() const {
     return children;
