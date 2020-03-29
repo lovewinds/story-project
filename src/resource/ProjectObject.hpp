@@ -22,19 +22,42 @@ public:
     : type(type), name(), property(), children() {}
   ProjectObject(const ProjectObject &pt) = delete;
 
+  bool operator!=(const ProjectObject &other) const {
+      return !(*this == other);
+  }
+  bool operator==(const ProjectObject &other) const {
+    if (this->name != other.name) return false;
+    if (this->type != other.type) return false;
+    
+    // Property comparison
+    auto iter = this->property.begin();
+    while (iter != this->property.end()) {
+      std::string _key = iter->first;
+      std::string _val = iter->second;
+      if (_val != other.get(_key)) return false;
+
+      iter++;
+    }
+
+    return true;
+  }
+
+  std::string getType() { return type; }
+  std::string getName() { return name; }
+
   void add(std::string key, std::string value) {
     property.insert(std::make_pair(key, value));
   }
   void remove(std::string key, std::string value) {
     property.erase(key);
   }
-  std::string get(std::string key) {
-    return property[key];
+  std::string get(std::string key) const {
+    return property.at(key);
   }
-  int getInt(std::string key) {
+  int getInt(std::string key) const {
     int ret = 0;
     try {
-      ret = std::stoi(property[key].c_str());
+      ret = std::stoi(property.at(key).c_str());
     }
     catch (std::exception e) {
       LOG_ERR("Invalid key [%s]", key.c_str());

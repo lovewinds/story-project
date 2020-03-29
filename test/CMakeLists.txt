@@ -40,9 +40,19 @@ ELSE(UNIX AND NOT WIN32)
 ENDIF(UNIX AND NOT WIN32)
 
 # TODO: Below additional flags are not working on MSVC. need check.
-IF(UNIX AND NOT WIN32)
-    SET(ADDITIONAL_CXXFLAGS "-Wno-unused-but-set-parameter -Wno-unused-but-set-variable -std=c++11")
-ENDIF(UNIX AND NOT WIN32)
+IF(${PLATFORM} STREQUAL "Linux")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -std=c++11")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unknown-pragmas")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-variable")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-but-set-parameter")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-but-set-variable")
+ELSEIF(${PLATFORM} STREQUAL "macOS")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -std=c++11")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unknown-pragmas")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-deprecated-declarations")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-variable")
+    STRING(APPEND ADDITIONAL_CXXFLAGS " -Wno-unused-parameter")
+ENDIF(${PLATFORM} STREQUAL "Linux")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} ")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ADDITIONAL_CXXFLAGS} ")
 
@@ -55,6 +65,7 @@ FILE(GLOB_RECURSE TEST_FILES
     "${CMAKE_SOURCE_DIR}/test/*.cpp"
     "${CMAKE_SOURCE_DIR}/test/*.h"
     "${CMAKE_SOURCE_DIR}/test/*.hpp"
+    "${CMAKE_SOURCE_DIR}/test/resource/*.cpp"
 )
 
 # binary build
