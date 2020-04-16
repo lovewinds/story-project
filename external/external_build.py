@@ -30,6 +30,8 @@ from scripts.packages.python3 import Builder_python
 from scripts.packages.boost import Builder_boost
 from scripts.packages.dirent import Builder_dirent
 from scripts.packages.pybind11 import Builder_pybind11
+from scripts.packages.icu import Builder_icu
+
 
 # Start building
 modules = [
@@ -48,6 +50,7 @@ modules = [
 	Builder_python(),
 	Builder_zeromq(),
 	Builder_dirent(),
+	Builder_icu(),
 ]
 
 def check_msvc(env_param):

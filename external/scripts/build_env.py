@@ -151,8 +151,9 @@ class BuildEnv:
                 zf.extractall(path='{}'.format(self.source_path))
             # Remove '.zip' from archive file name
             archive_name = archive_file.replace('.zip', '')
-            move('{}/{}'.format(self.source_path, archive_name),
-                 '{}/{}'.format(self.source_path, package_name))
+            if os.path.isdir('{}/{}'.format(self.source_path, archive_name)):
+                move('{}/{}'.format(self.source_path, archive_name),
+                     '{}/{}'.format(self.source_path, package_name))
             print("       [{}] extracted.".format(package_name))
 
     def extract_tarball(self, archive_file, package_name):
@@ -162,8 +163,9 @@ class BuildEnv:
             tarfile.open('{}/{}'.format(self.temp_path, archive_file)).extractall(self.source_path)
             # Remove '.tar.gz'
             archive_name = archive_file.replace('.tar.gz', '').replace('.tgz', '')
-            move('{}/{}'.format(self.source_path, archive_name),
-                 '{}/{}'.format(self.source_path, package_name))
+            if os.path.isdir('{}/{}'.format(self.source_path, archive_name)):
+                move('{}/{}'.format(self.source_path, archive_name),
+                     '{}/{}'.format(self.source_path, package_name))
             print("       [{}] extracted.".format(package_name))
 
     def run_command(self, cmd, module_name):
