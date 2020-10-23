@@ -1,0 +1,50 @@
+# Log verbosity
+SET(LOG_VERBOSE_FLAG "")
+IF(VERBOSE)
+    SET(LOG_VERBOSE_FLAG "--verbose")
+ENDIF()
+
+# Detect Platform
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    # Mac OS X
+    SET(PLATFORM "macOS")
+    SET(PYTHON "python3")
+    SET(BUILD_TYPE "release")
+    SET(BUILD_TYPE_DIR ${BUILD_TYPE})
+    SET(PLATFORM_DEF "-DPLATFORM_MACOS")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    # Linux
+    SET(PLATFORM "Linux")
+    SET(PYTHON "python3")
+    SET(BUILD_TYPE "release")
+    SET(BUILD_TYPE_DIR ${BUILD_TYPE})
+    SET(PLATFORM_DEF "-DPLATFORM_LINUX")
+ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+IF(WIN32)
+    SET(PLATFORM "Windows")
+    SET(PYTHON "python")
+    SET(BUILD_TYPE_DIR "$(Configuration)")
+    SET(PLATFORM_DEF "-DPLATFORM_WINDOWS")
+ENDIF(WIN32)
+
+# Features
+IF(${FEATURE_DISABLE_G3LOG})
+ELSE(${FEATURE_DISABLE_G3LOG})
+    SET(USE_G3LOG "TRUE")
+ENDIF(${FEATURE_DISABLE_G3LOG})
+
+# External cmake files for SDL2
+# https://github.com/rodrigo21/sdl2-cmake-scripts
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/tools")
+SET(Python_USE_STATIC_LIBS "TRUE")
+
+FOREACH(flag ${pkgs_CFLAGS})
+    SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
+ENDFOREACH(flag)
+FOREACH(flag ${pkgs_CXXFLAGS})
+    SET(EXTRA_CXXFLAGS "${EXTRA_CXXFLAGS} ${flag}")
+ENDFOREACH(flag)
+FOREACH(flag ${pkgs_CXXFLAGS})
+    SET(EXTRA_CPPFLAGS "${EXTRA_CPPFLAGS} ${flag}")
+ENDFOREACH(flag)
