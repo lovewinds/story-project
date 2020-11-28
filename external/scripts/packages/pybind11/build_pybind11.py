@@ -11,14 +11,14 @@ class Builder_pybind11(PackageBuilder):
         super()
         self.package = {
             'name': 'pybind11',
-            'url': 'https://github.com/pybind/pybind11/archive/v2.2.4.tar.gz',
-            'filename': 'pybind11-2.2.4.tar.gz'
+            'url': 'https://github.com/pybind/pybind11/archive/v2.6.1.tar.gz',
+            'filename': 'pybind11-2.6.1.tar.gz'
         }
         self.builder = {
             Platform.Windows: pybind11WindowsBuilder(
                 self.package,
                 {
-                    'checker': 'pybind11.lib'
+                    'checker': '..\include\pybind11\pybind11.h'
                 }
             ),
             Platform.Linux: pybind11LinuxBuilder(
