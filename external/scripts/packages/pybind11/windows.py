@@ -32,11 +32,24 @@ class pybind11WindowsBuilder(PlatformBuilder):
         ## TODO: Change toolset dynamically
         cmd = '''cmake ..  \
                     -A x64 \
+                    -DCMAKE_BUILD_TYPE={} \
+                    -DCMAKE_INSTALL_PREFIX={} \
                     -DPYBIND11_LTO_CXX_FLAGS="" \
                     -DPYTHON_LIBRARY={}/python37.lib \
                     -DPYTHON_INCLUDE_DIR={}/python \
-                '''.format(self.env.install_lib_path,
+                    -DPYBIND11_INSTALL=ON \
+                    -DPYBIND11_TEST=OFF \
+                '''.format(self.env.BUILD_TYPE,
+                           self.env.install_path,
+                           self.env.install_lib_path,
                            self.env.install_include_path)
+        self.log(f'     [CMD]:: {cmd}')
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+        cmd = '''cmake --build . \
+                    --config {} \
+                    --target INSTALL \
+                '''.format(self.env.BUILD_TYPE)
         self.log(f'     [CMD]:: {cmd}')
         self.env.run_command(cmd, module_name=self.config['name'])
 

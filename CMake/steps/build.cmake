@@ -12,7 +12,6 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/protobuf/src/
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/zeromq/include/
     ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/cppzmq/
-    ${CMAKE_SOURCE_DIR}/external/build/source/${PLATFORM}/pybind11/include/
 )
 
 IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
@@ -26,6 +25,10 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     # NOMINMAX for pybind11 on windows build
     ADD_DEFINITIONS("-DNOMINMAX")
+    IF(CMAKE_BUILD_TYPE MATCHES Debug)
+        ADD_DEFINITIONS("-DPy_DEBUG")
+    ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
+    
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /MP /EHsc")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /MP /EHsc")
     INCLUDE_DIRECTORIES(
