@@ -31,6 +31,9 @@
 *.vpj
 *.vpwhist
 .vscode
+.vs
+CMakeSettings.json
+out/
 
 # Tag files
 .tags*
