@@ -17,8 +17,8 @@ namespace story {
 namespace Core {
 
 /* Screen dimension constants */
-const int SCREEN_WIDTH = 540;
-const int SCREEN_HEIGHT = 960;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 Ecore* Ecore::instance = nullptr;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
