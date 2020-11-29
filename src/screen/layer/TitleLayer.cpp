@@ -3,6 +3,7 @@
 #endif
 
 #include "core/Ecore.hpp"
+#include "core/Object.hpp"
 #include "core/ScreenManager.hpp"
 #include "util/LogHelper.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
@@ -86,6 +87,23 @@ void TitleLayer::initMenuItem()
   int s_width = story::Core::Ecore::getScreenWidth();
   int s_height = story::Core::Ecore::getScreenHeight();
 
+  for (int i = 0; i < 16; i++) {
+    std::shared_ptr<Graphic::ImageTexture> it =
+        resManager.createImageTexture(str_text, "icon_triangle");
+    it->setWidth(20, true);
+    it->setHeight(20, true);
+    it->setAlpha(70);
+
+    std::shared_ptr<Graphic::CoreObject> gcObject (new Graphic::CoreObject());
+    gcObject->addTexture(it);
+
+    std::shared_ptr<Core::Object> object (new Core::Object());
+    int obj_x = rand() % s_width;
+    int obj_y = rand() % s_height;
+    object->addGraphicObject(gcObject);
+
+  }
+/*
   for (int i = 0; i < 64; i++) {
     std::shared_ptr<Graphic::ImageTexture> imgTexture = nullptr;
     std::shared_ptr<Graphic::Object> object
@@ -126,6 +144,7 @@ void TitleLayer::initMenuItem()
       addObject(object);
     }
   }
+*/
 }
 
 void TitleLayer::sampleMenuState(std::string id)
