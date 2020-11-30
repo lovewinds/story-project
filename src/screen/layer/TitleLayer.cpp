@@ -4,6 +4,7 @@
 
 #include "core/Ecore.hpp"
 #include "core/Object.hpp"
+#include "core/ObjectBuilder.hpp"
 #include "core/ScreenManager.hpp"
 #include "util/LogHelper.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
@@ -101,6 +102,9 @@ void TitleLayer::initMenuItem()
     int obj_x = rand() % s_width;
     int obj_y = rand() % s_height;
     object->addGraphicObject(gcObject);
+
+    std::shared_ptr<Core::ObjectBuilder> objBuilder(new Core::ObjectBuilder());
+    auto obj = objBuilder->build("icon_triangle");
 
   }
 /*
