@@ -7,35 +7,32 @@ namespace Core {
 
 class Object {
 public:
-  Object();
-  virtual ~Object();
-
-  virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
-  virtual void render();
+  Object(std::shared_ptr<Graphic::CoreObject> graphicObject) {
+    this->graphicObject = graphicObject;
+  }
+  virtual ~Object() { }
 
   void addGraphicObject(std::shared_ptr<Graphic::CoreObject> graphicObject) {
     this->graphicObject = graphicObject;
   }
 
-  double getX() { return p_x; }
-  double getY() { return p_y; }
-  void setX(double x) { p_x = x; }
-  void setY(double y) { p_y = y; }
+  double getX() { return graphicObject->getX(); }
+  double getY() { return graphicObject->getY(); }
+  void setX(double x) { graphicObject->setX(x); }
+  void setY(double y) { graphicObject->setY(y); }
+  void moveTo(double x, double y) { graphicObject->moveTo(x, y); }
+  void moveBy(double x, double y) { graphicObject->moveBy(x, y); }
 
-  void moveTo(double x, double y) {
-    p_x = x;
-    p_y = y;
+  virtual void update(Uint32 currentTime, Uint32 accumulator = 0) {
+    graphicObject->update(currentTime, accumulator);
   }
-  void moveBy(double x, double y) {
-    p_x += x;
-    p_y += y;
+  virtual void render() {
+    graphicObject->render();
   }
 
 private:
-  double p_x;
-  double p_y;
   std::shared_ptr<Graphic::CoreObject> graphicObject;
 };
 
-} /* namespace Graphic */
+} /* namespace Core */
 } /* namespace story */

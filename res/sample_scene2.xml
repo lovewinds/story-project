@@ -6,6 +6,27 @@
 						type="background" width="636" height="475" />
 			<ImageResource path="grid-base.png" name="Character"
 						type="sprite" width="128" height="192" />
+			<ImageResource path="japanvillage.jpg" name="Background"
+					type="background" width="636" height="475"/>
+			<ImageResource path="LostGarden_Grid_BasicTile.png" name="LostGarden_Tile"
+					type="background" width="240" height="280"/>
+			<ImageResource path="moderngirl02.png" name="Character"
+					type="sprite" width="128" height="192"/>
+			<ImageResource path="gom-sprite.png" name="Gom"
+					type="sprite" width="256" height="64"/>
+			<ImageResource path="JapaneseVillage.png" name="MapTile"
+					type="background" width="256" height="1312"/>
+			<ImageResource path="f071.png" name="Standing"
+					type="background" width="600" height="800"/>
+
+			<ImageResource path="ic_circle.png" name="icon_circle"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_cross.png" name="icon_cross"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_triangle.png" name="icon_triangle"
+					type="background" width="128" height="128"/>
+			<ImageResource path="ic_rect.png" name="icon_rectangle"
+					type="background" width="128" height="128"/>
 		</ResourceGroup>
 		<ExtendedTextureGroup>
 			<SpriteTexture name="loading_circle" source="Character" width="32" height="48">

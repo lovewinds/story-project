@@ -622,8 +622,7 @@ bool Ecore::loadProject()
    * TODO: This logic should 'prepare' to allocate all resources.
    */
   std::string res_xml("sample_scene.xml");
-  if (Ecore::checkPlatform("Linux"))
-    res_xml = "sample_scene2.xml";
+  // std::string res_xml("sample_scene2.xml");
   success = resManager->loadProject(res_xml);
   if (!success) {
     LOG_ERR("Failed to load resources!");

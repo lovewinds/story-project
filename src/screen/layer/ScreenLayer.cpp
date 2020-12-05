@@ -1,4 +1,6 @@
+#include "core/Util.hpp"
 #include "core/Ecore.hpp"
+#include "core/Object.hpp"
 #include "util/LogHelper.hpp"
 #include "resource/ResourceManager.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
@@ -46,6 +48,17 @@ bool ScreenLayer::addObject(std::shared_ptr<Graphic::Object> object)
   auto result = _object_map.emplace(object->getName(), object);
   if (!result.second) {
     LOG_ERR("Failed to insert object map!");
+    return false;
+  }
+  return true;
+}
+
+bool ScreenLayer::addCoreObject(std::shared_ptr<Core::Object> object)
+{
+  std::string uuid = Core::Util::format("uuid-%d", rand());
+  auto result = _core_object_map.emplace(uuid, object);
+  if (!result.second) {
+    LOG_ERR("Failed to insert object map :: [%s]", uuid.c_str());
     return false;
   }
   return true;

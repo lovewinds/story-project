@@ -69,15 +69,15 @@ void TitleLayer::initMenuItem()
   }
 
 /* Title text */
-  std::shared_ptr<Graphic::TextTexture> txt(
-    new Graphic::TextTexture("Story", textColor, bgColor, 58)
-  );
-  std::shared_ptr<Graphic::Object> title_obj(new Graphic::Object());
+  // std::shared_ptr<Graphic::TextTexture> txt(
+  //   new Graphic::TextTexture("Story", textColor, bgColor, 58)
+  // );
+  // std::shared_ptr<Graphic::Object> title_obj(new Graphic::Object());
 
-  title_obj->setName("title_string");
-  title_obj->movePositionTo(story::Core::Ecore::getScreenWidth()-200, 100);
-  title_obj->addText(txt);
-  addObject(title_obj);
+  // title_obj->setName("title_string");
+  // title_obj->movePositionTo(story::Core::Ecore::getScreenWidth()-200, 100);
+  // title_obj->addText(txt);
+  // addObject(title_obj);
 
 
 
@@ -89,23 +89,22 @@ void TitleLayer::initMenuItem()
   int s_height = story::Core::Ecore::getScreenHeight();
 
   for (int i = 0; i < 16; i++) {
-    std::shared_ptr<Graphic::ImageTexture> it =
-        resManager.createImageTexture(str_text, "icon_triangle");
-    it->setWidth(20, true);
-    it->setHeight(20, true);
-    it->setAlpha(70);
-
-    std::shared_ptr<Graphic::CoreObject> gcObject (new Graphic::CoreObject());
-    gcObject->addTexture(it);
-
-    std::shared_ptr<Core::Object> object (new Core::Object());
-    int obj_x = rand() % s_width;
-    int obj_y = rand() % s_height;
-    object->addGraphicObject(gcObject);
+    // std::shared_ptr<Graphic::ImageTexture> it =
+    //     resManager.createImageTexture(str_text, "icon_triangle");
+    // it->setWidth(20, true);
+    // it->setHeight(20, true);
+    // it->setAlpha(70);
 
     std::shared_ptr<Core::ObjectBuilder> objBuilder(new Core::ObjectBuilder());
-    auto obj = objBuilder->build("icon_triangle");
+    objBuilder->setTexture("icon_triangle");
+    auto obj = objBuilder->build();
 
+    double x = rand() % s_width / 2.0;
+    double y = rand() % s_height / 2.0;
+    obj->setX(x);
+    obj->setY(y);
+    LOG_INFO("Position : %f, %f", x, y);
+    addCoreObject(obj);
   }
 /*
   for (int i = 0; i < 64; i++) {
@@ -252,6 +251,11 @@ void TitleLayer::render()
   {
     it.second->render();
   }
+
+  for (auto& it : _core_object_map)
+  {
+    it.second->render();
+  }
 }
 
 void TitleLayer::update(Uint32 currentTime, Uint32 accumulator)
@@ -284,6 +288,10 @@ void TitleLayer::update(Uint32 currentTime, Uint32 accumulator)
     it.second->update(currentTime, accumulator);
   }
 
+  for (auto& it : _core_object_map)
+  {
+    it.second->update(currentTime, accumulator);
+  }
 }
 
 } /* namespace Screen */

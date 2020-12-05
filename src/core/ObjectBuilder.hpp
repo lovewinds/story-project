@@ -12,21 +12,27 @@ namespace Core {
 
 class ObjectBuilder {
 public:
-  ObjectBuilder();
-  virtual ~ObjectBuilder();
+  ObjectBuilder() { }
+  virtual ~ObjectBuilder() { }
 
-  std::shared_ptr<Core::Object> build(std::string textureName) {
+  void setTexture(std::string textureName) {
+    this->textureName = textureName;
+  }
+
+  std::shared_ptr<Core::Object> build() {
     std::shared_ptr<Graphic::CoreObjectBuilder> cob(
       new Graphic::CoreObjectBuilder()
     );
     auto o = cob->build(textureName);
 
-    std::shared_ptr<Core::Object> obj(new Core::Object());
-    obj->addGraphicObject(o);
-
+    std::shared_ptr<Core::Object> obj(
+      new Core::Object(o)
+    );
     return obj;
   }
 
+private:
+  std::string textureName;
 };
 
 } /* namespace Core */
