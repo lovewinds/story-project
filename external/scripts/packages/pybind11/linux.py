@@ -25,9 +25,25 @@ class pybind11LinuxBuilder(PlatformBuilder):
         self.tag_log("Start building ...")
         BuildEnv.mkdir_p(build_path)
         os.chdir(build_path)
-        cmd = '{} cmake -DCMAKE_INSTALL_PREFIX={} ..; make -j {}; make install'.format(
-            self.env.BUILD_FLAG,
-            self.env.install_path,
-            self.env.NJOBS
-        )
+
+        cmd = '''{} cmake ..  \
+                    -DCMAKE_BUILD_TYPE={} \
+                    -DCMAKE_INSTALL_PREFIX={} \
+                    -DPYBIND11_LTO_CXX_FLAGS="" \
+                    -DPYTHON_LIBRARY={}/libpython3.7m.a \
+                    -DPYTHON_INCLUDE_DIR={}/python \
+                    -DPYBIND11_INSTALL=ON \
+                    -DPYBIND11_TEST=OFF \
+                '''.format(self.env.BUILD_FLAG,
+                           self.env.BUILD_TYPE,
+                           self.env.install_path,
+                           self.env.install_lib_path,
+                           self.env.install_include_path)
+        self.log(f'     [CMD]:: {cmd}')
         self.env.run_command(cmd, module_name=self.config['name'])
+
+        cmd = '''{} make -j {}; make install
+                '''.format(self.env.BUILD_FLAG, self.env.BUILD_TYPE)
+        self.log(f'     [CMD]:: {cmd}')
+        self.env.run_command(cmd, module_name=self.config['name'])
+

@@ -28,8 +28,8 @@ class pybind11WindowsBuilder(PlatformBuilder):
         self.tag_log("Start building ..")
         self.env.mkdir_p(build_path)
         os.chdir(build_path)
-        
-        ## TODO: Change toolset dynamically
+
+        # TODO: Change toolset dynamically
         cmd = '''cmake ..  \
                     -A x64 \
                     -DCMAKE_BUILD_TYPE={} \
@@ -52,16 +52,3 @@ class pybind11WindowsBuilder(PlatformBuilder):
                 '''.format(self.env.BUILD_TYPE)
         self.log(f'     [CMD]:: {cmd}')
         self.env.run_command(cmd, module_name=self.config['name'])
-
-        # cmd = '''msbuild pybind11.sln \
-        #             /maxcpucount:{} \
-        #             /t:check \
-        #             /p:PlatformToolSet={} \
-        #             /p:Configuration={} \
-        #             /p:Platform=x64 \
-        #             /p:OutDir={}\\ \
-        #         '''.format(self.env.NJOBS,
-        #                    self.env.compiler_version, self.env.BUILD_TYPE,
-        #                    self.env.install_lib_path)
-        # self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
-        # self.env.run_command(cmd, module_name=self.config['name'])
