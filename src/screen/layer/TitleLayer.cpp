@@ -103,6 +103,8 @@ void TitleLayer::initMenuItem()
     double y = rand() % s_height / 2.0;
     obj->setX(x);
     obj->setY(y);
+    obj->setWidth(20, true);
+    obj->setHeight(20, true);
     LOG_INFO("Position : %f, %f", x, y);
     addCoreObject(obj);
   }

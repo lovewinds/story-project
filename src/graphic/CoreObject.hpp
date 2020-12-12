@@ -18,6 +18,16 @@ public:
   double getY() { return p_y; }
   void setX(double x) { p_x = x; }
   void setY(double y) { p_y = y; }
+  double getWidth() { return width; }
+  double getHeight() { return height; }
+  void setWidth(double width, bool ratio) {
+    this->width = width;
+    texture->setWidth(width, ratio);
+  }
+  void setHeight(double height, bool ratio) {
+    this->height = height;
+    texture->setHeight(height, ratio);
+  }
 
   void moveTo(double x, double y) {
     p_x = x;
@@ -38,6 +48,8 @@ public:
 private:
   double p_x;
   double p_y;
+  double width;
+  double height;
   std::shared_ptr<Graphic::Texture> texture;
 };
 

@@ -20,6 +20,10 @@ public:
   double getY() { return graphicObject->getY(); }
   void setX(double x) { graphicObject->setX(x); }
   void setY(double y) { graphicObject->setY(y); }
+  double getWidth() { return graphicObject->getWidth(); }
+  double getHeight() { return graphicObject->getHeight(); }
+  void setWidth(double width, bool ratio) { graphicObject->setWidth(width, ratio); }
+  void setHeight(double height, bool ratio) { graphicObject->setHeight(height, ratio); }
   void moveTo(double x, double y) { graphicObject->moveTo(x, y); }
   void moveBy(double x, double y) { graphicObject->moveBy(x, y); }
 
