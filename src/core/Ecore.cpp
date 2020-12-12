@@ -5,6 +5,7 @@
 #include <SDL_keyboard.h>
 
 #include "core/Ecore.hpp"
+#include "core/Util.hpp"
 #include "core/ScreenManager.hpp"
 #include "graphic/texture/Texture.hpp"
 #include "resource/ResourceManager.hpp"
@@ -591,17 +592,19 @@ bool Ecore::init(void* hwnd)
 std::shared_ptr<SDLFontWrap> Ecore::loadFont(std::string family, int size)
 {
   std::shared_ptr<SDLFontWrap> font = nullptr;
-  char font_path[256] = { 0, };
   TTF_Font *pFont = nullptr;
 
   /* Load Font */
-  SDL_snprintf(font_path, 256, "../res/%s.ttf", family.c_str());
-  pFont = TTF_OpenFont(font_path, size);
+  std::string fontPath = Core::Util::format(
+    "%s/%s.ttf",
+    Core::Ecore::getResourcePath().c_str(), family.c_str()
+  );
+  pFont = TTF_OpenFont(fontPath.c_str(), size);
   if (pFont == nullptr)
   {
     /* Android can handle under /assets directory */
-    SDL_snprintf(font_path, 256, "%s.ttf", family.c_str());
-    pFont = TTF_OpenFont(font_path, size);
+    fontPath = Core::Util::format("%s.ttf", family.c_str());
+    pFont = TTF_OpenFont(fontPath.c_str(), size);
     if (pFont == nullptr) {
       LOG_ERR("Failed to load font[%s]!", family.c_str());
       LOG_ERR("      SDL_ttf Error: %s", TTF_GetError());
