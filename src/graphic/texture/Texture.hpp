@@ -52,8 +52,8 @@ protected:
   /* Texture dimensions */
   int mWidth = 0;
   int mHeight = 0;
-  double wRatio;
-  double hRatio;
+  double wRatio = 1.0;
+  double hRatio = 1.0;
 
   /* Renders texture at given point */
   virtual void texture_render(int x, int y,

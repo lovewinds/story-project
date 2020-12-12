@@ -10,7 +10,6 @@ namespace Graphic {
 
 ImageTexture::ImageTexture(std::string name, std::string base_image) :
   Texture(),
-  wRatio(1.0), hRatio(1.0),
   m_degrees(0.0)
 {
   radian = 0;
@@ -104,22 +103,6 @@ int ImageTexture::getWidth()
 int ImageTexture::getHeight()
 {
   return mHeight;
-}
-
-void ImageTexture::setWidth(double width, bool ratio)
-{
-  if (ratio)
-    wRatio = width / 100.0;
-  else
-    mWidth = width;
-}
-
-void ImageTexture::setHeight(double height, bool ratio)
-{
-  if (ratio)
-    hRatio = height / 100.0;
-  else
-    mHeight = height;
 }
 
 std::string ImageTexture::getName()

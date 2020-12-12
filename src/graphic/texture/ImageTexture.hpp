@@ -31,8 +31,6 @@ public:
   /* Gets image dimensions */
   int getWidth();
   int getHeight();
-  void setWidth(double width, bool ratio = false);
-  void setHeight(double height, bool ratio = false);
   std::string getName();
 
 protected:
@@ -40,8 +38,6 @@ protected:
   void _removeTexture();
 
   int radian;
-  double wRatio;
-  double hRatio;
 
   /* Angle of rotation */
   double m_degrees;

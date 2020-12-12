@@ -12,6 +12,8 @@ p_x(0), p_y(0)
   mTexture = nullptr;
   mWidth = 0;
   mHeight = 0;
+  wRatio = 1.0;
+  hRatio = 1.0;
 }
 
 Texture::~Texture()
@@ -126,6 +128,10 @@ void Texture::texture_render(int x, int y, SDL_Rect* clip, double angle,
       renderQuad.h *= story::Core::Ecore::getDisplayScale();
     }
   }
+  LOG_DBG("  [%X] :: (%d, %d) [%d x %d]",
+      this,
+      renderQuad.x, renderQuad.y,
+      renderQuad.w, renderQuad.h);
 
   /* Render to screen */
   SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
