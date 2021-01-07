@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 PROJECT(story-test C CXX)
 
 # TODO: Required?
@@ -65,6 +65,7 @@ FILE(GLOB_RECURSE TEST_FILES
     "${CMAKE_SOURCE_DIR}/test/*.cpp"
     "${CMAKE_SOURCE_DIR}/test/*.h"
     "${CMAKE_SOURCE_DIR}/test/*.hpp"
+    "${CMAKE_SOURCE_DIR}/test/graphic/*.cpp"
     "${CMAKE_SOURCE_DIR}/test/resource/*.cpp"
 )
 

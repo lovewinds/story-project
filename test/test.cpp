@@ -24,15 +24,6 @@ public:
 story::Core::Ecore* GlobalEnv::core = nullptr;
 
 
-TEST(EcoreTest, First) {
-  story::Core::Ecore* global_core = GlobalEnv::getCore();
-  story::Core::Ecore* core = story::Core::Ecore::getInstance();
-
-  EXPECT_NE(global_core, nullptr);
-  EXPECT_EQ(global_core, core);
-}
-
-
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   ::testing::AddGlobalTestEnvironment(new GlobalEnv);
