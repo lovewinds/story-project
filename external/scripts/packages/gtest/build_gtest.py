@@ -11,8 +11,8 @@ class Builder_gtest(PackageBuilder):
         super(Builder_gtest, self)
         self.package = {
             'name': 'gtest',
-            'url': 'https://github.com/google/googletest/archive/release-1.8.1.tar.gz',
-            'filename': 'googletest-release-1.8.1.tar.gz'
+            'url': 'https://github.com/google/googletest/archive/release-1.10.0.tar.gz',
+            'filename': 'googletest-release-1.10.0.tar.gz'
         }
         self.builder = {
             Platform.Windows: gtestWindowsBuilder(
