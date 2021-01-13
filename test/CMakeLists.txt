@@ -127,16 +127,24 @@ ELSE(UNIX AND NOT WIN32)
 ENDIF(UNIX AND NOT WIN32)
 
 # Post build
-ADD_CUSTOM_COMMAND(
-    TARGET ${PROJECT_NAME}
-    POST_BUILD
-    COMMAND ${PYTHON}
-    ARGS
-        "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
-        "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
-        "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
-    COMMENT "Copy required dynamic libraries"
+FILE(GLOB DEPENDENT_FILES
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/*.dll
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/*.so
 )
+FILE(COPY ${DEPENDENT_FILES}
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/
+)
+# ADD_CUSTOM_COMMAND(
+#     TARGET ${PROJECT_NAME}
+#     POST_BUILD
+#     COMMAND ${PYTHON}
+#     ARGS
+#         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
+#         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
+#         "${CMAKE_CURRENT_BINARY_DIR}/$(Configuration)/"
+#     COMMENT "Copy required dynamic libraries"
+# )
+
 # Copy Python modules
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"
