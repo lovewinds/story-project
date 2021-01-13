@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <memory>
+#include "graphic/movement/Component.hpp"
 
 namespace story {
 namespace Graphic {
+namespace Movement {
 
 enum MovementState
 {
@@ -13,6 +15,12 @@ enum MovementState
   MOVEMENT_START,
   MOVEMENT_PAUSE,
   MOVEMENT_RESUME,
+};
+
+enum MovementConfig
+{
+  CONFIG_ONCE,
+  CONFIG_REPEAT,
 };
 
 class Movement {
@@ -32,6 +40,9 @@ public:
   double getAngle() { return angle; }
 
   virtual void update(unsigned int currentTime, unsigned int accumulator = 0);
+  void setComponent(std::shared_ptr<Component> c) {
+    component = c;
+  }
 
   Movement& operator+ (Movement& ref) {
     x += ref.x;
@@ -56,12 +67,15 @@ protected:
   unsigned int elapsedTime = 0;
   unsigned int prevTime = 0;
   MovementState state;
+  std::shared_ptr<Component> component;
 
-  /* Position */
+  // Position
   double x;
   double y;
   double angle;
+
 };
 
-} /* namespace Graphic */
-} /* namespace story */
+} // namespace Movement
+} // namespace Graphic
+} // namespace story

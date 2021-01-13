@@ -4,6 +4,7 @@
 
 namespace story {
 namespace Graphic {
+namespace Movement {
 
 Movement::Movement()
     : x(0.0), y(0.0), angle(0.0)
@@ -33,7 +34,6 @@ void Movement::sync()
 {
 }
 
-
 void Movement::pause()
 {
   elapsedTime = story::Core::Ecore::getAppTicks() - startTime;
@@ -48,46 +48,14 @@ void Movement::resume()
 
 void Movement::update(unsigned int currentTime, unsigned int accumulator)
 {
-  static double accel = 0.026;
-  static double velo = 1.0;
-
-  Uint32 compensatedTime = currentTime;
-  Uint32 atomicTime = (compensatedTime - startTime);
-  Uint32 delta = atomicTime - prevTime;
-
-  if (atomicTime == 0) {
-    velo = 1.0;
-    accel = 0.0;
+  if (MOVEMENT_START == state && component) {
+    Position p = component->update(currentTime, accumulator);
+    x = p.x;
+    y = p.y;
+    angle = p.angle;
   }
-
-  if (MOVEMENT_START != state) return;
-
-  accel = 0.0;
-  velo = 0.1;
-
-  //prev_y = a_y + velo * ((atomicTime > 375) ? 375 : atomicTime);
-  y = velo * ((atomicTime > 375) ? 375 : atomicTime);
-
-  if (atomicTime > 375) {
-    delta = atomicTime - 375;
-    accel = -0.00026;
-    //velo = 1.0 - (1.0 / 375.0) * (delta - 375);
-    velo += accel * delta;
-    y += velo * delta;
-  }
-
-  /* Recover */
-  if (y < -0.1) {
-    y = 0.0;
-    startTime = currentTime;
-    accel = 0.0;
-    velo = 0.1;
-  }
-
-  x = y;
-  prevTime = delta;
 }
 
-
-} /* namespace Graphic */
-} /* namespace story */
+} // namespace Movement
+} // namespace Graphic
+} // namespace story
