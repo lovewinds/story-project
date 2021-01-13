@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphic/CoreObject.hpp"
+#include "graphic/movement/Movement.hpp"
 
 namespace story {
 namespace Core {
@@ -15,6 +16,9 @@ public:
   void addGraphicObject(std::shared_ptr<Graphic::CoreObject> graphicObject) {
     this->graphicObject = graphicObject;
   }
+  void addMovement(Graphic::Movement::Movement movement) {
+    this->movement = std::make_shared<Graphic::Movement::Movement>(movement);
+  }
 
   double getX() { return graphicObject->getX(); }
   double getY() { return graphicObject->getY(); }
@@ -27,15 +31,12 @@ public:
   void moveTo(double x, double y) { graphicObject->moveTo(x, y); }
   void moveBy(double x, double y) { graphicObject->moveBy(x, y); }
 
-  virtual void update(Uint32 currentTime, Uint32 accumulator = 0) {
-    graphicObject->update(currentTime, accumulator);
-  }
-  virtual void render() {
-    graphicObject->render();
-  }
+  virtual void update(Uint32 currentTime, Uint32 accumulator = 0);
+  virtual void render();
 
 private:
   std::shared_ptr<Graphic::CoreObject> graphicObject;
+  std::shared_ptr<Graphic::Movement::Movement> movement;
 };
 
 } /* namespace Core */

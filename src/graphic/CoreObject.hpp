@@ -41,8 +41,8 @@ public:
   virtual void update(Uint32 currentTime, Uint32 accumulator = 0) {
     texture->update(currentTime, accumulator);
   }
-  virtual void render() {
-    texture->render(p_x, p_y, 0.0, 0.0, 0.0);
+  virtual void render(double x = 0.0, double y = 0.0) {
+    texture->render(p_x + x, p_y + y, 0.0, 0.0, 0.0);
   }
 
 private:
