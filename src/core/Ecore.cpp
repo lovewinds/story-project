@@ -5,6 +5,7 @@
 #include <SDL_keyboard.h>
 
 #include "core/Ecore.hpp"
+#include "core/Util.hpp"
 #include "core/ScreenManager.hpp"
 #include "graphic/texture/Texture.hpp"
 #include "resource/ResourceManager.hpp"
@@ -17,8 +18,8 @@ namespace story {
 namespace Core {
 
 /* Screen dimension constants */
-const int SCREEN_WIDTH = 540;
-const int SCREEN_HEIGHT = 960;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 Ecore* Ecore::instance = nullptr;
 int Ecore::custom_event_id[CUSTOM_EVENT_MAX];
@@ -591,17 +592,19 @@ bool Ecore::init(void* hwnd)
 std::shared_ptr<SDLFontWrap> Ecore::loadFont(std::string family, int size)
 {
   std::shared_ptr<SDLFontWrap> font = nullptr;
-  char font_path[256] = { 0, };
   TTF_Font *pFont = nullptr;
 
   /* Load Font */
-  SDL_snprintf(font_path, 256, "../res/%s.ttf", family.c_str());
-  pFont = TTF_OpenFont(font_path, size);
+  std::string fontPath = Core::Util::format(
+    "%s/%s.ttf",
+    Core::Ecore::getResourcePath().c_str(), family.c_str()
+  );
+  pFont = TTF_OpenFont(fontPath.c_str(), size);
   if (pFont == nullptr)
   {
     /* Android can handle under /assets directory */
-    SDL_snprintf(font_path, 256, "%s.ttf", family.c_str());
-    pFont = TTF_OpenFont(font_path, size);
+    fontPath = Core::Util::format("%s.ttf", family.c_str());
+    pFont = TTF_OpenFont(fontPath.c_str(), size);
     if (pFont == nullptr) {
       LOG_ERR("Failed to load font[%s]!", family.c_str());
       LOG_ERR("      SDL_ttf Error: %s", TTF_GetError());
@@ -622,8 +625,7 @@ bool Ecore::loadProject()
    * TODO: This logic should 'prepare' to allocate all resources.
    */
   std::string res_xml("sample_scene.xml");
-  if (Ecore::checkPlatform("Linux"))
-    res_xml = "sample_scene2.xml";
+  // std::string res_xml("sample_scene2.xml");
   success = resManager->loadProject(res_xml);
   if (!success) {
     LOG_ERR("Failed to load resources!");

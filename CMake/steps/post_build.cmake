@@ -6,16 +6,26 @@ IF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
 ELSEIF(${PLATFORM} STREQUAL "Windows")
     SET(INSTALL_TARGET_DIR "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/")
 ENDIF((${PLATFORM} STREQUAL "Linux") OR (${PLATFORM} STREQUAL "macOS"))
-ADD_CUSTOM_COMMAND(
-    TARGET ${PROJECT_NAME}
-    POST_BUILD
-    COMMAND ${PYTHON}
-    ARGS
-        "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
-        "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
-        "${INSTALL_TARGET_DIR}"
-    COMMENT "Copy required dynamic libraries"
+
+FILE(GLOB DEPENDENT_FILES
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/*.dll
+    ${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/*.so
 )
+FILE(COPY ${DEPENDENT_FILES}
+     DESTINATION ${INSTALL_TARGET_DIR}
+)
+MESSAGE("Required dynamic libraries are copied")
+# ADD_CUSTOM_COMMAND(
+#     TARGET ${PROJECT_NAME}
+#     POST_BUILD
+#     COMMAND ${PYTHON}
+#     ARGS
+#         "${CMAKE_SOURCE_DIR}/external/copy-dependencies.py"
+#         "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/lib/"
+#         "${INSTALL_TARGET_DIR}"
+#     COMMENT "Copy required dynamic libraries"
+# )
+
 # Copy Python modules
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/external/build/target/${PLATFORM}/${BUILD_TYPE}/python37_modules_Lib.zip"

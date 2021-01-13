@@ -19,7 +19,11 @@ class gtestWindowsBuilder(PlatformBuilder):
             self.env.source_path,
             self.config['name']
         ))
-        project_path = Path('{}/{}/build/googlemock/gtest'.format(
+        gtest_project_path = Path('{}/{}/build/googletest'.format(
+            self.env.source_path,
+            self.config['name']
+        ))
+        gmock_project_path = Path('{}/{}/build/googlemock'.format(
             self.env.source_path,
             self.config['name']
         ))
@@ -45,10 +49,26 @@ class gtestWindowsBuilder(PlatformBuilder):
         self.log(f'[CMD]:: {cmd}'.split())
         self.env.run_command(cmd, module_name=self.config['name'])
 
-        os.chdir(project_path)
+        # googletest
+        os.chdir(gtest_project_path)
         cmd = '''msbuild gtest.sln \
                     /maxcpucount:{} \
                     /t:gtest;gtest_main \
+                    /p:PlatformToolSet={} \
+                    /p:Configuration={} \
+                    /p:Platform=x64 \
+                    /p:OutDir={}\\ \
+                '''.format(self.env.NJOBS,
+                           self.env.compiler_version, self.env.BUILD_TYPE,
+                           self.env.install_lib_path)
+        self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
+        self.env.run_command(cmd, module_name=self.config['name'])
+
+        # googlemock
+        os.chdir(gmock_project_path)
+        cmd = '''msbuild gmock.sln \
+                    /maxcpucount:{} \
+                    /t:gmock;gmock_main \
                     /p:PlatformToolSet={} \
                     /p:Configuration={} \
                     /p:Platform=x64 \
@@ -66,6 +86,10 @@ class gtestWindowsBuilder(PlatformBuilder):
                  f'{self.env.install_lib_path}\\gtest.lib')
             move(f'{self.env.install_lib_path}\\gtest_maind.lib',
                  f'{self.env.install_lib_path}\\gtest_main.lib')
+            move(f'{self.env.install_lib_path}\\gmockd.lib',
+                 f'{self.env.install_lib_path}\\gmock.lib')
+            move(f'{self.env.install_lib_path}\\gmock_maind.lib',
+                 f'{self.env.install_lib_path}\\gmock_main.lib')
 
     def patch_file_encoding(self, path):
         import codecs

@@ -12,6 +12,8 @@ p_x(0), p_y(0)
   mTexture = nullptr;
   mWidth = 0;
   mHeight = 0;
+  wRatio = 1.0;
+  hRatio = 1.0;
 }
 
 Texture::~Texture()
@@ -69,6 +71,22 @@ int Texture::getHeight()
   return mHeight;
 }
 
+void Texture::setWidth(double width, bool ratio)
+{
+  if (ratio)
+    wRatio = width / 100.0;
+  else
+    mWidth = width;
+}
+
+void Texture::setHeight(double height, bool ratio)
+{
+  if (ratio)
+    hRatio = height / 100.0;
+  else
+    mHeight = height;
+}
+
 void Texture::dealloc()
 {
   /* Free texture if it exists */
@@ -96,38 +114,10 @@ void Texture::texture_render(int x, int y, SDL_Rect* clip, double angle,
     renderQuad.w = clip->w;
     renderQuad.h = clip->h;
   }
-
-  if (story::Core::Ecore::isHighDPI() == true)
-  {
-    renderQuad.x *= story::Core::Ecore::getDisplayScale();
-    renderQuad.y *= story::Core::Ecore::getDisplayScale();
-    if (auto_size_by_dpi) {
-      renderQuad.w *= story::Core::Ecore::getDisplayScale();
-      renderQuad.h *= story::Core::Ecore::getDisplayScale();
-    }
-  }
-
-  /* Render to screen */
-  SDL_RenderCopyEx(gRenderer, mTexture->getTexture(), clip, &renderQuad, angle, center, flip);
-}
-
-void Texture::texture_render_resize(int x, int y, SDL_Rect* clip,
-  double ratio_w, double ratio_h, double angle,
-  bool auto_size_by_dpi, SDL_Point* center, SDL_RendererFlip flip)
-{
-  SDL_Renderer *gRenderer = story::Core::Ecore::getInstance()->getRenderer();
-
-  /* Set rendering space and render to screen */
-  SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
-  /* Set clip rendering dimensions */
-  if (clip != NULL)
-  {
-    renderQuad.w = clip->w;
-    renderQuad.h = clip->h;
-  }
-  renderQuad.w = (int)(renderQuad.w * ratio_w);
-  renderQuad.h = (int)(renderQuad.h * ratio_h);
+  if (wRatio > 1.0 || wRatio < 1.0)
+    renderQuad.w = (int)(renderQuad.w * wRatio);
+  if (hRatio > 1.0 || hRatio < 1.0)
+    renderQuad.h = (int)(renderQuad.h * hRatio);
 
   if (story::Core::Ecore::isHighDPI() == true)
   {

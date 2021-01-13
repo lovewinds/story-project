@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "util/SDLWrap.hpp"
+#include "core/Object.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/ImageTexture.hpp"
 #include "graphic/texture/TextTexture.hpp"
@@ -30,6 +31,7 @@ public:
 
   /* Should handle creation of resources with ResourceManager */
   virtual bool addObject(std::shared_ptr<Graphic::Object> object);
+  virtual bool addCoreObject(std::shared_ptr<Core::Object> object);
 
   /* Resource manager allocates image resource */
   //std::shared_ptr<SDLTextureWrap> allocateTexture(std::string path);
@@ -66,6 +68,8 @@ protected:
   std::map<std::string, std::shared_ptr<Graphic::Texture>> _raw_texture_map;
 
   std::map<std::string, std::shared_ptr<Graphic::Object>> _object_map;
+
+  std::map<std::string, std::shared_ptr<Core::Object>> _core_object_map;
 };
 
 } /* namespace Screen */
