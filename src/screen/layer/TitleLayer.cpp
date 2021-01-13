@@ -9,6 +9,9 @@
 #include "util/LogHelper.hpp"
 #include "graphic/texture/SpriteTexture.hpp"
 #include "graphic/texture/FigureTexture.hpp"
+#include "graphic/movement/Movement.hpp"
+#include "graphic/movement/Component.hpp"
+#include "graphic/movement/components/Smooth.hpp"
 #include "resource/ResourceManager.hpp"
 #include "graphic/GraphicObject.hpp"
 #include "graphic/animation/EAccelAnimation.hpp"
@@ -105,6 +108,14 @@ void TitleLayer::initMenuItem()
     obj->setY(y);
     obj->setWidth(20, true);
     obj->setHeight(20, true);
+
+    Graphic::Movement::Movement m1;
+    std::shared_ptr<Graphic::Movement::Component> component(
+      new Graphic::Movement::Smooth()
+    );
+    m1.setComponent(component);
+    m1.start();
+    obj->addMovement(m1);
     LOG_INFO("Position : %f, %f", x, y);
     addCoreObject(obj);
   }
