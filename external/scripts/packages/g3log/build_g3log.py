@@ -12,26 +12,26 @@ class Builder_g3log(PackageBuilder):
         super(Builder_g3log, self)
         self.package = {
             'name': 'g3log',
-            'url': 'https://github.com/KjellKod/g3log/archive/1.3.2.tar.gz',
-            'filename': 'g3log-1.3.2.tar.gz'
+            'url': 'https://github.com/KjellKod/g3log/archive/1.3.4.tar.gz',
+            'filename': 'g3log-1.3.4.tar.gz'
         }
         self.builder = {
             Platform.Windows: g3logWindowsBuilder(
                 self.package,
                 {
-                    'checker': 'g3logger.lib'
+                    'checker': 'g3log.lib'
                 }
             ),
             Platform.Linux: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'libg3logger.so'
+                    'checker': 'libg3log.so'
                 }
             ),
             Platform.macOS: g3logLinuxBuilder(
                 self.package,
                 {
-                    'checker': 'g3logger.dylib'
+                    'checker': 'g3log.dylib'
                 }
             )
         }

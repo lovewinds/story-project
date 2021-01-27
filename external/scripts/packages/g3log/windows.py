@@ -32,17 +32,17 @@ class g3logWindowsBuilder(PlatformBuilder):
         cmd = '''cmake .. \
                     -DCHANGE_G3LOG_DEBUG_TO_DBUG=ON \
                     -DENABLE_FATAL_SIGNALHANDLING=OFF \
-                    -DADD_BUILD_WIN_SHARED=ON \
+                    -DG3_SHARED_RUNTIME=ON \
                     -A x64'''
         self.log('\n          '.join(f'    [CMD]:: {cmd}'.split()))
         self.env.run_command(cmd, module_name=self.config['name'])
 
         # patch
-        BuildEnv.patch_static_MSVC("g3logger.vcxproj", self.env.BUILD_TYPE)
+        BuildEnv.patch_static_MSVC("g3log.vcxproj", self.env.BUILD_TYPE)
 
         cmd = '''msbuild g3log.sln \
                     /maxcpucount:{} \
-                    /t:g3logger \
+                    /t:g3log \
                     /p:PlatformToolSet={} \
                     /p:Configuration={} \
                     /p:Platform=x64 \
@@ -56,11 +56,11 @@ class g3logWindowsBuilder(PlatformBuilder):
     def post(self):
         super().post()
         
-        patch_target = Path('{}/{}/src/g3log/g3log.hpp'.format(
-            self.env.source_path,
-            self.config['name']
-        ))
-        self.patch_file_encoding(patch_target)
+        # patch_target = Path('{}/{}/src/g3log/g3log.hpp'.format(
+        #     self.env.source_path,
+        #     self.config['name']
+        # ))
+        # self.patch_file_encoding(patch_target)
 
     def patch_file_encoding(self, path):
         import codecs
