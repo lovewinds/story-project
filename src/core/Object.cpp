@@ -14,8 +14,6 @@ void Object::render() {
         p.y += movement->getY();
     }
     graphicObject->render(p.x, p.y);
-
-    LOG_DBG("  Object position [%f, %f]", p.x, p.y);
 }
 
 void Object::update(Uint32 currentTime, Uint32 accumulator) {

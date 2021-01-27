@@ -26,6 +26,8 @@
 #ifndef USE_SDL_LOG
 const LEVELS PY_LOG {DBUG.value + 1, "[Python] "};
 
+struct CustomSink;
+
 class Log
 {
 public:
@@ -34,6 +36,7 @@ public:
 
   static void init();
   static void deinit();
+  static void setLogLevel(int level);
 
   void dbg();
 
@@ -41,6 +44,6 @@ private:
   Log();
   static Log* logger;
   std::unique_ptr<g3::LogWorker> logworker;
-  //auto sinkHandle;
+  std::unique_ptr<g3::SinkHandle<CustomSink>> sinkHandle;
 };
 #endif

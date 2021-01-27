@@ -9,6 +9,12 @@ struct CustomSink {
   // http://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
   enum FG_Color { YELLOW = 33, RED = 41, GREEN = 32, BLUE = 36, WHITE = 97 };
 
+  int enabledLevel = INFO.value;
+
+  void setLogLevel(int level) {
+    enabledLevel = level;
+  }
+
   FG_Color GetColor(const LEVELS level) const {
     if (level.value == WARNING.value) { return RED; }
     // Windows (DEBUG->DBUG)
@@ -25,6 +31,9 @@ struct CustomSink {
     auto color = GetColor(level);
 
     logEntry.get().timestamp("[%m/%d %H:%M:%S]");
+
+    if (level.value < enabledLevel)
+      return;
 
     if (level.value == WARNING.value + 1) {
       /* Custom log level for python */
@@ -76,6 +85,12 @@ void Log::dbg()
   // LOGF(PY_LOG, "Python debug Message !!!");
 }
 
+void Log::setLogLevel(int level)
+{
+  std::future<void> received = logger->sinkHandle->call(
+    &CustomSink::setLogLevel, level);
+}
+
 void Log::init()
 {
   if (logger == nullptr) {
@@ -90,9 +105,11 @@ void Log::init()
 */
 
     logger->logworker = g3::LogWorker::createLogWorker();
-    static auto sinkHandle = logger->logworker->addSink(std2::make_unique<CustomSink>(),
+    logger->sinkHandle = logger->logworker->addSink(
+      std::make_unique<CustomSink>(),
       &CustomSink::ReceiveLogMessage);
     g3::initializeLogging(logger->logworker.get());
+
 
   //std::future<void> received = sinkHandle->call(&CustomSink::Foo, NULL);
 
