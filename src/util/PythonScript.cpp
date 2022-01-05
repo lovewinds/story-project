@@ -29,6 +29,7 @@ PythonScript* PythonScript::instance = nullptr;
   #include <Python.h>
 #endif
 
+
 // A friendly class.
 class hello
 {
@@ -47,18 +48,41 @@ std::string invite(const hello& w) {
   return w.greet() + "! Please come soon!";
 }
 
+class ScriptHost
+{
+public:
+  ScriptHost() {
+    this->core = story::Core::Ecore::getInstance();
+  }
+  std::string getBasePath() const {
+    return core->getBasePath();
+  }
+private:
+  story::Core::Ecore* core;
+};
+
 namespace py = pybind11;
+using namespace py::literals;
 /**********************************************************************
  * Module Start
  **********************************************************************/
 PYBIND11_EMBEDDED_MODULE(pyemb_test, m) {
-    py::class_<hello>(m, "pyemb_test")
+    py::class_<hello>(m, "hello")
       .def(py::init<std::string>())
-      .def_property_readonly("greet", &hello::greet)
+      .def(py::init([](std::string s) {
+        return new hello(s);
+      }))
+      // .def_property_readonly("greet", &hello::greet)
+      .def("greet", &hello::greet)
       .def("add", [](const hello& self, int i, int j) { return i + j; })
       .def("invite", invite);
 }
 
+PYBIND11_EMBEDDED_MODULE(scriptHostModule, m) {
+    py::class_<ScriptHost>(m, "scriptHost")
+      .def(py::init<>())
+      .def_property_readonly("getBasePath", &ScriptHost::getBasePath);
+}
 /**********************************************************************
  * Module End
  **********************************************************************/
@@ -89,14 +113,32 @@ void PythonScript::initialize()
 
   try {
     auto pyemb_test = py::module::import("pyemb_test");
-    auto obj = pyemb_test.attr("pyemb_test")("Korean");
-    auto message = obj.attr("greet").cast<std::string>();
+    auto obj = pyemb_test.attr("hello")("Korean");
+    auto message = obj.attr("greet")().cast<std::string>();
     LOG_ERR("From Python :: %s", message.c_str());
 
     auto val = obj.attr("add")(3, 7).cast<int>();
     LOG_ERR("From Python :: %d", val);
 
     message = obj.attr("invite")().cast<std::string>();
+    LOG_ERR("From Python :: %s", message.c_str());
+
+    // append source dir to sys.path, and python interpreter would find your custom python file
+    py::module_ sys = py::module_::import("sys");
+    py::list path = sys.attr("path");
+    for (auto p : path_list) {
+      path.attr("append")(p);
+    }
+
+    message = "Path :: {}"_s.format(path);
+    LOG_ERR("From Python :: %s", message.c_str());
+
+    // import custom python class and call it
+    py::module_ tokenize = py::module_::import("entry_point");
+    py::type scriptEntryPointClass = tokenize.attr("ScriptEntryPoint");
+    py::object scriptEntryPoint = scriptEntryPointClass();
+    py::object res = scriptEntryPoint.attr("check")();
+    message = res.cast<std::string>();
     LOG_ERR("From Python :: %s", message.c_str());
   }
   catch(std::exception &e) {
