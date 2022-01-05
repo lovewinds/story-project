@@ -46,6 +46,7 @@ Ecore::Ecore()
   PythonScript::preparePath(makeBasePath(".."));
   PythonScript::preparePath(makeBasePath("..\\lib"));
   PythonScript::preparePath(makeBasePath("..\\lib\\python"));
+  PythonScript::preparePath(makeBasePath("..\\..\\scripting"));
   PythonScript::preparePath(makeBasePath("python37_modules_Lib.zip"));
   PythonScript::preparePath(makeBasePath("python37_modules_Tools.zip"));
 #elif defined(PLATFORM_IOS)
